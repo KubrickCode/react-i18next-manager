@@ -1,12 +1,13 @@
 import {
   NavbarContent as SaasNavbarContent,
-  NavbarItem,
   SearchInput,
 } from "@saas-ui/react";
 
+import { NavbarItem } from "./navbar-item";
+
 export const NavbarContent = () => (
   <SaasNavbarContent justifyContent="flex-end">
-    <NavbarItem listStyleType="none">
+    <NavbarItem>
       <SearchInput size="sm" />
     </NavbarItem>
   </SaasNavbarContent>
