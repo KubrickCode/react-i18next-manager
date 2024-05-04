@@ -1,0 +1,25 @@
+{
+  "name": "@kubrick/react-i18next-manager",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4",
+    "@types/fs-extra": "^11",
+    "@types/node": "^20.12.7",
+    "fs-extra": "^11.2.0",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "build-frontend": "cd ../frontend && yarn build",
+    "build-backend": "cd ../backend && yarn build",
+    "build": "yarn build-frontend && yarn build-backend && node build.js"
+  },
+  "bin": {
+    "studio": "dist/main.js"
+  }
+}
