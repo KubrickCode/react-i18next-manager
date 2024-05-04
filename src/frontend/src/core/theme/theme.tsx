@@ -1,7 +1,8 @@
+import { PropsWithChildren } from "react";
+
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
 import { SaasProvider, theme as baseTheme } from "@saas-ui/react";
-import { PropsWithChildren } from "react";
 
 import { colors } from "./colors";
 
