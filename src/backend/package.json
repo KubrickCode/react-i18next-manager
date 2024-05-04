@@ -1,19 +1,23 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/main.ts",
-    "build": "tsc"
+    "dev": "ts-node -r tsconfig-paths/register src/main.ts",
+    "build": "tsc -p tsconfig.build.json && node post-build.js"
   },
   "license": "MIT",
   "dependencies": {
     "express": "^4.19.2",
-    "open": "^10.1.0"
+    "http-status-codes": "^2.3.0",
+    "open": "^10.1.0",
+    "reflect-metadata": "^0.2.2",
+    "typedi": "^0.10.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/reflect-metadata": "^0.1.0",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   }
 }
