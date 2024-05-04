@@ -21,6 +21,12 @@ deps-package:
 deps-test-web:
   cd "{{ test_web_dir }}" && yarn install
 
+package-publish:
+  cd "{{ package_dir }}" && npm publish --access public
+
+package-version *version:
+  cd "{{ package_dir }}" && npm version {{version}}
+
 run svc *args:
   #!/usr/bin/env bash
   set -euox pipefail
@@ -55,5 +61,5 @@ run svc *args:
       chmod +x dist/main.js
       npx studio
       ;;
-  
+
   esac
