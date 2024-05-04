@@ -1,0 +1,28 @@
+{
+  "recommendations": [
+    "bradgashler.htmltagwrap",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "chunsen.bracket-select",
+    "codezombiech.gitignore",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "formulahendry.code-runner",
+    "github.codespaces",
+    "github.copilot",
+    "github.copilot-chat",
+    "github.vscode-github-actions",
+    "gruntfuggly.todo-tree",
+    "kevinkyang.auto-comment-blocks",
+    "kisstkondoros.vscode-gutter-preview",
+    "mhutchie.git-graph",
+    "mike-co.import-sorter",
+    "ms-azuretools.vscode-docker",
+    "ms-vscode-remote.remote-containers",
+    "rangav.vscode-thunder-client",
+    "skellock.just",
+    "streetsidesoftware.code-spell-checker",
+    "wayou.vscode-todo-highlight",
+    "usernamehw.errorlens"
+  ]
+}
