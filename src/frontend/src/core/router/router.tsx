@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { HomePage } from "@pages/home";
-import { NotFoundPage } from "@pages/not-found";
+import { HomePage, NotFoundPage } from "@pages";
 
 export const Router = () => (
   <BrowserRouter>
