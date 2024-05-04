@@ -2,11 +2,12 @@ root_dir := justfile_directory()
 frontend_dir := root_dir + "/src/frontend"
 backend_dir := root_dir + "/src/backend"
 package_dir := root_dir + "/src/package"
+test_web_dir := root_dir + "/src/test-web"
 
 default:
   @just --list
 
-deps: deps-frontend deps-backend deps-package
+deps: deps-frontend deps-backend deps-package deps-test-web
 
 deps-frontend:
   cd "{{ frontend_dir }}" && yarn install
@@ -16,6 +17,9 @@ deps-backend:
 
 deps-package:
   cd "{{ package_dir }}" && yarn install
+
+deps-test-web:
+  cd "{{ test_web_dir }}" && yarn install
 
 run svc *args:
   #!/usr/bin/env bash
@@ -29,6 +33,11 @@ run svc *args:
     backend)
       cd "{{ backend_dir }}"
       PORT=3001 yarn dev
+      ;;
+
+    test-web)
+      cd "{{ test_web_dir }}"
+      GENERATE_SOURCEMAP=false yarn dev
       ;;
 
     app)
