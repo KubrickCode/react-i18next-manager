@@ -1,17 +1,21 @@
 root_dir := justfile_directory()
 frontend_dir := root_dir + "/src/frontend"
 backend_dir := root_dir + "/src/backend"
+package_dir := root_dir + "/src/package"
 
 default:
   @just --list
 
-deps: deps-frontend deps-backend
+deps: deps-frontend deps-backend deps-package
 
 deps-frontend:
   cd "{{ frontend_dir }}" && yarn install
 
 deps-backend:
   cd "{{ backend_dir }}" && yarn install
+
+deps-package:
+  cd "{{ package_dir }}" && yarn install
 
 run svc *args:
   #!/usr/bin/env bash
@@ -30,6 +34,17 @@ run svc *args:
     app)
       just run frontend &
       just run backend
+      ;;
+
+    package-build)
+      cd "{{ package_dir }}"
+      yarn build
+      ;;
+
+    package-studio)
+      cd "{{ package_dir }}"
+      chmod +x dist/main.js
+      npx studio
       ;;
   
   esac
