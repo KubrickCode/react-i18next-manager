@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 
-import { Button, Flex, Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { NavbarBrand as SaasNavbarBrand } from "@saas-ui/react";
+import { Button } from "@core/button";
 
 export const NavbarBrand = ({ label }: { label: string }) => (
   <SaasNavbarBrand>
