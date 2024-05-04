@@ -1,6 +1,9 @@
 import { PropsWithChildren } from "react";
-
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  extendTheme,
+  type ThemeConfig as ChakraThemeConfig,
+} from "@chakra-ui/react";
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
 import { SaasProvider, theme as baseTheme } from "@saas-ui/react";
 
@@ -12,7 +15,13 @@ const theme = {
 
 const saasTheme = extendTheme({ colors }, baseTheme);
 
+export const chakraThemeConfig: ChakraThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: false,
+};
+
 const chakraTheme = extendTheme({
+  config: chakraThemeConfig,
   colors,
   styles: {
     global: {
