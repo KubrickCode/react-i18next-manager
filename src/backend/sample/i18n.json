@@ -1,0 +1,14 @@
+{
+  "en": {
+    "ui.common.create": "Create",
+    "ui.common.delete": "Delete",
+    "ui.error.createError": "Failed to create",
+    "ui.error.deleteError": "Failed to delete"
+  },
+  "ko": {
+    "ui.common.create": "생성",
+    "ui.common.delete": "삭제",
+    "ui.error.createError": "생성 실패",
+    "ui.error.deleteError": "삭제 실패"
+  }
+}
