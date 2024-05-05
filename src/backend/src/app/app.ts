@@ -14,14 +14,14 @@ export class App {
   }
 
   private setupMiddleware(): void {
-    this.app.use(express.static(path.join(path.resolve(), "dist")));
+    this.app.use(express.static(path.join(__dirname, "../")));
     this.app.use(express.json());
   }
 
   private setupRoutes(): void {
     this.app.use("/api", new Routes().router);
     this.app.get("*", (req: Request, res: Response) => {
-      res.sendFile(path.join(path.resolve(), "./dist/index.html"));
+      res.sendFile(path.join(__dirname, "index.html"));
     });
   }
 
