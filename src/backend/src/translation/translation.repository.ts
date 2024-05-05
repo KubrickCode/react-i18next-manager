@@ -1,10 +1,11 @@
+import { DBService } from "../db/db.service";
 import { Service } from "typedi";
 
 @Service()
 export class TranslationRepository {
-  constructor() {}
+  constructor(private readonly dbService: DBService) {}
 
   async getTranslations() {
-    return "Hello, World!";
+    return this.dbService.getTranslations();
   }
 }
