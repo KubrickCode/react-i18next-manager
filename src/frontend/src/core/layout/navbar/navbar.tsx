@@ -7,7 +7,7 @@ import { NavbarContent } from "./navbar-content";
 const NAVBAR_LABEL = "I18n Studio";
 
 export const Navbar = () => (
-  <SaasNavbar position="sticky" top="0">
+  <SaasNavbar position="sticky" top="0" zIndex="9999">
     <Flex alignItems="center" justifyContent="space-between">
       <NavbarBrand label={NAVBAR_LABEL} />
       <NavbarContent />
