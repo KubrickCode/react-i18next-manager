@@ -19,8 +19,7 @@ type I18nStructure = {
 
 type TableData = {
   key: string;
-  en: string;
-  ko: string;
+  [language: string]: string;
 };
 
 export const HomePage = () => {
@@ -33,6 +32,8 @@ export const HomePage = () => {
   if (isLoading) return <>Loading...</>;
 
   const { keys } = data as I18nStructure;
+
+  const languages = Object.keys(Object.values(Object.values(keys)[0])[0]);
 
   return (
     <Page>
@@ -49,21 +50,16 @@ export const HomePage = () => {
                 columns={[
                   {
                     accessorKey: "key",
-                    header: "key",
+                    header: "KEY",
                   },
-                  {
-                    accessorKey: "en",
-                    header: "en",
-                  },
-                  {
-                    accessorKey: "ko",
-                    header: "ko",
-                  },
+                  ...languages.map((lang) => ({
+                    accessorKey: lang,
+                    header: lang.toUpperCase(),
+                  })),
                 ]}
                 data={Object.entries(key).map(([key, value]) => ({
                   key,
-                  en: value.en,
-                  ko: value.ko,
+                  ...value,
                 }))}
                 isSelectable
               />
