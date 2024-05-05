@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { DataTable } from "@core/data-table";
 import { Page } from "@core/page";
 import { useQuery } from "@core/react-query";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@core/tab";
@@ -15,6 +15,12 @@ type I18nStructure = {
   keys: {
     [group: string]: TranslationKeys;
   };
+};
+
+type TableData = {
+  key: string;
+  en: string;
+  ko: string;
 };
 
 export const HomePage = () => {
@@ -39,13 +45,28 @@ export const HomePage = () => {
         <TabPanels>
           {Object.values(keys).map((key: TranslationKeys, idx) => (
             <TabPanel key={idx}>
-              {Object.entries(key).map(([key, value], idx) => (
-                <Flex key={idx} gap={3}>
-                  <Text>{key.toString()}</Text>
-                  <Text>{value.en}</Text>
-                  <Text>{value.ko}</Text>
-                </Flex>
-              ))}
+              <DataTable<TableData>
+                columns={[
+                  {
+                    accessorKey: "key",
+                    header: "key",
+                  },
+                  {
+                    accessorKey: "en",
+                    header: "en",
+                  },
+                  {
+                    accessorKey: "ko",
+                    header: "ko",
+                  },
+                ]}
+                data={Object.entries(key).map(([key, value]) => ({
+                  key,
+                  en: value.en,
+                  ko: value.ko,
+                }))}
+                isSelectable
+              />
             </TabPanel>
           ))}
         </TabPanels>
