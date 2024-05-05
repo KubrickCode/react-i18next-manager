@@ -407,10 +407,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kubrick/react-i18next-manager@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@kubrick/react-i18next-manager/-/react-i18next-manager-0.1.0.tgz#7d96c4e7f354ef3369d713bb6d74e28de6b4bb38"
-  integrity sha512-y315QKj9eVODtWQC5X/DdcXbZqFbUxFAO1RODfyI1KMJp9gOHyKheWl+u658Ntl8r0/3TaesjPmluhoYAu1xDg==
+"@kubrick/react-i18next-manager@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@kubrick/react-i18next-manager/-/react-i18next-manager-0.1.1.tgz#feb7635c31462b370c53cae2cc558ddea4e0afca"
+  integrity sha512-s/0L/Zvr6ObOIn88hgHQB7/k/WnJMlaCmHwseJwzlgRp4de2q2/lZ4k/XJs8wtRwBZ3WVEIMfW5i2mmGXKteWA==
   dependencies:
     express "^4.19.2"
     http-status-codes "^2.3.0"
