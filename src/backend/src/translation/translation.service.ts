@@ -10,23 +10,23 @@ export class TranslationService {
     const i18n = {
       keys: {
         common: {
-          en: {
-            create: translations.en["ui.common.create"],
-            delete: translations.en["ui.common.delete"],
+          create: {
+            en: translations.en["ui.common.create"],
+            ko: translations.ko["ui.common.create"],
           },
-          ko: {
-            create: translations.ko["ui.common.create"],
-            delete: translations.ko["ui.common.delete"],
+          delete: {
+            en: translations.en["ui.common.delete"],
+            ko: translations.ko["ui.common.delete"],
           },
         },
         error: {
-          en: {
-            createError: translations.en["ui.error.createError"],
-            deleteError: translations.en["ui.error.deleteError"],
+          createError: {
+            en: translations.en["ui.error.createError"],
+            ko: translations.ko["ui.error.createError"],
           },
-          ko: {
-            createError: translations.ko["ui.error.createError"],
-            deleteError: translations.ko["ui.error.deleteError"],
+          deleteError: {
+            en: translations.en["ui.error.deleteError"],
+            ko: translations.ko["ui.error.deleteError"],
           },
         },
       },
