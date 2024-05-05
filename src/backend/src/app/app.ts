@@ -14,7 +14,7 @@ export class App {
   }
 
   private setupMiddleware(): void {
-    this.app.use(express.static(path.join(path.resolve(), "./")));
+    this.app.use(express.static(path.join(path.resolve(), "dist")));
     this.app.use(express.json());
   }
 
