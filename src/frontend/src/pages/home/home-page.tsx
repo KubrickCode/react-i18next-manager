@@ -1,9 +1,12 @@
-import { Flex, IconButton } from "@chakra-ui/react";
+import { ButtonGroup, IconButton, Input } from "@chakra-ui/react";
+import { ReactNode, useState } from "react";
+import { IoMdRefresh } from "react-icons/io";
+
+import { Button } from "@core/button";
 import { DataTable } from "@core/data-table";
 import { Page } from "@core/page";
 import { useQuery } from "@core/react-query";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@core/tab";
-import { IoMdRefresh } from "react-icons/io";
 
 type TranslationMap = {
   [key in string]: string;
@@ -20,8 +23,8 @@ type I18nStructure = {
 };
 
 type TableData = {
-  key: string;
-  [language: string]: string;
+  key: string | ReactNode;
+  [language: string]: string | ReactNode;
 };
 
 export const HomePage = () => {
@@ -29,6 +32,8 @@ export const HomePage = () => {
     "/translations",
     "getTranslations"
   );
+  const [isAddingMode, setIsAddingMode] = useState(false);
+
   if (!data) return <>ERROR</>;
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;
@@ -48,14 +53,26 @@ export const HomePage = () => {
         <TabPanels>
           {Object.values(keys).map((key: TranslationKeys, idx) => (
             <TabPanel key={idx}>
-              <Flex>
+              <ButtonGroup size="sm">
                 <IconButton
                   aria-label="refresh"
                   icon={<IoMdRefresh />}
                   marginBottom={3}
                   onClick={() => refetch()}
                 />
-              </Flex>
+                {!isAddingMode ? (
+                  <Button onClick={() => setIsAddingMode(true)}>
+                    Add Resource
+                  </Button>
+                ) : (
+                  <>
+                    <Button onClick={() => setIsAddingMode(false)}>
+                      Cancel
+                    </Button>
+                    <Button onClick={() => setIsAddingMode(false)}>Save</Button>
+                  </>
+                )}
+              </ButtonGroup>
               <DataTable<TableData>
                 columns={[
                   {
@@ -67,10 +84,33 @@ export const HomePage = () => {
                     header: lang.toUpperCase(),
                   })),
                 ]}
-                data={Object.entries(key).map(([key, value]) => ({
-                  key,
-                  ...value,
-                }))}
+                data={
+                  isAddingMode
+                    ? [
+                        {
+                          key: <Input placeholder="Enter key" />,
+                          ...languages.reduce(
+                            (acc, lang) => ({
+                              ...acc,
+                              [lang]: (
+                                <Input
+                                  placeholder={`Enter ${lang} translation`}
+                                />
+                              ),
+                            }),
+                            {}
+                          ),
+                        },
+                        ...Object.entries(key).map(([key, value]) => ({
+                          key,
+                          ...value,
+                        })),
+                      ]
+                    : Object.entries(key).map(([key, value]) => ({
+                        key,
+                        ...value,
+                      }))
+                }
                 isSelectable
               />
             </TabPanel>
