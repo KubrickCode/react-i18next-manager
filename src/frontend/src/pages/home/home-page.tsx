@@ -1,7 +1,9 @@
+import { Flex, IconButton } from "@chakra-ui/react";
 import { DataTable } from "@core/data-table";
 import { Page } from "@core/page";
 import { useQuery } from "@core/react-query";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@core/tab";
+import { IoMdRefresh } from "react-icons/io";
 
 type TranslationMap = {
   [key in string]: string;
@@ -23,7 +25,7 @@ type TableData = {
 };
 
 export const HomePage = () => {
-  const { data, error, isLoading } = useQuery(
+  const { data, error, isLoading, refetch } = useQuery(
     "/translations",
     "getTranslations"
   );
@@ -46,6 +48,14 @@ export const HomePage = () => {
         <TabPanels>
           {Object.values(keys).map((key: TranslationKeys, idx) => (
             <TabPanel key={idx}>
+              <Flex>
+                <IconButton
+                  aria-label="refresh"
+                  icon={<IoMdRefresh />}
+                  marginBottom={3}
+                  onClick={() => refetch()}
+                />
+              </Flex>
               <DataTable<TableData>
                 columns={[
                   {
