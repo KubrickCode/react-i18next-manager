@@ -12,7 +12,12 @@ export class TranslationController {
 
   async getTranslations(req: Request, res: Response) {
     const { group } = req.params;
-    const result = await this.translationService.getTranslations(group);
+    const { skip = 0, take = 9999 } = req.query;
+    const result = await this.translationService.getTranslations(
+      group,
+      Number(skip),
+      Number(take)
+    );
     res.status(StatusCodes.OK).send(result);
     return result;
   }

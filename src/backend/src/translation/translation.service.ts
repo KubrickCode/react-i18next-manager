@@ -12,7 +12,16 @@ type Translations = {
 export class TranslationService {
   constructor(private readonly translationRepository: TranslationRepository) {}
 
-  async getTranslations(group: string): Promise<{ keys: Translations }> {
+  async getTranslations(
+    group: string,
+    skip: number,
+    take: number
+  ): Promise<{
+    keys: Translations;
+    count: number;
+    hasPrevPage: boolean;
+    hasNextPage: boolean;
+  }> {
     const languages = await this.translationRepository.getLanguages();
     const rawTranslations = await this.translationRepository.getTranslations();
 
@@ -34,12 +43,24 @@ export class TranslationService {
         });
       });
 
-      return result;
+      const sortedProperties = Object.keys(result)
+        .sort()
+        .slice(skip, skip + take);
+      const paginatedResult: Translations = {};
+
+      sortedProperties.forEach((property) => {
+        paginatedResult[property] = result[property];
+      });
+
+      return paginatedResult;
     };
 
     const i18n = transformTranslations(rawTranslations, languages);
+    const count = Object.keys(i18n).length;
+    const hasPrevPage = skip > 0;
+    const hasNextPage = skip + take < count;
 
-    return { keys: i18n };
+    return { keys: i18n, count, hasPrevPage, hasNextPage };
   }
 
   async addTranslation(translation: string) {
