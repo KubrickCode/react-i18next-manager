@@ -1,8 +1,9 @@
-import { ButtonGroup, IconButton, Input } from "@chakra-ui/react";
+import { ButtonGroup, Flex, IconButton, Input } from "@chakra-ui/react";
 import { Button } from "@core/button";
 import { DataTable } from "@core/data-table";
 import { TabPanel } from "@core/tab";
 import { useMutation, useQuery } from "@core/tanstack-react-query";
+import { SearchInput } from "@saas-ui/react";
 import { ReactNode, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
 
@@ -56,36 +57,39 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
 
   return (
     <TabPanel>
-      <ButtonGroup size="sm">
-        <IconButton
-          aria-label="refresh"
-          icon={<IoMdRefresh />}
-          marginBottom={3}
-          onClick={() => getTranslationsResult.refetch()}
-        />
-        {!isAddingMode ? (
-          <Button onClick={() => setIsAddingMode(true)}>Add Resource</Button>
-        ) : (
-          <>
-            <Button onClick={() => setIsAddingMode(false)}>Cancel</Button>
-            <Button
-              onClick={() => {
-                mutate({
-                  link: "/translations",
-                  method: "post",
-                  body: {
-                    group,
-                    translation: "new translation",
-                  },
-                });
-                setIsAddingMode(false);
-              }}
-            >
-              Save
-            </Button>
-          </>
-        )}
-      </ButtonGroup>
+      <Flex gap={2}>
+        <ButtonGroup size="sm">
+          <IconButton
+            aria-label="refresh"
+            icon={<IoMdRefresh />}
+            marginBottom={3}
+            onClick={() => getTranslationsResult.refetch()}
+          />
+          {!isAddingMode ? (
+            <Button onClick={() => setIsAddingMode(true)}>Add Resource</Button>
+          ) : (
+            <>
+              <Button onClick={() => setIsAddingMode(false)}>Cancel</Button>
+              <Button
+                onClick={() => {
+                  mutate({
+                    link: "/translations",
+                    method: "post",
+                    body: {
+                      group,
+                      translation: "new translation",
+                    },
+                  });
+                  setIsAddingMode(false);
+                }}
+              >
+                Save
+              </Button>
+            </>
+          )}
+        </ButtonGroup>
+        <SearchInput size="sm" width="auto" />
+      </Flex>
       <DataTable<TableData>
         columns={[
           {
