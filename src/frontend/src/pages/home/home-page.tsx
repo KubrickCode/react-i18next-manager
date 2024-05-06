@@ -5,7 +5,7 @@ import { IoMdRefresh } from "react-icons/io";
 import { Button } from "@core/button";
 import { DataTable } from "@core/data-table";
 import { Page } from "@core/page";
-import { useQuery } from "@core/react-query";
+import { useQuery } from "@core/tanstack-react-query";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@core/tab";
 
 type TranslationMap = {

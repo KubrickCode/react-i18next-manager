@@ -1,4 +1,4 @@
-import { ReactQueryProvider } from "@core/react-query";
+import { ReactQueryProvider } from "@core/tanstack-react-query";
 import { Router } from "@core/router";
 import { ThemeProvider } from "@core/theme";
 
