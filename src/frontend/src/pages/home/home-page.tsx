@@ -32,13 +32,7 @@ export const HomePage = () => {
     "/translations",
     "getTranslations"
   );
-  const { mutate } = useMutation({
-    link: "/translations",
-    method: "post",
-    body: {
-      translation: "new translation",
-    },
-  });
+  const { mutate } = useMutation();
 
   const [isAddingMode, setIsAddingMode] = useState(false);
 
@@ -59,7 +53,7 @@ export const HomePage = () => {
           ))}
         </TabList>
         <TabPanels>
-          {Object.values(keys).map((key: TranslationKeys, idx) => (
+          {Object.entries(keys).map(([group, key], idx) => (
             <TabPanel key={idx}>
               <ButtonGroup size="sm">
                 <IconButton
@@ -79,7 +73,14 @@ export const HomePage = () => {
                     </Button>
                     <Button
                       onClick={() => {
-                        mutate();
+                        mutate({
+                          link: "/translations",
+                          method: "post",
+                          body: {
+                            group,
+                            translation: "new translation",
+                          },
+                        });
                         setIsAddingMode(false);
                       }}
                     >
