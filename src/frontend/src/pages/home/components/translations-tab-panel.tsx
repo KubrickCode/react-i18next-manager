@@ -36,6 +36,14 @@ type AddTranslationBody = {
   }[];
 };
 
+type EditTranslationBody = {
+  newKey: string;
+  translations: {
+    language: string;
+    value: string;
+  }[];
+};
+
 export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
   const getLanguagesResult = useQuery<string[]>(
     "/config/languages",
@@ -52,7 +60,27 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
       translations: [],
     });
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+
+  const [editKey, setEditKey] = useState<string | null>(null);
+  const [editData, setEditData] = useState<EditTranslationBody>({
+    newKey: "",
+    translations: [],
+  });
+
   const { mutate } = useMutation();
+
+  const handleSaveEdit = () => {
+    mutate({
+      link: `/translations/${group}/${editKey}`,
+      method: "put",
+      body: {
+        newKey: editData.newKey,
+        translations: editData.translations,
+      },
+    });
+    setEditKey(null);
+    getTranslationsResult.refetch();
+  };
 
   if (!getLanguagesResult.data || !getTranslationsResult.data)
     return <>ERROR</>;
@@ -126,6 +154,10 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
             accessorKey: lang,
             header: lang.toUpperCase(),
           })),
+          {
+            accessorKey: "actions",
+            header: "ACTIONS",
+          },
         ]}
         data={
           isAddingMode
@@ -173,10 +205,82 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                   ...value,
                 })),
               ]
-            : Object.entries(translations.keys).map(([key, value]) => ({
-                key,
-                ...value,
-              }))
+            : Object.entries(translations.keys).map(([key, value]) =>
+                editKey === key
+                  ? {
+                      key: (
+                        <Input
+                          value={editData.newKey}
+                          onChange={(e) => {
+                            setEditData({
+                              ...editData,
+                              newKey: e.target.value,
+                            });
+                          }}
+                        />
+                      ),
+                      ...languages.reduce(
+                        (acc, lang) => ({
+                          ...acc,
+                          [lang]: (
+                            <Input
+                              value={
+                                editData.translations.find(
+                                  (t) => t.language === lang
+                                )?.value ?? ""
+                              }
+                              onChange={(e) => {
+                                setEditData({
+                                  ...editData,
+                                  translations: [
+                                    ...editData.translations.filter(
+                                      (t) => t.language !== lang
+                                    ),
+                                    {
+                                      language: lang,
+                                      value: e.target.value,
+                                    },
+                                  ],
+                                });
+                              }}
+                            />
+                          ),
+                        }),
+                        {}
+                      ),
+                      actions: (
+                        <ButtonGroup size="sm">
+                          <Button onClick={() => setEditKey(null)}>
+                            Cancel
+                          </Button>
+                          <Button onClick={handleSaveEdit}>Save</Button>
+                        </ButtonGroup>
+                      ),
+                    }
+                  : {
+                      key,
+                      ...value,
+                      actions: (
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            setEditKey(key);
+                            setEditData({
+                              newKey: key,
+                              translations: Object.entries(value).map(
+                                ([language, value]) => ({
+                                  language,
+                                  value,
+                                })
+                              ),
+                            });
+                          }}
+                        >
+                          Edit
+                        </Button>
+                      ),
+                    }
+              )
         }
         enableMultiSort={false}
         isSelectable
