@@ -67,7 +67,9 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
     translations: [],
   });
 
-  const { mutate } = useMutation();
+  const { mutate } = useMutation({
+    refetchQueryKey: [`getTranslations-${group}`],
+  });
 
   const handleSaveEdit = () => {
     mutate({
