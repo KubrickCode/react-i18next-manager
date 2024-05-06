@@ -1,5 +1,6 @@
 import { DBService } from "../db/db.service";
 import { Service } from "typedi";
+import { EditTranslationBody } from "./translation.controller";
 
 @Service()
 export class TranslationRepository {
@@ -23,5 +24,10 @@ export class TranslationRepository {
 
   async deleteTranslation(group: string, key: string) {
     this.dbService.deleteTranslation(group, key);
+  }
+
+  async editTranslation(group: string, key: string, data: EditTranslationBody) {
+    this.dbService.deleteTranslation(group, key);
+    this.dbService.addTranslation(group, data.newKey, data.translations);
   }
 }

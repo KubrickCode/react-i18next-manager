@@ -1,7 +1,10 @@
 import { Service } from "typedi";
 import { TranslationRepository } from "./translation.repository";
 import { TranslationData } from "../db/db.service";
-import { AddTranslationBody } from "./translation.controller";
+import {
+  AddTranslationBody,
+  EditTranslationBody,
+} from "./translation.controller";
 
 type Translations = {
   [key: string]: {
@@ -71,5 +74,9 @@ export class TranslationService {
 
   async deleteTranslation(group: string, key: string) {
     await this.translationRepository.deleteTranslation(group, key);
+  }
+
+  async editTranslation(group: string, key: string, data: EditTranslationBody) {
+    return this.translationRepository.editTranslation(group, key, data);
   }
 }

@@ -11,12 +11,21 @@ export type AddTranslationBody = {
   }[];
 };
 
+export type EditTranslationBody = {
+  newKey: string;
+  translations: {
+    language: string;
+    value: string;
+  }[];
+};
+
 @Service()
 export class TranslationController {
   constructor(private readonly translationService: TranslationService) {
     this.getTranslations = this.getTranslations.bind(this);
     this.addTranslation = this.addTranslation.bind(this);
     this.deleteTranslations = this.deleteTranslations.bind(this);
+    this.editTranslation = this.editTranslation.bind(this);
   }
 
   async getTranslations(req: Request, res: Response) {
@@ -47,5 +56,17 @@ export class TranslationController {
         .map((key) => this.translationService.deleteTranslation(group, key))
     );
     res.status(StatusCodes.NO_CONTENT).send();
+  }
+
+  async editTranslation(req: Request, res: Response) {
+    const body: EditTranslationBody = req.body;
+    const { group, key } = req.params;
+    const result = await this.translationService.editTranslation(
+      group,
+      key,
+      body
+    );
+    res.status(StatusCodes.OK).send();
+    return result;
   }
 }
