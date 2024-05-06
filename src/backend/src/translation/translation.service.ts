@@ -1,9 +1,15 @@
 import { Service } from "typedi";
-import { TranslationRepository } from "./translation.repository";
+import {
+  Config,
+  TranslationData,
+  TranslationRepository,
+} from "./translation.repository";
 
-type TranslationData = {
-  [key: string]: {
-    [subKey: string]: string;
+type GroupedTranslations = {
+  [group: string]: {
+    [key: string]: {
+      [language: string]: string;
+    };
   };
 };
 
@@ -11,26 +17,35 @@ type TranslationData = {
 export class TranslationService {
   constructor(private readonly translationRepository: TranslationRepository) {}
 
-  async getTranslations() {
+  async getTranslations(): Promise<{ keys: GroupedTranslations }> {
+    const config = await this.translationRepository.getConfig();
     const rawTranslations = await this.translationRepository.getTranslations();
 
-    const transformTranslations = (data: TranslationData) => {
-      const result: { [group: string]: { [key: string]: any } } = {};
-      Object.keys(data).forEach((language) => {
-        Object.keys(data[language]).forEach((key) => {
-          const group = key.split(".")[1];
-          const property = key.split(".")[2];
+    const transformTranslations = (
+      data: TranslationData,
+      config: Config
+    ): GroupedTranslations => {
+      const { groups, languages } = config;
+      const result: GroupedTranslations = {};
 
-          if (!result[group]) result[group] = {};
-          if (!result[group][property]) result[group][property] = {};
+      languages.forEach((language) => {
+        Object.entries(data[language]).forEach(([key, value]) => {
+          const parts = key.split(".");
+          const group = parts[1];
+          const property = parts[2];
 
-          result[group][property][language] = data[language][key];
+          if (groups.includes(group)) {
+            if (!result[group]) result[group] = {};
+            if (!result[group][property]) result[group][property] = {};
+            result[group][property][language] = value;
+          }
         });
       });
+
       return result;
     };
 
-    const i18n = transformTranslations(rawTranslations);
+    const i18n = transformTranslations(rawTranslations, config);
 
     return { keys: i18n };
   }

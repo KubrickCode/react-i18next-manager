@@ -17,6 +17,7 @@ export class TranslationController {
   }
 
   async addTranslation(req: Request, res: Response) {
+    console.log("body", req.body);
     const translation = req.body.translation;
     const result = await this.translationService.addTranslation(translation);
     res.status(StatusCodes.CREATED).send();
