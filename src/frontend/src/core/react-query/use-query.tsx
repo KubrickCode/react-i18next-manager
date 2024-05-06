@@ -1,4 +1,4 @@
-import { useQuery as useReactQuery } from "@tanstack/react-query";
+import { useQuery as useTanstackQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const host = window.location.origin + "/api";
@@ -26,7 +26,7 @@ export const useQuery = (link: string, key: string, queryOptions?: object) => {
     return response.data;
   };
 
-  return useReactQuery({
+  return useTanstackQuery({
     queryKey: [key, host + link],
     queryFn,
     retry: false,
