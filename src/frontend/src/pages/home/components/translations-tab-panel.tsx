@@ -28,6 +28,17 @@ type TranslationsTabPanelProps = {
   group: string;
 };
 
+type AddTranslationBody = {
+  group: string;
+  data: {
+    key: string;
+    translations: {
+      language: string;
+      value: string;
+    }[];
+  };
+};
+
 export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
   const getLanguagesResult = useQuery<string[]>(
     "/config/languages",
@@ -38,6 +49,14 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
     `getTranslations-${group}`
   );
   const [isAddingMode, setIsAddingMode] = useState(false);
+  const [addTranslationBody, setAddTranslationBody] =
+    useState<AddTranslationBody>({
+      group,
+      data: {
+        key: "",
+        translations: [],
+      },
+    });
   const { mutate } = useMutation();
 
   if (!getLanguagesResult.data || !getTranslationsResult.data)
@@ -75,12 +94,10 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                   mutate({
                     link: "/translations",
                     method: "post",
-                    body: {
-                      group,
-                      translation: "new translation",
-                    },
+                    body: addTranslationBody,
                   });
                   setIsAddingMode(false);
+                  getTranslationsResult.refetch();
                 }}
               >
                 Save
@@ -105,12 +122,42 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
           isAddingMode
             ? [
                 {
-                  key: <Input placeholder="Enter key" />,
+                  key: (
+                    <Input
+                      placeholder="Enter key"
+                      onChange={(e) => {
+                        setAddTranslationBody({
+                          ...addTranslationBody,
+                          data: {
+                            ...addTranslationBody.data,
+                            key: e.target.value,
+                          },
+                        });
+                      }}
+                    />
+                  ),
                   ...languages.reduce(
                     (acc, lang) => ({
                       ...acc,
                       [lang]: (
-                        <Input placeholder={`Enter ${lang} translation`} />
+                        <Input
+                          placeholder={`Enter ${lang} translation`}
+                          onChange={(e) => {
+                            setAddTranslationBody({
+                              ...addTranslationBody,
+                              data: {
+                                ...addTranslationBody.data,
+                                translations: [
+                                  ...addTranslationBody.data.translations,
+                                  {
+                                    language: lang,
+                                    value: e.target.value,
+                                  },
+                                ],
+                              },
+                            });
+                          }}
+                        />
                       ),
                     }),
                     {}
