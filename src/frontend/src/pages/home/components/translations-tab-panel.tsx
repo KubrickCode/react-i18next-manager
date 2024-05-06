@@ -122,7 +122,9 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                 ...value,
               }))
         }
+        enableMultiSort={false}
         isSelectable
+        isSortable
       />
     </TabPanel>
   );
