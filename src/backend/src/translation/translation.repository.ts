@@ -1,26 +1,15 @@
 import { DBService } from "../db/db.service";
 import { Service } from "typedi";
 
-export type TranslationData = {
-  [language: string]: {
-    [key: string]: string;
-  };
-};
-
-export type Config = {
-  groups: string[];
-  languages: string[];
-};
-
 @Service()
 export class TranslationRepository {
   constructor(private readonly dbService: DBService) {}
 
-  async getConfig(): Promise<Config> {
-    return this.dbService.getConfig();
+  async getLanguages() {
+    return this.dbService.getLanguages();
   }
 
-  async getTranslations(): Promise<TranslationData> {
+  async getTranslations() {
     return this.dbService.getTranslations();
   }
 

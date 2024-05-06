@@ -2,10 +2,24 @@ import { Service } from "typedi";
 import fs from "fs";
 import path from "path";
 
+export type TranslationData = {
+  [language: string]: {
+    [key: string]: string;
+  };
+};
+
+export type Config = {
+  groups: string[];
+  languages: string[];
+};
+
 @Service()
 export class DBService {
-  private config: any;
-  private data: any;
+  private config: Config = {
+    groups: [],
+    languages: [],
+  };
+  private data: TranslationData = {};
 
   constructor() {
     this.loadConfig();
@@ -24,8 +38,12 @@ export class DBService {
     this.data = JSON.parse(fileContent);
   }
 
-  public getConfig() {
-    return this.config;
+  public getGroups() {
+    return this.config.groups;
+  }
+
+  public getLanguages() {
+    return this.config.languages;
   }
 
   public getTranslations() {

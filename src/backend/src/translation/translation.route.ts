@@ -12,7 +12,10 @@ export class TranslationRouter {
   }
 
   private initRoutes(): void {
-    this.router.get("/", Container.get(TranslationController).getTranslations);
+    this.router.get(
+      "/:group",
+      Container.get(TranslationController).getTranslations
+    );
     this.router.post("/", Container.get(TranslationController).addTranslation);
   }
 }

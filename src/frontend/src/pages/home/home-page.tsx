@@ -1,135 +1,30 @@
-import { ButtonGroup, IconButton, Input } from "@chakra-ui/react";
-import { ReactNode, useState } from "react";
-import { IoMdRefresh } from "react-icons/io";
-
-import { Button } from "@core/button";
-import { DataTable } from "@core/data-table";
 import { Page } from "@core/page";
-import { useMutation, useQuery } from "@core/tanstack-react-query";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@core/tab";
-
-type TranslationMap = {
-  [key in string]: string;
-};
-
-type TranslationKeys = {
-  [key: string]: TranslationMap;
-};
-
-type I18nStructure = {
-  keys: {
-    [group: string]: TranslationKeys;
-  };
-};
-
-type TableData = {
-  key: string | ReactNode;
-  [language: string]: string | ReactNode;
-};
+import { useQuery } from "@core/tanstack-react-query";
+import { Tab, TabList, TabPanels, Tabs } from "@core/tab";
+import { TranslationsTabPanel } from "./components/translations-tab-panel";
 
 export const HomePage = () => {
-  const { data, error, isLoading, refetch } = useQuery(
-    "/translations",
-    "getTranslations"
-  );
-  const { mutate } = useMutation();
+  const {
+    data: groups,
+    error,
+    isLoading,
+  } = useQuery<string[]>("/config/groups", "getGroups");
 
-  const [isAddingMode, setIsAddingMode] = useState(false);
-
-  if (!data) return <>ERROR</>;
+  if (!groups) return <>ERROR</>;
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;
 
-  const { keys } = data as I18nStructure;
-
-  const languages = Object.keys(Object.values(Object.values(keys)[0])[0]);
-
   return (
     <Page>
-      <Tabs>
+      <Tabs onChange={(idx) => console.log(idx)} isLazy>
         <TabList>
-          {Object.keys(keys).map((group, idx) => (
+          {groups.map((group, idx) => (
             <Tab key={idx}>{group}</Tab>
           ))}
         </TabList>
         <TabPanels>
-          {Object.entries(keys).map(([group, key], idx) => (
-            <TabPanel key={idx}>
-              <ButtonGroup size="sm">
-                <IconButton
-                  aria-label="refresh"
-                  icon={<IoMdRefresh />}
-                  marginBottom={3}
-                  onClick={() => refetch()}
-                />
-                {!isAddingMode ? (
-                  <Button onClick={() => setIsAddingMode(true)}>
-                    Add Resource
-                  </Button>
-                ) : (
-                  <>
-                    <Button onClick={() => setIsAddingMode(false)}>
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        mutate({
-                          link: "/translations",
-                          method: "post",
-                          body: {
-                            group,
-                            translation: "new translation",
-                          },
-                        });
-                        setIsAddingMode(false);
-                      }}
-                    >
-                      Save
-                    </Button>
-                  </>
-                )}
-              </ButtonGroup>
-              <DataTable<TableData>
-                columns={[
-                  {
-                    accessorKey: "key",
-                    header: "KEY",
-                  },
-                  ...languages.map((lang) => ({
-                    accessorKey: lang,
-                    header: lang.toUpperCase(),
-                  })),
-                ]}
-                data={
-                  isAddingMode
-                    ? [
-                        {
-                          key: <Input placeholder="Enter key" />,
-                          ...languages.reduce(
-                            (acc, lang) => ({
-                              ...acc,
-                              [lang]: (
-                                <Input
-                                  placeholder={`Enter ${lang} translation`}
-                                />
-                              ),
-                            }),
-                            {}
-                          ),
-                        },
-                        ...Object.entries(key).map(([key, value]) => ({
-                          key,
-                          ...value,
-                        })),
-                      ]
-                    : Object.entries(key).map(([key, value]) => ({
-                        key,
-                        ...value,
-                      }))
-                }
-                isSelectable
-              />
-            </TabPanel>
+          {groups.map((group, idx) => (
+            <TranslationsTabPanel key={idx} group={group} />
           ))}
         </TabPanels>
       </Tabs>

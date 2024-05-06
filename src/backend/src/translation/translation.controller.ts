@@ -11,7 +11,8 @@ export class TranslationController {
   }
 
   async getTranslations(req: Request, res: Response) {
-    const result = await this.translationService.getTranslations();
+    const { group } = req.params;
+    const result = await this.translationService.getTranslations(group);
     res.status(StatusCodes.OK).send(result);
     return result;
   }

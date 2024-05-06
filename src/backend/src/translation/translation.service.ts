@@ -1,15 +1,10 @@
 import { Service } from "typedi";
-import {
-  Config,
-  TranslationData,
-  TranslationRepository,
-} from "./translation.repository";
+import { TranslationRepository } from "./translation.repository";
+import { TranslationData } from "../db/db.service";
 
-type GroupedTranslations = {
-  [group: string]: {
-    [key: string]: {
-      [language: string]: string;
-    };
+type Translations = {
+  [key: string]: {
+    [language: string]: string;
   };
 };
 
@@ -17,27 +12,24 @@ type GroupedTranslations = {
 export class TranslationService {
   constructor(private readonly translationRepository: TranslationRepository) {}
 
-  async getTranslations(): Promise<{ keys: GroupedTranslations }> {
-    const config = await this.translationRepository.getConfig();
+  async getTranslations(group: string): Promise<{ keys: Translations }> {
+    const languages = await this.translationRepository.getLanguages();
     const rawTranslations = await this.translationRepository.getTranslations();
 
     const transformTranslations = (
       data: TranslationData,
-      config: Config
-    ): GroupedTranslations => {
-      const { groups, languages } = config;
-      const result: GroupedTranslations = {};
+      languages: string[]
+    ): Translations => {
+      const result: Translations = {};
 
       languages.forEach((language) => {
         Object.entries(data[language]).forEach(([key, value]) => {
-          const parts = key.split(".");
-          const group = parts[1];
-          const property = parts[2];
-
-          if (groups.includes(group)) {
-            if (!result[group]) result[group] = {};
-            if (!result[group][property]) result[group][property] = {};
-            result[group][property][language] = value;
+          const [_, grp, property] = key.split(".");
+          if (grp === group) {
+            if (!result[property]) {
+              result[property] = {};
+            }
+            result[property][language] = value;
           }
         });
       });
@@ -45,7 +37,7 @@ export class TranslationService {
       return result;
     };
 
-    const i18n = transformTranslations(rawTranslations, config);
+    const i18n = transformTranslations(rawTranslations, languages);
 
     return { keys: i18n };
   }
