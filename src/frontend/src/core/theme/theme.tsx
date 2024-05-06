@@ -16,7 +16,7 @@ const theme = {
 const saasTheme = extendTheme({ colors }, baseTheme);
 
 export const chakraThemeConfig: ChakraThemeConfig = {
-  initialColorMode: "light",
+  initialColorMode: "dark",
   useSystemColorMode: false,
 };
 
