@@ -1,24 +1,8 @@
 import { useQuery as useTanstackQuery } from "@tanstack/react-query";
-import axios from "axios";
 
-const host = window.location.origin + "/api";
+import { api } from "@core/axios";
+
 const QUERY_STALE_TIME = 1000 * 60 * 5;
-
-export type MethodType = "post" | "patch" | "put" | "delete";
-
-const api = axios.create({
-  baseURL: host,
-  withCredentials: true,
-});
-
-api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    throw error;
-  }
-);
 
 export const useQuery = (link: string, key: string, queryOptions?: object) => {
   const queryFn = async () => {
@@ -27,7 +11,7 @@ export const useQuery = (link: string, key: string, queryOptions?: object) => {
   };
 
   return useTanstackQuery({
-    queryKey: [key, host + link],
+    queryKey: [key],
     queryFn,
     retry: false,
     staleTime: QUERY_STALE_TIME,
