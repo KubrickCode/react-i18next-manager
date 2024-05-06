@@ -20,7 +20,7 @@ export class DBService {
     languages: [],
   };
   private data: TranslationData = {};
-  private filePath = path.join(__dirname, "../../sample/i18n.json");
+  private filePath = path.join(__dirname, "./sample/i18n.json");
 
   constructor() {
     this.loadConfig();
@@ -28,7 +28,7 @@ export class DBService {
   }
 
   private loadConfig() {
-    const configPath = path.join(__dirname, "../../sample/config.json");
+    const configPath = path.join(__dirname, "./sample/config.json");
     const configFile = fs.readFileSync(configPath, "utf8");
     this.config = JSON.parse(configFile);
   }
