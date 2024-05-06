@@ -51,6 +51,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
       key: "",
       translations: [],
     });
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const { mutate } = useMutation();
 
   if (!getLanguagesResult.data || !getTranslationsResult.data)
@@ -97,6 +98,20 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                 Save
               </Button>
             </>
+          )}
+          {selectedKeys.length > 0 && (
+            <Button
+              onClick={() => {
+                mutate({
+                  link: `/translations/${group}/${selectedKeys.join(",")}`,
+                  method: "delete",
+                });
+                setSelectedKeys([]);
+                getTranslationsResult.refetch();
+              }}
+            >
+              Delete
+            </Button>
           )}
         </ButtonGroup>
         <SearchInput size="sm" width="auto" />
@@ -166,6 +181,16 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
         enableMultiSort={false}
         isSelectable
         isSortable
+        onSelectedRowsChange={(selected) => {
+          const newSelectedKeys = selected.map(
+            (index) => Object.keys(translations.keys)[Number(index)]
+          );
+          if (
+            JSON.stringify(newSelectedKeys) !== JSON.stringify(selectedKeys)
+          ) {
+            setSelectedKeys(newSelectedKeys);
+          }
+        }}
       />
     </TabPanel>
   );

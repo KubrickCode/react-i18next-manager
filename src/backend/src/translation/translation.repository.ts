@@ -20,4 +20,8 @@ export class TranslationRepository {
   ) {
     this.dbService.addTranslation(group, key, translations);
   }
+
+  async deleteTranslation(group: string, key: string) {
+    this.dbService.deleteTranslation(group, key);
+  }
 }

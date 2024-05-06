@@ -83,4 +83,14 @@ export class DBService {
     });
     this.saveData();
   }
+
+  public deleteTranslation(group: string, key: string) {
+    const fullKey = `ui.${group}.${key}`;
+    this.config.languages.forEach((language) => {
+      if (this.data[language] && this.data[language][fullKey]) {
+        delete this.data[language][fullKey];
+      }
+    });
+    this.saveData();
+  }
 }

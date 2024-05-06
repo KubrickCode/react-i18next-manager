@@ -20,5 +20,9 @@ export class TranslationRouter {
       "/:group",
       Container.get(TranslationController).addTranslation
     );
+    this.router.delete(
+      "/:group/:keys",
+      Container.get(TranslationController).deleteTranslations
+    );
   }
 }

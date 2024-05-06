@@ -68,4 +68,8 @@ export class TranslationService {
     const { key, translations } = data;
     await this.translationRepository.addTranslation(group, key, translations);
   }
+
+  async deleteTranslation(group: string, key: string) {
+    await this.translationRepository.deleteTranslation(group, key);
+  }
 }

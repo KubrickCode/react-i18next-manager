@@ -16,6 +16,7 @@ export class TranslationController {
   constructor(private readonly translationService: TranslationService) {
     this.getTranslations = this.getTranslations.bind(this);
     this.addTranslation = this.addTranslation.bind(this);
+    this.deleteTranslations = this.deleteTranslations.bind(this);
   }
 
   async getTranslations(req: Request, res: Response) {
@@ -36,5 +37,15 @@ export class TranslationController {
     const result = await this.translationService.addTranslation(group, body);
     res.status(StatusCodes.CREATED).send();
     return result;
+  }
+
+  async deleteTranslations(req: Request, res: Response) {
+    const { group, keys } = req.params;
+    Promise.all(
+      keys
+        .split(",")
+        .map((key) => this.translationService.deleteTranslation(group, key))
+    );
+    res.status(StatusCodes.NO_CONTENT).send();
   }
 }
