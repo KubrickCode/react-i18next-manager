@@ -5,7 +5,11 @@ import {
   type ThemeConfig as ChakraThemeConfig,
 } from "@chakra-ui/react";
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
-import { SaasProvider, theme as baseTheme } from "@saas-ui/react";
+import {
+  ModalsProvider,
+  SaasProvider,
+  theme as baseTheme,
+} from "@saas-ui/react";
 
 import { colors } from "./colors";
 
@@ -43,8 +47,10 @@ const chakraTheme = extendTheme({
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => (
   <SaasProvider theme={saasTheme}>
-    <EmotionThemeProvider theme={theme}>
-      <ChakraProvider theme={chakraTheme}>{children}</ChakraProvider>
-    </EmotionThemeProvider>
+    <ModalsProvider>
+      <EmotionThemeProvider theme={theme}>
+        <ChakraProvider theme={chakraTheme}>{children}</ChakraProvider>
+      </EmotionThemeProvider>
+    </ModalsProvider>
   </SaasProvider>
 );

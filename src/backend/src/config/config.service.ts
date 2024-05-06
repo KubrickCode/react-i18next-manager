@@ -12,4 +12,8 @@ export class ConfigService {
   async getLanguages() {
     return this.configRepository.getLanguages();
   }
+
+  async editGroups(body: { prevName: string; newName?: string }[]) {
+    return this.configRepository.editGroups(body);
+  }
 }

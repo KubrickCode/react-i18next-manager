@@ -21,6 +21,7 @@ export class DBService {
   };
   private data: TranslationData = {};
   private filePath = path.join(__dirname, "./sample/i18n.json");
+  private configPath = path.join(__dirname, "./sample/config.json");
 
   constructor() {
     this.loadConfig();
@@ -28,8 +29,7 @@ export class DBService {
   }
 
   private loadConfig() {
-    const configPath = path.join(__dirname, "./sample/config.json");
-    const configFile = fs.readFileSync(configPath, "utf8");
+    const configFile = fs.readFileSync(this.configPath, "utf8");
     this.config = JSON.parse(configFile);
   }
 
@@ -92,5 +92,13 @@ export class DBService {
       }
     });
     this.saveData();
+  }
+
+  public saveGroups(groups: string[]): Promise<void> {
+    this.config.groups = groups;
+
+    const data = JSON.stringify(this.config, null, 2);
+    fs.writeFileSync(this.configPath, data);
+    return Promise.resolve();
   }
 }
