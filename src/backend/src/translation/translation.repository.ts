@@ -13,7 +13,11 @@ export class TranslationRepository {
     return this.dbService.getTranslations();
   }
 
-  async addTranslation(translation: string) {
-    console.log("Adding translation: ", translation);
+  async addTranslation(
+    group: string,
+    key: string,
+    translations: Array<{ language: string; value: string }>
+  ) {
+    this.dbService.addTranslation(group, key, translations);
   }
 }

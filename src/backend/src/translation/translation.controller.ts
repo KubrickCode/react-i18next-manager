@@ -3,6 +3,17 @@ import { TranslationService } from "./translation.service";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
+export type AddTranslationBody = {
+  group: string;
+  data: {
+    key: string;
+    translations: {
+      language: string;
+      value: string;
+    }[];
+  };
+};
+
 @Service()
 export class TranslationController {
   constructor(private readonly translationService: TranslationService) {
@@ -23,9 +34,8 @@ export class TranslationController {
   }
 
   async addTranslation(req: Request, res: Response) {
-    console.log("body", req.body);
-    const translation = req.body.translation;
-    const result = await this.translationService.addTranslation(translation);
+    const body: AddTranslationBody = req.body;
+    const result = await this.translationService.addTranslation(body);
     res.status(StatusCodes.CREATED).send();
     return result;
   }

@@ -1,6 +1,7 @@
 import { Service } from "typedi";
 import { TranslationRepository } from "./translation.repository";
 import { TranslationData } from "../db/db.service";
+import { AddTranslationBody } from "./translation.controller";
 
 type Translations = {
   [key: string]: {
@@ -63,7 +64,9 @@ export class TranslationService {
     return { keys: i18n, count, hasPrevPage, hasNextPage };
   }
 
-  async addTranslation(translation: string) {
-    return this.translationRepository.addTranslation(translation);
+  async addTranslation(body: AddTranslationBody) {
+    const { group, data } = body;
+    const { key, translations } = data;
+    await this.translationRepository.addTranslation(group, key, translations);
   }
 }
