@@ -4,14 +4,11 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 export type AddTranslationBody = {
-  group: string;
-  data: {
-    key: string;
-    translations: {
-      language: string;
-      value: string;
-    }[];
-  };
+  key: string;
+  translations: {
+    language: string;
+    value: string;
+  }[];
 };
 
 @Service()
@@ -35,7 +32,8 @@ export class TranslationController {
 
   async addTranslation(req: Request, res: Response) {
     const body: AddTranslationBody = req.body;
-    const result = await this.translationService.addTranslation(body);
+    const { group } = req.params;
+    const result = await this.translationService.addTranslation(group, body);
     res.status(StatusCodes.CREATED).send();
     return result;
   }

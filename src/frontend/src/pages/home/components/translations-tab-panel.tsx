@@ -29,14 +29,11 @@ type TranslationsTabPanelProps = {
 };
 
 type AddTranslationBody = {
-  group: string;
-  data: {
-    key: string;
-    translations: {
-      language: string;
-      value: string;
-    }[];
-  };
+  key: string;
+  translations: {
+    language: string;
+    value: string;
+  }[];
 };
 
 export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
@@ -51,11 +48,8 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
   const [isAddingMode, setIsAddingMode] = useState(false);
   const [addTranslationBody, setAddTranslationBody] =
     useState<AddTranslationBody>({
-      group,
-      data: {
-        key: "",
-        translations: [],
-      },
+      key: "",
+      translations: [],
     });
   const { mutate } = useMutation();
 
@@ -92,7 +86,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
               <Button
                 onClick={() => {
                   mutate({
-                    link: "/translations",
+                    link: `/translations/${group}`,
                     method: "post",
                     body: addTranslationBody,
                   });
@@ -128,10 +122,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                       onChange={(e) => {
                         setAddTranslationBody({
                           ...addTranslationBody,
-                          data: {
-                            ...addTranslationBody.data,
-                            key: e.target.value,
-                          },
+                          key: e.target.value,
                         });
                       }}
                     />
@@ -145,16 +136,15 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                           onChange={(e) => {
                             setAddTranslationBody({
                               ...addTranslationBody,
-                              data: {
-                                ...addTranslationBody.data,
-                                translations: [
-                                  ...addTranslationBody.data.translations,
-                                  {
-                                    language: lang,
-                                    value: e.target.value,
-                                  },
-                                ],
-                              },
+                              translations: [
+                                ...addTranslationBody.translations.filter(
+                                  (t) => t.language !== lang
+                                ),
+                                {
+                                  language: lang,
+                                  value: e.target.value,
+                                },
+                              ],
                             });
                           }}
                         />

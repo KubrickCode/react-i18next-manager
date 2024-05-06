@@ -16,6 +16,9 @@ export class TranslationRouter {
       "/:group",
       Container.get(TranslationController).getTranslations
     );
-    this.router.post("/", Container.get(TranslationController).addTranslation);
+    this.router.post(
+      "/:group",
+      Container.get(TranslationController).addTranslation
+    );
   }
 }

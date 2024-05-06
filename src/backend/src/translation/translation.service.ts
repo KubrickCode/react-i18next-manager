@@ -64,8 +64,7 @@ export class TranslationService {
     return { keys: i18n, count, hasPrevPage, hasNextPage };
   }
 
-  async addTranslation(body: AddTranslationBody) {
-    const { group, data } = body;
+  async addTranslation(group: string, data: AddTranslationBody) {
     const { key, translations } = data;
     await this.translationRepository.addTranslation(group, key, translations);
   }
