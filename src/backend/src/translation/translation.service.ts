@@ -34,4 +34,8 @@ export class TranslationService {
 
     return { keys: i18n };
   }
+
+  async addTranslation(translation: string) {
+    return this.translationRepository.addTranslation(translation);
+  }
 }

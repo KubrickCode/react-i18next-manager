@@ -5,7 +5,7 @@ import { IoMdRefresh } from "react-icons/io";
 import { Button } from "@core/button";
 import { DataTable } from "@core/data-table";
 import { Page } from "@core/page";
-import { useQuery } from "@core/tanstack-react-query";
+import { useMutation, useQuery } from "@core/tanstack-react-query";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@core/tab";
 
 type TranslationMap = {
@@ -32,6 +32,14 @@ export const HomePage = () => {
     "/translations",
     "getTranslations"
   );
+  const { mutate } = useMutation({
+    link: "/translations",
+    method: "post",
+    body: {
+      translation: "new translation",
+    },
+  });
+
   const [isAddingMode, setIsAddingMode] = useState(false);
 
   if (!data) return <>ERROR</>;
@@ -69,7 +77,14 @@ export const HomePage = () => {
                     <Button onClick={() => setIsAddingMode(false)}>
                       Cancel
                     </Button>
-                    <Button onClick={() => setIsAddingMode(false)}>Save</Button>
+                    <Button
+                      onClick={() => {
+                        mutate();
+                        setIsAddingMode(false);
+                      }}
+                    >
+                      Save
+                    </Button>
                   </>
                 )}
               </ButtonGroup>

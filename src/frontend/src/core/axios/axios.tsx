@@ -1,6 +1,9 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 const API_HOST = window.location.origin + "/api";
+
+export type MethodType = "get" | "post" | "put" | "delete" | "patch";
+export type RequestConfig = AxiosRequestConfig;
 
 export const api = axios.create({
   baseURL: API_HOST,

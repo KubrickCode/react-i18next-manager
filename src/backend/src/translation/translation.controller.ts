@@ -7,11 +7,19 @@ import { StatusCodes } from "http-status-codes";
 export class TranslationController {
   constructor(private readonly translationService: TranslationService) {
     this.getTranslations = this.getTranslations.bind(this);
+    this.addTranslation = this.addTranslation.bind(this);
   }
 
   async getTranslations(req: Request, res: Response) {
     const result = await this.translationService.getTranslations();
     res.status(StatusCodes.OK).send(result);
+    return result;
+  }
+
+  async addTranslation(req: Request, res: Response) {
+    const translation = req.body.translation;
+    const result = await this.translationService.addTranslation(translation);
+    res.status(StatusCodes.CREATED).send();
     return result;
   }
 }

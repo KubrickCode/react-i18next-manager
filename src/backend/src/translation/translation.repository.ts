@@ -8,4 +8,8 @@ export class TranslationRepository {
   async getTranslations() {
     return this.dbService.getTranslations();
   }
+
+  async addTranslation(translation: string) {
+    console.log("Adding translation: ", translation);
+  }
 }
