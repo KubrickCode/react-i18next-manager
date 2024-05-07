@@ -1,6 +1,7 @@
 import { Page } from "~/core/page";
 import { useQuery } from "~/core/tanstack-react-query";
 import { Tab, TabList, TabPanels, Tabs } from "~/core/tab";
+
 import { TranslationsTabPanel } from "./components/translations-tab-panel";
 
 export const HomePage = () => {

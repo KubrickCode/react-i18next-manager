@@ -8,11 +8,11 @@ import {
 import { MdDarkMode, MdPeopleOutline } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import { useModals } from "@saas-ui/react";
+import { FaLanguage } from "react-icons/fa";
 
 import { Menu, MenuButton, MenuItem, MenuList } from "~/core/menu";
 
 import { ConfigManagementModalBody } from "./components/config-management-modal-body";
-import { FaLanguage } from "react-icons/fa";
 
 export const SettingButton = () => {
   const { toggleColorMode } = useColorMode();
