@@ -53,13 +53,12 @@ export const ConfigManagementModalBody = ({
   if (isLoading) return <>Loading...</>;
 
   return (
-    <VStack align="baseline">
+    <VStack align="baseline" color={fontColor}>
       {configs
         .filter((config) => config.prevName !== "")
         .map((config, idx) => (
           <Flex key={idx} gap={2} width="full">
             <Input
-              color={fontColor}
               value={config.newName}
               onChange={(e) => {
                 const newConfigs = [...configs];
@@ -72,9 +71,9 @@ export const ConfigManagementModalBody = ({
               icon={<FaTrash />}
               onClick={() => {
                 modals.confirm({
-                  title: <Text color={fontColor}>Delete Confirmation</Text>,
+                  title: <Text>Delete Confirmation</Text>,
                   body: (
-                    <Text color={fontColor}>
+                    <Text>
                       Are you sure you want to delete this{" "}
                       {configKind === "groups" ? "group" : "language"}?
                     </Text>
@@ -99,7 +98,6 @@ export const ConfigManagementModalBody = ({
         .map((config) => (
           <Flex key={config.id} gap={2} width="full">
             <Input
-              color={fontColor}
               value={config.newName}
               onChange={(e) => {
                 const newConfigs = [...configs];
