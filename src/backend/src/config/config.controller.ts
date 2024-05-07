@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ConfigService } from "./config.service";
 
-type EditGroupBody = {
+type EditConfigBody = {
   id?: number;
   prevName: string;
   newName?: string;
@@ -13,7 +13,7 @@ type EditGroupBody = {
 export class ConfigController {
   constructor(private readonly configService: ConfigService) {
     this.getConfig = this.getConfig.bind(this);
-    this.editGroups = this.editGroups.bind(this);
+    this.editConfig = this.editConfig.bind(this);
     this.deleteConfig = this.deleteConfig.bind(this);
   }
 
@@ -24,9 +24,10 @@ export class ConfigController {
     return result;
   }
 
-  async editGroups(req: Request, res: Response) {
-    const body: EditGroupBody = req.body;
-    const result = await this.configService.editGroups(body);
+  async editConfig(req: Request, res: Response) {
+    const { kind } = req.params;
+    const body: EditConfigBody = req.body;
+    const result = await this.configService.editConfig(kind, body);
     res.status(StatusCodes.OK).send(result);
     return result;
   }

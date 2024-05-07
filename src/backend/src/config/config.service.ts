@@ -30,6 +30,20 @@ export class ConfigService {
     return this.configRepository.editGroups(body);
   }
 
+  async editConfig(
+    kind: string,
+    body: { id?: number; prevName: string; newName?: string }[]
+  ) {
+    switch (kind) {
+      case "groups":
+        return await this.configRepository.editGroups(body);
+      case "languages":
+        return await this.configRepository.editLanguages(body);
+      default:
+        throw new Error("Invalid config kind");
+    }
+  }
+
   async deleteConfig(kind: string, name: string) {
     switch (kind) {
       case "groups":

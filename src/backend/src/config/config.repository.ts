@@ -37,6 +37,30 @@ export class ConfigRepository {
     return updatedGroups;
   }
 
+  async editLanguages(
+    body: { id?: number; prevName: string; newName?: string }[]
+  ) {
+    const languages = await this.dbService.getLanguages();
+
+    let updatedLanguages = [...languages];
+
+    body.forEach((item) => {
+      if (item.id !== undefined && item.newName) {
+        updatedLanguages.push(item.newName);
+      } else {
+        const index = updatedLanguages.findIndex(
+          (language) => language === item.prevName
+        );
+        if (index !== -1 && item.newName) {
+          updatedLanguages[index] = item.newName;
+        }
+      }
+    });
+
+    await this.dbService.saveLanguages(updatedLanguages);
+    return updatedLanguages;
+  }
+
   async deleteGroup(groupName: string) {
     const groups = this.dbService.getGroups();
     const updatedGroups = groups.filter((group) => group !== groupName);

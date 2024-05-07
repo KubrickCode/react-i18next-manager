@@ -13,7 +13,7 @@ export class ConfigRouter {
 
   private initRoutes(): void {
     this.router.get("/:kind", Container.get(ConfigController).getConfig);
-    this.router.put("/groups", Container.get(ConfigController).editGroups);
+    this.router.put("/:kind", Container.get(ConfigController).editConfig);
     this.router.delete(
       "/:kind/:name",
       Container.get(ConfigController).deleteConfig
