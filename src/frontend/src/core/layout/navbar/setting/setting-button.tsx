@@ -1,6 +1,7 @@
 import { IoIosSettings } from "react-icons/io";
 import {
   ButtonGroup,
+  Flex,
   IconButton,
   Input,
   Text,
@@ -16,6 +17,7 @@ import { useModals } from "@saas-ui/react";
 import { useMutation, useQuery } from "@core/tanstack-react-query";
 import { useEffect, useState } from "react";
 import { Button } from "@core/button";
+import { FaTrash } from "react-icons/fa";
 
 export const SettingButton = () => {
   const { toggleColorMode } = useColorMode();
@@ -93,18 +95,49 @@ const GroupManagementModalBody = ({ fontColor }: { fontColor: string }) => {
   return (
     <VStack align="baseline">
       {groups.map((group, idx) => (
-        <Input
-          key={idx}
-          color={fontColor}
-          value={group.newName}
-          onChange={(e) => {
-            const newGroups = [...groups];
-            newGroups[idx].newName = e.target.value;
-            setGroups(newGroups);
-          }}
-        />
+        <Flex gap={2} width="full">
+          <Input
+            key={idx}
+            color={fontColor}
+            value={group.newName}
+            onChange={(e) => {
+              const newGroups = [...groups];
+              newGroups[idx].newName = e.target.value;
+              setGroups(newGroups);
+            }}
+          />
+          <IconButton
+            aria-label="delete"
+            icon={<FaTrash />}
+            onClick={() => {
+              modals.confirm({
+                title: <Text color={fontColor}>Delete Confirmation</Text>,
+                body: (
+                  <Text color={fontColor}>
+                    Are you sure you want to delete this group?
+                  </Text>
+                ),
+                confirmProps: {
+                  colorScheme: "red",
+                  children: "Delete",
+                },
+                onConfirm: () => {
+                  mutate({
+                    link: `/config/groups/${group.prevName}`,
+                    method: "delete",
+                  });
+                },
+              });
+            }}
+          />
+        </Flex>
       ))}
-      <ButtonGroup display="flex" justifyContent="flex-end" width="full">
+      <ButtonGroup
+        display="flex"
+        justifyContent="flex-end"
+        marginTop={5}
+        width="full"
+      >
         <Button onClick={() => modals.closeAll()}>Close</Button>
         <Button
           colorScheme="primary"

@@ -16,4 +16,8 @@ export class ConfigService {
   async editGroups(body: { prevName: string; newName?: string }[]) {
     return this.configRepository.editGroups(body);
   }
+
+  async deleteGroup(groupName: string) {
+    return this.configRepository.deleteGroup(groupName);
+  }
 }

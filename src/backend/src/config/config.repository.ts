@@ -27,4 +27,10 @@ export class ConfigRepository {
     await this.dbService.saveGroups(updatedGroups);
     return updatedGroups;
   }
+
+  async deleteGroup(groupName: string) {
+    const groups = this.dbService.getGroups();
+    const updatedGroups = groups.filter((group) => group !== groupName);
+    await this.dbService.saveGroups(updatedGroups);
+  }
 }

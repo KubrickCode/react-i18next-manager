@@ -14,12 +14,20 @@ export class ConfigController {
     this.getGroups = this.getGroups.bind(this);
     this.getLanguages = this.getLanguages.bind(this);
     this.editGroups = this.editGroups.bind(this);
+    this.deleteGroup = this.deleteGroup.bind(this);
   }
 
   async editGroups(req: Request, res: Response) {
     const body: EditGroupBody = req.body;
     const result = await this.configService.editGroups(body);
     res.status(StatusCodes.OK).send(result);
+    return result;
+  }
+
+  async deleteGroup(req: Request, res: Response) {
+    const { groupName } = req.params;
+    const result = await this.configService.deleteGroup(groupName);
+    res.status(StatusCodes.NO_CONTENT).send(result);
     return result;
   }
 
