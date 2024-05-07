@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { ConfigService } from "./config.service";
 
 type EditGroupBody = {
+  id?: number;
   prevName: string;
   newName?: string;
 }[];
@@ -12,9 +13,10 @@ type EditGroupBody = {
 export class ConfigController {
   constructor(private readonly configService: ConfigService) {
     this.getGroups = this.getGroups.bind(this);
-    this.getLanguages = this.getLanguages.bind(this);
     this.editGroups = this.editGroups.bind(this);
     this.deleteGroup = this.deleteGroup.bind(this);
+
+    this.getLanguages = this.getLanguages.bind(this);
   }
 
   async editGroups(req: Request, res: Response) {

@@ -13,15 +13,24 @@ export class ConfigRepository {
     return this.dbService.getLanguages();
   }
 
-  async editGroups(body: { prevName: string; newName?: string }[]) {
-    const groups = this.dbService.getGroups();
+  async editGroups(
+    body: { id?: number; prevName: string; newName?: string }[]
+  ) {
+    const groups = await this.dbService.getGroups();
 
-    const updatedGroups = groups.map((group) => {
-      const found = body.find((item) => item.prevName === group);
-      if (found && found.newName) {
-        return found.newName;
+    let updatedGroups = [...groups];
+
+    body.forEach((item) => {
+      if (item.id !== undefined && item.newName) {
+        updatedGroups.push(item.newName);
+      } else {
+        const index = updatedGroups.findIndex(
+          (group) => group === item.prevName
+        );
+        if (index !== -1 && item.newName) {
+          updatedGroups[index] = item.newName;
+        }
       }
-      return group;
     });
 
     await this.dbService.saveGroups(updatedGroups);

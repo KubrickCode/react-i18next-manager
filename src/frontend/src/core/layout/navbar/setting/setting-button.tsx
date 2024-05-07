@@ -63,6 +63,7 @@ export const SettingButton = () => {
 };
 
 type Groups = {
+  id?: number;
   prevName: string;
   newName?: string;
 };
@@ -88,50 +89,97 @@ const GroupManagementModalBody = ({ fontColor }: { fontColor: string }) => {
     }
   }, [data]);
 
+  console.log(groups);
+
   if (!groups) return <>ERROR</>;
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;
 
   return (
     <VStack align="baseline">
-      {groups.map((group, idx) => (
-        <Flex gap={2} width="full">
-          <Input
-            key={idx}
-            color={fontColor}
-            value={group.newName}
-            onChange={(e) => {
-              const newGroups = [...groups];
-              newGroups[idx].newName = e.target.value;
-              setGroups(newGroups);
-            }}
-          />
-          <IconButton
-            aria-label="delete"
-            icon={<FaTrash />}
-            onClick={() => {
-              modals.confirm({
-                title: <Text color={fontColor}>Delete Confirmation</Text>,
-                body: (
-                  <Text color={fontColor}>
-                    Are you sure you want to delete this group?
-                  </Text>
-                ),
-                confirmProps: {
-                  colorScheme: "red",
-                  children: "Delete",
-                },
-                onConfirm: () => {
-                  mutate({
-                    link: `/config/groups/${group.prevName}`,
-                    method: "delete",
-                  });
-                },
-              });
-            }}
-          />
-        </Flex>
-      ))}
+      {groups
+        .filter((group) => group.prevName !== "")
+        .map((group, idx) => (
+          <Flex key={idx} gap={2} width="full">
+            <Input
+              color={fontColor}
+              value={group.newName}
+              onChange={(e) => {
+                const newGroups = [...groups];
+                newGroups[idx].newName = e.target.value;
+                setGroups(newGroups);
+              }}
+            />
+            <IconButton
+              aria-label="delete"
+              icon={<FaTrash />}
+              onClick={() => {
+                modals.confirm({
+                  title: <Text color={fontColor}>Delete Confirmation</Text>,
+                  body: (
+                    <Text color={fontColor}>
+                      Are you sure you want to delete this group?
+                    </Text>
+                  ),
+                  confirmProps: {
+                    colorScheme: "red",
+                    children: "Delete",
+                  },
+                  onConfirm: () => {
+                    mutate({
+                      link: `/config/groups/${group.prevName}`,
+                      method: "delete",
+                    });
+                  },
+                });
+              }}
+            />
+          </Flex>
+        ))}
+      {groups
+        .filter((group) => group.prevName === "")
+        .map((group) => (
+          <Flex key={group.id} gap={2} width="full">
+            <Input
+              color={fontColor}
+              value={group.newName}
+              onChange={(e) => {
+                const newGroups = [...groups];
+                const groupIndex = newGroups.findIndex(
+                  (g) => g.id === group.id
+                );
+                if (groupIndex !== -1) {
+                  newGroups[groupIndex].newName = e.target.value;
+                }
+                setGroups(newGroups);
+              }}
+            />
+            <IconButton
+              aria-label="delete"
+              icon={<FaTrash />}
+              onClick={() => {
+                const newGroups = groups.filter((g) => g.id !== group.id);
+                setGroups(newGroups);
+              }}
+            />
+          </Flex>
+        ))}
+      <Button
+        variant="outline"
+        width="full"
+        onClick={() => {
+          setGroups((prev) => [
+            ...prev,
+            {
+              id: prev.length,
+              prevName: "",
+              newName: "",
+            },
+          ]);
+        }}
+      >
+        +
+      </Button>
       <ButtonGroup
         display="flex"
         justifyContent="flex-end"
