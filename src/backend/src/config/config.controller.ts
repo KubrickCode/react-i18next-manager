@@ -12,11 +12,16 @@ type EditGroupBody = {
 @Service()
 export class ConfigController {
   constructor(private readonly configService: ConfigService) {
-    this.getGroups = this.getGroups.bind(this);
+    this.getConfig = this.getConfig.bind(this);
     this.editGroups = this.editGroups.bind(this);
     this.deleteGroup = this.deleteGroup.bind(this);
+  }
 
-    this.getLanguages = this.getLanguages.bind(this);
+  async getConfig(req: Request, res: Response) {
+    const { kind } = req.params;
+    const result = await this.configService.getConfig(kind);
+    res.status(StatusCodes.OK).send(result);
+    return result;
   }
 
   async editGroups(req: Request, res: Response) {
@@ -30,18 +35,6 @@ export class ConfigController {
     const { groupName } = req.params;
     const result = await this.configService.deleteGroup(groupName);
     res.status(StatusCodes.NO_CONTENT).send(result);
-    return result;
-  }
-
-  async getGroups(req: Request, res: Response) {
-    const result = await this.configService.getGroups();
-    res.status(StatusCodes.OK).send(result);
-    return result;
-  }
-
-  async getLanguages(req: Request, res: Response) {
-    const result = await this.configService.getLanguages();
-    res.status(StatusCodes.OK).send(result);
     return result;
   }
 }

@@ -5,6 +5,17 @@ import { ConfigRepository } from "./config.repository";
 export class ConfigService {
   constructor(private readonly configRepository: ConfigRepository) {}
 
+  async getConfig(kind: string) {
+    switch (kind) {
+      case "groups":
+        return this.configRepository.getGroups();
+      case "languages":
+        return this.configRepository.getLanguages();
+      default:
+        throw new Error("Invalid config kind");
+    }
+  }
+
   async getGroups() {
     return this.configRepository.getGroups();
   }
