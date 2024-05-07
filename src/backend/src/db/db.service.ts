@@ -101,4 +101,12 @@ export class DBService {
     fs.writeFileSync(this.configPath, data);
     return Promise.resolve();
   }
+
+  public saveLanguages(languages: string[]): Promise<void> {
+    this.config.languages = languages;
+
+    const data = JSON.stringify(this.config, null, 2);
+    fs.writeFileSync(this.configPath, data);
+    return Promise.resolve();
+  }
 }

@@ -15,8 +15,8 @@ export class ConfigRouter {
     this.router.get("/:kind", Container.get(ConfigController).getConfig);
     this.router.put("/groups", Container.get(ConfigController).editGroups);
     this.router.delete(
-      "/groups/:groupName",
-      Container.get(ConfigController).deleteGroup
+      "/:kind/:name",
+      Container.get(ConfigController).deleteConfig
     );
   }
 }

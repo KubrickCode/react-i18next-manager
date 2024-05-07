@@ -14,7 +14,7 @@ export class ConfigController {
   constructor(private readonly configService: ConfigService) {
     this.getConfig = this.getConfig.bind(this);
     this.editGroups = this.editGroups.bind(this);
-    this.deleteGroup = this.deleteGroup.bind(this);
+    this.deleteConfig = this.deleteConfig.bind(this);
   }
 
   async getConfig(req: Request, res: Response) {
@@ -31,9 +31,9 @@ export class ConfigController {
     return result;
   }
 
-  async deleteGroup(req: Request, res: Response) {
-    const { groupName } = req.params;
-    const result = await this.configService.deleteGroup(groupName);
+  async deleteConfig(req: Request, res: Response) {
+    const { kind, name } = req.params;
+    const result = await this.configService.deleteConfig(kind, name);
     res.status(StatusCodes.NO_CONTENT).send(result);
     return result;
   }

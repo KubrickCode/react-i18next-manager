@@ -42,4 +42,12 @@ export class ConfigRepository {
     const updatedGroups = groups.filter((group) => group !== groupName);
     await this.dbService.saveGroups(updatedGroups);
   }
+
+  async deleteLanguage(languageName: string) {
+    const languages = this.dbService.getLanguages();
+    const updatedLanguages = languages.filter(
+      (language) => language !== languageName
+    );
+    await this.dbService.saveLanguages(updatedLanguages);
+  }
 }
