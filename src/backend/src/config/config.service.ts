@@ -16,20 +16,6 @@ export class ConfigService {
     }
   }
 
-  async getGroups() {
-    return this.configRepository.getGroups();
-  }
-
-  async getLanguages() {
-    return this.configRepository.getLanguages();
-  }
-
-  async editGroups(
-    body: { id?: number; prevName: string; newName?: string }[]
-  ) {
-    return this.configRepository.editGroups(body);
-  }
-
   async editConfig(
     kind: string,
     body: { id?: number; prevName: string; newName?: string }[]
