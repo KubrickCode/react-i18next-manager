@@ -5,13 +5,14 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { MdDarkMode } from "react-icons/md";
+import { MdDarkMode, MdPeopleOutline } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import { useModals } from "@saas-ui/react";
 
 import { Menu, MenuButton, MenuItem, MenuList } from "@core/menu";
 
 import { ConfigManagementModalBody } from "./components/config-management-modal-body";
+import { FaLanguage } from "react-icons/fa";
 
 export const SettingButton = () => {
   const { toggleColorMode } = useColorMode();
@@ -42,6 +43,7 @@ export const SettingButton = () => {
           <Text>{darkModeLabel}</Text>
         </MenuItem>
         <MenuItem
+          icon={<MdPeopleOutline />}
           onClick={() =>
             modals.open({
               title: <Text color={fontColor}>Group Management</Text>,
@@ -52,6 +54,7 @@ export const SettingButton = () => {
           Group Management
         </MenuItem>
         <MenuItem
+          icon={<FaLanguage />}
           onClick={() =>
             modals.open({
               title: <Text color={fontColor}>Language Management</Text>,
