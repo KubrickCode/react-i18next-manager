@@ -16,7 +16,7 @@ export const HomePage = () => {
 
   return (
     <Page>
-      <Tabs onChange={(idx) => console.log(idx)} isLazy>
+      <Tabs isLazy>
         <TabList>
           {groups.map((group, idx) => (
             <Tab key={idx}>{group}</Tab>
