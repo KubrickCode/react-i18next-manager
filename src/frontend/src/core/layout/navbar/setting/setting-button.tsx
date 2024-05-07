@@ -51,6 +51,16 @@ export const SettingButton = () => {
         >
           Group Management
         </MenuItem>
+        <MenuItem
+          onClick={() =>
+            modals.open({
+              title: <Text color={fontColor}>Language Management</Text>,
+              body: <ConfigManagementModalBody configKind="languages" />,
+            })
+          }
+        >
+          Language Management
+        </MenuItem>
       </MenuList>
     </Menu>
   );

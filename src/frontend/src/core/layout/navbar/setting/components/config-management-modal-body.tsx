@@ -14,14 +14,14 @@ import { FaTrash } from "react-icons/fa";
 import { Button } from "@core/button";
 import { useMutation, useQuery } from "@core/tanstack-react-query";
 
-type Group = {
+type Config = {
   id?: number;
   prevName: string;
   newName?: string;
 };
 
 type ConfigManagementModalBodyProps = {
-  configKind: string;
+  configKind: "groups" | "languages";
 };
 
 export const ConfigManagementModalBody = ({
@@ -36,35 +36,35 @@ export const ConfigManagementModalBody = ({
   const { mutate } = useMutation({
     refetchQueryKey: [`get${configKind.toUpperCase()}InModal`],
   });
-  const [groups, setGroups] = useState<Group[]>([]);
+  const [configs, setConfigs] = useState<Config[]>([]);
 
   useEffect(() => {
     if (data) {
-      const newGroups = data.map((group) => ({
-        prevName: group,
-        newName: group,
+      const newConfigs = data.map((config) => ({
+        prevName: config,
+        newName: config,
       }));
-      setGroups(newGroups);
+      setConfigs(newConfigs);
     }
   }, [data]);
 
-  if (!groups) return <>ERROR</>;
+  if (!configs) return <>ERROR</>;
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;
 
   return (
     <VStack align="baseline">
-      {groups
-        .filter((group) => group.prevName !== "")
-        .map((group, idx) => (
+      {configs
+        .filter((config) => config.prevName !== "")
+        .map((config, idx) => (
           <Flex key={idx} gap={2} width="full">
             <Input
               color={fontColor}
-              value={group.newName}
+              value={config.newName}
               onChange={(e) => {
-                const newGroups = [...groups];
-                newGroups[idx].newName = e.target.value;
-                setGroups(newGroups);
+                const newConfigs = [...configs];
+                newConfigs[idx].newName = e.target.value;
+                setConfigs(newConfigs);
               }}
             />
             <IconButton
@@ -75,7 +75,8 @@ export const ConfigManagementModalBody = ({
                   title: <Text color={fontColor}>Delete Confirmation</Text>,
                   body: (
                     <Text color={fontColor}>
-                      Are you sure you want to delete this group?
+                      Are you sure you want to delete this{" "}
+                      {configKind === "groups" ? "group" : "language"}?
                     </Text>
                   ),
                   confirmProps: {
@@ -84,7 +85,7 @@ export const ConfigManagementModalBody = ({
                   },
                   onConfirm: () => {
                     mutate({
-                      link: `/config/groups/${group.prevName}`,
+                      link: `/config/${configKind}/${config.prevName}`,
                       method: "delete",
                     });
                   },
@@ -93,30 +94,30 @@ export const ConfigManagementModalBody = ({
             />
           </Flex>
         ))}
-      {groups
-        .filter((group) => group.prevName === "")
-        .map((group) => (
-          <Flex key={group.id} gap={2} width="full">
+      {configs
+        .filter((config) => config.prevName === "")
+        .map((config) => (
+          <Flex key={config.id} gap={2} width="full">
             <Input
               color={fontColor}
-              value={group.newName}
+              value={config.newName}
               onChange={(e) => {
-                const newGroups = [...groups];
-                const groupIndex = newGroups.findIndex(
-                  (g) => g.id === group.id
+                const newConfigs = [...configs];
+                const configIndex = newConfigs.findIndex(
+                  (c) => c.id === config.id
                 );
-                if (groupIndex !== -1) {
-                  newGroups[groupIndex].newName = e.target.value;
+                if (configIndex !== -1) {
+                  newConfigs[configIndex].newName = e.target.value;
                 }
-                setGroups(newGroups);
+                setConfigs(newConfigs);
               }}
             />
             <IconButton
               aria-label="delete"
               icon={<FaTrash />}
               onClick={() => {
-                const newGroups = groups.filter((g) => g.id !== group.id);
-                setGroups(newGroups);
+                const newConfigs = configs.filter((c) => c.id !== config.id);
+                setConfigs(newConfigs);
               }}
             />
           </Flex>
@@ -125,7 +126,7 @@ export const ConfigManagementModalBody = ({
         variant="outline"
         width="full"
         onClick={() => {
-          setGroups((prev) => [
+          setConfigs((prev) => [
             ...prev,
             {
               id: prev.length,
@@ -148,9 +149,9 @@ export const ConfigManagementModalBody = ({
           colorScheme="primary"
           onClick={() =>
             mutate({
-              link: "/config/groups",
+              link: `/config/${configKind}`,
               method: "put",
-              body: groups,
+              body: configs,
             })
           }
         >
