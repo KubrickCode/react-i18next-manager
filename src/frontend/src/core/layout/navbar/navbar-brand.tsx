@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
 import { NavbarBrand as SaasNavbarBrand } from "@saas-ui/react";
 
-import { Button } from "@core/button";
+import { Button } from "~/core/button";
 
 export const NavbarBrand = ({ label }: { label: string }) => {
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");

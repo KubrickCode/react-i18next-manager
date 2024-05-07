@@ -1,8 +1,8 @@
 import { ButtonGroup, Flex, IconButton, Input } from "@chakra-ui/react";
-import { Button } from "@core/button";
-import { DataTable } from "@core/data-table";
-import { TabPanel } from "@core/tab";
-import { useMutation, useQuery } from "@core/tanstack-react-query";
+import { Button } from "~/core/button";
+import { DataTable } from "~/core/data-table";
+import { TabPanel } from "~/core/tab";
+import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { SearchInput } from "@saas-ui/react";
 import { ReactNode, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";

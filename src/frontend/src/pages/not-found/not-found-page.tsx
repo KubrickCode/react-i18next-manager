@@ -1,4 +1,4 @@
-import { Page } from "@core/page";
+import { Page } from "~/core/page";
 
 export const NotFoundPage = () => (
   <Page>

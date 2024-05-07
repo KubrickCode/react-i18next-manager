@@ -3,7 +3,7 @@ import {
   useQuery as useTanstackQuery,
 } from "@tanstack/react-query";
 
-import { api } from "@core/axios";
+import { api } from "../axios";
 import { AxiosError } from "axios";
 
 const QUERY_STALE_TIME = 1000 * 60 * 5;

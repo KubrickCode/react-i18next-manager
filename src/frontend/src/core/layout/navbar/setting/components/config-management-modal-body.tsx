@@ -11,8 +11,8 @@ import { useModals } from "@saas-ui/react";
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
-import { Button } from "@core/button";
-import { useMutation, useQuery } from "@core/tanstack-react-query";
+import { Button } from "~/core/button";
+import { useMutation, useQuery } from "~/core/tanstack-react-query";
 
 type Config = {
   id?: number;

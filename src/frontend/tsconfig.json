@@ -19,12 +19,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
     "paths": {
-      "@app/*": ["./src/app/*"],
-      "@core/*": ["./src/core/*"],
-      "@shared/*": ["./src/shared/*"],
-      "@pages": ["./src/pages/index"]
+      "~/*": ["./src/*"]
     }
   },
   "include": ["src"],

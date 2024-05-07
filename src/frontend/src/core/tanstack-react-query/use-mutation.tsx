@@ -3,7 +3,7 @@ import {
   useMutation as useTanstackMutation,
 } from "@tanstack/react-query";
 
-import { MethodType, RequestConfig, api } from "@core/axios";
+import { MethodType, RequestConfig, api } from "../axios";
 import { queryClient } from "./provider";
 
 type MutateParams = {
