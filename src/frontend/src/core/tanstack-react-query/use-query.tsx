@@ -3,12 +3,11 @@ import {
   useQuery as useTanstackQuery,
 } from "@tanstack/react-query";
 
-import { api } from "../axios";
-import { AxiosError } from "axios";
+import { api, ResponseError } from "../axios";
 
 const QUERY_STALE_TIME = 1000 * 60 * 5;
 
-export const useQuery = <TQueryFnData = unknown, TError = AxiosError>(
+export const useQuery = <TQueryFnData = unknown, TError = ResponseError>(
   link: string,
   key: string,
   queryOptions?: Omit<
