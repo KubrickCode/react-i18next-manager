@@ -7,5 +7,6 @@ export const LABELS = {
   KEY: "Key",
   LANGUAGE_MANAGEMENT: "Language Management",
   NAVBAR: "I18n Studio",
+  PLUS: "plus",
   SAVE: "Save",
 };

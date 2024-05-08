@@ -10,6 +10,7 @@ import {
 import { useModals } from "@saas-ui/react";
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa6";
 
 import { Button } from "~/core/button";
 import { LABELS } from "~/core/constants";
@@ -121,22 +122,22 @@ export const ConfigManagementModalBody = ({
             />
           </Flex>
         ))}
-      <Button
-        variant="outline"
-        width="full"
-        onClick={() => {
-          setConfigs((prev) => [
-            ...prev,
-            {
-              id: prev.length,
-              prevName: "",
-              newName: "",
-            },
-          ]);
-        }}
-      >
-        +
-      </Button>
+      <Flex justifyContent="flex-end" width="full">
+        <IconButton
+          aria-label={LABELS.PLUS}
+          icon={<FaPlus />}
+          onClick={() => {
+            setConfigs((prev) => [
+              ...prev,
+              {
+                id: prev.length,
+                prevName: "",
+                newName: "",
+              },
+            ]);
+          }}
+        />
+      </Flex>
       <ButtonGroup
         display="flex"
         justifyContent="flex-end"
