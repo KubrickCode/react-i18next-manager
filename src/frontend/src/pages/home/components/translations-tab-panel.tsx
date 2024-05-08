@@ -18,7 +18,7 @@ type TranslationKeys = {
 };
 
 type I18nStructure = {
-  keys: TranslationKeys;
+  translations: TranslationKeys;
 };
 
 type TableData = {
@@ -99,7 +99,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
     return <>Loading...</>;
 
   const languages = getLanguagesResult.data;
-  const translations = getTranslationsResult.data;
+  const { translations } = getTranslationsResult.data;
 
   return (
     <TabPanel>
@@ -204,12 +204,12 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                     {}
                   ),
                 },
-                ...Object.entries(translations.keys).map(([key, value]) => ({
+                ...Object.entries(translations).map(([key, value]) => ({
                   key,
                   ...value,
                 })),
               ]
-            : Object.entries(translations.keys).map(([key, value]) =>
+            : Object.entries(translations).map(([key, value]) =>
                 editKey === key
                   ? {
                       key: (

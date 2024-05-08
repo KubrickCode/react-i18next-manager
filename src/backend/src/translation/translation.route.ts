@@ -7,6 +7,10 @@ import {
   AddTranslationReqParamsDTO,
 } from "./dto/add-translation.dto";
 import { RequestDataKind } from "../enum";
+import {
+  GetTranslationsReqParamsDTO,
+  GetTranslationsReqQueryDTO,
+} from "./dto/get-translations.dto";
 
 @Service()
 export class TranslationRouter {
@@ -20,6 +24,14 @@ export class TranslationRouter {
   private initRoutes(): void {
     this.router.get(
       "/:group",
+      this.validateRequest.validate(
+        GetTranslationsReqParamsDTO,
+        RequestDataKind.PARAMS
+      ),
+      this.validateRequest.validate(
+        GetTranslationsReqQueryDTO,
+        RequestDataKind.QUERY
+      ),
       Container.get(TranslationController).getTranslations
     );
     this.router.post(

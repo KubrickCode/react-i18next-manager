@@ -1,7 +1,12 @@
 import { Service } from "typedi";
 import { TranslationRepository } from "./translation.repository";
-import { TranslationData } from "../db/db.service";
 import { EditTranslationBody } from "./translation.controller";
+
+type GetTranslationsParams = {
+  group: string;
+  skip: number;
+  take: number;
+};
 
 type AddTranslationParams = {
   group: string;
@@ -18,25 +23,22 @@ type Translations = {
   };
 };
 
+type RawTranslationData = {
+  [language: string]: {
+    [key: string]: string;
+  };
+};
+
 @Service()
 export class TranslationService {
   constructor(private readonly translationRepository: TranslationRepository) {}
 
-  async getTranslations(
-    group: string,
-    skip: number,
-    take: number
-  ): Promise<{
-    keys: Translations;
-    count: number;
-    hasPrevPage: boolean;
-    hasNextPage: boolean;
-  }> {
+  async getTranslations({ group, skip, take }: GetTranslationsParams) {
     const languages = await this.translationRepository.getLanguages();
     const rawTranslations = await this.translationRepository.getTranslations();
 
     const transformTranslations = (
-      data: TranslationData,
+      data: RawTranslationData,
       languages: string[]
     ): Translations => {
       const result: Translations = {};
@@ -65,12 +67,12 @@ export class TranslationService {
       return paginatedResult;
     };
 
-    const i18n = transformTranslations(rawTranslations, languages);
-    const count = Object.keys(i18n).length;
+    const translations = transformTranslations(rawTranslations, languages);
+    const count = Object.keys(translations).length;
     const hasPrevPage = skip > 0;
     const hasNextPage = skip + take < count;
 
-    return { keys: i18n, count, hasPrevPage, hasNextPage };
+    return { translations, count, hasPrevPage, hasNextPage };
   }
 
   async addTranslation(params: AddTranslationParams) {

@@ -7,6 +7,12 @@ import {
   AddTranslationReqParamsDTO,
 } from "./dto/add-translation.dto";
 import { plainToClass } from "class-transformer";
+import {
+  GetTranslationsReqParamsDTO,
+  GetTranslationsReqQueryDTO,
+  GetTranslationsResDTO,
+} from "./dto/get-translations.dto";
+import { getValidatedResponse } from "../utils/get-validated-response.util";
 
 export type AddTranslationBody = {
   key: string;
@@ -34,15 +40,15 @@ export class TranslationController {
   }
 
   async getTranslations(req: Request, res: Response) {
-    const { group } = req.params;
-    const { skip = 0, take = 9999 } = req.query;
-    const result = await this.translationService.getTranslations(
+    const { group } = plainToClass(GetTranslationsReqParamsDTO, req.params);
+    const { skip, take } = plainToClass(GetTranslationsReqQueryDTO, req.query);
+    const result = await this.translationService.getTranslations({
       group,
-      Number(skip),
-      Number(take)
-    );
-    res.status(StatusCodes.OK).send(result);
-    return result;
+      skip,
+      take,
+    });
+    const response = await getValidatedResponse(GetTranslationsResDTO, result);
+    res.status(StatusCodes.OK).send(response);
   }
 
   async addTranslation(req: Request, res: Response) {
