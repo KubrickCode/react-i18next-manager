@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
 import { Button } from "~/core/button";
+import { LABELS } from "~/core/constants";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
 
 type Config = {
@@ -67,7 +68,7 @@ export const ConfigManagementModalBody = ({
               }}
             />
             <IconButton
-              aria-label="delete"
+              aria-label={LABELS.DELETE}
               icon={<FaTrash />}
               onClick={() => {
                 modals.confirm({
@@ -80,7 +81,7 @@ export const ConfigManagementModalBody = ({
                   ),
                   confirmProps: {
                     colorScheme: "red",
-                    children: "Delete",
+                    children: LABELS.DELETE,
                   },
                   onConfirm: () => {
                     mutate({
@@ -111,7 +112,7 @@ export const ConfigManagementModalBody = ({
               }}
             />
             <IconButton
-              aria-label="delete"
+              aria-label={LABELS.DELETE}
               icon={<FaTrash />}
               onClick={() => {
                 const newConfigs = configs.filter((c) => c.id !== config.id);
@@ -153,7 +154,7 @@ export const ConfigManagementModalBody = ({
             })
           }
         >
-          Save
+          {LABELS.SAVE}
         </Button>
       </ButtonGroup>
     </VStack>

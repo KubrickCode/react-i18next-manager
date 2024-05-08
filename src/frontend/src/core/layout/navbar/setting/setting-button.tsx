@@ -11,6 +11,7 @@ import { useModals } from "@saas-ui/react";
 import { FaLanguage } from "react-icons/fa";
 
 import { Menu, MenuButton, MenuItem, MenuList } from "~/core/menu";
+import { LABELS } from "~/core/constants";
 
 import { ConfigManagementModalBody } from "./components/config-management-modal-body";
 
@@ -46,23 +47,25 @@ export const SettingButton = () => {
           icon={<MdPeopleOutline />}
           onClick={() =>
             modals.open({
-              title: <Text color={fontColor}>Group Management</Text>,
+              title: <Text color={fontColor}>{LABELS.GROUP_MANAGEMENT}</Text>,
               body: <ConfigManagementModalBody configKind="groups" />,
             })
           }
         >
-          Group Management
+          {LABELS.GROUP_MANAGEMENT}
         </MenuItem>
         <MenuItem
           icon={<FaLanguage />}
           onClick={() =>
             modals.open({
-              title: <Text color={fontColor}>Language Management</Text>,
+              title: (
+                <Text color={fontColor}>{LABELS.LANGUAGE_MANAGEMENT}</Text>
+              ),
               body: <ConfigManagementModalBody configKind="languages" />,
             })
           }
         >
-          Language Management
+          {LABELS.LANGUAGE_MANAGEMENT}
         </MenuItem>
       </MenuList>
     </Menu>

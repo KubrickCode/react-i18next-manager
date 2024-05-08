@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
 
 import { Button } from "~/core/button";
+import { LABELS } from "~/core/constants";
 import { DataTable } from "~/core/data-table";
 import { TabPanel } from "~/core/tab";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
@@ -126,7 +127,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                   getTranslationsResult.refetch();
                 }}
               >
-                Save
+                {LABELS.SAVE}
               </Button>
             </>
           )}
@@ -141,7 +142,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                 getTranslationsResult.refetch();
               }}
             >
-              Delete
+              {LABELS.DELETE}
             </Button>
           )}
         </ButtonGroup>
@@ -151,7 +152,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
         columns={[
           {
             accessorKey: "key",
-            header: "KEY",
+            header: LABELS.KEY,
           },
           ...languages.map((lang) => ({
             accessorKey: lang,
@@ -159,7 +160,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
           })),
           {
             accessorKey: "actions",
-            header: "ACTIONS",
+            header: LABELS.ACTIONS,
           },
         ]}
         data={
@@ -254,7 +255,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                       actions: (
                         <ButtonGroup size="sm">
                           <Button onClick={() => setEditKey(null)}>
-                            Cancel
+                            {LABELS.CANCEL}
                           </Button>
                           <Button onClick={handleSaveEdit}>Save</Button>
                         </ButtonGroup>
@@ -279,7 +280,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                             });
                           }}
                         >
-                          Edit
+                          {LABELS.EDIT}
                         </Button>
                       ),
                     }
