@@ -1,10 +1,16 @@
 import { Service } from "typedi";
 import { TranslationRepository } from "./translation.repository";
 import { TranslationData } from "../db/db.service";
-import {
-  AddTranslationBody,
-  EditTranslationBody,
-} from "./translation.controller";
+import { EditTranslationBody } from "./translation.controller";
+
+type AddTranslationParams = {
+  group: string;
+  key: string;
+  translations: {
+    language: string;
+    value: string;
+  }[];
+};
 
 type Translations = {
   [key: string]: {
@@ -67,9 +73,8 @@ export class TranslationService {
     return { keys: i18n, count, hasPrevPage, hasNextPage };
   }
 
-  async addTranslation(group: string, data: AddTranslationBody) {
-    const { key, translations } = data;
-    await this.translationRepository.addTranslation(group, key, translations);
+  async addTranslation(params: AddTranslationParams) {
+    await this.translationRepository.addTranslation(params);
   }
 
   async deleteTranslation(group: string, key: string) {

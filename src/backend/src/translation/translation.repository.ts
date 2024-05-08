@@ -2,6 +2,15 @@ import { DBService } from "../db/db.service";
 import { Service } from "typedi";
 import { EditTranslationBody } from "./translation.controller";
 
+type AddTranslationParams = {
+  group: string;
+  key: string;
+  translations: {
+    language: string;
+    value: string;
+  }[];
+};
+
 @Service()
 export class TranslationRepository {
   constructor(private readonly dbService: DBService) {}
@@ -14,11 +23,7 @@ export class TranslationRepository {
     return this.dbService.getTranslations();
   }
 
-  async addTranslation(
-    group: string,
-    key: string,
-    translations: Array<{ language: string; value: string }>
-  ) {
+  async addTranslation({ group, key, translations }: AddTranslationParams) {
     this.dbService.addTranslation(group, key, translations);
   }
 

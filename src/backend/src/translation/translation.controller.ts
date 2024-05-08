@@ -2,6 +2,11 @@ import { Service } from "typedi";
 import { TranslationService } from "./translation.service";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import {
+  AddTranslationReqBodyDTO,
+  AddTranslationReqParamsDTO,
+} from "./dto/add-translation.dto";
+import { plainToClass } from "class-transformer";
 
 export type AddTranslationBody = {
   key: string;
@@ -41,11 +46,17 @@ export class TranslationController {
   }
 
   async addTranslation(req: Request, res: Response) {
-    const body: AddTranslationBody = req.body;
-    const { group } = req.params;
-    const result = await this.translationService.addTranslation(group, body);
+    const { group } = plainToClass(AddTranslationReqParamsDTO, req.params);
+    const { key, translations } = plainToClass(
+      AddTranslationReqBodyDTO,
+      req.body
+    );
+    await this.translationService.addTranslation({
+      group,
+      key,
+      translations,
+    });
     res.status(StatusCodes.CREATED).send();
-    return result;
   }
 
   async deleteTranslations(req: Request, res: Response) {

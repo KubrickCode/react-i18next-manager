@@ -1,12 +1,18 @@
 import { Router } from "express";
 import { Container, Service } from "typedi";
 import { TranslationController } from "./translation.controller";
+import { ValidateRequest } from "../middlewares/validate-request.middleware";
+import {
+  AddTranslationReqBodyDTO,
+  AddTranslationReqParamsDTO,
+} from "./dto/add-translation.dto";
+import { RequestDataKind } from "../enum";
 
 @Service()
 export class TranslationRouter {
   public router: Router;
 
-  constructor() {
+  constructor(private readonly validateRequest: ValidateRequest) {
     this.router = Router();
     this.initRoutes();
   }
@@ -18,6 +24,14 @@ export class TranslationRouter {
     );
     this.router.post(
       "/:group",
+      this.validateRequest.validate(
+        AddTranslationReqParamsDTO,
+        RequestDataKind.PARAMS
+      ),
+      this.validateRequest.validate(
+        AddTranslationReqBodyDTO,
+        RequestDataKind.BODY
+      ),
       Container.get(TranslationController).addTranslation
     );
     this.router.delete(
