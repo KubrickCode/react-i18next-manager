@@ -20,12 +20,22 @@ export class DBService {
     languages: [],
   };
   private data: TranslationData = {};
-  private filePath = path.join(__dirname, "./sample/i18n.json");
-  private configPath = path.join(__dirname, "./sample/config.json");
+  private resourcePath: string;
+  private configPath: string;
 
   constructor() {
+    const targetPath = this.getTargetPath();
+    this.resourcePath = targetPath + "/i18n.json";
+    this.configPath = targetPath + "/config.json";
     this.loadConfig();
     this.loadData();
+  }
+
+  private getTargetPath() {
+    const i18nConfigFilePath = path.join("./", "i18n-config.json");
+    const i18nConfigFile = fs.readFileSync(i18nConfigFilePath, "utf8");
+    const { targetPath } = JSON.parse(i18nConfigFile);
+    return targetPath;
   }
 
   private loadConfig() {
@@ -34,7 +44,7 @@ export class DBService {
   }
 
   private loadData() {
-    const fileContent = fs.readFileSync(this.filePath, "utf8");
+    const fileContent = fs.readFileSync(this.resourcePath, "utf8");
     this.data = JSON.parse(fileContent);
   }
 
@@ -44,7 +54,7 @@ export class DBService {
       sortedData[language] = this.sortObjectKeys(this.data[language]);
     });
 
-    fs.writeFileSync(this.filePath, JSON.stringify(sortedData, null, 2));
+    fs.writeFileSync(this.resourcePath, JSON.stringify(sortedData, null, 2));
   }
 
   private sortObjectKeys(obj: { [key: string]: string }): {

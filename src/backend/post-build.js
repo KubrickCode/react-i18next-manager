@@ -26,16 +26,6 @@ const rewriteImportsAndAddDirname = (dir) => {
           content.slice(endOfLastImport + 1);
       }
 
-      if (file.name === "db.service.js") {
-        const lastImportIndex = content.lastIndexOf("import");
-        const endOfLastImport = content.indexOf("\n", lastImportIndex);
-        const dirnameCode = `const __dirname = "./"; \n`;
-        content =
-          content.slice(0, endOfLastImport + 1) +
-          dirnameCode +
-          content.slice(endOfLastImport + 1);
-      }
-
       fs.writeFileSync(fullPath, content, "utf8");
     }
   }
