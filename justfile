@@ -54,6 +54,11 @@ run svc *args:
       yarn i18n studio
       ;;
 
+    test-web-init)
+      cd "{{ test_web_dir }}"
+      yarn i18n init
+      ;;
+
     app)
       just run frontend &
       just run backend
@@ -68,6 +73,11 @@ run svc *args:
       cd "{{ package_dir }}"
       chmod +x dist/main.js
       npx studio
+      ;;
+
+    package-init)
+      cd "{{ package_dir }}"
+      npx init
       ;;
 
   esac

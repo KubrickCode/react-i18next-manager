@@ -407,10 +407,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kubrick/react-i18next-manager@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@kubrick/react-i18next-manager/-/react-i18next-manager-0.2.0.tgz#6be860226cecc485c6536dddf5e75755783c20e2"
-  integrity sha512-e3iTb3zI3BZeTYwtyFKdBlFGmSGKXjfl3reb1iVq132nL0GXJjlgUODnqluiKNFv6ToZwl1OsOZjbznhQj89hg==
+"@kubrick/react-i18next-manager@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@kubrick/react-i18next-manager/-/react-i18next-manager-0.3.7.tgz#e9e5d3f0e5b05e0a6f98a6b0d0e21771dd64db89"
+  integrity sha512-iyAMeI552b/jz7RLug4GMHsGjKGiarENzrkprKATASxsE8AbdJIyStwWRuJblWGJGTKnKug4rBpQuzSiX+VqBQ==
   dependencies:
     class-transformer "^0.5.1"
     class-validator "^0.14.1"

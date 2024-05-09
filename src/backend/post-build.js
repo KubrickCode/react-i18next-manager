@@ -16,7 +16,7 @@ const rewriteImportsAndAddDirname = (dir) => {
           : match;
       });
 
-      if (file.name === "app.js") {
+      if (file.name === "app.js" || file.name === "init.js") {
         const lastImportIndex = content.lastIndexOf("import");
         const endOfLastImport = content.indexOf("\n", lastImportIndex);
         const dirnameCode = `import { fileURLToPath } from 'url';\nconst __dirname = path.dirname(fileURLToPath(import.meta.url));\n`;

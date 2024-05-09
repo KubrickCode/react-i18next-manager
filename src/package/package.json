@@ -1,6 +1,6 @@
 {
   "name": "@kubrick/react-i18next-manager",
-  "version": "0.3.0",
+  "version": "0.3.7",
   "type": "module",
   "license": "MIT",
   "dependencies": {
@@ -25,6 +25,7 @@
     "build": "yarn build-frontend && yarn build-backend && node build.js"
   },
   "bin": {
-    "studio": "dist/main.js"
+    "studio": "./dist/main.js",
+    "init": "./dist/init.js"
   }
 }
