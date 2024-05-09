@@ -14,17 +14,20 @@ type MutateParams = {
 };
 
 export const useMutation = ({
-  refetchQueryKey,
+  refetchQueryKeys,
 }: {
-  refetchQueryKey?: QueryKey;
+  refetchQueryKeys?: QueryKey[];
 }) => {
   return useTanstackMutation({
     mutationFn: async ({ link, method, body, config }: MutateParams) => {
       const response = await api[method](link, body, config);
       return response.data;
     },
-    onSuccess: () => {
-      return queryClient.refetchQueries({ queryKey: refetchQueryKey });
+    onSuccess: async () => {
+      const promises = refetchQueryKeys?.map((queryKey) =>
+        queryClient.refetchQueries({ queryKey })
+      );
+      return await Promise.all(promises || []);
     },
   });
 };

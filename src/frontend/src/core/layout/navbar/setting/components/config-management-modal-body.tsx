@@ -8,6 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useModals } from "@saas-ui/react";
+import _ from "lodash";
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
@@ -36,7 +37,10 @@ export const ConfigManagementModalBody = ({
   );
   const modals = useModals();
   const { mutate } = useMutation({
-    refetchQueryKey: [`get${configKind.toUpperCase()}InModal`],
+    refetchQueryKeys: [
+      [`get${configKind.toUpperCase()}InModal`],
+      [`get${_.upperFirst(configKind)}`],
+    ],
   });
   const [configs, setConfigs] = useState<Config[]>([]);
 

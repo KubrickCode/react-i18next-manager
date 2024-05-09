@@ -70,7 +70,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
   });
 
   const { mutate } = useMutation({
-    refetchQueryKey: [`getTranslations-${group}`],
+    refetchQueryKeys: [[`getTranslations-${group}`]],
   });
 
   const handleSaveEdit = () => {
