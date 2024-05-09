@@ -17,6 +17,19 @@ export class App {
     this.setupRoutes();
   }
 
+  async startServer(port: number): Promise<void> {
+    const server = this.app.listen(port, async () => {
+      console.log(`Server running on http://localhost:${port}`);
+    });
+
+    process.on("SIGINT", () => {
+      server.close(() => {
+        console.log("Server closed.");
+        process.exit(0);
+      });
+    });
+  }
+
   private setupDB(): void {
     const existsTargetPathFolder = fs.existsSync(this.targetPath);
     if (!existsTargetPathFolder) {
@@ -69,19 +82,6 @@ export class App {
     this.app.use("/api", new Routes().router);
     this.app.get("*", (req: Request, res: Response) => {
       res.sendFile(path.join(__dirname, "index.html"));
-    });
-  }
-
-  public async startServer(port: number): Promise<void> {
-    const server = this.app.listen(port, async () => {
-      console.log(`Server running on http://localhost:${port}`);
-    });
-
-    process.on("SIGINT", () => {
-      server.close(() => {
-        console.log("Server closed.");
-        process.exit(0);
-      });
     });
   }
 }
