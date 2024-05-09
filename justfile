@@ -21,6 +21,9 @@ deps-package:
 deps-test-web:
   cd "{{ test_web_dir }}" && yarn install
 
+deps-upgrade-test-web:
+  cd "{{ test_web_dir }}" && yarn add @kubrick/react-i18next-manager
+
 package-publish:
   cd "{{ package_dir }}" && npm publish --access public
 
@@ -44,6 +47,11 @@ run svc *args:
     test-web)
       cd "{{ test_web_dir }}"
       GENERATE_SOURCEMAP=false yarn dev
+      ;;
+
+    test-web-studio)
+      cd "{{ test_web_dir }}"
+      yarn i18n studio
       ;;
 
     app)
