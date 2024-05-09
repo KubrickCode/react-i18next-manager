@@ -28,6 +28,7 @@ type TableData = {
 
 type TranslationsTabPanelProps = {
   group: string;
+  languages: string[];
 };
 
 type AddTranslationBody = {
@@ -46,12 +47,11 @@ type EditTranslationBody = {
   }[];
 };
 
-export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
-  const getLanguagesResult = useQuery<string[]>(
-    "/config/languages",
-    "getLanguages"
-  );
-  const getTranslationsResult = useQuery<I18nStructure>(
+export const TranslationsTabPanel = ({
+  group,
+  languages,
+}: TranslationsTabPanelProps) => {
+  const { data, error, isLoading, refetch } = useQuery<I18nStructure>(
     `/translations/${group}`,
     `getTranslations-${group}`
   );
@@ -83,23 +83,14 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
       },
     });
     setEditKey(null);
-    getTranslationsResult.refetch();
+    refetch();
   };
 
-  if (!getLanguagesResult.data || !getTranslationsResult.data)
-    return <>ERROR</>;
-  if (getLanguagesResult.error || getTranslationsResult.error)
-    return (
-      <>
-        {getLanguagesResult.error?.message ??
-          getTranslationsResult.error?.message}
-      </>
-    );
-  if (getLanguagesResult.isLoading || getTranslationsResult.isLoading)
-    return <>Loading...</>;
+  if (!data) return <>ERROR</>;
+  if (error) return <>{error.message}</>;
+  if (isLoading) return <>Loading...</>;
 
-  const languages = getLanguagesResult.data;
-  const { translations } = getTranslationsResult.data;
+  const { translations } = data;
 
   return (
     <TabPanel>
@@ -109,7 +100,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
             aria-label="refresh"
             icon={<IoMdRefresh />}
             marginBottom={3}
-            onClick={() => getTranslationsResult.refetch()}
+            onClick={() => refetch()}
           />
           {!isAddingMode ? (
             <Button onClick={() => setIsAddingMode(true)}>Add Resource</Button>
@@ -124,7 +115,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                     body: addTranslationBody,
                   });
                   setIsAddingMode(false);
-                  getTranslationsResult.refetch();
+                  refetch();
                 }}
               >
                 {LABELS.SAVE}
@@ -139,7 +130,7 @@ export const TranslationsTabPanel = ({ group }: TranslationsTabPanelProps) => {
                   method: "delete",
                 });
                 setSelectedKeys([]);
-                getTranslationsResult.refetch();
+                refetch();
               }}
             >
               {LABELS.DELETE}

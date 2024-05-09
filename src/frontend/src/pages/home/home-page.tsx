@@ -5,15 +5,29 @@ import { Tab, TabList, TabPanels, Tabs } from "~/core/tab";
 import { TranslationsTabPanel } from "./components/translations-tab-panel";
 
 export const HomePage = () => {
-  const {
-    data: groups,
-    error,
-    isLoading,
-  } = useQuery<string[]>("/config/groups", "getGroups");
+  const getGroupsQueryResult = useQuery<string[]>(
+    "/config/groups",
+    "getGroups"
+  );
+  const getLanguagesQueryResult = useQuery<string[]>(
+    "/config/languages",
+    "getLanguages"
+  );
 
-  if (!groups) return <>ERROR</>;
-  if (error) return <>{error.message}</>;
-  if (isLoading) return <>Loading...</>;
+  if (!getLanguagesQueryResult.data || !getGroupsQueryResult.data)
+    return <>ERROR</>;
+  if (getLanguagesQueryResult.error || getGroupsQueryResult.error)
+    return (
+      <>
+        {getLanguagesQueryResult.error?.message ??
+          getGroupsQueryResult.error?.message}
+      </>
+    );
+  if (getLanguagesQueryResult.isLoading || getGroupsQueryResult.isLoading)
+    return <>Loading...</>;
+
+  const languages = getLanguagesQueryResult.data;
+  const groups = getGroupsQueryResult.data;
 
   return (
     <Page>
@@ -25,7 +39,11 @@ export const HomePage = () => {
         </TabList>
         <TabPanels>
           {groups.map((group, idx) => (
-            <TranslationsTabPanel key={idx} group={group} />
+            <TranslationsTabPanel
+              key={idx}
+              group={group}
+              languages={languages}
+            />
           ))}
         </TabPanels>
       </Tabs>
