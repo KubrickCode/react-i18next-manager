@@ -6,7 +6,7 @@ import fs from "fs";
 
 @Service()
 export class App {
-  public app: Application;
+  private app: Application;
   private targetPath: string;
 
   constructor() {
