@@ -44,6 +44,8 @@ export class TranslationService {
       const result: Translations = {};
 
       languages.forEach((language) => {
+        if (!data[language]) return;
+
         Object.entries(data[language]).forEach(([key, value]) => {
           const [_, grp, property] = key.split(".");
           if (grp === group) {
