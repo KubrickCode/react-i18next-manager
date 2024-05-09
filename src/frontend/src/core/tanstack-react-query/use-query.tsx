@@ -9,7 +9,7 @@ const QUERY_STALE_TIME = 1000 * 60 * 5;
 
 export const useQuery = <TQueryFnData = unknown, TError = ResponseError>(
   link: string,
-  key: string,
+  key: string | string[],
   queryOptions?: Omit<
     UseQueryOptions<TQueryFnData, TError>,
     "queryKey" | "queryFn"

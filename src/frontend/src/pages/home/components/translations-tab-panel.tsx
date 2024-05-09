@@ -51,9 +51,10 @@ export const TranslationsTabPanel = ({
   group,
   languages,
 }: TranslationsTabPanelProps) => {
+  const queryKey = `getTranslations-${group}-${languages.join("-")}`;
   const { data, error, isLoading, refetch } = useQuery<I18nStructure>(
     `/translations/${group}`,
-    `getTranslations-${group}`
+    queryKey
   );
   const [isAddingMode, setIsAddingMode] = useState(false);
   const [addTranslationBody, setAddTranslationBody] =
@@ -70,7 +71,7 @@ export const TranslationsTabPanel = ({
   });
 
   const { mutate } = useMutation({
-    refetchQueryKeys: [[`getTranslations-${group}`]],
+    refetchQueryKeys: [[queryKey]],
   });
 
   const handleSaveEdit = () => {
