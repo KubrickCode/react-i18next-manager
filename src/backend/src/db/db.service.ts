@@ -68,19 +68,19 @@ export class DBService {
     return result;
   }
 
-  public getGroups() {
+  getGroups() {
     return this.config.groups;
   }
 
-  public getLanguages() {
+  getLanguages() {
     return this.config.languages;
   }
 
-  public getTranslations() {
+  getTranslations() {
     return this.data;
   }
 
-  public addTranslation(
+  addTranslation(
     group: string,
     key: string,
     translations: Array<{ language: string; value: string }>
@@ -94,7 +94,7 @@ export class DBService {
     this.saveData();
   }
 
-  public deleteTranslation(group: string, key: string) {
+  deleteTranslation(group: string, key: string) {
     const fullKey = `ui.${group}.${key}`;
     this.config.languages.forEach((language) => {
       if (this.data[language] && this.data[language][fullKey]) {
@@ -104,7 +104,7 @@ export class DBService {
     this.saveData();
   }
 
-  public saveGroups(groups: string[]): Promise<void> {
+  saveGroups(groups: string[]): Promise<void> {
     this.config.groups = groups;
 
     const data = JSON.stringify(this.config, null, 2);
@@ -112,7 +112,7 @@ export class DBService {
     return Promise.resolve();
   }
 
-  public saveLanguages(languages: string[]): Promise<void> {
+  saveLanguages(languages: string[]): Promise<void> {
     this.config.languages = languages;
 
     const data = JSON.stringify(this.config, null, 2);
