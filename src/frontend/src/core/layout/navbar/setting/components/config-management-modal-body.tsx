@@ -31,15 +31,16 @@ export const ConfigManagementModalBody = ({
   configKind,
 }: ConfigManagementModalBodyProps) => {
   const fontColor = useColorModeValue("gray.800", "white");
+  const upperFirstConfigKind = _.upperFirst(configKind);
   const { data, error, isLoading } = useQuery<string[]>(
     `/config/${configKind}`,
-    `get${configKind.toUpperCase()}InModal`
+    `get${upperFirstConfigKind}InModal`
   );
   const modals = useModals();
   const { mutate } = useMutation({
     refetchQueryKeys: [
-      [`get${configKind.toUpperCase()}InModal`],
-      [`get${_.upperFirst(configKind)}`],
+      [`get${upperFirstConfigKind}InModal`],
+      [`get${upperFirstConfigKind}`],
     ],
   });
   const [configs, setConfigs] = useState<Config[]>([]);
