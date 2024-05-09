@@ -1,21 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 
-const addDirnameToApp = (filePath) => {
-  let content = fs.readFileSync(filePath, "utf8");
-
-  const lastImportIndex = content.lastIndexOf("import");
-  const endOfLastImport = content.indexOf("\n", lastImportIndex);
-  const dirnameCode = `import { fileURLToPath } from 'url';\nconst __dirname = path.dirname(fileURLToPath(import.meta.url));\n`;
-
-  content =
-    content.slice(0, endOfLastImport + 1) +
-    dirnameCode +
-    content.slice(endOfLastImport + 1);
-
-  fs.writeFileSync(filePath, content, "utf8");
-};
-
 const rewriteImportsAndAddDirname = (dir) => {
   const files = fs.readdirSync(dir, { withFileTypes: true });
 
