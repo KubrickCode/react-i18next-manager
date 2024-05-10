@@ -407,13 +407,14 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kubrick/react-i18next-manager@^0.3.7":
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/@kubrick/react-i18next-manager/-/react-i18next-manager-0.3.7.tgz#e9e5d3f0e5b05e0a6f98a6b0d0e21771dd64db89"
-  integrity sha512-iyAMeI552b/jz7RLug4GMHsGjKGiarENzrkprKATASxsE8AbdJIyStwWRuJblWGJGTKnKug4rBpQuzSiX+VqBQ==
+"@kubrick/react-i18next-manager@^0.3.11":
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/@kubrick/react-i18next-manager/-/react-i18next-manager-0.3.11.tgz#205849eb0a1361d629c49aa773f7001589c7b3f1"
+  integrity sha512-V/Q8srwKqcn4RQCJ0A/kEb+temuloMPmFS/SpVRj787Q99W4eg2pjFeuem3PwEBDCTUwvsps41EA0UlyMt2QXQ==
   dependencies:
     class-transformer "^0.5.1"
     class-validator "^0.14.1"
+    commander "^12.0.0"
     express "^4.19.2"
     http-status-codes "^2.3.0"
     open "^10.1.0"
@@ -900,6 +901,11 @@ color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+
+commander@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-12.0.0.tgz#b929db6df8546080adfd004ab215ed48cf6f2592"
+  integrity sha512-MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==
 
 concat-map@0.0.1:
   version "0.0.1"
