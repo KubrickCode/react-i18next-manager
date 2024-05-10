@@ -77,6 +77,7 @@ run svc *args:
 
     package-init)
       cd "{{ package_dir }}"
+      chmod +x dist/init.js
       npx init
       ;;
 
