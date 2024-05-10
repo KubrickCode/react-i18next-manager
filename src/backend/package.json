@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon --watch ./src --ext ts --exec ts-node -r tsconfig-paths/register src/main.ts",
-    "build": "tsc -p tsconfig.build.json && node post-build.js"
+    "build": "tsc -p tsconfig.build.json"
   },
   "license": "MIT",
   "dependencies": {

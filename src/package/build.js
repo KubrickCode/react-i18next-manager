@@ -1,8 +1,5 @@
-import fs from "fs-extra";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const fs = require("fs-extra");
+const path = require("path");
 
 const copyBuildFiles = async () => {
   const frontendDir = path.join(__dirname, "../frontend/dist");

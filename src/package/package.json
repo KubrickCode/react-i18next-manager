@@ -1,7 +1,7 @@
 {
   "name": "@kubrick/react-i18next-manager",
   "version": "0.3.7",
-  "type": "module",
+  "type": "commonjs",
   "license": "MIT",
   "dependencies": {
     "express": "^4.19.2",
