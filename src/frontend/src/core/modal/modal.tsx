@@ -4,6 +4,7 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 export type ModalProps = {
@@ -19,6 +20,8 @@ export const Modal = ({
   onClose,
   size = "md",
 }: ModalProps) => {
+  const closeButtonColor = useColorModeValue("black", "white");
+
   return (
     <ChakraModal
       isCentered
@@ -29,7 +32,7 @@ export const Modal = ({
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton />
+        <ModalCloseButton color={closeButtonColor} />
         {children}
       </ModalContent>
     </ChakraModal>
