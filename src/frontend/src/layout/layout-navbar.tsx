@@ -3,7 +3,6 @@ import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
 import { LABELS } from "~/core/constants";
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "~/core/navbar";
-import { Link } from "react-router-dom";
 import { Button } from "~/core/button";
 import { SettingButton } from "./setting";
 
@@ -15,21 +14,20 @@ export const LayoutNavbar = () => {
       <Flex alignItems="center" justifyContent="space-between">
         <NavbarBrand>
           <Flex alignItems="center">
-            <Link to="/">
-              <Button
-                leftIcon={
-                  <Image
-                    boxSize="3rem"
-                    objectFit="cover"
-                    src={darkModeImageSrc}
-                    alt="logo"
-                  />
-                }
-                variant="none"
-              >
-                {LABELS.NAVBAR}
-              </Button>
-            </Link>
+            <Button
+              leftIcon={
+                <Image
+                  boxSize="3rem"
+                  objectFit="cover"
+                  src={darkModeImageSrc}
+                  alt="logo"
+                />
+              }
+              onClick={() => (location.href = "/")}
+              variant="none"
+            >
+              {LABELS.NAVBAR}
+            </Button>
           </Flex>
         </NavbarBrand>
         <NavbarContent
