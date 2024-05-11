@@ -1,6 +1,7 @@
 export const LABELS = {
   ACTIONS: "Actions",
   CANCEL: "Cancel",
+  CLOSE: "Close",
   DELETE: "Delete",
   EDIT: "Edit",
   GROUP_MANAGEMENT: "Group Management",

@@ -7,24 +7,27 @@ import {
 } from "@chakra-ui/react";
 import { MdDarkMode, MdPeopleOutline } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
-import { useModals } from "@saas-ui/react";
 import { FaLanguage } from "react-icons/fa";
 
-import { Menu, MenuButton, MenuItem, MenuList } from "~/core/menu";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  MenuModalToggle,
+} from "~/core/menu";
 import { LABELS } from "~/core/constants";
 
-import { ConfigManagementModalBody } from "./components/config-management-modal-body";
+import { ConfigManagementModal } from "./components/config-management-modal";
 
 export const SettingButton = () => {
   const { toggleColorMode } = useColorMode();
-  const modals = useModals();
 
   const darkModeIcon = useColorModeValue(
     <MdDarkMode size="1rem" />,
     <CiLight color="white" size="1rem" />
   );
   const darkModeLabel = useColorModeValue("Dark Mode", "Light Mode");
-  const fontColor = useColorModeValue("gray.800", "white");
 
   return (
     <Menu>
@@ -43,30 +46,20 @@ export const SettingButton = () => {
         >
           <Text>{darkModeLabel}</Text>
         </MenuItem>
-        <MenuItem
-          icon={<MdPeopleOutline />}
-          onClick={() =>
-            modals.open({
-              title: <Text color={fontColor}>{LABELS.GROUP_MANAGEMENT}</Text>,
-              body: <ConfigManagementModalBody configKind="groups" />,
-            })
-          }
+        <MenuModalToggle
+          icon={MdPeopleOutline}
+          modal={ConfigManagementModal}
+          modalProps={{ configKind: "groups" }}
         >
           {LABELS.GROUP_MANAGEMENT}
-        </MenuItem>
-        <MenuItem
-          icon={<FaLanguage />}
-          onClick={() =>
-            modals.open({
-              title: (
-                <Text color={fontColor}>{LABELS.LANGUAGE_MANAGEMENT}</Text>
-              ),
-              body: <ConfigManagementModalBody configKind="languages" />,
-            })
-          }
+        </MenuModalToggle>
+        <MenuModalToggle
+          icon={FaLanguage}
+          modal={ConfigManagementModal}
+          modalProps={{ configKind: "languages" }}
         >
           {LABELS.LANGUAGE_MANAGEMENT}
-        </MenuItem>
+        </MenuModalToggle>
       </MenuList>
     </Menu>
   );
