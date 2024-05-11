@@ -14,7 +14,7 @@ import {
 import { LABELS } from "~/core/constants";
 import { Text } from "~/core/text";
 
-import { ConfigManagementModal } from "./components/config-management-modal";
+import { ConfigManagementModal } from "./config-management-modal";
 
 export const SettingButton = () => {
   const { toggleColorMode } = useColorMode();

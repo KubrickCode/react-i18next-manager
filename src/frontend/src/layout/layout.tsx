@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { AppShell } from "@saas-ui/react";
 
-import { Navbar } from "./navbar";
+import { LayoutNavbar } from "./layout-navbar";
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const bgColor = useColorModeValue("white", "gray.800");
@@ -13,7 +13,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
       backgroundColor={bgColor}
       color={fontColor}
       height="100vh"
-      navbar={<Navbar />}
+      navbar={<LayoutNavbar />}
       padding="1rem"
     >
       <Box as="main" overflowY="auto">
