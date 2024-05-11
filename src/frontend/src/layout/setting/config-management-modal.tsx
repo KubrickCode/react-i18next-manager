@@ -1,4 +1,4 @@
-import { ButtonGroup, Flex, IconButton, VStack } from "@chakra-ui/react";
+import { Flex, IconButton, VStack } from "@chakra-ui/react";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
@@ -10,6 +10,7 @@ import {
   DeleteModal,
   Modal,
   ModalBody,
+  ModalFooter,
   ModalHeader,
   ModalProps,
   ModalToggle,
@@ -144,28 +145,22 @@ export const ConfigManagementModal = ({
               }}
             />
           </Flex>
-          <ButtonGroup
-            display="flex"
-            justifyContent="flex-end"
-            marginTop={5}
-            width="full"
-          >
-            <Button onClick={onClose}>Close</Button>
-            <Button
-              colorScheme="primary"
-              onClick={() =>
-                mutate({
-                  link: `/config/${configKind}`,
-                  method: "put",
-                  body: configs,
-                })
-              }
-            >
-              {LABELS.SAVE}
-            </Button>
-          </ButtonGroup>
         </VStack>
       </ModalBody>
+      <ModalFooter onClose={onClose}>
+        <Button
+          colorScheme="primary"
+          onClick={() =>
+            mutate({
+              link: `/config/${configKind}`,
+              method: "put",
+              body: configs,
+            })
+          }
+        >
+          {LABELS.SAVE}
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

@@ -13,7 +13,9 @@ export const ModalFooter = ({ children, onClose }: ModalFooterProps) => {
     <ChakraModalFooter>
       <Flex direction="column">
         <Flex gap={3} justifyContent="right">
-          <Button onClick={onClose}>{LABELS.CLOSE}</Button>
+          <Button colorScheme="gray" onClick={onClose}>
+            {LABELS.CLOSE}
+          </Button>
           {children}
         </Flex>
       </Flex>
