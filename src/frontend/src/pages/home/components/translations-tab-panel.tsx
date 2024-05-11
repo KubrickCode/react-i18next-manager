@@ -1,41 +1,25 @@
 import { ButtonGroup, Flex } from "@chakra-ui/react";
 import { SearchInput } from "@saas-ui/react";
-import { ReactNode, useState } from "react";
+import { useCallback, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
 
 import { Button, IconButton } from "~/core/button";
 import { LABELS } from "~/core/constants";
-import { DataTable } from "~/core/data-table";
 import { TabPanel } from "~/core/tab";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
-import { Input } from "~/core/input";
 import { DeleteModal, ModalToggle } from "~/core/modal";
 import { Text } from "~/core/text";
 import { useToast } from "~/core/toast";
 
-type TranslationMap = {
-  [language: string]: string;
+import { TranslationsTable } from "./translations-table";
+
+export type TranslationKeys = {
+  [key: string]: {
+    [language: string]: string;
+  };
 };
 
-type TranslationKeys = {
-  [key: string]: TranslationMap;
-};
-
-type I18nStructure = {
-  translations: TranslationKeys;
-};
-
-type TableData = {
-  key: string | ReactNode;
-  [language: string]: string | ReactNode;
-};
-
-type TranslationsTabPanelProps = {
-  group: string;
-  languages: string[];
-};
-
-type AddTranslationBody = {
+export type AddTranslationBody = {
   key: string;
   translations: {
     language: string;
@@ -43,7 +27,7 @@ type AddTranslationBody = {
   }[];
 };
 
-type EditTranslationBody = {
+export type EditTranslationBody = {
   newKey: string;
   translations: {
     language: string;
@@ -51,16 +35,20 @@ type EditTranslationBody = {
   }[];
 };
 
+type TranslationsTabPanelProps = {
+  group: string;
+  languages: string[];
+};
+
 export const TranslationsTabPanel = ({
   group,
   languages,
 }: TranslationsTabPanelProps) => {
   const queryKey = `getTranslations-${group}-${languages.join("-")}`;
-  const { data, error, isLoading, refetch } = useQuery<I18nStructure>(
-    `/translations/${group}`,
-    queryKey
-  );
-  const [isAddingMode, setIsAddingMode] = useState(false);
+  const { data, error, isLoading, refetch } = useQuery<{
+    translations: TranslationKeys;
+  }>(`/translations/${group}`, queryKey);
+  const [addMode, setAddMode] = useState(false);
   const [addTranslationBody, setAddTranslationBody] =
     useState<AddTranslationBody>({
       key: "",
@@ -68,10 +56,11 @@ export const TranslationsTabPanel = ({
     });
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [editKey, setEditKey] = useState<string | null>(null);
-  const [editData, setEditData] = useState<EditTranslationBody>({
-    newKey: "",
-    translations: [],
-  });
+  const [editTranslationBody, setEditTranslationBody] =
+    useState<EditTranslationBody>({
+      newKey: "",
+      translations: [],
+    });
 
   const toast = useToast();
 
@@ -79,19 +68,45 @@ export const TranslationsTabPanel = ({
     refetchQueryKeys: [[queryKey]],
   });
 
-  const handleSaveEdit = () => {
+  const handleAddTranslationBody = useCallback(
+    (addTranslationBody: AddTranslationBody) => {
+      setAddTranslationBody({
+        ...addTranslationBody,
+      });
+    },
+    []
+  );
+
+  const handleEditKey = useCallback((key: string | null) => {
+    setEditKey(key);
+  }, []);
+
+  const handleEditTranslationBody = useCallback(
+    (editTranslationBody: EditTranslationBody) => {
+      setEditTranslationBody({
+        ...editTranslationBody,
+      });
+    },
+    []
+  );
+
+  const handleSaveEdit = useCallback(() => {
     mutate({
       link: `/translations/${group}/${editKey}`,
       method: "put",
       body: {
-        newKey: editData.newKey,
-        translations: editData.translations,
+        newKey: editTranslationBody.newKey,
+        translations: editTranslationBody.translations,
       },
     });
     setEditKey(null);
     refetch();
     toast({ description: "Translation resource updated" });
-  };
+  }, [editTranslationBody, editKey, group, mutate, refetch, toast]);
+
+  const handleSelectedKeys = useCallback((keys: string[]) => {
+    setSelectedKeys(keys);
+  }, []);
 
   if (!data) return <>ERROR</>;
   if (error) return <>{error.message}</>;
@@ -108,11 +123,11 @@ export const TranslationsTabPanel = ({
             icon={<IoMdRefresh />}
             onClick={() => refetch()}
           />
-          {!isAddingMode ? (
-            <Button onClick={() => setIsAddingMode(true)}>Add Resource</Button>
+          {!addMode ? (
+            <Button onClick={() => setAddMode(true)}>Add Resource</Button>
           ) : (
             <>
-              <Button onClick={() => setIsAddingMode(false)}>Cancel</Button>
+              <Button onClick={() => setAddMode(false)}>Cancel</Button>
               <Button
                 onClick={() => {
                   mutate({
@@ -120,7 +135,7 @@ export const TranslationsTabPanel = ({
                     method: "post",
                     body: addTranslationBody,
                   });
-                  setIsAddingMode(false);
+                  setAddMode(false);
                   refetch();
                   toast({ description: "Translation resource added" });
                 }}
@@ -152,157 +167,19 @@ export const TranslationsTabPanel = ({
         </ButtonGroup>
         <SearchInput size="sm" width="auto" />
       </Flex>
-      <DataTable<TableData>
-        columns={[
-          {
-            accessorKey: "key",
-            header: LABELS.KEY,
-          },
-          ...languages.map((lang) => ({
-            accessorKey: lang,
-            header: lang.toUpperCase(),
-          })),
-          {
-            accessorKey: "actions",
-            header: LABELS.ACTIONS,
-          },
-        ]}
-        data={
-          isAddingMode
-            ? [
-                {
-                  key: (
-                    <Input
-                      placeholder="Enter key"
-                      onChange={(e) => {
-                        setAddTranslationBody({
-                          ...addTranslationBody,
-                          key: e.target.value,
-                        });
-                      }}
-                    />
-                  ),
-                  ...languages.reduce(
-                    (acc, lang) => ({
-                      ...acc,
-                      [lang]: (
-                        <Input
-                          placeholder={`Enter ${lang} translation`}
-                          onChange={(e) => {
-                            setAddTranslationBody({
-                              ...addTranslationBody,
-                              translations: [
-                                ...addTranslationBody.translations.filter(
-                                  (t) => t.language !== lang
-                                ),
-                                {
-                                  language: lang,
-                                  value: e.target.value,
-                                },
-                              ],
-                            });
-                          }}
-                        />
-                      ),
-                    }),
-                    {}
-                  ),
-                },
-                ...Object.entries(translations).map(([key, value]) => ({
-                  key,
-                  ...value,
-                })),
-              ]
-            : Object.entries(translations).map(([key, value]) =>
-                editKey === key
-                  ? {
-                      key: (
-                        <Input
-                          value={editData.newKey}
-                          onChange={(e) => {
-                            setEditData({
-                              ...editData,
-                              newKey: e.target.value,
-                            });
-                          }}
-                        />
-                      ),
-                      ...languages.reduce(
-                        (acc, lang) => ({
-                          ...acc,
-                          [lang]: (
-                            <Input
-                              value={
-                                editData.translations.find(
-                                  (t) => t.language === lang
-                                )?.value ?? ""
-                              }
-                              onChange={(e) => {
-                                setEditData({
-                                  ...editData,
-                                  translations: [
-                                    ...editData.translations.filter(
-                                      (t) => t.language !== lang
-                                    ),
-                                    {
-                                      language: lang,
-                                      value: e.target.value,
-                                    },
-                                  ],
-                                });
-                              }}
-                            />
-                          ),
-                        }),
-                        {}
-                      ),
-                      actions: (
-                        <ButtonGroup size="sm">
-                          <Button onClick={() => setEditKey(null)}>
-                            {LABELS.CANCEL}
-                          </Button>
-                          <Button onClick={handleSaveEdit}>Save</Button>
-                        </ButtonGroup>
-                      ),
-                    }
-                  : {
-                      key,
-                      ...value,
-                      actions: (
-                        <Button
-                          size="sm"
-                          onClick={() => {
-                            setEditKey(key);
-                            setEditData({
-                              newKey: key,
-                              translations: Object.entries(value).map(
-                                ([language, value]) => ({
-                                  language,
-                                  value,
-                                })
-                              ),
-                            });
-                          }}
-                        >
-                          {LABELS.EDIT}
-                        </Button>
-                      ),
-                    }
-              )
-        }
-        enableMultiSort={false}
-        isSelectable
-        isSortable
-        onSelectedRowsChange={(selected) => {
-          const newSelectedKeys = selected.map(
-            (index) => Object.keys(translations)[Number(index)]
-          );
-          if (
-            JSON.stringify(newSelectedKeys) !== JSON.stringify(selectedKeys)
-          ) {
-            setSelectedKeys(newSelectedKeys);
-          }
-        }}
+      <TranslationsTable
+        addMode={addMode}
+        addTranslationBody={addTranslationBody}
+        editKey={editKey}
+        editTranslationBody={editTranslationBody}
+        languages={languages}
+        selectedKeys={selectedKeys}
+        translations={translations}
+        handleAddTranslationBody={handleAddTranslationBody}
+        handleEditKey={handleEditKey}
+        handleEditTranslationBody={handleEditTranslationBody}
+        handleSaveEdit={handleSaveEdit}
+        handleSelectedKeys={handleSelectedKeys}
       />
     </TabPanel>
   );
