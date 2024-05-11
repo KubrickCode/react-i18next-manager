@@ -1,9 +1,9 @@
-import { ButtonGroup, Flex, IconButton, Input } from "@chakra-ui/react";
+import { ButtonGroup, Flex, Input } from "@chakra-ui/react";
 import { SearchInput } from "@saas-ui/react";
 import { ReactNode, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
 
-import { Button } from "~/core/button";
+import { Button, IconButton } from "~/core/button";
 import { LABELS } from "~/core/constants";
 import { DataTable } from "~/core/data-table";
 import { TabPanel } from "~/core/tab";
