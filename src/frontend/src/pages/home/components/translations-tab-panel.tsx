@@ -10,6 +10,7 @@ import { TabPanel } from "~/core/tab";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { Input } from "~/core/input";
 import { DeleteModal, ModalToggle } from "~/core/modal";
+import { Text } from "~/core/text";
 
 type TranslationMap = {
   [language: string]: string;
@@ -128,11 +129,16 @@ export const TranslationsTabPanel = ({
             <ModalToggle
               modal={DeleteModal}
               modalProps={{
+                body: (
+                  <Text>
+                    Are you sure you want to delete these translations?
+                  </Text>
+                ),
                 link: `/translations/${group}/${selectedKeys.join(",")}`,
                 onComplete() {
                   setSelectedKeys([]);
-                  refetch();
                 },
+                refetchQueryKeys: [[queryKey]],
               }}
             >
               <Button>{LABELS.DELETE}</Button>
