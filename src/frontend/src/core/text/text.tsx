@@ -1,3 +1,10 @@
-import { Text as ChakraText, TextProps } from "@chakra-ui/react";
+import {
+  Text as ChakraText,
+  TextProps,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
-export const Text = (props: TextProps) => <ChakraText {...props} />;
+export const Text = (props: TextProps) => {
+  const fontColor = useColorModeValue("black", "white");
+  return <ChakraText color={fontColor} {...props} />;
+};

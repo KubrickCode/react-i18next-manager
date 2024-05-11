@@ -1,10 +1,5 @@
 import { IoIosSettings } from "react-icons/io";
-import {
-  IconButton,
-  Text,
-  useColorMode,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { IconButton, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { MdDarkMode, MdPeopleOutline } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import { FaLanguage } from "react-icons/fa";
@@ -17,6 +12,7 @@ import {
   MenuModalToggle,
 } from "~/core/menu";
 import { LABELS } from "~/core/constants";
+import { Text } from "~/core/text";
 
 import { ConfigManagementModal } from "./components/config-management-modal";
 

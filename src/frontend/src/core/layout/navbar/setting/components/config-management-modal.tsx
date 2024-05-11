@@ -1,4 +1,4 @@
-import { ButtonGroup, Flex, IconButton, Text, VStack } from "@chakra-ui/react";
+import { ButtonGroup, Flex, IconButton, VStack } from "@chakra-ui/react";
 import { useModals } from "@saas-ui/react";
 import _ from "lodash";
 import { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import { LABELS } from "~/core/constants";
 import { Modal, ModalBody, ModalHeader, ModalProps } from "~/core/modal";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { Input } from "~/core/input";
+import { Text } from "~/core/text";
 
 type Config = {
   id?: number;
@@ -56,7 +57,9 @@ export const ConfigManagementModal = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalHeader>{`Manage ${upperFirstConfigKind}`}</ModalHeader>
+      <ModalHeader>
+        <Text>{`Manage ${upperFirstConfigKind}`}</Text>
+      </ModalHeader>
       <ModalBody>
         <VStack>
           {configs
