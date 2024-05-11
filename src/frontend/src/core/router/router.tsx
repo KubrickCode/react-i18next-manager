@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { HomePage, NotFoundPage } from "~/pages";
-import { Layout } from "~/core/layout";
+import { Layout } from "~/layout";
 
 export const Router = () => (
   <BrowserRouter>
