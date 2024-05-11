@@ -1,5 +1,4 @@
 import { ButtonGroup, Flex, IconButton, VStack } from "@chakra-ui/react";
-import { useModals } from "@saas-ui/react";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
@@ -7,7 +6,14 @@ import { FaPlus } from "react-icons/fa6";
 
 import { Button } from "~/core/button";
 import { LABELS } from "~/core/constants";
-import { Modal, ModalBody, ModalHeader, ModalProps } from "~/core/modal";
+import {
+  DeleteModal,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalProps,
+  ModalToggle,
+} from "~/core/modal";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { Input } from "~/core/input";
 import { Text } from "~/core/text";
@@ -32,7 +38,6 @@ export const ConfigManagementModal = ({
     `/config/${configKind}`,
     `get${upperFirstConfigKind}InModal`
   );
-  const modals = useModals();
   const { mutate } = useMutation({
     refetchQueryKeys: [
       [`get${upperFirstConfigKind}InModal`],
@@ -74,31 +79,24 @@ export const ConfigManagementModal = ({
                     setConfigs(newConfigs);
                   }}
                 />
-                <IconButton
-                  aria-label={LABELS.DELETE}
-                  icon={<FaTrash />}
-                  onClick={() => {
-                    modals.confirm({
-                      title: <Text>Delete Confirmation</Text>,
-                      body: (
-                        <Text>
-                          Are you sure you want to delete this{" "}
-                          {configKind === "groups" ? "group" : "language"}?
-                        </Text>
-                      ),
-                      confirmProps: {
-                        colorScheme: "red",
-                        children: LABELS.DELETE,
-                      },
-                      onConfirm: () => {
-                        mutate({
-                          link: `/config/${configKind}/${config.prevName}`,
-                          method: "delete",
-                        });
-                      },
-                    });
+                <ModalToggle
+                  modal={DeleteModal}
+                  modalProps={{
+                    body: (
+                      <Text>
+                        Are you sure you want to delete this{" "}
+                        {configKind === "groups" ? "group" : "language"}?
+                      </Text>
+                    ),
+                    link: `/config/${configKind}/${config.prevName}`,
+                    refetchQueryKeys: [
+                      [`get${upperFirstConfigKind}InModal`],
+                      [`get${upperFirstConfigKind}`],
+                    ],
                   }}
-                />
+                >
+                  <IconButton aria-label={LABELS.DELETE} icon={<FaTrash />} />
+                </ModalToggle>
               </Flex>
             ))}
           {configs
@@ -152,7 +150,7 @@ export const ConfigManagementModal = ({
             marginTop={5}
             width="full"
           >
-            <Button onClick={() => modals.closeAll()}>Close</Button>
+            <Button onClick={onClose}>Close</Button>
             <Button
               colorScheme="primary"
               onClick={() =>

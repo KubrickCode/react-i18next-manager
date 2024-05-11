@@ -3,6 +3,7 @@ export const LABELS = {
   CANCEL: "Cancel",
   CLOSE: "Close",
   DELETE: "Delete",
+  DELETE_CONFIRMATION: "Delete Confirmation",
   EDIT: "Edit",
   GROUP_MANAGEMENT: "Group Management",
   KEY: "Key",

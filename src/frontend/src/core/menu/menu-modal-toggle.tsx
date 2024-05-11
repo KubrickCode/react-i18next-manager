@@ -1,19 +1,11 @@
-import { Box, Flex, FlexProps, HStack, Icon } from "@chakra-ui/react";
+import { Box, Flex, HStack, Icon } from "@chakra-ui/react";
 import { createElement } from "react";
 import { IconType } from "react-icons";
 
 import { useModalToggle } from "~/core/modal";
 
 import { MenuItem, MenuItemProps } from "./menu-item";
-
-type ModalToggleProps<Modal extends React.ElementType = React.ElementType> =
-  FlexProps & {
-    modal: Modal;
-    modalProps?: Omit<
-      React.ComponentPropsWithoutRef<Modal>,
-      "isOpen" | "onClose"
-    >;
-  };
+import { ModalToggleProps } from "../modal/modal-toggle";
 
 export type MenuModalToggleProps = Omit<MenuItemProps, "icon"> &
   Pick<ModalToggleProps, "modal" | "modalProps"> & {
