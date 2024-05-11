@@ -98,11 +98,10 @@ export const TranslationsTabPanel = ({
   return (
     <TabPanel>
       <Flex gap={2}>
-        <ButtonGroup size="sm">
+        <ButtonGroup alignItems="center" marginBottom={3} size="sm">
           <IconButton
             aria-label="refresh"
             icon={<IoMdRefresh />}
-            marginBottom={3}
             onClick={() => refetch()}
           />
           {!isAddingMode ? (
@@ -285,7 +284,7 @@ export const TranslationsTabPanel = ({
         isSortable
         onSelectedRowsChange={(selected) => {
           const newSelectedKeys = selected.map(
-            (index) => Object.keys(translations.keys)[Number(index)]
+            (index) => Object.keys(translations)[Number(index)]
           );
           if (
             JSON.stringify(newSelectedKeys) !== JSON.stringify(selectedKeys)
