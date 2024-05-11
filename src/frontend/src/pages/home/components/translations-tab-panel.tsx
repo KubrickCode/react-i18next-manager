@@ -9,6 +9,7 @@ import { DataTable } from "~/core/data-table";
 import { TabPanel } from "~/core/tab";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { Input } from "~/core/input";
+import { DeleteModal, ModalToggle } from "~/core/modal";
 
 type TranslationMap = {
   [language: string]: string;
@@ -125,18 +126,18 @@ export const TranslationsTabPanel = ({
             </>
           )}
           {selectedKeys.length > 0 && (
-            <Button
-              onClick={() => {
-                mutate({
-                  link: `/translations/${group}/${selectedKeys.join(",")}`,
-                  method: "delete",
-                });
-                setSelectedKeys([]);
-                refetch();
+            <ModalToggle
+              modal={DeleteModal}
+              modalProps={{
+                link: `/translations/${group}/${selectedKeys.join(",")}`,
+                onComplete() {
+                  setSelectedKeys([]);
+                  refetch();
+                },
               }}
             >
-              {LABELS.DELETE}
-            </Button>
+              <Button>{LABELS.DELETE}</Button>
+            </ModalToggle>
           )}
         </ButtonGroup>
         <SearchInput size="sm" width="auto" />

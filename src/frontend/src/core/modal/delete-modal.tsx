@@ -12,12 +12,14 @@ import { Text } from "../text";
 type DeleteModelProps = ModalProps & {
   body: ReactNode;
   link: string;
+  onComplete?: () => void;
   refetchQueryKeys?: QueryKey[];
 };
 
 export const DeleteModal = ({
   body,
   link,
+  onComplete,
   refetchQueryKeys,
   ...modalProps
 }: DeleteModelProps) => {
@@ -39,6 +41,7 @@ export const DeleteModal = ({
               link,
               method: "delete",
             });
+            onComplete?.();
           }}
         >
           {LABELS.DELETE}
