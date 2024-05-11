@@ -1,4 +1,4 @@
-import { ButtonGroup, Flex, Input } from "@chakra-ui/react";
+import { ButtonGroup, Flex } from "@chakra-ui/react";
 import { SearchInput } from "@saas-ui/react";
 import { ReactNode, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
@@ -8,6 +8,7 @@ import { LABELS } from "~/core/constants";
 import { DataTable } from "~/core/data-table";
 import { TabPanel } from "~/core/tab";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
+import { Input } from "~/core/input";
 
 type TranslationMap = {
   [language: string]: string;
