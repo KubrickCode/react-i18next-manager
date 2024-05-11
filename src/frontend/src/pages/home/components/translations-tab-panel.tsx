@@ -11,6 +11,7 @@ import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { Input } from "~/core/input";
 import { DeleteModal, ModalToggle } from "~/core/modal";
 import { Text } from "~/core/text";
+import { useToast } from "~/core/toast";
 
 type TranslationMap = {
   [language: string]: string;
@@ -66,12 +67,13 @@ export const TranslationsTabPanel = ({
       translations: [],
     });
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-
   const [editKey, setEditKey] = useState<string | null>(null);
   const [editData, setEditData] = useState<EditTranslationBody>({
     newKey: "",
     translations: [],
   });
+
+  const toast = useToast();
 
   const { mutate } = useMutation({
     refetchQueryKeys: [[queryKey]],
@@ -88,6 +90,7 @@ export const TranslationsTabPanel = ({
     });
     setEditKey(null);
     refetch();
+    toast({ description: "Translation resource updated" });
   };
 
   if (!data) return <>ERROR</>;
@@ -119,6 +122,7 @@ export const TranslationsTabPanel = ({
                   });
                   setIsAddingMode(false);
                   refetch();
+                  toast({ description: "Translation resource added" });
                 }}
               >
                 {LABELS.SAVE}
@@ -137,6 +141,7 @@ export const TranslationsTabPanel = ({
                 link: `/translations/${group}/${selectedKeys.join(",")}`,
                 onComplete() {
                   setSelectedKeys([]);
+                  toast({ description: "Translation resources deleted" });
                 },
                 refetchQueryKeys: [[queryKey]],
               }}
