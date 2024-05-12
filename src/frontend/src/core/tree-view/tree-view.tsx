@@ -1,9 +1,11 @@
 import { Tree, NodeRendererProps } from "react-arborist";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
-import { Flex } from "@chakra-ui/react";
+import { Flex, VStack } from "@chakra-ui/react";
 
 import { Button } from "../button";
 import { Text } from "../text";
+import { useState } from "react";
+import { SearchInput } from "@saas-ui/react";
 
 export type TreeData = {
   id: string;
@@ -17,17 +19,26 @@ type TreeViewProps = {
 };
 
 export const GroupTreeView = ({ data, onNodeSelect }: TreeViewProps) => {
+  const [term, setTerm] = useState("");
+
   return (
-    <Tree
-      initialData={data}
-      openByDefault={false}
-      height={1000}
-      indent={24}
-      onSelect={(nodes) => onNodeSelect(nodes[0]?.data.id || null)}
-      rowHeight={45}
-    >
-      {Node}
-    </Tree>
+    <VStack>
+      <SearchInput onChange={(e) => setTerm(e.target.value)} size="sm" />
+      <Tree
+        initialData={data}
+        openByDefault={false}
+        height={1000}
+        indent={24}
+        onSelect={(nodes) => onNodeSelect(nodes[0]?.data.id || null)}
+        rowHeight={45}
+        searchTerm={term}
+        searchMatch={(node, term) =>
+          node.data.name.toLowerCase().includes(term.toLowerCase())
+        }
+      >
+        {Node}
+      </Tree>
+    </VStack>
   );
 };
 
