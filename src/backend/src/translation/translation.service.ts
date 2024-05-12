@@ -39,7 +39,8 @@ export class TranslationService {
 
     const transformTranslations = (
       data: RawTranslationData,
-      languages: string[]
+      languages: string[],
+      group: string
     ): Translations => {
       const result: Translations = {};
 
@@ -47,8 +48,8 @@ export class TranslationService {
         if (!data[language]) return;
 
         Object.entries(data[language]).forEach(([key, value]) => {
-          const [_, grp, property] = key.split(".");
-          if (grp === group) {
+          if (key.startsWith(`ui.${group}.`)) {
+            const property = key.slice(`ui.${group}.`.length);
             if (!result[property]) {
               result[property] = {};
             }
@@ -69,7 +70,11 @@ export class TranslationService {
       return paginatedResult;
     };
 
-    const translations = transformTranslations(rawTranslations, languages);
+    const translations = transformTranslations(
+      rawTranslations,
+      languages,
+      group
+    );
     const count = Object.keys(translations).length;
     const hasPrevPage = skip > 0;
     const hasNextPage = skip + take < count;

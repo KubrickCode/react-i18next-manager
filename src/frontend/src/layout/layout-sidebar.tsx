@@ -7,6 +7,7 @@ import { Button } from "~/core/button";
 import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
 import { LABELS } from "~/core/constants";
 import { SettingButton } from "./setting";
+import { useQuery } from "~/core/tanstack-react-query";
 
 type Group = {
   key: string;
@@ -16,39 +17,11 @@ type Group = {
 export const LayoutSidebar = () => {
   const { handleSelectedGroup } = useLayoutContext();
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");
-  const groups: Group[] = [
-    {
-      key: "common",
-    },
-    {
-      key: "title",
-      children: [{ key: "main" }],
-    },
-    {
-      key: "error",
-      children: [
-        {
-          key: "field",
-        },
-        {
-          key: "server",
-          children: [
-            {
-              key: "internal",
-            },
-            {
-              key: "external",
-            },
-            {
-              key: "timeout",
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const { data } = useQuery<Group[]>("/config/groups", "getGroups");
 
-  const treeData = convertGroupsToTreeData(groups);
+  if (!data) return null;
+
+  const treeData = convertGroupsToTreeData(data);
 
   return (
     <Sidebar width="20rem">

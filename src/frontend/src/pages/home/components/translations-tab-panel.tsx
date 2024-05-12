@@ -5,7 +5,6 @@ import { IoMdRefresh } from "react-icons/io";
 
 import { Button, IconButton } from "~/core/button";
 import { LABELS } from "~/core/constants";
-import { TabPanel } from "~/core/tab";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { DeleteModal, ModalToggle } from "~/core/modal";
 import { Text } from "~/core/text";
@@ -115,7 +114,7 @@ export const TranslationsTabPanel = ({
   const { translations } = data;
 
   return (
-    <TabPanel>
+    <>
       <Flex gap={2}>
         <ButtonGroup alignItems="center" marginBottom={3} size="sm">
           <IconButton
@@ -181,6 +180,6 @@ export const TranslationsTabPanel = ({
         handleSaveEdit={handleSaveEdit}
         handleSelectedKeys={handleSelectedKeys}
       />
-    </TabPanel>
+    </>
   );
 };

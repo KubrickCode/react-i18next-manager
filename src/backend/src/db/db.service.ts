@@ -9,8 +9,13 @@ export type TranslationData = {
 };
 
 export type Config = {
-  groups: string[];
+  groups: Group[];
   languages: string[];
+};
+
+export type Group = {
+  key: string;
+  children?: Group[];
 };
 
 @Service()
@@ -104,7 +109,7 @@ export class DBService {
     this.saveData();
   }
 
-  saveGroups(groups: string[]): Promise<void> {
+  saveGroups(groups: Group[]): Promise<void> {
     this.config.groups = groups;
 
     const data = JSON.stringify(this.config, null, 2);
