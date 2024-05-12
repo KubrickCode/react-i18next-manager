@@ -1,5 +1,6 @@
 export const LABELS = {
   ACTIONS: "Actions",
+  APP_TITLE: "I18n Studio",
   CANCEL: "Cancel",
   CLOSE: "Close",
   DELETE: "Delete",
@@ -8,7 +9,6 @@ export const LABELS = {
   GROUP_MANAGEMENT: "Group Management",
   KEY: "Key",
   LANGUAGE_MANAGEMENT: "Language Management",
-  NAVBAR: "I18n Studio",
   PLUS: "plus",
   SAVE: "Save",
 };
