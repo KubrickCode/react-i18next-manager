@@ -48,7 +48,7 @@ export const LayoutSidebarGroupTreeView = () => {
   );
 };
 
-type TreeData = {
+export type TreeData = {
   id: string;
   name: string;
   children?: TreeData[];

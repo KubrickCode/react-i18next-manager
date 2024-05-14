@@ -1,4 +1,4 @@
-import { TreeData } from "~/core/tree";
+import { TreeData } from "./sidebar/layout-sidebar-group-treeview";
 
 type Group = {
   key: string;
