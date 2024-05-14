@@ -1,4 +1,4 @@
-import { TreeData } from "~/core/tree-view";
+import { TreeData } from "~/core/tree";
 
 type Group = {
   key: string;

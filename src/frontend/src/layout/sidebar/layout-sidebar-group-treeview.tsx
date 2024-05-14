@@ -1,37 +1,41 @@
-import { Tree, NodeRendererProps } from "react-arborist";
-import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
-import { Box, Flex, VStack } from "@chakra-ui/react";
-
-import { IconButton } from "../button";
-import { Text } from "../text";
 import { useState } from "react";
+import { Box, Flex, VStack } from "@chakra-ui/react";
 import { SearchInput } from "@saas-ui/react";
-import { Input } from "../input";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
+import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
-export type TreeData = {
-  id: string;
-  name: string;
-  children?: TreeData[];
+import { useQuery } from "~/core/tanstack-react-query";
+import { NodeRendererProps, Tree } from "~/core/tree";
+import { Input } from "~/core/input";
+import { Text } from "~/core/text";
+import { IconButton } from "~/core/button";
+
+import { useLayoutContext } from "../context";
+import { convertGroupsToTreeData } from "../utils";
+
+type Group = {
+  key: string;
+  children?: Group[];
 };
 
-type TreeViewProps = {
-  data: TreeData[];
-  onNodeSelect: (key: string | null) => void;
-};
-
-export const GroupTreeView = ({ data, onNodeSelect }: TreeViewProps) => {
+export const LayoutSidebarGroupTreeView = () => {
+  const { handleSelectedGroup } = useLayoutContext();
+  const { data } = useQuery<Group[]>("/config/groups", "getGroups");
   const [term, setTerm] = useState("");
+
+  if (!data) return null;
+
+  const treeData = convertGroupsToTreeData(data);
 
   return (
     <VStack>
       <SearchInput onChange={(e) => setTerm(e.target.value)} size="sm" />
       <Tree
-        initialData={data}
+        initialData={treeData}
         openByDefault={false}
         height={1000}
         indent={24}
-        onSelect={(nodes) => onNodeSelect(nodes[0]?.data.id || null)}
+        onSelect={(nodes) => handleSelectedGroup(nodes[0]?.data.id || null)}
         rowHeight={45}
         searchTerm={term}
         searchMatch={(node, term) =>
@@ -42,6 +46,12 @@ export const GroupTreeView = ({ data, onNodeSelect }: TreeViewProps) => {
       </Tree>
     </VStack>
   );
+};
+
+type TreeData = {
+  id: string;
+  name: string;
+  children?: TreeData[];
 };
 
 const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
