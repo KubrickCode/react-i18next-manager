@@ -3,7 +3,7 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 import { AppShell } from "@saas-ui/react";
 
 import { LayoutContextProvider } from "./context";
-import { LayoutSidebar } from "./layout-sidebar";
+import { LayoutSidebar } from "./sidebar";
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const bgColor = useColorModeValue("white", "gray.800");

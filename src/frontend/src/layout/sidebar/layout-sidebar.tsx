@@ -1,12 +1,12 @@
 import { Sidebar, SidebarSection } from "~/core/sidebar";
 import { GroupTreeView } from "~/core/tree-view";
 
-import { useLayoutContext } from "./context";
-import { convertGroupsToTreeData } from "./utils";
+import { useLayoutContext } from "../context";
+import { convertGroupsToTreeData } from "../utils";
 import { Button } from "~/core/button";
 import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
 import { LABELS } from "~/core/constants";
-import { SettingButton } from "./setting";
+import { SettingButton } from "./setting-button";
 import { useQuery } from "~/core/tanstack-react-query";
 
 type Group = {
