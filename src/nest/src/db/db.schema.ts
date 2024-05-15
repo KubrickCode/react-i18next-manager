@@ -4,6 +4,6 @@ type Locale = {
   position: number;
 };
 
-export type Locales = {
+export type DBSchema = {
   locales: Locale[];
 };

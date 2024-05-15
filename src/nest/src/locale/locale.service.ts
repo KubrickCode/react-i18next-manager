@@ -22,7 +22,7 @@ export class LocaleService {
   }
 
   async addLocale({ label, position }: AddLocaleParams) {
-    const { locales } = await this.localeRepository.getLocales();
+    const locales = await this.localeRepository.getLocales();
     return await this.localeRepository.addLocale({
       locales,
       newLocale: {
@@ -34,7 +34,7 @@ export class LocaleService {
   }
 
   async editLocale({ id, newLabel, newPosition }: EditLocaleParams) {
-    const { locales } = await this.localeRepository.getLocales();
+    const locales = await this.localeRepository.getLocales();
     const locale = locales.find((locale) => locale.id === id);
 
     return await this.localeRepository.editLocale({
@@ -47,7 +47,7 @@ export class LocaleService {
   }
 
   async deleteLocale({ id }: { id: string }) {
-    const { locales } = await this.localeRepository.getLocales();
+    const locales = await this.localeRepository.getLocales();
     const localeIndex = locales.findIndex((locale) => locale.id === id);
 
     return await this.localeRepository.deleteLocale({ localeIndex, locales });
