@@ -30,7 +30,7 @@ export class LocaleRepository {
   }
 
   async addLocale(newLocale: AddLocaleParams) {
-    const locales = this.db.getState().locales;
+    const { locales } = this.db.getState();
     locales.push(newLocale);
     this.db.write();
   }
