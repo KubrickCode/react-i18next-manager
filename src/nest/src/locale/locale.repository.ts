@@ -44,4 +44,14 @@ export class LocaleRepository {
 
     this.db.write();
   }
+
+  async deleteLocale({ id }: { id: string }) {
+    const { locales } = this.db.getState();
+    const localeIndex = locales.findIndex((locale) => locale.id === id);
+
+    if (localeIndex === -1) return;
+
+    locales.splice(localeIndex, 1);
+    this.db.write();
+  }
 }

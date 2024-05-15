@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { LocaleService } from './locale.service';
 import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decorator';
 import { GetLocalesResDto } from './dto/get-locales.dto';
@@ -7,6 +15,7 @@ import {
   EditLocaleReqBodyDto,
   EditLocaleReqParamDto,
 } from './dto/edit-locale.dto';
+import { DeleteLocaleReqParamDto } from './dto/delete-locale.dto';
 
 @Controller('locales')
 export class LocaleController {
@@ -32,5 +41,10 @@ export class LocaleController {
       ...param,
       ...body,
     });
+  }
+
+  @Delete(':id')
+  async deleteLocale(@Param() { id }: DeleteLocaleReqParamDto) {
+    return await this.localeService.deleteLocale({ id });
   }
 }

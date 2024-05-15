@@ -36,4 +36,8 @@ export class LocaleService {
       newPosition,
     });
   }
+
+  async deleteLocale({ id }: { id: string }) {
+    return await this.localeRepository.deleteLocale({ id });
+  }
 }
