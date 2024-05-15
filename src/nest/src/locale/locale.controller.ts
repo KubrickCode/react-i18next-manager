@@ -6,7 +6,7 @@ export class LocaleController {
   constructor(private readonly localeService: LocaleService) {}
 
   @Get()
-  async getLocales(): Promise<string[]> {
+  async getLocales() {
     return await this.localeService.getLocales();
   }
 }

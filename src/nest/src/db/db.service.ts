@@ -2,9 +2,9 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as lowdb from 'lowdb';
 import * as FileAsync from 'lowdb/adapters/FileAsync';
 import { join } from 'path';
-import { LocaleData } from './db.schema';
+import { Locales } from './db.schema';
 
-export type LocaleDB = lowdb.LowdbAsync<LocaleData>;
+export type LocaleDB = lowdb.LowdbAsync<Locales>;
 
 @Injectable()
 export class DBService implements OnModuleInit {
@@ -16,7 +16,7 @@ export class DBService implements OnModuleInit {
 
   private async initializeDb() {
     const file = join(__dirname, 'sample/locale.json');
-    const adapter = new FileAsync<LocaleData>(file);
+    const adapter = new FileAsync<Locales>(file);
     this.db = await lowdb(adapter);
     await this.db.defaults({ locales: [] }).write();
   }

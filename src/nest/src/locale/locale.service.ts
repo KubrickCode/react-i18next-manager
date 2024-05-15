@@ -5,7 +5,7 @@ import { LocaleRepository } from './locale.repository';
 export class LocaleService {
   constructor(private readonly localeRepository: LocaleRepository) {}
 
-  async getLocales(): Promise<string[]> {
+  async getLocales() {
     return await this.localeRepository.getLocales();
   }
 }

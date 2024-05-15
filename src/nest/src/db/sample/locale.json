@@ -1,3 +1,19 @@
 {
-  "locales": ["en", "ko"]
+  "locales": [
+    {
+      "id": "9094373b-d01c-4359-bf18-3cc66a04505b",
+      "label": "en",
+      "position": 0
+    },
+    {
+      "id": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+      "label": "ko",
+      "position": 1
+    },
+    {
+      "id": "7c7b0225-e3ac-4eac-9902-8b6fe695f2ab",
+      "label": "zh",
+      "position": 2
+    }
+  ]
 }

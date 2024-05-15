@@ -13,7 +13,7 @@ export class LocaleRepository {
     this.db = await this.dbService.getDb();
   }
 
-  async getLocales(): Promise<string[]> {
+  async getLocales() {
     return this.db.get('locales').value();
   }
 }
