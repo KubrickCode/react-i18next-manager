@@ -5,6 +5,7 @@ import { join } from 'path';
 import { Locales } from './db.schema';
 
 export type LocaleDB = lowdb.LowdbAsync<Locales>;
+export type { Locales };
 
 @Injectable()
 export class DBService implements OnModuleInit {

@@ -22,10 +22,14 @@ export class LocaleService {
   }
 
   async addLocale({ label, position }: AddLocaleParams) {
+    const { locales } = await this.localeRepository.getLocales();
     return await this.localeRepository.addLocale({
-      id: uuidv4(),
-      label,
-      position,
+      locales,
+      newLocale: {
+        id: uuidv4(),
+        label,
+        position,
+      },
     });
   }
 

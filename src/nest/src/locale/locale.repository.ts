@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DBService, LocaleDB } from 'src/db/db.service';
+import { DBService, Locales, LocaleDB } from 'src/db/db.service';
 
 type AddLocaleParams = {
-  id: string;
-  label: string;
-  position: number;
+  locales: Locales['locales'];
+  newLocale: { id: string; label: string; position: number };
 };
 
 type EditLocaleParams = {
@@ -29,8 +28,7 @@ export class LocaleRepository {
     return this.db.getState();
   }
 
-  async addLocale(newLocale: AddLocaleParams) {
-    const { locales } = this.db.getState();
+  async addLocale({ locales, newLocale }: AddLocaleParams) {
     locales.push(newLocale);
     this.db.write();
   }
