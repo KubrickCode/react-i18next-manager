@@ -14,6 +14,6 @@ export class LocaleRepository {
   }
 
   async getLocales() {
-    return this.db.get('locales').value();
+    return this.db.getState();
   }
 }
