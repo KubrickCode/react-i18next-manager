@@ -34,14 +34,22 @@ export class LocaleService {
   }
 
   async editLocale({ id, newLabel, newPosition }: EditLocaleParams) {
+    const { locales } = await this.localeRepository.getLocales();
+    const locale = locales.find((locale) => locale.id === id);
+
     return await this.localeRepository.editLocale({
-      id,
-      newLabel,
-      newPosition,
+      locale,
+      newLocale: {
+        newLabel,
+        newPosition,
+      },
     });
   }
 
   async deleteLocale({ id }: { id: string }) {
-    return await this.localeRepository.deleteLocale({ id });
+    const { locales } = await this.localeRepository.getLocales();
+    const localeIndex = locales.findIndex((locale) => locale.id === id);
+
+    return await this.localeRepository.deleteLocale({ localeIndex, locales });
   }
 }
