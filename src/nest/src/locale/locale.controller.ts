@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -22,17 +24,20 @@ export class LocaleController {
   constructor(private readonly localeService: LocaleService) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   @ResponseDtoInterceptor(GetLocalesResDto)
   async getLocales() {
     return await this.localeService.getLocales();
   }
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   async addLocale(@Body() body: AddLocaleReqBodyDto) {
     return await this.localeService.addLocale(body);
   }
 
   @Patch(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async editLocale(
     @Param() param: EditLocaleReqParamDto,
     @Body() body: EditLocaleReqBodyDto,
@@ -44,6 +49,7 @@ export class LocaleController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async deleteLocale(@Param() { id }: DeleteLocaleReqParamDto) {
     return await this.localeService.deleteLocale({ id });
   }
