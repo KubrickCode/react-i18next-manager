@@ -1,17 +1,17 @@
-type Locale = {
+export type LocaleSchema = {
   id: string;
   label: string;
   position: number;
 };
 
-type Group = {
+export type GroupSchema = {
   id: string;
   label: string;
   position: number;
-  children: Group[];
+  children: GroupSchema[];
 };
 
 export type DBSchema = {
-  locales: Locale[];
-  groups: Group[];
+  locales: LocaleSchema[];
+  groups: GroupSchema[];
 };
