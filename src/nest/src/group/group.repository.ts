@@ -8,6 +8,11 @@ type AddGroupParams = {
   parentId: UUID | null;
 };
 
+type EditGroupLabelParams = {
+  id: UUID;
+  newLabel: string;
+};
+
 @Injectable()
 export class GroupRepository {
   private db: DB;
@@ -30,14 +35,12 @@ export class GroupRepository {
       id: uuidv4(),
       label,
       position: 0,
+      children: [],
     };
 
     if (parentId) {
       const parentGroup = this.findGroupById(groups, parentId);
       if (parentGroup) {
-        if (!parentGroup.children) {
-          parentGroup.children = [];
-        }
         newGroup.position = parentGroup.children.length;
         parentGroup.children.push(newGroup);
       } else {
@@ -52,6 +55,14 @@ export class GroupRepository {
     return newGroup;
   }
 
+  async editGroupLabel({ id, newLabel }: EditGroupLabelParams) {
+    const groups = this.db.get('groups').value();
+    const group = this.findGroupById(groups, id);
+
+    group.label = newLabel;
+    this.db.write();
+  }
+
   async deleteGroup({ id }: { id: UUID }) {
     const groups = this.db.get('groups').value();
     this.findGroupAndDelete({ id, groups });
@@ -59,6 +70,7 @@ export class GroupRepository {
   }
 
   private findGroupById(groups: GroupSchema[], id: UUID): GroupSchema | null {
+    console.log(groups);
     for (const group of groups) {
       if (group.id === id) return group;
       const found = this.findGroupById(group.children, id);

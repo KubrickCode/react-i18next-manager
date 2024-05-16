@@ -8,7 +8,7 @@ export type GroupSchema = {
   id: string;
   label: string;
   position: number;
-  children?: GroupSchema[];
+  children: GroupSchema[];
 };
 
 export type DBSchema = {

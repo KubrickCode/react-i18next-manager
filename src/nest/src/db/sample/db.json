@@ -30,36 +30,42 @@
             {
               "id": "100d4368-9688-418d-9e58-691946ab545f",
               "label": "form",
-              "position": 0
+              "position": 0,
+              "children": []
             },
             {
               "id": "bbf2cea5-8141-425b-8854-b9c3d545f46f",
               "label": "section",
-              "position": 1
+              "position": 1,
+              "children": []
             }
           ]
         },
         {
           "id": "1fca48c7-ebb5-4369-9654-2c880d022a4a",
           "label": "tooltip",
-          "position": 1
+          "position": 1,
+          "children": []
         }
       ]
     },
     {
       "id": "663fa135-10a8-4d40-8c76-5a7be31c3d26",
       "label": "error",
-      "position": 0
+      "position": 0,
+      "children": []
     },
     {
       "id": "6dbee307-7275-4cbb-b467-cafacdda50d0",
       "label": "menu",
-      "position": 0
+      "position": 0,
+      "children": []
     },
     {
       "id": "45a13d2e-b2b8-49dd-8693-dfc13e7469f7",
       "label": "title",
-      "position": 0
+      "position": 0,
+      "children": []
     }
   ]
 }

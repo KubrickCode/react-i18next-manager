@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { GroupService } from './group.service';
@@ -13,6 +14,10 @@ import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decora
 import { GetGroupsResDto } from './dto/get-groups.dto';
 import { DeleteGroupReqParamDto } from './dto/delete-group.dto';
 import { AddGroupReqBodyDto } from './dto/add-group.dto';
+import {
+  EditGroupLabelReqBodyDto,
+  EditGroupLabelReqParamDto,
+} from './dto/edit-group-label.dto';
 
 @Controller('groups')
 export class GroupController {
@@ -29,6 +34,18 @@ export class GroupController {
   @HttpCode(HttpStatus.CREATED)
   async addLocale(@Body() body: AddGroupReqBodyDto) {
     return await this.groupService.addGroup(body);
+  }
+
+  @Patch(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async editLocale(
+    @Param() param: EditGroupLabelReqParamDto,
+    @Body() body: EditGroupLabelReqBodyDto,
+  ) {
+    return await this.groupService.editGroupLabel({
+      ...param,
+      ...body,
+    });
   }
 
   @Delete(':id')
