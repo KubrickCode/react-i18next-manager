@@ -13,10 +13,6 @@ type EditLocaleParams = {
   newPosition?: number;
 };
 
-type DeleteLocaleParams = {
-  id: string;
-};
-
 @Injectable()
 export class LocaleRepository {
   private db: DB;
@@ -49,7 +45,7 @@ export class LocaleRepository {
     this.db.write();
   }
 
-  async deleteLocale({ id }: DeleteLocaleParams) {
+  async deleteLocale({ id }: { id: string }) {
     const locales = this.db.get('locales').value();
     const localeIndex = locales.findIndex((locale) => locale.id === id);
 

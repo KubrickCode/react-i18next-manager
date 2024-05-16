@@ -1,10 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DBService, DB, DBSchema } from 'src/db/db.service';
 
-type DeleteGroupParams = {
-  id: string;
-};
-
 @Injectable()
 export class GroupRepository {
   private db: DB;
@@ -21,7 +17,7 @@ export class GroupRepository {
     return this.db.get('groups').value();
   }
 
-  async deleteGroup({ id }: DeleteGroupParams) {
+  async deleteGroup({ id }: { id: string }) {
     const groups = this.db.get('groups').value();
     this.findGroupAndDelete({ id, groups });
     this.db.write();
