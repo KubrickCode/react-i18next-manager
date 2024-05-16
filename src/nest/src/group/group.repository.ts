@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { DBService, DB } from 'src/db/db.service';
+import { DBService, DB, DBSchema } from 'src/db/db.service';
+
+type DeleteGroupParams = {
+  groupId: string;
+  groups: DBSchema['groups'];
+};
 
 @Injectable()
 export class GroupRepository {
@@ -15,5 +20,33 @@ export class GroupRepository {
 
   async getGroups() {
     return this.db.get('groups').value();
+  }
+
+  async deleteGroup(params: DeleteGroupParams) {
+    this.findGroupAndDelete(params);
+    this.db.write();
+  }
+
+  private findGroupAndDelete({
+    groupId,
+    groups,
+  }: {
+    groupId: string;
+    groups: DBSchema['groups'];
+  }) {
+    const index = groups.findIndex((group) => group.id === groupId);
+
+    if (index !== -1) {
+      groups.splice(index, 1);
+    }
+
+    for (const group of groups) {
+      if (group.children) {
+        this.findGroupAndDelete({
+          groupId,
+          groups: group.children,
+        });
+      }
+    }
   }
 }
