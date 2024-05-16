@@ -1,22 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { DBService, DBSchema, DB } from 'src/db/db.service';
+import { DBService, DB } from 'src/db/db.service';
+import { v4 as uuidv4 } from 'uuid';
 
 type AddLocaleParams = {
-  locales: DBSchema['locales'];
-  newLocale: { id: string; label: string; position: number };
+  label: string;
+  position: number;
 };
 
 type EditLocaleParams = {
-  locale: DBSchema['locales'][number];
-  newLocale: {
-    newLabel?: string;
-    newPosition?: number;
-  };
+  id: string;
+  newLabel?: string;
+  newPosition?: number;
 };
 
 type DeleteLocaleParams = {
-  localeIndex: number;
-  locales: DBSchema['locales'];
+  id: string;
 };
 
 @Injectable()
@@ -35,22 +33,26 @@ export class LocaleRepository {
     return this.db.get('locales').value();
   }
 
-  async addLocale({ locales, newLocale }: AddLocaleParams) {
-    locales.push(newLocale);
+  async addLocale({ label, position }: AddLocaleParams) {
+    const locales = this.db.get('locales').value();
+    locales.push({ id: uuidv4(), label, position });
     this.db.write();
   }
 
-  async editLocale({
-    locale,
-    newLocale: { newLabel, newPosition },
-  }: EditLocaleParams) {
+  async editLocale({ id, newLabel, newPosition }: EditLocaleParams) {
+    const locales = this.db.get('locales').value();
+    const locale = locales.find((locale) => locale.id === id);
+
     typeof newLabel === 'string' && (locale.label = newLabel);
     typeof newPosition === 'number' && (locale.position = newPosition);
 
     this.db.write();
   }
 
-  async deleteLocale({ localeIndex, locales }: DeleteLocaleParams) {
+  async deleteLocale({ id }: DeleteLocaleParams) {
+    const locales = this.db.get('locales').value();
+    const localeIndex = locales.findIndex((locale) => locale.id === id);
+
     if (localeIndex === -1) return;
 
     locales.splice(localeIndex, 1);

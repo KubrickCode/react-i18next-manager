@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { LocaleRepository } from './locale.repository';
-import { v4 as uuidv4 } from 'uuid';
 
 type AddLocaleParams = {
   label: string;
@@ -21,35 +20,15 @@ export class LocaleService {
     return await this.localeRepository.getLocales();
   }
 
-  async addLocale({ label, position }: AddLocaleParams) {
-    const locales = await this.localeRepository.getLocales();
-    return await this.localeRepository.addLocale({
-      locales,
-      newLocale: {
-        id: uuidv4(),
-        label,
-        position,
-      },
-    });
+  async addLocale(params: AddLocaleParams) {
+    return await this.localeRepository.addLocale(params);
   }
 
-  async editLocale({ id, newLabel, newPosition }: EditLocaleParams) {
-    const locales = await this.localeRepository.getLocales();
-    const locale = locales.find((locale) => locale.id === id);
-
-    return await this.localeRepository.editLocale({
-      locale,
-      newLocale: {
-        newLabel,
-        newPosition,
-      },
-    });
+  async editLocale(params: EditLocaleParams) {
+    return await this.localeRepository.editLocale(params);
   }
 
   async deleteLocale({ id }: { id: string }) {
-    const locales = await this.localeRepository.getLocales();
-    const localeIndex = locales.findIndex((locale) => locale.id === id);
-
-    return await this.localeRepository.deleteLocale({ localeIndex, locales });
+    return await this.localeRepository.deleteLocale({ id });
   }
 }
