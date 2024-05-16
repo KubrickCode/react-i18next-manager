@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DBService, DB, DBSchema } from 'src/db/db.service';
 
 type DeleteGroupParams = {
-  groupId: string;
-  groups: DBSchema['groups'];
+  id: string;
 };
 
 @Injectable()
@@ -22,19 +21,20 @@ export class GroupRepository {
     return this.db.get('groups').value();
   }
 
-  async deleteGroup(params: DeleteGroupParams) {
-    this.findGroupAndDelete(params);
+  async deleteGroup({ id }: DeleteGroupParams) {
+    const groups = this.db.get('groups').value();
+    this.findGroupAndDelete({ id, groups });
     this.db.write();
   }
 
   private findGroupAndDelete({
-    groupId,
+    id,
     groups,
   }: {
-    groupId: string;
+    id: string;
     groups: DBSchema['groups'];
   }) {
-    const index = groups.findIndex((group) => group.id === groupId);
+    const index = groups.findIndex((group) => group.id === id);
 
     if (index !== -1) {
       groups.splice(index, 1);
@@ -43,7 +43,7 @@ export class GroupRepository {
     for (const group of groups) {
       if (group.children) {
         this.findGroupAndDelete({
-          groupId,
+          id,
           groups: group.children,
         });
       }

@@ -10,8 +10,6 @@ export class GroupService {
   }
 
   async deleteGroup({ id }: { id: string }) {
-    const groups = await this.groupRepository.getGroups();
-
-    return await this.groupRepository.deleteGroup({ groupId: id, groups });
+    return await this.groupRepository.deleteGroup({ id });
   }
 }
