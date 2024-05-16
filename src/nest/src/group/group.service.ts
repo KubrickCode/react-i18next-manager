@@ -12,6 +12,15 @@ type EditGroupLabelParams = {
   newLabel: string;
 };
 
+type EditGroupPositionParams = {
+  id: UUID;
+  newPosition: number;
+};
+
+type EditGroupsPositionParams = {
+  groups: EditGroupPositionParams[];
+};
+
 @Injectable()
 export class GroupService {
   constructor(private readonly groupRepository: GroupRepository) {}
@@ -26,6 +35,10 @@ export class GroupService {
 
   async editGroupLabel(params: EditGroupLabelParams) {
     return await this.groupRepository.editGroupLabel(params);
+  }
+
+  async editGroupsPosition(params: EditGroupsPositionParams) {
+    return await this.groupRepository.editGroupsPosition(params);
   }
 
   async deleteGroup({ id }: { id: UUID }) {

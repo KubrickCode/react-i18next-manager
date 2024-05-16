@@ -13,6 +13,15 @@ type EditGroupLabelParams = {
   newLabel: string;
 };
 
+type EditGroupPositionParams = {
+  id: UUID;
+  newPosition: number;
+};
+
+type EditGroupsPositionParams = {
+  groups: EditGroupPositionParams[];
+};
+
 @Injectable()
 export class GroupRepository {
   private db: DB;
@@ -60,6 +69,19 @@ export class GroupRepository {
     const group = this.findGroupById(groups, id);
 
     group.label = newLabel;
+    this.db.write();
+  }
+
+  async editGroupsPosition(params: EditGroupsPositionParams) {
+    const groups = this.db.get('groups').value();
+
+    params.groups.forEach(({ id, newPosition }) => {
+      const group = this.findGroupById(groups, id);
+      if (group) {
+        group.position = newPosition;
+      }
+    });
+
     this.db.write();
   }
 

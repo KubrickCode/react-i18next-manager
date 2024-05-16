@@ -18,6 +18,7 @@ import {
   EditGroupLabelReqBodyDto,
   EditGroupLabelReqParamDto,
 } from './dto/edit-group-label.dto';
+import { EditGroupsPositionReqBodyDto } from './dto/edit-groups-position.dto';
 
 @Controller('groups')
 export class GroupController {
@@ -34,6 +35,12 @@ export class GroupController {
   @HttpCode(HttpStatus.CREATED)
   async addLocale(@Body() body: AddGroupReqBodyDto) {
     return await this.groupService.addGroup(body);
+  }
+
+  @Patch('position')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async editGroupsPosition(@Body() body: EditGroupsPositionReqBodyDto) {
+    return await this.groupService.editGroupsPosition(body);
   }
 
   @Patch(':id')
