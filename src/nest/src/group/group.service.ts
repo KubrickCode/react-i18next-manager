@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GroupRepository } from './group.repository';
+import { UUID } from 'src/common/types';
 
 @Injectable()
 export class GroupService {
@@ -9,7 +10,7 @@ export class GroupService {
     return await this.groupRepository.getGroups();
   }
 
-  async deleteGroup({ id }: { id: string }) {
+  async deleteGroup({ id }: { id: UUID }) {
     return await this.groupRepository.deleteGroup({ id });
   }
 }

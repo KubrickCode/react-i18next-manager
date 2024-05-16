@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UUID } from 'src/common/types';
 import { DBService, DB } from 'src/db/db.service';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,7 +9,7 @@ type AddLocaleParams = {
 };
 
 type EditLocaleParams = {
-  id: string;
+  id: UUID;
   newLabel?: string;
   newPosition?: number;
 };
@@ -45,7 +46,7 @@ export class LocaleRepository {
     this.db.write();
   }
 
-  async deleteLocale({ id }: { id: string }) {
+  async deleteLocale({ id }: { id: UUID }) {
     const locales = this.db.get('locales').value();
     const localeIndex = locales.findIndex((locale) => locale.id === id);
 

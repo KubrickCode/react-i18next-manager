@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LocaleRepository } from './locale.repository';
+import { UUID } from 'src/common/types';
 
 type AddLocaleParams = {
   label: string;
@@ -7,7 +8,7 @@ type AddLocaleParams = {
 };
 
 type EditLocaleParams = {
-  id: string;
+  id: UUID;
   newLabel?: string;
   newPosition?: number;
 };
@@ -28,7 +29,7 @@ export class LocaleService {
     return await this.localeRepository.editLocale(params);
   }
 
-  async deleteLocale({ id }: { id: string }) {
+  async deleteLocale({ id }: { id: UUID }) {
     return await this.localeRepository.deleteLocale({ id });
   }
 }

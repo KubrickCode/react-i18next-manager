@@ -1,6 +1,7 @@
-import { IsString } from 'class-validator';
+import { IsUUID } from 'class-validator';
+import { UUID } from 'src/common/types';
 
 export class DeleteGroupReqParamDto {
-  @IsString()
-  id: string;
+  @IsUUID()
+  id: UUID;
 }

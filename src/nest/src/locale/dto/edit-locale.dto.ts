@@ -1,8 +1,9 @@
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsOptional, IsString, IsUUID } from 'class-validator';
+import { UUID } from 'src/common/types';
 
 export class EditLocaleReqParamDto {
-  @IsString()
-  id: string;
+  @IsUUID()
+  id: UUID;
 }
 
 export class EditLocaleReqBodyDto {

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UUID } from 'src/common/types';
 import { DBService, DB, DBSchema } from 'src/db/db.service';
 
 @Injectable()
@@ -17,7 +18,7 @@ export class GroupRepository {
     return this.db.get('groups').value();
   }
 
-  async deleteGroup({ id }: { id: string }) {
+  async deleteGroup({ id }: { id: UUID }) {
     const groups = this.db.get('groups').value();
     this.findGroupAndDelete({ id, groups });
     this.db.write();
@@ -27,7 +28,7 @@ export class GroupRepository {
     id,
     groups,
   }: {
-    id: string;
+    id: UUID;
     groups: DBSchema['groups'];
   }) {
     const index = groups.findIndex((group) => group.id === id);

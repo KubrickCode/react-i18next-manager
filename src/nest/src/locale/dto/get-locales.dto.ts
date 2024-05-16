@@ -1,9 +1,16 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsInt, IsString, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsInt,
+  IsString,
+  IsUUID,
+  ValidateNested,
+} from 'class-validator';
+import { UUID } from 'src/common/types';
 
 class Locale {
-  @IsString()
-  id: string;
+  @IsUUID()
+  id: UUID;
 
   @IsString()
   label: string;
