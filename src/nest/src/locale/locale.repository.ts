@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
+import { generateUUID } from 'src/common/utils';
 import { DBService, DB } from 'src/db/db.service';
-import { v4 as uuidv4 } from 'uuid';
 
 type AddLocaleParams = {
   label: string;
@@ -32,7 +32,7 @@ export class LocaleRepository {
 
   async addLocale({ label, position }: AddLocaleParams) {
     const locales = this.db.get('locales').value();
-    locales.push({ id: uuidv4(), label, position });
+    locales.push({ id: generateUUID(), label, position });
     this.db.write();
   }
 

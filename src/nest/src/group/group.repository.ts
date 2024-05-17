@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
+import { generateUUID } from 'src/common/utils';
 import { DBService, DB, DBSchema, GroupSchema } from 'src/db/db.service';
-import { v4 as uuidv4 } from 'uuid';
 
 type AddGroupParams = {
   label: string;
@@ -41,7 +41,7 @@ export class GroupRepository {
   async addGroup({ label, parentId }: AddGroupParams) {
     const groups = this.db.get('groups').value();
     const newGroup: GroupSchema = {
-      id: uuidv4(),
+      id: generateUUID(),
       label,
       position: 0,
       children: [],
