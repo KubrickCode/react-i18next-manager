@@ -1,4 +1,3 @@
-
 type Group  = {
 id: string;
 newPosition: number;

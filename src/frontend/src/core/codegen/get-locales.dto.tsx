@@ -1,4 +1,3 @@
-
 type Locale  = {
 id: string;
 label: string;

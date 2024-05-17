@@ -1,4 +1,3 @@
-
 export type EditLocaleReqParamDto  = {
 id: string;
 }

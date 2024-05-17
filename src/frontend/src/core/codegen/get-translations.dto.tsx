@@ -1,4 +1,3 @@
-
 type Translation  = {
 id: string;
 key: string;

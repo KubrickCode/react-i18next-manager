@@ -17,7 +17,7 @@ function transformDto(content) {
   let importEndIndex = 0;
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].trim() === "") {
-      importEndIndex = i;
+      importEndIndex = i + 1; // include the empty line
       break;
     }
   }
@@ -85,7 +85,8 @@ function readFilesRecursively(dir, fileCallback, finishCallback) {
 // Function to handle each DTO file
 function handleDtoFile(filePath) {
   if (filePath.endsWith("dto.ts")) {
-    const frontendFilePath = path.join(frontendDir, path.basename(filePath));
+    const frontendFileName = path.basename(filePath).replace(".ts", ".tsx");
+    const frontendFilePath = path.join(frontendDir, frontendFileName);
 
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
@@ -102,13 +103,44 @@ function handleDtoFile(filePath) {
           console.log(
             `DTO file ${filePath} has been transformed and saved to frontend directory`
           );
+          updateIndexFile(frontendFileName);
         }
       });
     });
   }
 }
 
+// Function to update the index.tsx file
+function updateIndexFile(fileName) {
+  const indexPath = path.join(frontendDir, "index.tsx");
+  const exportStatement = `export * from "./${fileName.replace(
+    ".tsx",
+    ""
+  )}";\n`;
+
+  fs.appendFile(indexPath, exportStatement, (err) => {
+    if (err) {
+      console.error(`Error updating index.tsx file: ${err}`);
+    } else {
+      console.log(`index.tsx has been updated with ${fileName}`);
+    }
+  });
+}
+
+// Clear the index.tsx file before starting
+function clearIndexFile() {
+  const indexPath = path.join(frontendDir, "index.tsx");
+  fs.writeFile(indexPath, "", (err) => {
+    if (err) {
+      console.error(`Error clearing index.tsx file: ${err}`);
+    } else {
+      console.log("index.tsx has been cleared.");
+    }
+  });
+}
+
 // Start reading files from the backend directory
+clearIndexFile();
 readFilesRecursively(backendDir, handleDtoFile, (err) => {
   if (err) {
     console.error(`Error during file processing: ${err}`);

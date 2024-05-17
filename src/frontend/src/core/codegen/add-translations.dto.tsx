@@ -1,4 +1,3 @@
-
 type Translation  = {
 localeId: string;
 key: string;
