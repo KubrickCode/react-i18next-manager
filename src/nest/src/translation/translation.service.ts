@@ -40,4 +40,10 @@ export class TranslationService {
       await this.translationRepository.editTranslation(newTranslation);
     }
   }
+
+  async deleteTranslations({ ids }: { ids: UUID[] }) {
+    for (const id of ids) {
+      await this.translationRepository.deleteTranslation({ id });
+    }
+  }
 }

@@ -1,12 +1,15 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
+  ParseArrayPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decorator';
 import { TranslationService } from './translation.service';
@@ -19,6 +22,7 @@ import {
   AddTranslationsReqParamDto,
 } from './dto/add-translations.dto';
 import { EditTranslationsReqBodyDto } from './dto/edit-translations.dto';
+import { UUID } from 'src/common/types';
 
 @Controller('translations')
 export class TranslationController {
@@ -49,5 +53,14 @@ export class TranslationController {
     return await this.translationService.editTranslations({
       ...body,
     });
+  }
+
+  @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteTranslations(
+    @Query('ids', new ParseArrayPipe({ items: String, separator: ',' }))
+    ids: UUID[],
+  ) {
+    return await this.translationService.deleteTranslations({ ids });
   }
 }
