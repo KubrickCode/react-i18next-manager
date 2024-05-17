@@ -3,20 +3,16 @@ import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DB, DBService } from 'src/db/db.service';
 
-type AddTranslationsParams = {
+type AddTranslationParams = {
   groupId: UUID;
-  newTranslations: {
-    localeId: UUID;
-    key: string;
-    value: string;
-  }[];
+  localeId: UUID;
+  key: string;
+  value: string;
 };
 
-type EditTranslationsParams = {
-  newTranslations: {
-    id: UUID;
-    value: string;
-  }[];
+type EditTranslationParams = {
+  id: UUID;
+  value: string;
 };
 
 @Injectable()
@@ -35,24 +31,20 @@ export class TranslationRepository {
     return this.db.get('translations').filter({ groupId }).value();
   }
 
-  async addTranslations({ groupId, newTranslations }: AddTranslationsParams) {
+  async addTranslation(params: AddTranslationParams) {
     const translations = this.db.get('translations').value();
-    for (const newTranslation of newTranslations) {
-      translations.push({ id: generateUUID(), groupId, ...newTranslation });
-    }
+    translations.push({ id: generateUUID(), ...params });
     this.db.write();
   }
 
-  async editTranslations({ newTranslations }: EditTranslationsParams) {
+  async editTranslation({ id, value }: EditTranslationParams) {
     const translations = this.db.get('translations').value();
-    for (const newTranslation of newTranslations) {
-      const index = translations.findIndex((t) => t.id === newTranslation.id);
-      if (index !== -1) {
-        translations[index] = {
-          ...translations[index],
-          value: newTranslation.value,
-        };
-      }
+    const index = translations.findIndex((t) => t.id === id);
+    if (index !== -1) {
+      translations[index] = {
+        ...translations[index],
+        value,
+      };
     }
     this.db.write();
   }
