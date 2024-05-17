@@ -1,11 +1,13 @@
+import { UUID } from 'src/common/types';
+
 export type LocaleSchema = {
-  id: string;
+  id: UUID;
   label: string;
   position: number;
 };
 
 export type GroupSchema = {
-  id: string;
+  id: UUID;
   label: string;
   position: number;
   children: GroupSchema[];
