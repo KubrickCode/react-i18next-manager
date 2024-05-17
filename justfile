@@ -3,6 +3,10 @@ frontend_dir := root_dir + "/src/frontend"
 backend_dir := root_dir + "/src/backend"
 package_dir := root_dir + "/src/package"
 test_web_dir := root_dir + "/src/test-web"
+scripts_dir := root_dir + "/src/scripts"
+
+codegen:
+  node "{{ scripts_dir }}/codegen.js"
 
 default:
   @just --list
