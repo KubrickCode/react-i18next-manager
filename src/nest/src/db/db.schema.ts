@@ -13,7 +13,16 @@ export type GroupSchema = {
   children: GroupSchema[];
 };
 
+export type TranslationSchema = {
+  id: UUID;
+  localeId: UUID;
+  groupId: UUID;
+  key: string;
+  value: string;
+};
+
 export type DBSchema = {
   locales: LocaleSchema[];
   groups: GroupSchema[];
+  translations: TranslationSchema[];
 };
