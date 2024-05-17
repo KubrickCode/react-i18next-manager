@@ -11,6 +11,13 @@ type AddTranslationsParams = {
   }[];
 };
 
+type EditTranslationsParams = {
+  newTranslations: {
+    id: UUID;
+    value: string;
+  }[];
+};
+
 @Injectable()
 export class TranslationService {
   constructor(private readonly translationRepository: TranslationRepository) {}
@@ -21,5 +28,9 @@ export class TranslationService {
 
   async addTranslations(params: AddTranslationsParams) {
     return this.translationRepository.addTranslations(params);
+  }
+
+  async editTranslations(params: EditTranslationsParams) {
+    return this.translationRepository.editTranslations(params);
   }
 }

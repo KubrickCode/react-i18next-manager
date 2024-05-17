@@ -12,6 +12,13 @@ type AddTranslationsParams = {
   }[];
 };
 
+type EditTranslationsParams = {
+  newTranslations: {
+    id: UUID;
+    value: string;
+  }[];
+};
+
 @Injectable()
 export class TranslationRepository {
   private db: DB;
@@ -32,6 +39,20 @@ export class TranslationRepository {
     const translations = this.db.get('translations').value();
     for (const newTranslation of newTranslations) {
       translations.push({ id: generateUUID(), groupId, ...newTranslation });
+    }
+    this.db.write();
+  }
+
+  async editTranslations({ newTranslations }: EditTranslationsParams) {
+    const translations = this.db.get('translations').value();
+    for (const newTranslation of newTranslations) {
+      const index = translations.findIndex((t) => t.id === newTranslation.id);
+      if (index !== -1) {
+        translations[index] = {
+          ...translations[index],
+          value: newTranslation.value,
+        };
+      }
     }
     this.db.write();
   }

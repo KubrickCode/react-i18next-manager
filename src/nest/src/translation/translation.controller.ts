@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decorator';
@@ -17,6 +18,7 @@ import {
   AddTranslationsReqBodyDto,
   AddTranslationsReqParamDto,
 } from './dto/add-translations.dto';
+import { EditTranslationsReqBodyDto } from './dto/edit-translations.dto';
 
 @Controller('translations')
 export class TranslationController {
@@ -37,6 +39,14 @@ export class TranslationController {
   ) {
     return await this.translationService.addTranslations({
       ...param,
+      ...body,
+    });
+  }
+
+  @Patch()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async editTranslations(@Body() body: EditTranslationsReqBodyDto) {
+    return await this.translationService.editTranslations({
       ...body,
     });
   }
