@@ -14,14 +14,14 @@ import { TranslationsTable } from "./translations-table";
 
 export type TranslationKeys = {
   [key: string]: {
-    [language: string]: string;
+    [locale: string]: string;
   };
 };
 
 export type AddTranslationBody = {
   key: string;
   translations: {
-    language: string;
+    locale: string;
     value: string;
   }[];
 };
@@ -29,21 +29,21 @@ export type AddTranslationBody = {
 export type EditTranslationBody = {
   newKey: string;
   translations: {
-    language: string;
+    locale: string;
     value: string;
   }[];
 };
 
 type TranslationsTabPanelProps = {
   group: string;
-  languages: string[];
+  locales: string[];
 };
 
 export const TranslationsTabPanel = ({
   group,
-  languages,
+  locales,
 }: TranslationsTabPanelProps) => {
-  const queryKey = `getTranslations-${group}-${languages.join("-")}`;
+  const queryKey = `getTranslations-${group}-${locales.join("-")}`;
   const { data, error, isLoading, refetch } = useQuery<{
     translations: TranslationKeys;
   }>(`/translations/${group}`, queryKey);
@@ -171,7 +171,7 @@ export const TranslationsTabPanel = ({
         addTranslationBody={addTranslationBody}
         editKey={editKey}
         editTranslationBody={editTranslationBody}
-        languages={languages}
+        locales={locales}
         selectedKeys={selectedKeys}
         translations={translations}
         handleAddTranslationBody={handleAddTranslationBody}

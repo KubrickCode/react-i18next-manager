@@ -14,7 +14,7 @@ import {
 
 type TableData = {
   key: string | ReactNode;
-  [language: string]: string | ReactNode;
+  [locale: string]: string | ReactNode;
 };
 
 type TranslationsTableProps = {
@@ -22,7 +22,7 @@ type TranslationsTableProps = {
   addTranslationBody: AddTranslationBody;
   editKey: string | null;
   editTranslationBody: EditTranslationBody;
-  languages: string[];
+  locales: string[];
   selectedKeys: string[];
   translations: TranslationKeys;
   handleAddTranslationBody: (body: AddTranslationBody) => void;
@@ -37,7 +37,7 @@ export const TranslationsTable = ({
   addTranslationBody,
   editKey,
   editTranslationBody,
-  languages,
+  locales,
   selectedKeys,
   translations,
   handleAddTranslationBody,
@@ -53,9 +53,9 @@ export const TranslationsTable = ({
           accessorKey: "key",
           header: LABELS.KEY,
         },
-        ...languages.map((lang) => ({
-          accessorKey: lang,
-          header: lang.toUpperCase(),
+        ...locales.map((locale) => ({
+          accessorKey: locale,
+          header: locale.toUpperCase(),
         })),
         {
           accessorKey: "actions",
@@ -77,21 +77,21 @@ export const TranslationsTable = ({
                     }}
                   />
                 ),
-                ...languages.reduce(
-                  (acc, lang) => ({
+                ...locales.reduce(
+                  (acc, locale) => ({
                     ...acc,
-                    [lang]: (
+                    [locale]: (
                       <Input
-                        placeholder={`Enter ${lang} translation`}
+                        placeholder={`Enter ${locale} translation`}
                         onChange={(e) => {
                           handleAddTranslationBody({
                             ...addTranslationBody,
                             translations: [
                               ...addTranslationBody.translations.filter(
-                                (t) => t.language !== lang
+                                (t) => t.locale !== locale
                               ),
                               {
-                                language: lang,
+                                locale: locale,
                                 value: e.target.value,
                               },
                             ],
@@ -122,14 +122,14 @@ export const TranslationsTable = ({
                         }}
                       />
                     ),
-                    ...languages.reduce(
-                      (acc, lang) => ({
+                    ...locales.reduce(
+                      (acc, locale) => ({
                         ...acc,
-                        [lang]: (
+                        [locale]: (
                           <Input
                             value={
                               editTranslationBody.translations.find(
-                                (t) => t.language === lang
+                                (t) => t.locale === locale
                               )?.value ?? ""
                             }
                             onChange={(e) => {
@@ -137,10 +137,10 @@ export const TranslationsTable = ({
                                 ...editTranslationBody,
                                 translations: [
                                   ...editTranslationBody.translations.filter(
-                                    (t) => t.language !== lang
+                                    (t) => t.locale !== locale
                                   ),
                                   {
-                                    language: lang,
+                                    locale: locale,
                                     value: e.target.value,
                                   },
                                 ],
@@ -171,8 +171,8 @@ export const TranslationsTable = ({
                           handleEditTranslationBody({
                             newKey: key,
                             translations: Object.entries(value).map(
-                              ([language, value]) => ({
-                                language,
+                              ([locale, value]) => ({
+                                locale,
                                 value,
                               })
                             ),
