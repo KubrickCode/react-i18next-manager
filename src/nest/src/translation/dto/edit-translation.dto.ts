@@ -2,25 +2,25 @@ import { Type } from 'class-transformer';
 import { IsArray, IsString, IsUUID, ValidateNested } from 'class-validator';
 import { UUID } from 'src/common/types';
 
-class Translation {
+class TranslationValue {
   @IsUUID()
   localeId: UUID;
-
-  @IsString()
-  key: string;
 
   @IsString()
   value: string;
 }
 
-export class AddTranslationsReqBodyDto {
+export class EditTranslationReqBodyDto {
+  @IsString()
+  newKey: string;
+
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Translation)
-  newTranslations: Translation[];
+  @Type(() => TranslationValue)
+  newValues: TranslationValue[];
 }
 
-export class AddTranslationsReqParamDto {
+export class EditTranslationReqParamDto {
   @IsUUID()
-  groupId: UUID;
+  id: UUID;
 }

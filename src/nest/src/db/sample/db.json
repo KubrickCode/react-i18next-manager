@@ -66,115 +66,123 @@
   "translations": [
     {
       "id": "dd0d8d9d-718a-4f91-8a0f-0d2cc1fda41b",
-      "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
       "groupId": "bfbe8d06-24cf-4404-9c67-0e181817d18a",
       "key": "store",
-      "value": "store"
-    },
-    {
-      "id": "62e278d7-6f06-4e08-bc06-bbbb9785f10a",
-      "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
-      "groupId": "bfbe8d06-24cf-4404-9c67-0e181817d18a",
-      "key": "store",
-      "value": "상점"
+      "values": [
+        {
+          "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
+          "value": "Store"
+        },
+        {
+          "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+          "value": "상점"
+        }
+      ]
     },
     {
       "id": "80f15e94-73aa-4559-9795-27295e97f19f",
-      "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
       "groupId": "bfbe8d06-24cf-4404-9c67-0e181817d18a",
       "key": "product",
-      "value": "Product"
-    },
-    {
-      "id": "ea317759-5631-4a67-bdcd-2d36dfbd535c",
-      "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
-      "groupId": "bfbe8d06-24cf-4404-9c67-0e181817d18a",
-      "key": "product",
-      "value": "상품"
+      "values": [
+        {
+          "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
+          "value": "Product"
+        },
+        {
+          "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+          "value": "상품"
+        }
+      ]
     },
     {
       "id": "ec573db6-3753-450c-89f6-1ed00189a63d",
-      "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
       "groupId": "08690a92-8767-436d-a79c-e1eb1d598db1",
       "key": "commonLabel",
-      "value": "Common Label"
-    },
-    {
-      "id": "38301355-b168-4b5d-9049-c644eba35b2e",
-      "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
-      "groupId": "08690a92-8767-436d-a79c-e1eb1d598db1",
-      "key": "commonLabel",
-      "value": "공통 라벨"
+      "values": [
+        {
+          "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
+          "value": "Common Label"
+        },
+        {
+          "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+          "value": "공통 라벨"
+        }
+      ]
     },
     {
       "id": "d9745f8b-e6c0-4cbe-8c6d-ff11ea751ef1",
-      "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
       "groupId": "08690a92-8767-436d-a79c-e1eb1d598db1",
       "key": "commonLabel2",
-      "value": "Common Label2"
-    },
-    {
-      "id": "d09c4177-6d70-4d2f-bbfa-9afe7dddb6d0",
-      "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
-      "groupId": "08690a92-8767-436d-a79c-e1eb1d598db1",
-      "key": "commonLabel2",
-      "value": "공통 라벨2"
+      "values": [
+        {
+          "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
+          "value": "Common Label2"
+        },
+        {
+          "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+          "value": "공통 라벨2"
+        }
+      ]
     },
     {
       "id": "53a16c29-1532-413f-a91b-7032aabcc01a",
-      "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
       "groupId": "100d4368-9688-418d-9e58-691946ab545f",
       "key": "commonLabelForm",
-      "value": "Common Label Form"
-    },
-    {
-      "id": "7d21931f-d326-4f4d-978e-124e5457c4f0",
-      "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
-      "groupId": "100d4368-9688-418d-9e58-691946ab545f",
-      "key": "commonLabelForm",
-      "value": "공통 라벨 폼"
+      "values": [
+        {
+          "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
+          "value": "Common Label Form"
+        },
+        {
+          "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+          "value": "공통 라벨 폼"
+        }
+      ]
     },
     {
       "id": "a535ef93-226e-4e19-8fdd-8c0d89bc18be",
-      "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
       "groupId": "100d4368-9688-418d-9e58-691946ab545f",
       "key": "commonLabelForm2",
-      "value": "Common Label Form2"
-    },
-    {
-      "id": "e712986b-92c9-47fe-8bce-9bf5e4017af5",
-      "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
-      "groupId": "100d4368-9688-418d-9e58-691946ab545f",
-      "key": "commonLabelForm2",
-      "value": "공통 라벨 폼2"
+      "values": [
+        {
+          "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
+          "value": "Common Label Form2"
+        },
+        {
+          "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+          "value": "공통 라벨 폼2"
+        }
+      ]
     },
     {
       "id": "a508e11d-5fe4-40f0-be36-a295f5787921",
-      "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
       "groupId": "bbf2cea5-8141-425b-8854-b9c3d545f46f",
       "key": "commonLabelSection",
-      "value": "Common Label Section"
-    },
-    {
-      "id": "47ea7bf3-e035-424e-99e6-cfb13425e1a0",
-      "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
-      "groupId": "bbf2cea5-8141-425b-8854-b9c3d545f46f",
-      "key": "commonLabelSection",
-      "value": "공통 라벨 섹션"
+      "values": [
+        {
+          "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
+          "value": "Common Label Section"
+        },
+        {
+          "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+          "value": "공통 라벨 섹션"
+        }
+      ]
     },
     {
       "id": "59dba3e9-c7fc-431a-b731-7cf6d5452ef2",
-      "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
       "groupId": "bbf2cea5-8141-425b-8854-b9c3d545f46f",
       "key": "commonLabelSection2",
-      "value": "Common Label Section2"
-    },
-    {
-      "id": "87426da1-c79b-4304-b193-e00144c6041e",
-      "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
-      "groupId": "bbf2cea5-8141-425b-8854-b9c3d545f46f",
-      "key": "commonLabelSection2",
-      "value": "공통 라벨 섹션2"
+      "values": [
+        {
+          "localeId": "9094373b-d01c-4359-bf18-3cc66a04505b",
+          "value": "Common Label Section2"
+        },
+        {
+          "localeId": "c50010a4-7c43-432d-89d2-2cac5e44eee2",
+          "value": "공통 라벨 섹션2"
+        }
+      ]
     }
   ]
 }

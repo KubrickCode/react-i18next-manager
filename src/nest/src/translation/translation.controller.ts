@@ -6,10 +6,8 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseArrayPipe,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decorator';
 import { TranslationService } from './translation.service';
@@ -18,11 +16,14 @@ import {
   GetTranslationsResDto,
 } from './dto/get-translations.dto';
 import {
-  AddTranslationsReqBodyDto,
-  AddTranslationsReqParamDto,
-} from './dto/add-translations.dto';
-import { EditTranslationsReqBodyDto } from './dto/edit-translations.dto';
-import { UUID } from 'src/common/types';
+  AddTranslationReqBodyDto,
+  AddTranslationReqParamDto,
+} from './dto/add-translation.dto';
+import {
+  EditTranslationReqBodyDto,
+  EditTranslationReqParamDto,
+} from './dto/edit-translation.dto';
+import { DeleteTranslationReqParamDto } from './dto/delete-translation.dto';
 
 @Controller('translations')
 export class TranslationController {
@@ -37,30 +38,31 @@ export class TranslationController {
 
   @Post(':groupId')
   @HttpCode(HttpStatus.CREATED)
-  async addTranslations(
-    @Param() param: AddTranslationsReqParamDto,
-    @Body() body: AddTranslationsReqBodyDto,
+  async addTranslation(
+    @Param() param: AddTranslationReqParamDto,
+    @Body() body: AddTranslationReqBodyDto,
   ) {
-    return await this.translationService.addTranslations({
+    return await this.translationService.addTranslation({
       ...param,
       ...body,
     });
   }
 
-  @Patch()
+  @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async editTranslations(@Body() body: EditTranslationsReqBodyDto) {
-    return await this.translationService.editTranslations({
+  async editTranslation(
+    @Param() param: EditTranslationReqParamDto,
+    @Body() body: EditTranslationReqBodyDto,
+  ) {
+    return await this.translationService.editTranslation({
+      ...param,
       ...body,
     });
   }
 
-  @Delete()
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteTranslations(
-    @Query('ids', new ParseArrayPipe({ items: String, separator: ',' }))
-    ids: UUID[],
-  ) {
-    return await this.translationService.deleteTranslations({ ids });
+  async deleteTranslation(@Param() param: DeleteTranslationReqParamDto) {
+    return await this.translationService.deleteTranslation(param);
   }
 }

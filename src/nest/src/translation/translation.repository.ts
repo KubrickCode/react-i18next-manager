@@ -5,14 +5,20 @@ import { DB, DBService } from 'src/db/db.service';
 
 type AddTranslationParams = {
   groupId: UUID;
-  localeId: UUID;
   key: string;
-  value: string;
+  values: {
+    localeId: UUID;
+    value: string;
+  }[];
 };
 
 type EditTranslationParams = {
   id: UUID;
-  value: string;
+  newKey: string;
+  newValues: {
+    localeId: UUID;
+    value: string;
+  }[];
 };
 
 @Injectable()
@@ -37,14 +43,12 @@ export class TranslationRepository {
     this.db.write();
   }
 
-  async editTranslation({ id, value }: EditTranslationParams) {
+  async editTranslation({ id, newKey, newValues }: EditTranslationParams) {
     const translations = this.db.get('translations').value();
     const index = translations.findIndex((t) => t.id === id);
     if (index !== -1) {
-      translations[index] = {
-        ...translations[index],
-        value,
-      };
+      translations[index].key = newKey;
+      translations[index].values = newValues;
     }
     this.db.write();
   }

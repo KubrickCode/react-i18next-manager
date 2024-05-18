@@ -15,10 +15,12 @@ export type GroupSchema = {
 
 export type TranslationSchema = {
   id: UUID;
-  localeId: UUID;
   groupId: UUID;
   key: string;
-  value: string;
+  values: {
+    localeId: UUID;
+    value: string;
+  }[];
 };
 
 export type DBSchema = {
