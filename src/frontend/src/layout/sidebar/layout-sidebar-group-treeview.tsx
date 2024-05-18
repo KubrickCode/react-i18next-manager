@@ -145,72 +145,71 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
       </Flex>
 
       <Flex>
-        {(node.isSelected || isHovered) &&
-          (node.isEditing ? (
-            <IconButton
-              aria-label="save-edit"
-              colorScheme="gray"
-              icon={<FaSave />}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleEdit();
-              }}
-              size="xs"
-              variant="ghost"
-            />
-          ) : (
-            <IconButton
-              aria-label="edit"
-              colorScheme="gray"
-              icon={<FaEdit />}
-              onClick={(e) => {
-                e.stopPropagation();
-                node.edit();
-              }}
-              size="xs"
-              variant="ghost"
-            />
-          ))}
-        {node.isSelected && (
-          <ModalToggle
-            modal={AddGroupModal}
-            modalProps={{
-              parentId: node.id,
-              parentName: node.data.label,
-              onComplete() {
-                tree.reset();
-              },
-            }}
-          >
-            <IconButton
-              aria-label="add"
-              colorScheme="gray"
-              icon={<FaPlus />}
-              size="xs"
-              variant="ghost"
-            />
-          </ModalToggle>
-        )}
         {(node.isSelected || isHovered) && (
-          <ModalToggle
-            modal={DeleteModal}
-            modalProps={{
-              body: <Text>Are you sure you want to delete?</Text>,
-              link: `/groups/${node.id}`,
-              refetchQueryKeys,
-              onComplete() {
-                tree.delete(node.id);
-              },
-            }}
-          >
-            <IconButton
-              aria-label="delete"
-              colorScheme="gray"
-              icon={<FaTrash />}
-              size="xs"
-              variant="ghost"
-            />
-          </ModalToggle>
+          <>
+            {node.isEditing ? (
+              <IconButton
+                aria-label="save-edit"
+                colorScheme="gray"
+                icon={<FaSave />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEdit();
+                }}
+                size="xs"
+                variant="ghost"
+              />
+            ) : (
+              <IconButton
+                aria-label="edit"
+                colorScheme="gray"
+                icon={<FaEdit />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  node.edit();
+                }}
+                size="xs"
+                variant="ghost"
+              />
+            )}
+            <ModalToggle
+              modal={AddGroupModal}
+              modalProps={{
+                parentId: node.id,
+                parentName: node.data.label,
+                onComplete() {
+                  tree.reset();
+                },
+              }}
+            >
+              <IconButton
+                aria-label="add"
+                colorScheme="gray"
+                icon={<FaPlus />}
+                size="xs"
+                variant="ghost"
+              />
+            </ModalToggle>
+            <ModalToggle
+              modal={DeleteModal}
+              modalProps={{
+                body: <Text>Are you sure you want to delete?</Text>,
+                link: `/groups/${node.id}`,
+                refetchQueryKeys,
+                onComplete() {
+                  tree.delete(node.id);
+                },
+              }}
+            >
+              <IconButton
+                aria-label="delete"
+                colorScheme="gray"
+                icon={<FaTrash />}
+                size="xs"
+                variant="ghost"
+              />
+            </ModalToggle>
+          </>
         )}
       </Flex>
     </Box>
