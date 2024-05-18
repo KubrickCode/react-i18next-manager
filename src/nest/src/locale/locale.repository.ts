@@ -62,5 +62,16 @@ export class LocaleRepository {
 
     locales.splice(localeIndex, 1);
     this.db.write();
+
+    const translations = this.db.get('translations').value();
+    translations.forEach((translation) => {
+      const valueIndex = translation.values.findIndex(
+        (value) => value.localeId === id,
+      );
+      if (valueIndex !== -1) {
+        translation.values.splice(valueIndex, 1);
+      }
+    });
+    this.db.write();
   }
 }
