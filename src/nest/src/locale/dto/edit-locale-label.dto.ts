@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsString, IsUUID } from 'class-validator';
 import { UUID } from 'src/common/types';
 
 export class EditLocaleLabelReqParamDto {
@@ -8,6 +8,5 @@ export class EditLocaleLabelReqParamDto {
 
 export class EditLocaleLabelReqBodyDto {
   @IsString()
-  @IsOptional()
-  newLabel?: string;
+  newLabel: string;
 }

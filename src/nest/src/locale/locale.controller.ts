@@ -43,7 +43,7 @@ export class LocaleController {
     return await this.localeService.editLocalesPosition(body);
   }
 
-  @Patch(':id')
+  @Patch('label/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async editLocaleLabel(
     @Param() param: EditLocaleLabelReqParamDto,
