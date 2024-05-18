@@ -17,13 +17,14 @@ export const LayoutSidebar = () => {
           <Button
             leftIcon={
               <Image
-                boxSize="3rem"
+                boxSize="2rem"
                 objectFit="cover"
                 src={darkModeImageSrc}
                 alt="logo"
               />
             }
             onClick={() => (location.href = "/")}
+            padding={0}
             variant="none"
           >
             {LABELS.APP_TITLE}
