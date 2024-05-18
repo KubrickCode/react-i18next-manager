@@ -20,14 +20,41 @@ export const LayoutSidebarGroupTreeView = () => {
   const { handleSelectedGroup } = useLayoutContext();
   const { data } = useQuery<GetGroupsResDto["groups"]>("/groups", "getGroups");
   const [term, setTerm] = useState("");
+  const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
 
   if (!data) return null;
 
   const treeData = convertGroupsToTreeData(data);
 
   return (
-    <VStack>
+    <VStack alignItems="baseline">
       <SearchInput onChange={(e) => setTerm(e.target.value)} size="sm" />
+      <Box
+        _hover={{ backgroundColor: treeNodeBgColor }}
+        alignItems="center"
+        borderRadius={5}
+        padding={2}
+        width="full"
+      >
+        <Flex alignItems="center" justifyContent="space-between">
+          <Text fontSize="xs">Groups</Text>
+          <ModalToggle
+            modal={AddGroupModal}
+            modalProps={{
+              parentId: null,
+              parentName: "Root",
+            }}
+          >
+            <IconButton
+              aria-label="add"
+              colorScheme="gray"
+              icon={<FaPlus />}
+              size="xs"
+              variant="ghost"
+            />
+          </ModalToggle>
+        </Flex>
+      </Box>
       <Tree
         initialData={treeData}
         openByDefault={false}
