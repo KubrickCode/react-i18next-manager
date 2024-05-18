@@ -87,12 +87,17 @@ export class GroupRepository {
 
   async deleteGroup({ id }: { id: UUID }) {
     const groups = this.db.get('groups').value();
+    const allGroupIds = this.collectGroupAndChildIds(groups, id);
     this.findGroupAndDelete({ id, groups });
-    this.db.write();
+
+    const translations = this.db.get('translations').value();
+    const updatedTranslations = translations.filter(
+      (translation) => !allGroupIds.includes(translation.groupId),
+    );
+    this.db.set('translations', updatedTranslations).write();
   }
 
   private findGroupById(groups: GroupSchema[], id: UUID): GroupSchema | null {
-    console.log(groups);
     for (const group of groups) {
       if (group.id === id) return group;
       const found = this.findGroupById(group.children, id);
@@ -112,6 +117,7 @@ export class GroupRepository {
 
     if (index !== -1) {
       groups.splice(index, 1);
+      return;
     }
 
     for (const group of groups) {
@@ -122,5 +128,22 @@ export class GroupRepository {
         });
       }
     }
+  }
+
+  private collectGroupAndChildIds(groups: GroupSchema[], id: UUID): UUID[] {
+    const groupIds: UUID[] = [];
+    const collect = (group: GroupSchema) => {
+      groupIds.push(group.id);
+      if (group.children) {
+        group.children.forEach(collect);
+      }
+    };
+
+    const targetGroup = this.findGroupById(groups, id);
+    if (targetGroup) {
+      collect(targetGroup);
+    }
+
+    return groupIds;
   }
 }
