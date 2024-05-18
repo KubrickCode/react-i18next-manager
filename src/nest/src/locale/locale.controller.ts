@@ -18,6 +18,7 @@ import {
   EditLocaleLabelReqParamDto,
 } from './dto/edit-locale-label.dto';
 import { DeleteLocaleReqParamDto } from './dto/delete-locale.dto';
+import { EditLocalesPositionReqBodyDto } from './dto/edit-locales-position.dto';
 
 @Controller('locales')
 export class LocaleController {
@@ -34,6 +35,12 @@ export class LocaleController {
   @HttpCode(HttpStatus.CREATED)
   async addLocale(@Body() body: AddLocaleReqBodyDto) {
     return await this.localeService.addLocale(body);
+  }
+
+  @Patch('position')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async editLocalesPosition(@Body() body: EditLocalesPositionReqBodyDto) {
+    return await this.localeService.editLocalesPosition(body);
   }
 
   @Patch(':id')

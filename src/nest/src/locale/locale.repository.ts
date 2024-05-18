@@ -13,6 +13,13 @@ type EditLocaleLabelParams = {
   newLabel?: string;
 };
 
+type EditLocalesPositionParams = {
+  locales: {
+    id: UUID;
+    position: number;
+  }[];
+};
+
 @Injectable()
 export class LocaleRepository {
   private db: DB;
@@ -49,6 +56,17 @@ export class LocaleRepository {
 
     typeof newLabel === 'string' && (locale.label = newLabel);
 
+    this.db.write();
+  }
+
+  async editLocalesPosition({ locales }: EditLocalesPositionParams) {
+    const localesData = this.db.get('locales').value();
+    locales.forEach((locale) => {
+      const localeData = localesData.find((data) => data.id === locale.id);
+      if (localeData) {
+        localeData.position = locale.position;
+      }
+    });
     this.db.write();
   }
 
