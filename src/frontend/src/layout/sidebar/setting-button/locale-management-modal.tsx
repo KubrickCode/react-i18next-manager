@@ -1,29 +1,19 @@
-import { Flex, IconButton, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa6";
+import { useState } from "react";
+import { Box, Divider, Flex } from "@chakra-ui/react";
+import { FaRegEdit, FaSave, FaTrash } from "react-icons/fa";
 
-import { Button } from "~/core/button";
-import { LABELS } from "~/core/constants";
 import {
-  DeleteModal,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
   ModalProps,
-  ModalToggle,
 } from "~/core/modal";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
-import { Input } from "~/core/input";
 import { Text } from "~/core/text";
 import { GetLocalesResDto } from "~/core/codegen";
-
-type Locales = {
-  id?: string;
-  prevLabel: string;
-  newLabel: string;
-};
+import { Button, IconButton } from "~/core/button";
+import { Input } from "~/core/input";
 
 type LocaleManagementModalProps = ModalProps;
 
@@ -36,27 +26,24 @@ export const LocaleManagementModal = ({
     `getLocalesInModal`
   );
   const refetchQueryKeys = [[`getLocalesInModal`], [`getLocales`]];
+  const [editMode, setEditMode] = useState(false);
+  const [selectedLocale, setSelectedLocale] = useState<{
+    id: string;
+    newLabel: string;
+  }>({
+    id: "",
+    newLabel: "",
+  });
+
   const { mutate } = useMutation({
     refetchQueryKeys,
   });
-  const [locales, setLocales] = useState<Locales[]>([]);
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      setLocales(
-        data.locales.map(({ id, label }) => ({
-          id,
-          prevLabel: label,
-          newLabel: label,
-        }))
-      );
-    }
-  }, [data]);
 
   if (!data) return <>ERROR</>;
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;
+
+  const { locales } = data;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -64,82 +51,83 @@ export const LocaleManagementModal = ({
         <Text>Locale Management</Text>
       </ModalHeader>
       <ModalBody>
-        <VStack>
-          {locales
-            .filter((locale) => locale.prevLabel !== "")
-            .map((locale, idx) => (
-              <Flex key={idx} gap={2} width="full">
-                <Input
-                  value={locale.newLabel}
-                  onChange={(e) => {
-                    const newLocales = [...locales];
-                    newLocales[idx].newLabel = e.target.value;
-                    setLocales(newLocales);
-                  }}
-                />
-                <ModalToggle
-                  modal={DeleteModal}
-                  modalProps={{
-                    body: (
-                      <Text>Are you sure you want to delete this locale?</Text>
-                    ),
-                    link: `/locales/${locale.id}`,
-                    refetchQueryKeys,
-                  }}
+        {locales.map((locale, idx) => {
+          const isEditMode = editMode && selectedLocale.id === locale.id;
+
+          return (
+            <>
+              <Box key={locale.id} padding={3}>
+                <Flex
+                  alignItems="center"
+                  gap={1}
+                  justifyContent="space-between"
                 >
-                  <IconButton aria-label={LABELS.DELETE} icon={<FaTrash />} />
-                </ModalToggle>
-              </Flex>
-            ))}
-          {locales
-            .filter((locale) => locale.prevLabel === "")
-            .map((locale) => (
-              <Flex key={locale.id} gap={2} width="full">
-                <Input
-                  value={locale.newLabel}
-                  onChange={(e) => {
-                    const newLocales = [...locales];
-                    const localeIndex = newLocales.findIndex(
-                      (c) => c.id === locale.id
-                    );
-                    if (localeIndex !== -1) {
-                      newLocales[localeIndex].newLabel = e.target.value;
-                    }
-                    setLocales(newLocales);
-                  }}
-                />
-                <IconButton
-                  aria-label={LABELS.DELETE}
-                  icon={<FaTrash />}
-                  onClick={() => {
-                    const newLocales = locales.filter(
-                      (c) => c.id !== locale.id
-                    );
-                    setLocales(newLocales);
-                  }}
-                />
-              </Flex>
-            ))}
-          <Flex justifyContent="flex-end" width="full">
-            <IconButton
-              aria-label={LABELS.PLUS}
-              icon={<FaPlus />}
-              onClick={() => {
-                setLocales((prev) => [
-                  ...prev,
-                  {
-                    prevLabel: "",
-                    newLabel: "",
-                  },
-                ]);
-              }}
-            />
-          </Flex>
-        </VStack>
+                  {isEditMode ? (
+                    <Input
+                      size="sm"
+                      onChange={(e) =>
+                        setSelectedLocale((prev) => ({
+                          ...prev,
+                          newLabel: e.target.value,
+                        }))
+                      }
+                      value={selectedLocale.newLabel}
+                    />
+                  ) : (
+                    <Text>{locale.label}</Text>
+                  )}
+                  <Flex gap={1}>
+                    {isEditMode ? (
+                      <Flex gap={1}>
+                        <IconButton
+                          aria-label="save"
+                          size="sm"
+                          icon={<FaSave />}
+                          onClick={() => {
+                            setEditMode(false);
+                          }}
+                        />
+                        <Button
+                          onClick={() => {
+                            setEditMode(false);
+                          }}
+                          size="sm"
+                        >
+                          X
+                        </Button>
+                      </Flex>
+                    ) : (
+                      <IconButton
+                        aria-label="edit"
+                        isDisabled={!!editMode}
+                        size="sm"
+                        icon={<FaRegEdit />}
+                        onClick={() => {
+                          setEditMode(true);
+                          setSelectedLocale({
+                            id: locale.id,
+                            newLabel: locale.label,
+                          });
+                        }}
+                      />
+                    )}
+                    {!isEditMode && (
+                      <IconButton
+                        aria-label="delete"
+                        isDisabled={!!editMode}
+                        size="sm"
+                        icon={<FaTrash />}
+                      />
+                    )}
+                  </Flex>
+                </Flex>
+              </Box>
+              {idx < locales.length - 1 && <Divider />}
+            </>
+          );
+        })}
       </ModalBody>
-      <ModalFooter onClose={onClose}>
-        <Button colorScheme="primary">{LABELS.SAVE}</Button>
-      </ModalFooter>
+      <ModalFooter onClose={onClose} />
     </Modal>
   );
 };
