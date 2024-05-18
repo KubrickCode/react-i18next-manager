@@ -94,6 +94,16 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
     refetchQueryKeys,
   });
 
+  const handleEdit = () => {
+    mutate({
+      link: `/groups/label/${node.data.id}`,
+      method: "patch",
+      body: { newLabel: label },
+    });
+    node.submit(label);
+    node.select();
+  };
+
   return (
     <Box
       _hover={{ backgroundColor: treeNodeBgColor }}
@@ -119,15 +129,7 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
             onChange={(e) => setLabel(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Escape") node.reset();
-              if (e.key === "Enter") {
-                mutate({
-                  link: `/groups/label/${node.data.id}`,
-                  method: "patch",
-                  body: { newLabel: label },
-                });
-                node.submit(label);
-                node.select();
-              }
+              if (e.key === "Enter") handleEdit();
             }}
             size="sm"
             value={label}
@@ -151,13 +153,7 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
               icon={<FaSave />}
               onClick={(e) => {
                 e.stopPropagation();
-                mutate({
-                  link: `/groups/label/${node.data.id}`,
-                  method: "patch",
-                  body: { newLabel: label },
-                });
-                node.submit(label);
-                node.select();
+                handleEdit();
               }}
               size="xs"
               variant="ghost"
