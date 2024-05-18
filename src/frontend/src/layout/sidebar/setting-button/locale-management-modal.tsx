@@ -3,11 +3,13 @@ import { Box, Divider, Flex } from "@chakra-ui/react";
 import { FaRegEdit, FaSave, FaTrash } from "react-icons/fa";
 
 import {
+  DeleteModal,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
   ModalProps,
+  ModalToggle,
 } from "~/core/modal";
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { Text } from "~/core/text";
@@ -118,12 +120,21 @@ export const LocaleManagementModal = ({
                       />
                     )}
                     {!isEditMode && (
-                      <IconButton
-                        aria-label="delete"
-                        isDisabled={!!editMode}
-                        size="sm"
-                        icon={<FaTrash />}
-                      />
+                      <ModalToggle
+                        modal={DeleteModal}
+                        modalProps={{
+                          body: <Text>Are you sure you want to delete?</Text>,
+                          link: `/locales/${locale.id}`,
+                          refetchQueryKeys,
+                        }}
+                      >
+                        <IconButton
+                          aria-label="delete"
+                          isDisabled={!!editMode}
+                          size="sm"
+                          icon={<FaTrash />}
+                        />
+                      </ModalToggle>
                     )}
                   </Flex>
                 </Flex>
