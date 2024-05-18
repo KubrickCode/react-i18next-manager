@@ -42,12 +42,8 @@ export const SettingButton = () => {
         >
           <Text>{darkModeLabel}</Text>
         </MenuItem>
-        <MenuModalToggle
-          icon={FaLanguage}
-          modal={LocaleManagementModal}
-          modalProps={{ configKind: "languages" }}
-        >
-          {LABELS.LANGUAGE_MANAGEMENT}
+        <MenuModalToggle icon={FaLanguage} modal={LocaleManagementModal}>
+          {LABELS.LOCALE_MANAGEMENT}
         </MenuModalToggle>
       </MenuList>
     </Menu>

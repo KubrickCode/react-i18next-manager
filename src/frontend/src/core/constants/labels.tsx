@@ -8,7 +8,7 @@ export const LABELS = {
   EDIT: "Edit",
   GROUP_MANAGEMENT: "Group Management",
   KEY: "Key",
-  LANGUAGE_MANAGEMENT: "Language Management",
+  LOCALE_MANAGEMENT: "Locale Management",
   PLUS: "plus",
   SAVE: "Save",
 };

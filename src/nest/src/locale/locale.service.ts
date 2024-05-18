@@ -24,7 +24,7 @@ export class LocaleService {
   constructor(private readonly localeRepository: LocaleRepository) {}
 
   async getLocales() {
-    return await this.localeRepository.getLocales();
+    return { locales: await this.localeRepository.getLocales() };
   }
 
   async addLocale(params: AddLocaleParams) {

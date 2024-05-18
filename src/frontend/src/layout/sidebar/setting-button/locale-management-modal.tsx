@@ -1,5 +1,4 @@
 import { Flex, IconButton, VStack } from "@chakra-ui/react";
-import _ from "lodash";
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
@@ -18,113 +17,105 @@ import {
 import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { Input } from "~/core/input";
 import { Text } from "~/core/text";
+import { GetLocalesResDto } from "~/core/codegen";
 
-type Config = {
-  id?: number;
-  prevName: string;
-  newName?: string;
+type Locales = {
+  id?: string;
+  prevLabel: string;
+  newLabel: string;
 };
 
-type LocaleManagementModalProps = ModalProps & {
-  configKind: "groups" | "languages";
-};
+type LocaleManagementModalProps = ModalProps;
 
 export const LocaleManagementModal = ({
-  configKind,
   isOpen,
   onClose,
 }: LocaleManagementModalProps) => {
-  const upperFirstConfigKind = _.upperFirst(configKind);
-  const { data, error, isLoading } = useQuery<string[]>(
-    `/config/${configKind}`,
-    `get${upperFirstConfigKind}InModal`
+  const { data, error, isLoading } = useQuery<GetLocalesResDto>(
+    "/locales",
+    `getLocalesInModal`
   );
+  const refetchQueryKeys = [[`getLocalesInModal`], [`getLocales`]];
   const { mutate } = useMutation({
-    refetchQueryKeys: [
-      [`get${upperFirstConfigKind}InModal`],
-      [`get${upperFirstConfigKind}`],
-    ],
+    refetchQueryKeys,
   });
-  const [configs, setConfigs] = useState<Config[]>([]);
+  const [locales, setLocales] = useState<Locales[]>([]);
 
   useEffect(() => {
     if (data) {
-      const newConfigs = data.map((config) => ({
-        prevName: config,
-        newName: config,
-      }));
-      setConfigs(newConfigs);
+      console.log(data);
+      setLocales(
+        data.locales.map(({ id, label }) => ({
+          id,
+          prevLabel: label,
+          newLabel: label,
+        }))
+      );
     }
   }, [data]);
 
-  if (!configs) return <>ERROR</>;
+  if (!data) return <>ERROR</>;
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalHeader>
-        <Text>{`Manage ${upperFirstConfigKind}`}</Text>
+        <Text>Locale Management</Text>
       </ModalHeader>
       <ModalBody>
         <VStack>
-          {configs
-            .filter((config) => config.prevName !== "")
-            .map((config, idx) => (
+          {locales
+            .filter((locale) => locale.prevLabel !== "")
+            .map((locale, idx) => (
               <Flex key={idx} gap={2} width="full">
                 <Input
-                  value={config.newName}
+                  value={locale.newLabel}
                   onChange={(e) => {
-                    const newConfigs = [...configs];
-                    newConfigs[idx].newName = e.target.value;
-                    setConfigs(newConfigs);
+                    const newLocales = [...locales];
+                    newLocales[idx].newLabel = e.target.value;
+                    setLocales(newLocales);
                   }}
                 />
                 <ModalToggle
                   modal={DeleteModal}
                   modalProps={{
                     body: (
-                      <Text>
-                        Are you sure you want to delete this{" "}
-                        {configKind === "groups" ? "group" : "language"}?
-                      </Text>
+                      <Text>Are you sure you want to delete this locale?</Text>
                     ),
-                    link: `/config/${configKind}/${config.prevName}`,
-                    refetchQueryKeys: [
-                      [`get${upperFirstConfigKind}InModal`],
-                      [`get${upperFirstConfigKind}`],
-                    ],
+                    link: `/locales/${locale.id}`,
+                    refetchQueryKeys,
                   }}
                 >
                   <IconButton aria-label={LABELS.DELETE} icon={<FaTrash />} />
                 </ModalToggle>
               </Flex>
             ))}
-          {configs
-            .filter((config) => config.prevName === "")
-            .map((config) => (
-              <Flex key={config.id} gap={2} width="full">
+          {locales
+            .filter((locale) => locale.prevLabel === "")
+            .map((locale) => (
+              <Flex key={locale.id} gap={2} width="full">
                 <Input
-                  value={config.newName}
+                  value={locale.newLabel}
                   onChange={(e) => {
-                    const newConfigs = [...configs];
-                    const configIndex = newConfigs.findIndex(
-                      (c) => c.id === config.id
+                    const newLocales = [...locales];
+                    const localeIndex = newLocales.findIndex(
+                      (c) => c.id === locale.id
                     );
-                    if (configIndex !== -1) {
-                      newConfigs[configIndex].newName = e.target.value;
+                    if (localeIndex !== -1) {
+                      newLocales[localeIndex].newLabel = e.target.value;
                     }
-                    setConfigs(newConfigs);
+                    setLocales(newLocales);
                   }}
                 />
                 <IconButton
                   aria-label={LABELS.DELETE}
                   icon={<FaTrash />}
                   onClick={() => {
-                    const newConfigs = configs.filter(
-                      (c) => c.id !== config.id
+                    const newLocales = locales.filter(
+                      (c) => c.id !== locale.id
                     );
-                    setConfigs(newConfigs);
+                    setLocales(newLocales);
                   }}
                 />
               </Flex>
@@ -134,12 +125,11 @@ export const LocaleManagementModal = ({
               aria-label={LABELS.PLUS}
               icon={<FaPlus />}
               onClick={() => {
-                setConfigs((prev) => [
+                setLocales((prev) => [
                   ...prev,
                   {
-                    id: prev.length,
-                    prevName: "",
-                    newName: "",
+                    prevLabel: "",
+                    newLabel: "",
                   },
                 ]);
               }}
@@ -148,18 +138,7 @@ export const LocaleManagementModal = ({
         </VStack>
       </ModalBody>
       <ModalFooter onClose={onClose}>
-        <Button
-          colorScheme="primary"
-          onClick={() =>
-            mutate({
-              link: `/config/${configKind}`,
-              method: "put",
-              body: configs,
-            })
-          }
-        >
-          {LABELS.SAVE}
-        </Button>
+        <Button colorScheme="primary">{LABELS.SAVE}</Button>
       </ModalFooter>
     </Modal>
   );

@@ -6,14 +6,13 @@ import { GetLocalesResDto } from "~/core/codegen";
 import { TranslationsTable } from "./components/translations-table";
 
 export const HomePage = () => {
-  const {
-    data: locales,
-    error,
-    isLoading,
-  } = useQuery<GetLocalesResDto["locales"]>("/locales", "getLocales");
+  const { data, error, isLoading } = useQuery<GetLocalesResDto>(
+    "/locales",
+    "getLocales"
+  );
   const { selectedGroup } = useLayoutContext();
 
-  if (!locales) return <>ERROR</>;
+  if (!data) return <>ERROR</>;
   if (error) return <>{error?.message}</>;
   if (isLoading) return <>Loading...</>;
 
@@ -21,7 +20,7 @@ export const HomePage = () => {
     <Page>
       {selectedGroup && (
         <TranslationsTable
-          locales={locales.map(({ id, label }) => ({ id, label }))}
+          locales={data.locales.map(({ id, label }) => ({ id, label }))}
           selectedGroupId={selectedGroup}
         />
       )}
