@@ -14,6 +14,7 @@ import { DeleteModal, ModalToggle } from "~/core/modal";
 
 import { useLayoutContext } from "../context";
 import { convertGroupsToTreeData } from "../utils";
+import { AddGroupModal } from "./add-group-modal";
 
 export const LayoutSidebarGroupTreeView = () => {
   const { handleSelectedGroup } = useLayoutContext();
@@ -145,17 +146,24 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
             />
           ))}
         {node.isSelected && (
-          <IconButton
-            aria-label="add"
-            colorScheme="gray"
-            icon={<FaPlus />}
-            onClick={(e) => {
-              e.stopPropagation();
-              tree.createInternal();
+          <ModalToggle
+            modal={AddGroupModal}
+            modalProps={{
+              parentId: node.id,
+              parentName: node.data.label,
+              onComplete() {
+                tree.reset();
+              },
             }}
-            size="xs"
-            variant="ghost"
-          />
+          >
+            <IconButton
+              aria-label="add"
+              colorScheme="gray"
+              icon={<FaPlus />}
+              size="xs"
+              variant="ghost"
+            />
+          </ModalToggle>
         )}
         {(node.isSelected || isHovered) && (
           <ModalToggle
