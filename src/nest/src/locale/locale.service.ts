@@ -7,10 +7,9 @@ type AddLocaleParams = {
   position: number;
 };
 
-type EditLocaleParams = {
+type EditLocaleLabelParams = {
   id: UUID;
   newLabel?: string;
-  newPosition?: number;
 };
 
 @Injectable()
@@ -25,8 +24,8 @@ export class LocaleService {
     return await this.localeRepository.addLocale(params);
   }
 
-  async editLocale(params: EditLocaleParams) {
-    return await this.localeRepository.editLocale(params);
+  async editLocaleLabel(params: EditLocaleLabelParams) {
+    return await this.localeRepository.editLocaleLabel(params);
   }
 
   async deleteLocale({ id }: { id: UUID }) {

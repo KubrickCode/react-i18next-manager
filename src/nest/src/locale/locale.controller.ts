@@ -14,9 +14,9 @@ import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decora
 import { GetLocalesResDto } from './dto/get-locales.dto';
 import { AddLocaleReqBodyDto } from './dto/add-locale.dto';
 import {
-  EditLocaleReqBodyDto,
-  EditLocaleReqParamDto,
-} from './dto/edit-locale.dto';
+  EditLocaleLabelReqBodyDto,
+  EditLocaleLabelReqParamDto,
+} from './dto/edit-locale-label.dto';
 import { DeleteLocaleReqParamDto } from './dto/delete-locale.dto';
 
 @Controller('locales')
@@ -38,11 +38,11 @@ export class LocaleController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async editLocale(
-    @Param() param: EditLocaleReqParamDto,
-    @Body() body: EditLocaleReqBodyDto,
+  async editLocaleLabel(
+    @Param() param: EditLocaleLabelReqParamDto,
+    @Body() body: EditLocaleLabelReqBodyDto,
   ) {
-    return await this.localeService.editLocale({
+    return await this.localeService.editLocaleLabel({
       ...param,
       ...body,
     });

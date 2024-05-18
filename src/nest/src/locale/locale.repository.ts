@@ -8,10 +8,9 @@ type AddLocaleParams = {
   position: number;
 };
 
-type EditLocaleParams = {
+type EditLocaleLabelParams = {
   id: UUID;
   newLabel?: string;
-  newPosition?: number;
 };
 
 @Injectable()
@@ -44,12 +43,11 @@ export class LocaleRepository {
     this.db.write();
   }
 
-  async editLocale({ id, newLabel, newPosition }: EditLocaleParams) {
+  async editLocaleLabel({ id, newLabel }: EditLocaleLabelParams) {
     const locales = this.db.get('locales').value();
     const locale = locales.find((locale) => locale.id === id);
 
     typeof newLabel === 'string' && (locale.label = newLabel);
-    typeof newPosition === 'number' && (locale.position = newPosition);
 
     this.db.write();
   }
