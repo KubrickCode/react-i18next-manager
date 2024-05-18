@@ -25,7 +25,11 @@ export class TranslationService {
   constructor(private readonly translationRepository: TranslationRepository) {}
 
   async getTranslations({ groupId }: { groupId: UUID }) {
-    return this.translationRepository.getTranslations({ groupId });
+    return {
+      translations: await this.translationRepository.getTranslations({
+        groupId,
+      }),
+    };
   }
 
   async addTranslation(params: AddTranslationParams) {

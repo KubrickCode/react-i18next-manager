@@ -15,18 +15,16 @@ export const TranslationsTable = ({
   selectedGroupId,
 }: TranslationsTableProps) => {
   const queryKey = `getTranslations-${selectedGroupId}-${locales.join("-")}`;
-  const {
-    data: translations,
-    error,
-    isLoading,
-  } = useQuery<GetTranslationsResDto["translations"]>(
+  const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
     `/translations/${selectedGroupId}`,
     queryKey
   );
 
-  if (!translations) return <>ERROR</>;
+  if (!data) return <>ERROR</>;
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;
+
+  const { translations } = data;
 
   return (
     <Table>
