@@ -1,9 +1,12 @@
+type TranslationValue  = {
+localeId: string;
+value: string;
+}
 type Translation  = {
 id: string;
-localeId: string;
 groupId: string;
 key: string;
-value: string;
+values: TranslationValue[];
 }
 export type GetTranslationsResDto  = {
 translations: Translation[];

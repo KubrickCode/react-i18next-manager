@@ -5,11 +5,6 @@ const path = require("path");
 const backendDir = path.join(__dirname, "../nest/src");
 const frontendDir = path.join(__dirname, "../frontend/src/core/codegen");
 
-// Ensure the frontend codegen directory exists
-if (!fs.existsSync(frontendDir)) {
-  fs.mkdirSync(frontendDir, { recursive: true });
-}
-
 // Function to transform DTO content
 function transformDto(content) {
   // Remove import lines at the start of the file
@@ -127,6 +122,13 @@ function updateIndexFile(fileName) {
   });
 }
 
+// Clear the codegen directory before starting
+function clearCodegenDir() {
+  fs.rmdirSync(frontendDir, { recursive: true });
+  fs.mkdirSync(frontendDir, { recursive: true });
+  console.log("codegen directory has been cleared.");
+}
+
 // Clear the index.tsx file before starting
 function clearIndexFile() {
   const indexPath = path.join(frontendDir, "index.tsx");
@@ -140,6 +142,7 @@ function clearIndexFile() {
 }
 
 // Start reading files from the backend directory
+clearCodegenDir();
 clearIndexFile();
 readFilesRecursively(backendDir, handleDtoFile, (err) => {
   if (err) {
