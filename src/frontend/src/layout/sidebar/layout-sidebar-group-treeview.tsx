@@ -32,6 +32,7 @@ export const LayoutSidebarGroupTreeView = () => {
         onChange={(e) => setTerm(e.target.value)}
         onReset={() => setTerm("")}
         size="sm"
+        value={term}
       />
       <Box
         _hover={{ backgroundColor: treeNodeBgColor }}
