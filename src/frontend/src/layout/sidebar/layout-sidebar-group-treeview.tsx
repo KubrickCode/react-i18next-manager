@@ -104,7 +104,7 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
       onClick={() => node.isInternal && node.toggle()}
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
-      paddingLeft={`${(node.level + 1) * 1.5}rem`}
+      paddingLeft={`${(node.level + 1) * 1}rem`}
       paddingRight="0.5rem"
       width="full"
     >
@@ -131,7 +131,7 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
           />
         ) : (
           <>
-            <Text>{label}</Text>
+            <Text marginBottom={1}>{label}</Text>
             {node.data.children &&
               node.data.children.length > 0 &&
               (node.isOpen ? <MdArrowDropDown /> : <MdArrowRight />)}
