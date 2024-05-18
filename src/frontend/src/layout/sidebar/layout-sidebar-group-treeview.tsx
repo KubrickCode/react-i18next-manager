@@ -10,6 +10,7 @@ import { Input } from "~/core/input";
 import { Text } from "~/core/text";
 import { IconButton } from "~/core/button";
 import { GetGroupsResDto } from "~/core/codegen";
+import { DeleteModal, ModalToggle } from "~/core/modal";
 
 import { useLayoutContext } from "../context";
 import { convertGroupsToTreeData } from "../utils";
@@ -57,8 +58,9 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
   const inputBgColor = useColorModeValue("white", "gray.800");
 
+  const refetchQueryKeys = [["getGroups"]];
   const { mutate } = useMutation({
-    refetchQueryKeys: [["getGroups"]],
+    refetchQueryKeys,
   });
 
   return (
@@ -156,17 +158,25 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
           />
         )}
         {(node.isSelected || isHovered) && (
-          <IconButton
-            aria-label="delete"
-            colorScheme="gray"
-            icon={<FaTrash />}
-            onClick={(e) => {
-              e.stopPropagation();
-              tree.delete(node.id);
+          <ModalToggle
+            modal={DeleteModal}
+            modalProps={{
+              body: <Text>Are you sure you want to delete?</Text>,
+              link: `/groups/${node.id}`,
+              refetchQueryKeys,
+              onComplete() {
+                tree.delete(node.id);
+              },
             }}
-            size="xs"
-            variant="ghost"
-          />
+          >
+            <IconButton
+              aria-label="delete"
+              colorScheme="gray"
+              icon={<FaTrash />}
+              size="xs"
+              variant="ghost"
+            />
+          </ModalToggle>
         )}
       </Flex>
     </Box>
