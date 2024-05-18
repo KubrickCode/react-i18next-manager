@@ -104,8 +104,6 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
     node.select();
   };
 
-  console.log(node);
-
   return (
     <Box
       _hover={{ backgroundColor: treeNodeBgColor }}
