@@ -33,7 +33,7 @@ export class LocaleRepository {
   }
 
   async getLocales() {
-    return this.db.get('locales').value();
+    return this.db.get('locales').sortBy('position').value();
   }
 
   async addLocale({ label, position }: AddLocaleParams) {
