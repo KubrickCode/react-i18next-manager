@@ -28,14 +28,6 @@ export const TranslationsTable = ({
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;
 
-  const translationsByKey = translations.reduce((acc, translation) => {
-    if (!acc[translation.key]) {
-      acc[translation.key] = {};
-    }
-    acc[translation.key][translation.localeId] = translation.value;
-    return acc;
-  }, {} as Record<string, Record<string, string>>);
-
   return (
     <Table>
       <Thead>
@@ -47,12 +39,15 @@ export const TranslationsTable = ({
         </Tr>
       </Thead>
       <Tbody>
-        {Object.entries(translationsByKey).map(([key, values]) => (
-          <Tr key={key}>
-            <Td>{key}</Td>
-            {locales.map((locale) => (
-              <Td key={locale.id}>{values[locale.id]}</Td>
-            ))}
+        {translations.map((translation) => (
+          <Tr key={translation.id}>
+            <Td>{translation.key}</Td>
+            {locales.map((locale) => {
+              const valueObj = translation.values.find(
+                (val) => val.localeId === locale.id
+              );
+              return <Td key={locale.id}>{valueObj ? valueObj.value : ""}</Td>;
+            })}
           </Tr>
         ))}
       </Tbody>
