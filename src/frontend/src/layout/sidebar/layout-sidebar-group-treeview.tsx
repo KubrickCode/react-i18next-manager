@@ -27,7 +27,6 @@ export const LayoutSidebarGroupTreeView = () => {
     <VStack>
       <SearchInput onChange={(e) => setTerm(e.target.value)} size="sm" />
       <Tree
-        key={JSON.stringify(treeData)}
         initialData={treeData}
         openByDefault={false}
         height={1000}
@@ -52,7 +51,7 @@ export type TreeData = {
 };
 
 const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
-  const [input, setInput] = useState(node.data.label);
+  const [label, setLabel] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
 
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
@@ -84,13 +83,25 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
           <Input
             autoFocus
             backgroundColor={inputBgColor}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => setLabel(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") node.reset();
+              if (e.key === "Enter") {
+                mutate({
+                  link: `/groups/label/${node.data.id}`,
+                  method: "patch",
+                  body: { newLabel: label },
+                });
+                node.submit(label);
+                node.select();
+              }
+            }}
             size="sm"
-            value={input}
+            value={label}
           />
         ) : (
           <>
-            <Text>{node.data.label}</Text>
+            <Text>{label}</Text>
             {node.data.children &&
               node.data.children.length > 0 &&
               (node.isOpen ? <MdArrowDropDown /> : <MdArrowRight />)}
@@ -110,9 +121,10 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
                 mutate({
                   link: `/groups/label/${node.data.id}`,
                   method: "patch",
-                  body: { newLabel: input },
+                  body: { newLabel: label },
                 });
-                node.submit(input);
+                node.submit(label);
+                node.select();
               }}
               size="xs"
               variant="ghost"
