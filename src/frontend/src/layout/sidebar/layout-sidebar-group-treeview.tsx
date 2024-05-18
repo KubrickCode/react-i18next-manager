@@ -56,7 +56,7 @@ export const LayoutSidebarGroupTreeView = () => {
         </Flex>
       </Box>
       <Tree
-        initialData={treeData}
+        data={treeData}
         openByDefault={false}
         height={1000}
         indent={24}
