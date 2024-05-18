@@ -1,6 +1,6 @@
 import { IoIosSettings } from "react-icons/io";
 import { IconButton, useColorMode, useColorModeValue } from "@chakra-ui/react";
-import { MdDarkMode, MdPeopleOutline } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import { FaLanguage } from "react-icons/fa";
 
@@ -14,7 +14,7 @@ import {
 import { LABELS } from "~/core/constants";
 import { Text } from "~/core/text";
 
-import { ConfigManagementModal } from "./config-management-modal";
+import { LocaleManagementModal } from "./locale-management-modal";
 
 export const SettingButton = () => {
   const { toggleColorMode } = useColorMode();
@@ -43,15 +43,8 @@ export const SettingButton = () => {
           <Text>{darkModeLabel}</Text>
         </MenuItem>
         <MenuModalToggle
-          icon={MdPeopleOutline}
-          modal={ConfigManagementModal}
-          modalProps={{ configKind: "groups" }}
-        >
-          {LABELS.GROUP_MANAGEMENT}
-        </MenuModalToggle>
-        <MenuModalToggle
           icon={FaLanguage}
-          modal={ConfigManagementModal}
+          modal={LocaleManagementModal}
           modalProps={{ configKind: "languages" }}
         >
           {LABELS.LANGUAGE_MANAGEMENT}

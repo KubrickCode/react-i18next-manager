@@ -25,15 +25,15 @@ type Config = {
   newName?: string;
 };
 
-type ConfigManagementModalProps = ModalProps & {
+type LocaleManagementModalProps = ModalProps & {
   configKind: "groups" | "languages";
 };
 
-export const ConfigManagementModal = ({
+export const LocaleManagementModal = ({
   configKind,
   isOpen,
   onClose,
-}: ConfigManagementModalProps) => {
+}: LocaleManagementModalProps) => {
   const upperFirstConfigKind = _.upperFirst(configKind);
   const { data, error, isLoading } = useQuery<string[]>(
     `/config/${configKind}`,
