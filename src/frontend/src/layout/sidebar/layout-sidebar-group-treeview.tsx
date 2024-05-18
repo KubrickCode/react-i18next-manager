@@ -28,7 +28,11 @@ export const LayoutSidebarGroupTreeView = () => {
 
   return (
     <VStack alignItems="baseline">
-      <SearchInput onChange={(e) => setTerm(e.target.value)} size="sm" />
+      <SearchInput
+        onChange={(e) => setTerm(e.target.value)}
+        onReset={() => setTerm("")}
+        size="sm"
+      />
       <Box
         _hover={{ backgroundColor: treeNodeBgColor }}
         alignItems="center"
@@ -63,9 +67,7 @@ export const LayoutSidebarGroupTreeView = () => {
         onSelect={(nodes) => handleSelectedGroup(nodes[0]?.data.id || null)}
         rowHeight={45}
         searchTerm={term}
-        searchMatch={(node, term) =>
-          node.data.label.toLowerCase().includes(term.toLowerCase())
-        }
+        searchMatch={(node, term) => node.data.label.includes(term)}
       >
         {Node}
       </Tree>
