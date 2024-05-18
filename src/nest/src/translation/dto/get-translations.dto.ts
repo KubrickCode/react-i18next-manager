@@ -6,6 +6,12 @@ class Translation {
   @IsUUID()
   id: UUID;
 
+  @IsUUID()
+  localeId: UUID;
+
+  @IsUUID()
+  groupId: UUID;
+
   @IsString()
   key: string;
 
