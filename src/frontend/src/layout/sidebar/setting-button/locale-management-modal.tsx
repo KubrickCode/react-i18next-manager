@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Box, Divider, Flex } from "@chakra-ui/react";
 import { FaRegEdit, FaSave, FaTrash } from "react-icons/fa";
 
@@ -53,10 +53,9 @@ export const LocaleManagementModal = ({
       <ModalBody>
         {locales.map((locale, idx) => {
           const isEditMode = editMode && selectedLocale.id === locale.id;
-
           return (
-            <>
-              <Box key={locale.id} padding={3}>
+            <Fragment key={locale.id}>
+              <Box padding={3}>
                 <Flex
                   alignItems="center"
                   gap={1}
@@ -85,6 +84,13 @@ export const LocaleManagementModal = ({
                           icon={<FaSave />}
                           onClick={() => {
                             setEditMode(false);
+                            mutate({
+                              link: `/locales/label/${selectedLocale.id}`,
+                              method: "patch",
+                              body: {
+                                newLabel: selectedLocale.newLabel,
+                              },
+                            });
                           }}
                         />
                         <Button
@@ -123,7 +129,7 @@ export const LocaleManagementModal = ({
                 </Flex>
               </Box>
               {idx < locales.length - 1 && <Divider />}
-            </>
+            </Fragment>
           );
         })}
       </ModalBody>
