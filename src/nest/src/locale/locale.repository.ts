@@ -31,8 +31,16 @@ export class LocaleRepository {
   }
 
   async addLocale({ label, position }: AddLocaleParams) {
+    const id = generateUUID();
+
     const locales = this.db.get('locales').value();
-    locales.push({ id: generateUUID(), label, position });
+    locales.push({ id, label, position });
+    this.db.write();
+
+    const translations = this.db.get('translations').value();
+    translations.forEach((translation) => {
+      translation.values.push({ localeId: id, value: '' });
+    });
     this.db.write();
   }
 
