@@ -43,7 +43,7 @@ export class GroupController {
     return await this.groupService.editGroupsPosition(body);
   }
 
-  @Patch(':id')
+  @Patch('label/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async editLocale(
     @Param() param: EditGroupLabelReqParamDto,

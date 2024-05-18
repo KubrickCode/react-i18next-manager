@@ -4,7 +4,7 @@ import { SearchInput } from "@saas-ui/react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
-import { useQuery } from "~/core/tanstack-react-query";
+import { useMutation, useQuery } from "~/core/tanstack-react-query";
 import { NodeRendererProps, Tree } from "~/core/tree";
 import { Input } from "~/core/input";
 import { Text } from "~/core/text";
@@ -27,6 +27,7 @@ export const LayoutSidebarGroupTreeView = () => {
     <VStack>
       <SearchInput onChange={(e) => setTerm(e.target.value)} size="sm" />
       <Tree
+        key={JSON.stringify(treeData)}
         initialData={treeData}
         openByDefault={false}
         height={1000}
@@ -56,6 +57,10 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
 
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
   const inputBgColor = useColorModeValue("white", "gray.800");
+
+  const { mutate } = useMutation({
+    refetchQueryKeys: [["getGroups"]],
+  });
 
   return (
     <Box
@@ -102,6 +107,11 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
               icon={<FaSave />}
               onClick={(e) => {
                 e.stopPropagation();
+                mutate({
+                  link: `/groups/label/${node.data.id}`,
+                  method: "patch",
+                  body: { newLabel: input },
+                });
                 node.submit(input);
               }}
               size="xs"
