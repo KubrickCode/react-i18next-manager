@@ -9,18 +9,14 @@ import { NodeRendererProps, Tree } from "~/core/tree";
 import { Input } from "~/core/input";
 import { Text } from "~/core/text";
 import { IconButton } from "~/core/button";
+import { GetGroupsResDto } from "~/core/codegen";
 
 import { useLayoutContext } from "../context";
 import { convertGroupsToTreeData } from "../utils";
 
-type Group = {
-  key: string;
-  children?: Group[];
-};
-
 export const LayoutSidebarGroupTreeView = () => {
   const { handleSelectedGroup } = useLayoutContext();
-  const { data } = useQuery<Group[]>("/config/groups", "getGroups");
+  const { data } = useQuery<GetGroupsResDto["groups"]>("/groups", "getGroups");
   const [term, setTerm] = useState("");
 
   if (!data) return null;
@@ -39,7 +35,7 @@ export const LayoutSidebarGroupTreeView = () => {
         rowHeight={45}
         searchTerm={term}
         searchMatch={(node, term) =>
-          node.data.name.toLowerCase().includes(term.toLowerCase())
+          node.data.label.toLowerCase().includes(term.toLowerCase())
         }
       >
         {Node}
@@ -50,12 +46,12 @@ export const LayoutSidebarGroupTreeView = () => {
 
 export type TreeData = {
   id: string;
-  name: string;
+  label: string;
   children?: TreeData[];
 };
 
 const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
-  const [input, setInput] = useState(node.data.name);
+  const [input, setInput] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
 
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
@@ -89,8 +85,9 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
           />
         ) : (
           <>
-            <Text>{node.data.name}</Text>
+            <Text>{node.data.label}</Text>
             {node.data.children &&
+              node.data.children.length > 0 &&
               (node.isOpen ? <MdArrowDropDown /> : <MdArrowRight />)}
           </>
         )}

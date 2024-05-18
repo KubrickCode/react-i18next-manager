@@ -1,23 +1,15 @@
+import { GetGroupsResDto } from "~/core/codegen";
+
 import { TreeData } from "./sidebar/layout-sidebar-group-treeview";
 
-type Group = {
-  key: string;
-  children?: Group[];
-};
-
 export const convertGroupsToTreeData = (
-  groups: Group[],
-  parentKey?: string
+  groups: GetGroupsResDto["groups"]
 ): TreeData[] => {
-  return groups.map((group) => {
-    const newKey = parentKey ? `${parentKey}.${group.key}` : group.key;
-    const children = group.children
-      ? convertGroupsToTreeData(group.children, newKey)
-      : undefined;
+  return groups.map(({ id, label, children }) => {
     return {
-      id: newKey,
-      name: group.key,
-      children,
+      id,
+      label,
+      children: convertGroupsToTreeData(children),
     };
   });
 };
