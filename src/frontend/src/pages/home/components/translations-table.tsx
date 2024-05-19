@@ -33,7 +33,10 @@ export const TranslationsTable = () => {
       </Thead>
       <Tbody>
         {translations.map((translation) => (
-          <TranslationsTableRow translation={translation} />
+          <TranslationsTableRow
+            key={translation.id}
+            translation={translation}
+          />
         ))}
       </Tbody>
     </Table>
