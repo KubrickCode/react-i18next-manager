@@ -31,6 +31,7 @@ export const SettingButton = () => {
       <MenuButton
         aria-label="setting-menu-button"
         as={IconButton}
+        colorScheme="gray"
         icon={<IoIosSettings />}
         size="sm"
         variant="outline"
