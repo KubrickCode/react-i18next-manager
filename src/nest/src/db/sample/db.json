@@ -47,19 +47,19 @@
     {
       "id": "663fa135-10a8-4d40-8c76-5a7be31c3d26",
       "label": "error",
-      "position": 0,
+      "position": 1,
       "children": []
     },
     {
       "id": "6dbee307-7275-4cbb-b467-cafacdda50d0",
       "label": "menu",
-      "position": 0,
+      "position": 2,
       "children": []
     },
     {
       "id": "45a13d2e-b2b8-49dd-8693-dfc13e7469f7",
       "label": "title",
-      "position": 0,
+      "position": 3,
       "children": []
     }
   ],

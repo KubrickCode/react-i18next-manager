@@ -18,7 +18,10 @@ import {
   EditGroupLabelReqBodyDto,
   EditGroupLabelReqParamDto,
 } from './dto/edit-group-label.dto';
-import { EditGroupsPositionReqBodyDto } from './dto/edit-groups-position.dto';
+import {
+  EditGroupPositionReqBodyDto,
+  EditGroupPositionReqParamDto,
+} from './dto/edit-group-position.dto';
 
 @Controller('groups')
 export class GroupController {
@@ -37,10 +40,16 @@ export class GroupController {
     return await this.groupService.addGroup(body);
   }
 
-  @Patch('position')
+  @Patch('position/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async editGroupsPosition(@Body() body: EditGroupsPositionReqBodyDto) {
-    return await this.groupService.editGroupsPosition(body);
+  async editGroupPosition(
+    @Param() param: EditGroupPositionReqParamDto,
+    @Body() body: EditGroupPositionReqBodyDto,
+  ) {
+    return await this.groupService.editGroupPosition({
+      ...param,
+      ...body,
+    });
   }
 
   @Patch('label/:id')

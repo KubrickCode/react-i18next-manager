@@ -65,6 +65,9 @@ export const LayoutSidebarGroupTreeView = () => {
         openByDefault={false}
         height={1000}
         indent={24}
+        onMove={(source) => {
+          console.log(source);
+        }}
         onSelect={(nodes) => handleSelectedGroup(nodes[0]?.data.id || null)}
         rowHeight={45}
         searchTerm={term}
@@ -82,7 +85,7 @@ export type TreeData = {
   children?: TreeData[];
 };
 
-const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
+const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
   const [label, setLabel] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -107,6 +110,7 @@ const Node = ({ node, tree }: NodeRendererProps<TreeData>) => {
   return (
     <Box
       _hover={{ backgroundColor: treeNodeBgColor }}
+      ref={dragHandle}
       alignItems="center"
       backgroundColor={node.state.isSelected ? treeNodeBgColor : "transparent"}
       borderRadius={5}

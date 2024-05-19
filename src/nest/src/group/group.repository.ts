@@ -15,11 +15,7 @@ type EditGroupLabelParams = {
 
 type EditGroupPositionParams = {
   id: UUID;
-  newPosition: number;
-};
-
-type EditGroupsPositionParams = {
-  groups: EditGroupPositionParams[];
+  position: number;
 };
 
 @Injectable()
@@ -72,15 +68,21 @@ export class GroupRepository {
     this.db.write();
   }
 
-  async editGroupsPosition(params: EditGroupsPositionParams) {
+  async editGroupPosition({ id, position }: EditGroupPositionParams) {
     const groups = this.db.get('groups').value();
+    const group = this.findGroupById(groups, id);
 
-    params.groups.forEach(({ id, newPosition }) => {
-      const group = this.findGroupById(groups, id);
-      if (group) {
-        group.position = newPosition;
-      }
-    });
+    if (!group) {
+      throw new Error(`Group with id ${id} not found`);
+    }
+
+    const parentGroup = this.findParentGroup(groups, id);
+
+    if (parentGroup) {
+      this.reorderGroups(parentGroup.children, id, position);
+    } else {
+      this.reorderGroups(groups, id, position);
+    }
 
     this.db.write();
   }
@@ -95,6 +97,23 @@ export class GroupRepository {
       (translation) => !allGroupIds.includes(translation.groupId),
     );
     this.db.set('translations', updatedTranslations).write();
+  }
+
+  private collectGroupAndChildIds(groups: GroupSchema[], id: UUID): UUID[] {
+    const groupIds: UUID[] = [];
+    const collect = (group: GroupSchema) => {
+      groupIds.push(group.id);
+      if (group.children) {
+        group.children.forEach(collect);
+      }
+    };
+
+    const targetGroup = this.findGroupById(groups, id);
+    if (targetGroup) {
+      collect(targetGroup);
+    }
+
+    return groupIds;
   }
 
   private findGroupById(groups: GroupSchema[], id: UUID): GroupSchema | null {
@@ -130,20 +149,29 @@ export class GroupRepository {
     }
   }
 
-  private collectGroupAndChildIds(groups: GroupSchema[], id: UUID): UUID[] {
-    const groupIds: UUID[] = [];
-    const collect = (group: GroupSchema) => {
-      groupIds.push(group.id);
-      if (group.children) {
-        group.children.forEach(collect);
+  private findParentGroup(groups: GroupSchema[], id: UUID): GroupSchema | null {
+    for (const group of groups) {
+      if (group.children.some((child) => child.id === id)) {
+        return group;
       }
-    };
+      const found = this.findParentGroup(group.children, id);
+      if (found) return found;
+    }
+    return null;
+  }
 
-    const targetGroup = this.findGroupById(groups, id);
-    if (targetGroup) {
-      collect(targetGroup);
+  private reorderGroups(groups: GroupSchema[], id: UUID, newPosition: number) {
+    const groupIndex = groups.findIndex((group) => group.id === id);
+
+    if (groupIndex === -1) {
+      throw new Error(`Group with id ${id} not found in the given group list`);
     }
 
-    return groupIds;
+    const [movedGroup] = groups.splice(groupIndex, 1);
+    groups.splice(newPosition, 0, movedGroup);
+
+    groups.forEach((group, index) => {
+      group.position = index;
+    });
   }
 }
