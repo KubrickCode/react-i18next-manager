@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { FaEdit, FaSave } from "react-icons/fa";
+
 import { Button, IconButton } from "~/core/button";
 import { GetTranslationsResDto } from "~/core/codegen";
+import { useColorModeValue } from "~/core/color-mode";
 import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
 import { Td, Tr } from "~/core/table";
@@ -22,8 +24,10 @@ export const TranslationsTableRow = ({
     values: translation.values,
   });
 
+  const hoveredBackground = useColorModeValue("gray.50", "gray.900");
+
   return (
-    <Tr _hover={{ bg: "gray.50" }} key={translation.id}>
+    <Tr _hover={{ bg: hoveredBackground }} key={translation.id}>
       <Td>
         {editMode ? (
           <Input
