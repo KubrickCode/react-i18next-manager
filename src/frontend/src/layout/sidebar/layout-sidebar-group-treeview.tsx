@@ -58,7 +58,6 @@ export const LayoutSidebarGroupTreeView = () => {
           >
             <IconButton
               aria-label="add"
-              colorScheme="gray"
               icon={<FaPlus />}
               size="xs"
               variant="ghost"
@@ -173,7 +172,6 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
             {node.isEditing ? (
               <IconButton
                 aria-label="save-edit"
-                colorScheme="gray"
                 icon={<FaSave />}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -185,7 +183,6 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
             ) : (
               <IconButton
                 aria-label="edit"
-                colorScheme="gray"
                 icon={<FaEdit />}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -207,7 +204,6 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
             >
               <IconButton
                 aria-label="add"
-                colorScheme="gray"
                 icon={<FaPlus />}
                 size="xs"
                 variant="ghost"
@@ -226,7 +222,6 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
             >
               <IconButton
                 aria-label="delete"
-                colorScheme="gray"
                 icon={<FaTrash />}
                 size="xs"
                 variant="ghost"
