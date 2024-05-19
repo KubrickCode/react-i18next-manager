@@ -1,5 +1,5 @@
 import { Page } from "~/core/page";
-import { useQuery } from "~/core/tanstack-react-query";
+import { useQuery } from "~/core/react-query";
 import { useLayoutContext } from "~/layout/context";
 import { GetLocalesResDto } from "~/core/codegen";
 

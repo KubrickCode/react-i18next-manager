@@ -1,6 +1,6 @@
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
-import { useQuery } from "~/core/tanstack-react-query";
+import { useQuery } from "~/core/react-query";
 
 type TranslationsTableProps = {
   locales: {

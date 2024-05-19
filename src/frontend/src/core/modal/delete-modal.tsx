@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 import { Modal, ModalProps } from "./modal";
-import { QueryKey, useMutation } from "../tanstack-react-query";
+import { QueryKey, useMutation } from "../react-query";
 import { ModalHeader } from "./modal-header";
 import { LABELS } from "../constants";
 import { ModalBody } from "./modal-body";

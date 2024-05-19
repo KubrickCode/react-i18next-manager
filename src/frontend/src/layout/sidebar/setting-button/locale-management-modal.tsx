@@ -11,7 +11,7 @@ import {
   ModalProps,
   ModalToggle,
 } from "~/core/modal";
-import { useMutation, useQuery } from "~/core/tanstack-react-query";
+import { useMutation, useQuery } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { GetLocalesResDto } from "~/core/codegen";
 import { Button, IconButton } from "~/core/button";

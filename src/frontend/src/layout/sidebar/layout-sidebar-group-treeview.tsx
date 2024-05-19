@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
-import { useMutation, useQuery } from "~/core/tanstack-react-query";
+import { useMutation, useQuery } from "~/core/react-query";
 import { NodeRendererProps, Tree } from "~/core/tree";
 import { Input, SearchInput } from "~/core/input";
 import { Text } from "~/core/text";

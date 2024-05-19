@@ -11,7 +11,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { useMutation } from "~/core/tanstack-react-query";
+import { useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 type AddGroupModalProps = ModalProps & {
