@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -36,6 +35,12 @@ export class TranslationController {
     return await this.translationService.getTranslations(param);
   }
 
+  @Post('/delete')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteTranslation(@Body() body: DeleteTranslationsReqBodyDto) {
+    return await this.translationService.deleteTranslations(body);
+  }
+
   @Post(':groupId')
   @HttpCode(HttpStatus.CREATED)
   async addTranslation(
@@ -58,11 +63,5 @@ export class TranslationController {
       ...param,
       ...body,
     });
-  }
-
-  @Delete()
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteTranslation(@Body() body: DeleteTranslationsReqBodyDto) {
-    return await this.translationService.deleteTranslations(body);
   }
 }

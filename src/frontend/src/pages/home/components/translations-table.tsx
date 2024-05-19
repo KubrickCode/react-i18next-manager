@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Th, Thead, Tr } from "~/core/table";
 import { useQuery } from "~/core/react-query";
@@ -8,9 +6,16 @@ import { useLayoutContext } from "~/layout/context";
 import { TranslationsTableRow } from "./translations-table-row";
 import { Checkbox } from "~/core/checkbox";
 
-export const TranslationsTable = () => {
+type TranslationsTableProps = {
+  handleSelectedIds: (ids: string[]) => void;
+  selectedIds: string[];
+};
+
+export const TranslationsTable = ({
+  handleSelectedIds,
+  selectedIds,
+}: TranslationsTableProps) => {
   const { locales, selectedGroup } = useLayoutContext();
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const queryKey = `getTranslations-${selectedGroup?.id}}`;
   const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
@@ -26,17 +31,17 @@ export const TranslationsTable = () => {
 
   const handleSelectAll = () => {
     if (selectedIds.length === translations.length) {
-      setSelectedIds([]);
+      handleSelectedIds([]);
     } else {
-      setSelectedIds(translations.map((translation) => translation.id));
+      handleSelectedIds(translations.map((translation) => translation.id));
     }
   };
 
   const handleSelect = (id: string) => {
     if (selectedIds.includes(id)) {
-      setSelectedIds((prev) => prev.filter((selectedId) => selectedId !== id));
+      handleSelectedIds(selectedIds.filter((selectedId) => selectedId !== id));
     } else {
-      setSelectedIds((prev) => [...prev, id]);
+      handleSelectedIds([...selectedIds, id]);
     }
   };
 

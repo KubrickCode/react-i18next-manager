@@ -8,8 +8,17 @@ import { useQueryClient } from "~/core/react-query";
 import { useLayoutContext } from "~/layout/context";
 
 import { AddTranslationModal } from "./add-translation-modal";
+import { DeleteTranslationModal } from "./delete-translations-modal";
 
-export const TranslationsTableToolbar = () => {
+type TranslationsTableToolbarProps = {
+  handleSelectedIds: (ids: string[]) => void;
+  selectedIds: string[];
+};
+
+export const TranslationsTableToolbar = ({
+  handleSelectedIds,
+  selectedIds,
+}: TranslationsTableToolbarProps) => {
   const { selectedGroup } = useLayoutContext();
 
   const queryClient = useQueryClient();
@@ -23,6 +32,16 @@ export const TranslationsTableToolbar = () => {
 
   return (
     <HStack marginTop={2}>
+      {selectedIds.length > 0 && (
+        <ModalToggle
+          modal={DeleteTranslationModal}
+          modalProps={{ handleSelectedIds, ids: selectedIds }}
+        >
+          <Button colorScheme="red" size="sm">
+            Delete {selectedIds.length} rows
+          </Button>
+        </ModalToggle>
+      )}
       <IconButton
         aria-label="refresh"
         icon={<IoMdRefresh />}

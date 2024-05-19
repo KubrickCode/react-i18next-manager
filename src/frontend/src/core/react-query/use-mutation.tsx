@@ -33,5 +33,8 @@ export const useMutation = <TBody, TData = unknown>({
       );
       return await Promise.all(promises || []);
     },
+    onError: (error) => {
+      console.error(error);
+    },
   });
 };
