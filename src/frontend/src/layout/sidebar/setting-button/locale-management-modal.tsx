@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Box, Divider, Flex } from "@chakra-ui/react";
 import { FaRegEdit, FaSave, FaTrash } from "react-icons/fa";
 import { MdDragIndicator } from "react-icons/md";
 
@@ -23,6 +22,7 @@ import {
   DropResult,
   Droppable,
 } from "~/core/drag-drop";
+import { Box, Divider, Flex } from "~/core/layout";
 
 type LocaleManagementModalProps = ModalProps;
 

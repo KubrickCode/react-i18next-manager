@@ -1,8 +1,9 @@
-import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
-
 import { Sidebar, SidebarSection } from "~/core/sidebar";
 import { Button } from "~/core/button";
 import { LABELS } from "~/core/constants";
+import { Flex } from "~/core/layout";
+import { Image } from "~/core/image";
+import { useColorModeValue } from "~/core/color-mode";
 
 import { SettingButton } from "./setting-button";
 import { LayoutSidebarGroupTreeView } from "./layout-sidebar-group-treeview";

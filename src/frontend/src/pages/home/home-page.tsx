@@ -1,8 +1,8 @@
 import { Page } from "~/core/page";
 import { useQuery } from "~/core/tanstack-react-query";
-
 import { useLayoutContext } from "~/layout/context";
 import { GetLocalesResDto } from "~/core/codegen";
+
 import { TranslationsTable } from "./components/translations-table";
 import { TranslationsTableToolbar } from "./components/translations-table-toolbar";
 

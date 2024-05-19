@@ -1,8 +1,8 @@
-import { HStack } from "@chakra-ui/react";
-import { SearchInput } from "@saas-ui/react";
 import { IoMdRefresh } from "react-icons/io";
 
 import { Button, IconButton } from "~/core/button";
+import { SearchInput } from "~/core/input";
+import { HStack } from "~/core/layout";
 
 export const TranslationsTableToolbar = () => {
   return (

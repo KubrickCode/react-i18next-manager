@@ -1,6 +1,8 @@
 import { PropsWithChildren } from "react";
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import { AppShell } from "@saas-ui/react";
+
+import { Box } from "~/core/layout";
+import { useColorModeValue } from "~/core/color-mode";
+import { AppShell } from "~/core/app-shell";
 
 import { LayoutContextProvider } from "./context";
 import { LayoutSidebar } from "./sidebar";

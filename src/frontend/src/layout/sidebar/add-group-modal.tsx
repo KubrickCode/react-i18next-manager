@@ -1,8 +1,9 @@
-import { VStack } from "@chakra-ui/react";
 import { useState } from "react";
+
 import { Button } from "~/core/button";
 import { LABELS } from "~/core/constants";
 import { Input } from "~/core/input";
+import { VStack } from "~/core/layout";
 import {
   Modal,
   ModalBody,
