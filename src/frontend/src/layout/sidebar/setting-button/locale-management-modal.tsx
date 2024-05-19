@@ -23,6 +23,10 @@ import {
 } from "~/core/drag-drop";
 import { Box, Divider, Flex } from "~/core/layout";
 import { useLayoutContext } from "~/layout/context";
+import {
+  EditLocaleLabelReqBodyDto,
+  EditLocalesPositionReqBodyDto,
+} from "~/core/codegen";
 
 type LocaleManagementModalProps = ModalProps;
 
@@ -42,7 +46,12 @@ export const LocaleManagementModal = ({
     newLabel: "",
   });
 
-  const { mutate } = useMutation({
+  const { mutate: editLocalesPosition } =
+    useMutation<EditLocalesPositionReqBodyDto>({
+      refetchQueryKeys,
+    });
+
+  const { mutate: editLocaleLabel } = useMutation<EditLocaleLabelReqBodyDto>({
     refetchQueryKeys,
   });
 
@@ -58,7 +67,7 @@ export const LocaleManagementModal = ({
       position: index,
     }));
 
-    mutate({
+    editLocalesPosition({
       link: `/locales/position`,
       method: "patch",
       body: {
@@ -125,7 +134,7 @@ export const LocaleManagementModal = ({
                                       icon={<FaSave />}
                                       onClick={() => {
                                         setEditMode(false);
-                                        mutate({
+                                        editLocaleLabel({
                                           link: `/locales/label/${selectedLocale.id}`,
                                           method: "patch",
                                           body: {

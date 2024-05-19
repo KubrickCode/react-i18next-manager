@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Button } from "~/core/button";
+import { AddGroupReqBodyDto } from "~/core/codegen";
 import { LABELS } from "~/core/constants";
 import { Input } from "~/core/input";
 import { VStack } from "~/core/layout";
@@ -29,12 +30,12 @@ export const AddGroupModal = ({
 }: AddGroupModalProps) => {
   const [label, setLabel] = useState("");
 
-  const { mutate } = useMutation({
+  const { mutate: addGroup } = useMutation<AddGroupReqBodyDto>({
     refetchQueryKeys: [["getGroups"]],
   });
 
   const handleSubmit = () => {
-    mutate({
+    addGroup({
       link: "/groups",
       method: "post",
       body: {

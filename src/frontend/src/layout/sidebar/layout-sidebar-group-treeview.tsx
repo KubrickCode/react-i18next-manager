@@ -14,6 +14,10 @@ import { useColorModeValue } from "~/core/color-mode";
 import { useLayoutContext } from "../context";
 import { convertGroupsToTreeData } from "../utils";
 import { AddGroupModal } from "./add-group-modal";
+import {
+  EditGroupLabelReqBodyDto,
+  EditGroupPositionReqBodyDto,
+} from "~/core/codegen";
 
 export const LayoutSidebarGroupTreeView = () => {
   const { groups, handleSelectedGroup } = useLayoutContext();
@@ -21,9 +25,10 @@ export const LayoutSidebarGroupTreeView = () => {
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
 
   const refetchQueryKeys = [["getGroups"]];
-  const { mutate } = useMutation({
-    refetchQueryKeys,
-  });
+  const { mutate: editGroupPosition } =
+    useMutation<EditGroupPositionReqBodyDto>({
+      refetchQueryKeys,
+    });
 
   const treeData = convertGroupsToTreeData(groups);
 
@@ -67,7 +72,7 @@ export const LayoutSidebarGroupTreeView = () => {
         height={1000}
         indent={24}
         onMove={({ dragIds, index: position }) => {
-          mutate({
+          editGroupPosition({
             link: `/groups/position/${dragIds[0]}`,
             method: "patch",
             body: { position },
@@ -107,12 +112,12 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
   const inputBgColor = useColorModeValue("white", "gray.800");
 
   const refetchQueryKeys = [["getGroups"]];
-  const { mutate } = useMutation({
+  const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
     refetchQueryKeys,
   });
 
   const handleEdit = () => {
-    mutate({
+    editGroupLabel({
       link: `/groups/label/${node.data.id}`,
       method: "patch",
       body: { newLabel: label },
