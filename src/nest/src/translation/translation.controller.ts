@@ -23,7 +23,7 @@ import {
   EditTranslationReqBodyDto,
   EditTranslationReqParamDto,
 } from './dto/edit-translation.dto';
-import { DeleteTranslationReqParamDto } from './dto/delete-translation.dto';
+import { DeleteTranslationsReqBodyDto } from './dto/delete-translations.dto';
 
 @Controller('translations')
 export class TranslationController {
@@ -62,7 +62,7 @@ export class TranslationController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteTranslation(@Param() param: DeleteTranslationReqParamDto) {
-    return await this.translationService.deleteTranslation(param);
+  async deleteTranslation(@Body() body: DeleteTranslationsReqBodyDto) {
+    return await this.translationService.deleteTranslations(body);
   }
 }
