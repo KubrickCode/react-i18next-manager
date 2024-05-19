@@ -38,7 +38,7 @@ export const TranslationsTable = ({
       </Thead>
       <Tbody>
         {translations.map((translation) => (
-          <Tr key={translation.id}>
+          <Tr _hover={{ bg: "gray.50" }} key={translation.id}>
             <Td>{translation.key}</Td>
             {locales.map((locale) => {
               const valueObj = translation.values.find(
