@@ -15,16 +15,18 @@ type QueryState = {
 
 type State = {
   selectedGroup: SelectedGroup;
-} & QueryState;
+};
 
 type Action = {
   handleSelectedGroup: (group: State["selectedGroup"]) => void;
 };
 
-const initialState: State = {
+const initialQueryState: QueryState = {
   groups: [],
   locales: [],
+};
 
+const initialState: State = {
   selectedGroup: null,
 };
 
@@ -32,7 +34,8 @@ const initialActions: Action = {
   handleSelectedGroup: () => {},
 };
 
-const LayoutContext = createContext<State & Action>({
+const LayoutContext = createContext<QueryState & State & Action>({
+  ...initialQueryState,
   ...initialState,
   ...initialActions,
 });
@@ -65,9 +68,12 @@ export const LayoutContextProvider = ({
   const { groups } = groupsQueryResult.data;
   const { locales } = localesQueryResult.data;
 
-  const stateValue: State = {
+  const queryStateValue: QueryState = {
     groups,
     locales,
+  };
+
+  const stateValue: State = {
     selectedGroup,
   };
 
@@ -78,6 +84,7 @@ export const LayoutContextProvider = ({
   return (
     <LayoutContext.Provider
       value={{
+        ...queryStateValue,
         ...stateValue,
         ...actionValue,
       }}
