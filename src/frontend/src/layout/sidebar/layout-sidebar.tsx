@@ -12,7 +12,7 @@ export const LayoutSidebar = () => {
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");
 
   return (
-    <Sidebar width="20rem">
+    <Sidebar>
       <SidebarSection>
         <Flex alignItems="center" justifyContent="space-between">
           <Button
