@@ -39,7 +39,7 @@ const chakraTheme = extendTheme({
   components: {
     Input: {
       defaultProps: {
-        focusBorderColor: "primary.500",
+        focusBorderColor: "darkgray.500",
       },
     },
   },

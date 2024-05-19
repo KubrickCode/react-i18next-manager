@@ -88,7 +88,7 @@ export const AddTranslationModal = ({
         </VStack>
       </ModalBody>
       <ModalFooter onClose={onClose}>
-        <Button colorScheme="primary" onClick={handleSubmit}>
+        <Button colorScheme="darkgray" onClick={handleSubmit}>
           {LABELS.SAVE}
         </Button>
       </ModalFooter>

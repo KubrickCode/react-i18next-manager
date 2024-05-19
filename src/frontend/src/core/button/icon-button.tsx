@@ -7,7 +7,7 @@ import {
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (props, ref) => {
-    const colorScheme = useColorModeValue("primary", "gray");
+    const colorScheme = useColorModeValue("darkgray", "gray");
     return <ChakraIconButton ref={ref} colorScheme={colorScheme} {...props} />;
   }
 );
