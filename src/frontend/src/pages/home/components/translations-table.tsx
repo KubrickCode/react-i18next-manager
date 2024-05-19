@@ -1,6 +1,9 @@
+import { FaEdit } from "react-icons/fa";
+
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
 import { useQuery } from "~/core/react-query";
+import { IconButton } from "~/core/button";
 
 type TranslationsTableProps = {
   locales: {
@@ -34,6 +37,7 @@ export const TranslationsTable = ({
           {locales.map((locale) => (
             <Th key={locale.id}>{locale.label.toUpperCase()}</Th>
           ))}
+          <Th />
         </Tr>
       </Thead>
       <Tbody>
@@ -46,6 +50,15 @@ export const TranslationsTable = ({
               );
               return <Td key={locale.id}>{valueObj ? valueObj.value : ""}</Td>;
             })}
+            <Td>
+              <IconButton
+                _hover={{ bg: "gray.200" }}
+                aria-label="edit"
+                icon={<FaEdit />}
+                size="xs"
+                variant="ghost"
+              />
+            </Td>
           </Tr>
         ))}
       </Tbody>
