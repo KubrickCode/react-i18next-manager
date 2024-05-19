@@ -1,24 +1,16 @@
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Th, Thead, Tr } from "~/core/table";
 import { useQuery } from "~/core/react-query";
+import { useLayoutContext } from "~/layout/context";
 
 import { TranslationsTableRow } from "./translations-table-row";
 
-type TranslationsTableProps = {
-  locales: {
-    id: string;
-    label: string;
-  }[];
-  selectedGroupId: string;
-};
+export const TranslationsTable = () => {
+  const { locales, selectedGroup } = useLayoutContext();
 
-export const TranslationsTable = ({
-  locales,
-  selectedGroupId,
-}: TranslationsTableProps) => {
-  const queryKey = `getTranslations-${selectedGroupId}}`;
+  const queryKey = `getTranslations-${selectedGroup?.id}}`;
   const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
-    `/translations/${selectedGroupId}`,
+    `/translations/${selectedGroup?.id}`,
     queryKey
   );
 
@@ -41,7 +33,7 @@ export const TranslationsTable = ({
       </Thead>
       <Tbody>
         {translations.map((translation) => (
-          <TranslationsTableRow locales={locales} translation={translation} />
+          <TranslationsTableRow translation={translation} />
         ))}
       </Tbody>
     </Table>
