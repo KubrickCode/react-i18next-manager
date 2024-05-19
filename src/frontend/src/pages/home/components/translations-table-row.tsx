@@ -34,6 +34,7 @@ export const TranslationsTableRow = ({
   });
 
   const hoveredBackground = useColorModeValue("gray.50", "gray.900");
+  const hoveredIconButtonBackground = useColorModeValue("gray.200", "gray.700");
 
   const { mutate: editTranslation } = useMutation<EditTranslationReqBodyDto>({
     refetchQueryKeys: [[`getTranslations-${selectedGroup?.id}}`]],
@@ -111,7 +112,7 @@ export const TranslationsTableRow = ({
       <Td>
         <Flex gap={2}>
           <IconButton
-            _hover={{ bg: "gray.200" }}
+            _hover={{ bg: hoveredIconButtonBackground }}
             aria-label="edit"
             colorScheme="gray"
             icon={editMode ? <FaSave /> : <FaEdit />}
@@ -122,7 +123,7 @@ export const TranslationsTableRow = ({
             variant="outline"
           />
           <Button
-            _hover={{ bg: "gray.200" }}
+            _hover={{ bg: hoveredIconButtonBackground }}
             colorScheme="gray"
             onClick={() => setEditMode(false)}
             size="sm"
