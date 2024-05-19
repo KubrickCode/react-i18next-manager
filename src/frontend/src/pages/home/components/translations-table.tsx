@@ -24,7 +24,7 @@ export const TranslationsTable = () => {
     <Table layout="fixed" size="sm">
       <Thead>
         <Tr>
-          <Th>KEY</Th>
+          <Th paddingY={3}>KEY</Th>
           {locales.map((locale) => (
             <Th key={locale.id}>{locale.label.toUpperCase()}</Th>
           ))}
