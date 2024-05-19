@@ -37,7 +37,7 @@ export const TranslationsTableRow = ({
             }
           />
         ) : (
-          <Text>{translation.key}</Text>
+          <Text fontSize="sm">{translation.key}</Text>
         )}
       </Td>
       {locales.map((locale) => {
@@ -71,7 +71,7 @@ export const TranslationsTableRow = ({
                 }}
               />
             ) : (
-              <Text>{valueObj?.value}</Text>
+              <Text fontSize="sm">{valueObj?.value}</Text>
             )}
           </Td>
         );
