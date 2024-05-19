@@ -40,16 +40,9 @@ export class TranslationService {
     await this.translationRepository.editTranslation(params);
   }
 
-  async deleteTranslations({ ids }: { ids: UUID[] }) {
-    for (const id of ids) {
-      if (!this.isUUID(id)) throw new Error('Invalid UUID');
+  async deleteTranslations({ translations }: { translations: { id: UUID }[] }) {
+    for (const { id } of translations) {
       await this.translationRepository.deleteTranslation({ id });
     }
-  }
-
-  private isUUID(id: string) {
-    const uuidRegex =
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    return uuidRegex.test(id);
   }
 }

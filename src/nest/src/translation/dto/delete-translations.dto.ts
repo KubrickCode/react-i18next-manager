@@ -1,10 +1,15 @@
 import { Type } from 'class-transformer';
-import { IsArray, ValidateNested } from 'class-validator';
+import { IsArray, IsUUID, ValidateNested } from 'class-validator';
 import { UUID } from 'src/common/types';
+
+class Translation {
+  @IsUUID()
+  id: UUID;
+}
 
 export class DeleteTranslationsReqBodyDto {
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => String)
-  ids: UUID[];
+  @Type(() => Translation)
+  translations: Translation[];
 }

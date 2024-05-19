@@ -60,7 +60,7 @@ export class TranslationController {
     });
   }
 
-  @Delete(':id')
+  @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteTranslation(@Body() body: DeleteTranslationsReqBodyDto) {
     return await this.translationService.deleteTranslations(body);
