@@ -1,10 +1,15 @@
+import { forwardRef } from "react";
 import {
   IconButton as ChakraIconButton,
   IconButtonProps,
   useColorModeValue,
 } from "@chakra-ui/react";
 
-export const IconButton = (props: IconButtonProps) => {
-  const colorScheme = useColorModeValue("primary", "gray");
-  return <ChakraIconButton colorScheme={colorScheme} {...props} />;
-};
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  (props, ref) => {
+    const colorScheme = useColorModeValue("primary", "gray");
+    return <ChakraIconButton ref={ref} colorScheme={colorScheme} {...props} />;
+  }
+);
+
+IconButton.displayName = "IconButton";
