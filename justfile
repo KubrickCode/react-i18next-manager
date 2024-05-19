@@ -1,6 +1,7 @@
 root_dir := justfile_directory()
 frontend_dir := root_dir + "/src/frontend"
 backend_dir := root_dir + "/src/backend"
+nest_dir := root_dir + "/src/nest"
 package_dir := root_dir + "/src/package"
 test_web_dir := root_dir + "/src/test-web"
 scripts_dir := root_dir + "/src/scripts"
@@ -45,6 +46,11 @@ run svc *args:
 
     backend)
       cd "{{ backend_dir }}"
+      PORT=3001 yarn dev
+      ;;
+
+    nest)
+      cd "{{ nest_dir }}"
       PORT=3001 yarn dev
       ;;
 
