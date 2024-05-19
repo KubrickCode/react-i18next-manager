@@ -21,7 +21,7 @@ export const TranslationsTable = () => {
   const { translations } = data;
 
   return (
-    <Table>
+    <Table size="sm">
       <Thead>
         <Tr>
           <Th>KEY</Th>
