@@ -2,10 +2,14 @@ import { useState } from "react";
 import { FaEdit, FaSave } from "react-icons/fa";
 
 import { Button, IconButton } from "~/core/button";
-import { GetTranslationsResDto } from "~/core/codegen";
+import {
+  EditTranslationReqBodyDto,
+  GetTranslationsResDto,
+} from "~/core/codegen";
 import { useColorModeValue } from "~/core/color-mode";
 import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
+import { useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { Text } from "~/core/text";
 import { useLayoutContext } from "~/layout/context";
@@ -17,7 +21,7 @@ type TranslationsTableRowProps = {
 export const TranslationsTableRow = ({
   translation,
 }: TranslationsTableRowProps) => {
-  const { locales } = useLayoutContext();
+  const { locales, selectedGroup } = useLayoutContext();
   const [editMode, setEditMode] = useState(false);
   const [translationForm, setTranslationForm] = useState({
     key: translation.key,
@@ -25,6 +29,22 @@ export const TranslationsTableRow = ({
   });
 
   const hoveredBackground = useColorModeValue("gray.50", "gray.900");
+
+  const { mutate: editTranslation } = useMutation<EditTranslationReqBodyDto>({
+    refetchQueryKeys: [[`getTranslations-${selectedGroup?.id}}`]],
+  });
+
+  const handleEditTranslation = () => {
+    editTranslation({
+      link: `/translations/${translation.id}`,
+      method: "patch",
+      body: {
+        newKey: translationForm.key,
+        newValues: translationForm.values,
+      },
+    });
+    setEditMode(false);
+  };
 
   return (
     <Tr _hover={{ bg: hoveredBackground }} key={translation.id}>
@@ -87,7 +107,9 @@ export const TranslationsTableRow = ({
             aria-label="edit"
             colorScheme="gray"
             icon={editMode ? <FaSave /> : <FaEdit />}
-            onClick={() => setEditMode((prev) => !prev)}
+            onClick={() => {
+              editMode ? handleEditTranslation() : setEditMode(true);
+            }}
             size="sm"
             variant="outline"
           />
