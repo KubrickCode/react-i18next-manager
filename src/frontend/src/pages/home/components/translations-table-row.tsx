@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaEdit, FaSave } from "react-icons/fa";
 
 import { Button, IconButton } from "~/core/button";
+import { Checkbox } from "~/core/checkbox";
 import {
   EditTranslationReqBodyDto,
   GetTranslationsResDto,
@@ -15,10 +16,14 @@ import { Text } from "~/core/text";
 import { useLayoutContext } from "~/layout/context";
 
 type TranslationsTableRowProps = {
+  isSelected: boolean;
+  onSelect: () => void;
   translation: GetTranslationsResDto["translations"][number];
 };
 
 export const TranslationsTableRow = ({
+  isSelected,
+  onSelect,
   translation,
 }: TranslationsTableRowProps) => {
   const { locales, selectedGroup } = useLayoutContext();
@@ -48,6 +53,9 @@ export const TranslationsTableRow = ({
 
   return (
     <Tr _hover={{ bg: hoveredBackground }} key={translation.id}>
+      <Td>
+        <Checkbox isChecked={isSelected} onChange={onSelect} />
+      </Td>
       <Td>
         {editMode ? (
           <Input
