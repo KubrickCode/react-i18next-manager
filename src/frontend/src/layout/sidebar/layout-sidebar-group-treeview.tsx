@@ -22,6 +22,11 @@ export const LayoutSidebarGroupTreeView = () => {
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
 
+  const refetchQueryKeys = [["getGroups"]];
+  const { mutate } = useMutation({
+    refetchQueryKeys,
+  });
+
   if (!data) return null;
 
   const treeData = convertGroupsToTreeData(data);
@@ -65,8 +70,12 @@ export const LayoutSidebarGroupTreeView = () => {
         openByDefault={false}
         height={1000}
         indent={24}
-        onMove={(source) => {
-          console.log(source);
+        onMove={({ dragIds, index: position }) => {
+          mutate({
+            link: `/groups/position/${dragIds[0]}`,
+            method: "patch",
+            body: { position },
+          });
         }}
         onSelect={(nodes) => handleSelectedGroup(nodes[0]?.data.id || null)}
         rowHeight={45}
