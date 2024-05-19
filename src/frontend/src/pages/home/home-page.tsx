@@ -24,7 +24,7 @@ export const HomePage = () => {
           <TranslationsTableToolbar />
           <TranslationsTable
             locales={data.locales.map(({ id, label }) => ({ id, label }))}
-            selectedGroupId={selectedGroup}
+            selectedGroupId={selectedGroup.id}
           />
         </>
       )}

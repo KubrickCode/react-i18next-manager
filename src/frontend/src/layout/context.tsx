@@ -1,7 +1,12 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
+type Group = {
+  id: string;
+  label: string;
+};
+
 type State = {
-  selectedGroup: string | null;
+  selectedGroup: Group | null;
 };
 
 type Action = {
@@ -28,14 +33,14 @@ type LayoutContextProviderProps = PropsWithChildren;
 export const LayoutContextProvider = ({
   children,
 }: LayoutContextProviderProps) => {
-  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
 
   const stateValue: State = {
     selectedGroup,
   };
 
   const actionValue: Action = {
-    handleSelectedGroup: (group: string | null) => setSelectedGroup(group),
+    handleSelectedGroup: (group: Group | null) => setSelectedGroup(group),
   };
 
   return (

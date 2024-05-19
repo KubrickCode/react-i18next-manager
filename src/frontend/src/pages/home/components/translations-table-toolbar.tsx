@@ -8,12 +8,14 @@ import { useLayoutContext } from "~/layout/context";
 
 export const TranslationsTableToolbar = () => {
   const { selectedGroup } = useLayoutContext();
-  const queryKey = `getTranslations-${selectedGroup}}`;
 
   const queryClient = useQueryClient();
 
   const handleRefresh = () => {
-    queryClient.invalidateQueries({ queryKey: [queryKey] });
+    selectedGroup &&
+      queryClient.invalidateQueries({
+        queryKey: [`getTranslations-${selectedGroup.id}}`],
+      });
   };
 
   return (

@@ -77,7 +77,16 @@ export const LayoutSidebarGroupTreeView = () => {
             body: { position },
           });
         }}
-        onSelect={(nodes) => handleSelectedGroup(nodes[0]?.data.id || null)}
+        onSelect={(nodes) =>
+          handleSelectedGroup(
+            nodes[0]?.data
+              ? {
+                  id: nodes[0].data.id,
+                  label: nodes[0].data.label,
+                }
+              : null
+          )
+        }
         rowHeight={45}
         searchTerm={term}
         searchMatch={(node, term) => node.data.label.includes(term)}
