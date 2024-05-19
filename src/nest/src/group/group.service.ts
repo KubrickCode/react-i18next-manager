@@ -22,7 +22,7 @@ export class GroupService {
   constructor(private readonly groupRepository: GroupRepository) {}
 
   async getGroups() {
-    return await this.groupRepository.getGroups();
+    return { groups: await this.groupRepository.getGroups() };
   }
 
   async addGroup(params: AddGroupParams) {

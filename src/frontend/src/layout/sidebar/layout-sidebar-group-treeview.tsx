@@ -2,12 +2,11 @@ import { useState } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
-import { useMutation, useQuery } from "~/core/react-query";
+import { useMutation } from "~/core/react-query";
 import { NodeRendererProps, Tree } from "~/core/tree";
 import { Input, SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
 import { IconButton } from "~/core/button";
-import { GetGroupsResDto } from "~/core/codegen";
 import { DeleteModal, ModalToggle } from "~/core/modal";
 import { Box, Flex, VStack } from "~/core/layout";
 import { useColorModeValue } from "~/core/color-mode";
@@ -17,8 +16,7 @@ import { convertGroupsToTreeData } from "../utils";
 import { AddGroupModal } from "./add-group-modal";
 
 export const LayoutSidebarGroupTreeView = () => {
-  const { handleSelectedGroup } = useLayoutContext();
-  const { data } = useQuery<GetGroupsResDto["groups"]>("/groups", "getGroups");
+  const { groups, handleSelectedGroup } = useLayoutContext();
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
 
@@ -27,9 +25,7 @@ export const LayoutSidebarGroupTreeView = () => {
     refetchQueryKeys,
   });
 
-  if (!data) return null;
-
-  const treeData = convertGroupsToTreeData(data);
+  const treeData = convertGroupsToTreeData(groups);
 
   return (
     <VStack alignItems="baseline">
