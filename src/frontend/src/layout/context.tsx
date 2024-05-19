@@ -3,10 +3,10 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { GetGroupsResDto, GetLocalesResDto } from "~/core/codegen";
 import { useQuery } from "~/core/react-query";
 
-type Group = {
+type SelectedGroup = {
   id: string;
   label: string;
-};
+} | null;
 
 type QueryState = {
   groups: GetGroupsResDto["groups"];
@@ -14,7 +14,7 @@ type QueryState = {
 };
 
 type State = {
-  selectedGroup: Group | null;
+  selectedGroup: SelectedGroup;
 } & QueryState;
 
 type Action = {
@@ -44,7 +44,7 @@ type LayoutContextProviderProps = PropsWithChildren;
 export const LayoutContextProvider = ({
   children,
 }: LayoutContextProviderProps) => {
-  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<SelectedGroup>(null);
   const groupsQueryResult = useQuery<GetGroupsResDto>("/groups", "getGroups");
 
   const localesQueryResult = useQuery<GetLocalesResDto>(
@@ -72,7 +72,7 @@ export const LayoutContextProvider = ({
   };
 
   const actionValue: Action = {
-    handleSelectedGroup: (group: Group | null) => setSelectedGroup(group),
+    handleSelectedGroup: (group: SelectedGroup) => setSelectedGroup(group),
   };
 
   return (
