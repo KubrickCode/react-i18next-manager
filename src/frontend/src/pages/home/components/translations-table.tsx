@@ -1,9 +1,8 @@
-import { FaEdit } from "react-icons/fa";
-
 import { GetTranslationsResDto } from "~/core/codegen";
-import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
+import { Table, Tbody, Th, Thead, Tr } from "~/core/table";
 import { useQuery } from "~/core/react-query";
-import { IconButton } from "~/core/button";
+
+import { TranslationsTableRow } from "./translations-table-row";
 
 type TranslationsTableProps = {
   locales: {
@@ -42,24 +41,7 @@ export const TranslationsTable = ({
       </Thead>
       <Tbody>
         {translations.map((translation) => (
-          <Tr _hover={{ bg: "gray.50" }} key={translation.id}>
-            <Td>{translation.key}</Td>
-            {locales.map((locale) => {
-              const valueObj = translation.values.find(
-                (val) => val.localeId === locale.id
-              );
-              return <Td key={locale.id}>{valueObj ? valueObj.value : ""}</Td>;
-            })}
-            <Td>
-              <IconButton
-                _hover={{ bg: "gray.200" }}
-                aria-label="edit"
-                icon={<FaEdit />}
-                size="xs"
-                variant="ghost"
-              />
-            </Td>
-          </Tr>
+          <TranslationsTableRow locales={locales} translation={translation} />
         ))}
       </Tbody>
     </Table>
