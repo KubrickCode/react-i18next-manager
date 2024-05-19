@@ -14,7 +14,7 @@ export const TranslationsTable = ({
   locales,
   selectedGroupId,
 }: TranslationsTableProps) => {
-  const queryKey = `getTranslations-${selectedGroupId}-${locales.join("-")}`;
+  const queryKey = `getTranslations-${selectedGroupId}}`;
   const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
     `/translations/${selectedGroupId}`,
     queryKey
