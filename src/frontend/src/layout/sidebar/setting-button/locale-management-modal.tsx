@@ -11,9 +11,8 @@ import {
   ModalProps,
   ModalToggle,
 } from "~/core/modal";
-import { useMutation, useQuery } from "~/core/react-query";
+import { useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
-import { GetLocalesResDto } from "~/core/codegen";
 import { Button, IconButton } from "~/core/button";
 import { Input } from "~/core/input";
 import {
@@ -23,6 +22,7 @@ import {
   Droppable,
 } from "~/core/drag-drop";
 import { Box, Divider, Flex } from "~/core/layout";
+import { useLayoutContext } from "~/layout/context";
 
 type LocaleManagementModalProps = ModalProps;
 
@@ -30,11 +30,9 @@ export const LocaleManagementModal = ({
   isOpen,
   onClose,
 }: LocaleManagementModalProps) => {
-  const { data, error, isLoading } = useQuery<GetLocalesResDto>(
-    "/locales",
-    `getLocalesInModal`
-  );
-  const refetchQueryKeys = [[`getLocalesInModal`], [`getLocales`]];
+  const { locales } = useLayoutContext();
+
+  const refetchQueryKeys = [[`getLocales`]];
   const [editMode, setEditMode] = useState(false);
   const [selectedLocale, setSelectedLocale] = useState<{
     id: string;
@@ -47,12 +45,6 @@ export const LocaleManagementModal = ({
   const { mutate } = useMutation({
     refetchQueryKeys,
   });
-
-  if (!data) return <>ERROR</>;
-  if (error) return <>{error.message}</>;
-  if (isLoading) return <>Loading...</>;
-
-  const { locales } = data;
 
   const onDrag = (result: DropResult) => {
     if (!result.destination) return;
