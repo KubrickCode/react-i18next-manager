@@ -5,7 +5,7 @@ const defaultConfig = {
   targetPath: "./sample",
 };
 
-const configPath = path.join(path.dirname(__dirname), "i18n-config.json");
+const configPath = path.join(process.cwd(), "i18n-config.json");
 
 fs.writeFile(
   configPath,
