@@ -11,7 +11,7 @@
     "i18n": "npx @kubrick/react-i18next-manager"
   },
   "dependencies": {
-    "@kubrick/react-i18next-manager": "^0.3.11",
+    "@kubrick/react-i18next-manager": "^0.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
