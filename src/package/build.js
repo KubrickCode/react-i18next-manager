@@ -3,7 +3,7 @@ const path = require("path");
 
 const copyBuildFiles = async () => {
   const frontendDir = path.join(__dirname, "../frontend/dist");
-  const backendDir = path.join(__dirname, "../backend/dist/src");
+  const backendDir = path.join(__dirname, "../nest/dist");
   const targetDir = path.join(__dirname, "dist");
 
   try {
