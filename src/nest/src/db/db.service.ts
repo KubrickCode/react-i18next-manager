@@ -17,22 +17,26 @@ export class DBService implements OnModuleInit {
   }
 
   private async initializeDb() {
-    const targetPath =
-      process.env.NODE_ENV === 'development'
-        ? 'src/db/sample'
-        : this.getTargetPath();
+    const targetPath = this.getTargetPath();
     const file = join(targetPath, 'db.json');
+
     const adapter = new FileAsync<DBSchema>(file);
+
     this.db = await lowdb(adapter);
+
     await this.db.defaults({ locales: [] }).write();
   }
 
   private getTargetPath(): string {
+    if (process.env.NODE_ENV === 'development') return 'src/db/sample';
+
     const configFilePath = join(process.cwd(), 'i18n-config.json');
     if (!fs.existsSync(configFilePath)) {
       throw new Error('i18n-config.json file not found in the root directory.');
     }
+
     const configFile = fs.readFileSync(configFilePath, 'utf8');
+
     const { targetPath } = JSON.parse(configFile);
     if (!targetPath) {
       throw new Error('targetPath is required in i18n-config.json file.');
@@ -41,9 +45,7 @@ export class DBService implements OnModuleInit {
   }
 
   async getDb(): Promise<DB> {
-    if (!this.db) {
-      await this.initializeDb();
-    }
+    if (!this.db) await this.initializeDb();
     return this.db;
   }
 }
