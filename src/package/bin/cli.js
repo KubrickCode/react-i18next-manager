@@ -15,7 +15,7 @@ program
   .command("init")
   .description("Initialize configuration")
   .action(() => {
-    require("../dist/init.js");
+    require("./init.js");
   });
 
 program.parse(process.argv);
