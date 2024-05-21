@@ -12,13 +12,19 @@ const bootstrap = async () => {
 
   app.use(express.static(join(__dirname, '.')));
 
-  app.use((req, res, next) => {
-    if (!req.path.startsWith('/api')) {
-      res.sendFile(join(__dirname, 'index.html'));
-    } else {
-      next();
-    }
-  });
+  app.use(
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction,
+    ) => {
+      if (!req.path.startsWith('/api')) {
+        res.sendFile(join(__dirname, 'index.html'));
+      } else {
+        next();
+      }
+    },
+  );
 
   await app.listen(3001);
 };
