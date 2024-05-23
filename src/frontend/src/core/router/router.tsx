@@ -5,11 +5,16 @@ import { Layout } from "~/layout";
 
 export const Router = () => (
   <BrowserRouter>
-    <Layout>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Layout>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <HomePage />
+          </Layout>
+        }
+      />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   </BrowserRouter>
 );
