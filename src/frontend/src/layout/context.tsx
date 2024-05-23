@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 import { GetGroupsResDto, GetLocalesResDto } from "~/core/codegen";
-import { useQuery } from "~/core/react-query";
+import { LINK, useQuery } from "~/core/react-query";
 import { GET_GROUPS, GET_LOCALES } from "~/core/react-query/keys";
 
 type SelectedGroup = {
@@ -49,10 +49,13 @@ export const LayoutContextProvider = ({
   children,
 }: LayoutContextProviderProps) => {
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup>(null);
-  const groupsQueryResult = useQuery<GetGroupsResDto>("/groups", GET_GROUPS);
+  const groupsQueryResult = useQuery<GetGroupsResDto>(
+    LINK.GET_GROUPS,
+    GET_GROUPS
+  );
 
   const localesQueryResult = useQuery<GetLocalesResDto>(
-    "/locales",
+    LINK.GET_LOCALES,
     GET_LOCALES
   );
 

@@ -1,6 +1,6 @@
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Th, Thead, Tr } from "~/core/table";
-import { useQuery } from "~/core/react-query";
+import { LINK, useQuery } from "~/core/react-query";
 import { useLayoutContext } from "~/layout/context";
 
 import { TranslationsTableRow } from "./translations-table-row";
@@ -19,7 +19,7 @@ export const TranslationsTable = ({
   const { locales, selectedGroup } = useLayoutContext();
 
   const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
-    `/translations/${selectedGroup?.id}`,
+    LINK.GET_TRANSLATIONS(selectedGroup?.id ?? ""),
     GET_TRANSLATIONS(selectedGroup?.id ?? "")
   );
 

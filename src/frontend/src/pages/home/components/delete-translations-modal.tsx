@@ -8,7 +8,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { useMutation } from "~/core/react-query";
+import { LINK, useMutation } from "~/core/react-query";
 import { GET_TRANSLATIONS } from "~/core/react-query/keys";
 import { Text } from "~/core/text";
 import { useLayoutContext } from "~/layout/context";
@@ -33,7 +33,7 @@ export const DeleteTranslationModal = ({
 
   const handleSubmit = () => {
     deleteTranslations({
-      link: `/translations/delete`,
+      link: LINK.DELETE_TRANSLATIONS,
       method: "post",
       body: {
         translations: ids.map((id) => ({ id })),

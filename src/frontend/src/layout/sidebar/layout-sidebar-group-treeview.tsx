@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
-import { useMutation } from "~/core/react-query";
+import { useMutation, LINK } from "~/core/react-query";
 import { NodeRendererProps, Tree } from "~/core/tree";
 import { Input, SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
@@ -73,7 +73,7 @@ export const LayoutSidebarGroupTreeView = () => {
         indent={24}
         onMove={({ dragIds, index: position }) => {
           editGroupPosition({
-            link: `/groups/position/${dragIds[0]}`,
+            link: LINK.EDIT_GROUP_POSITION(dragIds[0]),
             method: "patch",
             body: { position },
           });
@@ -118,7 +118,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
 
   const handleEdit = () => {
     editGroupLabel({
-      link: `/groups/label/${node.data.id}`,
+      link: LINK.EDIT_GROUP_LABEL(node.data.id),
       method: "patch",
       body: { newLabel: label },
     });
@@ -214,7 +214,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
               modal={DeleteModal}
               modalProps={{
                 body: <Text>Are you sure you want to delete?</Text>,
-                link: `/groups/${node.id}`,
+                link: LINK.DELETE_GROUP(node.id),
                 refetchQueryKeys,
                 onComplete() {
                   tree.delete(node.id);

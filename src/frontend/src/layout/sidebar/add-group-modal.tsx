@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { useMutation } from "~/core/react-query";
+import { useMutation, LINK } from "~/core/react-query";
 import { GET_GROUPS } from "~/core/react-query/keys";
 import { Text } from "~/core/text";
 
@@ -37,7 +37,7 @@ export const AddGroupModal = ({
 
   const handleSubmit = () => {
     addGroup({
-      link: "/groups",
+      link: LINK.ADD_GROUP,
       method: "post",
       body: {
         label,

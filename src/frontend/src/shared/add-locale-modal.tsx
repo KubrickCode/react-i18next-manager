@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { useMutation } from "~/core/react-query";
+import { LINK, useMutation } from "~/core/react-query";
 import { GET_LOCALES } from "~/core/react-query/keys";
 import { Text } from "~/core/text";
 
@@ -35,7 +35,7 @@ export const AddLocaleModal = ({
 
   const handleSubmit = () => {
     addLocale({
-      link: "/locales",
+      link: LINK.ADD_LOCALE,
       method: "post",
       body: {
         label,

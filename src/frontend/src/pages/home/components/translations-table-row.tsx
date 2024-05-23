@@ -10,7 +10,7 @@ import {
 import { useColorModeValue } from "~/core/color-mode";
 import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
-import { useMutation } from "~/core/react-query";
+import { LINK, useMutation } from "~/core/react-query";
 import { GET_TRANSLATIONS } from "~/core/react-query/keys";
 import { Td, Tr } from "~/core/table";
 import { Text } from "~/core/text";
@@ -43,7 +43,7 @@ export const TranslationsTableRow = ({
 
   const handleEditTranslation = () => {
     editTranslation({
-      link: `/translations/${translation.id}`,
+      link: LINK.EDIT_TRANSLATION(translation.id),
       method: "patch",
       body: {
         newKey: translationForm.key,
