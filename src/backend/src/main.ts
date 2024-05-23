@@ -26,7 +26,7 @@ const bootstrap = async () => {
     },
   );
 
-  await app.listen(3001);
+  await app.listen(Number(process.env.PORT || 4321));
 };
 
 bootstrap();
