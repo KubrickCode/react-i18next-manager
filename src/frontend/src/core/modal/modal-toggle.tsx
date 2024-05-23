@@ -25,7 +25,6 @@ export const ModalToggle = ({
     <>
       <Flex
         alignItems="center"
-        maxWidth="fit-content"
         tabIndex={0}
         {...getToggleProps()}
         {...otherProps}

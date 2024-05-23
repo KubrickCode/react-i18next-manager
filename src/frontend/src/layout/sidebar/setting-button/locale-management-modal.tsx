@@ -28,6 +28,8 @@ import {
   EditLocalesPositionReqBodyDto,
 } from "~/core/codegen";
 
+import { AddLocaleModal } from "./add-locale-modal";
+
 type LocaleManagementModalProps = ModalProps;
 
 export const LocaleManagementModal = ({
@@ -202,6 +204,16 @@ export const LocaleManagementModal = ({
             )}
           </Droppable>
         </DragDropContext>
+        <ModalToggle
+          modal={AddLocaleModal}
+          modalProps={{
+            position: locales.length,
+          }}
+        >
+          <Button border="1px dotted lightgray" variant="outline" width="full">
+            +
+          </Button>
+        </ModalToggle>
       </ModalBody>
       <ModalFooter onClose={onClose} />
     </Modal>
