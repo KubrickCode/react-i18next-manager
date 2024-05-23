@@ -76,7 +76,7 @@ run svc *args:
     package-studio)
       cd "{{ package_dir }}"
       chmod +x dist/main.js
-      npx studio
+      npx @kubrick/react-i18next-manager studio
       ;;
 
     package-init)
