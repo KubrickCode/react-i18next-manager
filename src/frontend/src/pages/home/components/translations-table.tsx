@@ -23,6 +23,7 @@ export const TranslationsTable = ({
     queryKey
   );
 
+  if (locales.length < 1) return null;
   if (!data) return <>ERROR</>;
   if (error) return <>{error.message}</>;
   if (isLoading) return <>Loading...</>;

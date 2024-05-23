@@ -2,10 +2,12 @@ import { IoMdRefresh } from "react-icons/io";
 
 import { Button, IconButton } from "~/core/button";
 import { SearchInput } from "~/core/input";
-import { HStack } from "~/core/layout";
+import { Flex, HStack } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
 import { useQueryClient } from "~/core/react-query";
 import { useLayoutContext } from "~/layout/context";
+import { Text } from "~/core/text";
+import { AddLocaleModal } from "~/shared/add-locale-modal";
 
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
@@ -19,7 +21,7 @@ export const TranslationsTableToolbar = ({
   handleSelectedIds,
   selectedIds,
 }: TranslationsTableToolbarProps) => {
-  const { selectedGroup } = useLayoutContext();
+  const { locales, selectedGroup } = useLayoutContext();
 
   const queryClient = useQueryClient();
 
@@ -29,6 +31,19 @@ export const TranslationsTableToolbar = ({
         queryKey: [`getTranslations-${selectedGroup.id}}`],
       });
   };
+
+  if (locales.length < 1)
+    return (
+      <Flex alignItems="center" gap={2}>
+        <Text>Please</Text>
+        <ModalToggle modal={AddLocaleModal} modalProps={{ position: 0 }}>
+          <Button size="sm" textDecoration="underline" variant="link">
+            Add Locale
+          </Button>
+        </ModalToggle>
+        <Text>First</Text>
+      </Flex>
+    );
 
   return (
     <HStack marginTop={2}>
