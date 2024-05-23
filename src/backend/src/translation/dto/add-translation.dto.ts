@@ -1,31 +1,26 @@
-import {
-  IsString,
-  ValidateNested,
-  IsArray,
-  ArrayNotEmpty,
-} from "class-validator";
-import { Type } from "class-transformer";
+import { Type } from 'class-transformer';
+import { IsArray, IsString, IsUUID, ValidateNested } from 'class-validator';
+import { UUID } from 'src/common/types';
 
-export class AddTranslationReqParamsDTO {
+class TranslationValue {
+  @IsUUID()
+  localeId: UUID;
+
   @IsString()
-  readonly group: string;
+  value: string;
 }
 
-export class AddTranslationReqBodyDTO {
+export class AddTranslationReqBodyDto {
   @IsString()
-  readonly key: string;
+  key: string;
 
   @IsArray()
-  @ArrayNotEmpty()
   @ValidateNested({ each: true })
-  @Type(() => TranslationDto)
-  readonly translations: TranslationDto[];
+  @Type(() => TranslationValue)
+  values: TranslationValue[];
 }
 
-class TranslationDto {
-  @IsString()
-  readonly language: string;
-
-  @IsString()
-  readonly value: string;
+export class AddTranslationReqParamDto {
+  @IsUUID()
+  groupId: UUID;
 }

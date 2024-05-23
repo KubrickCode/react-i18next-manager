@@ -1,47 +1,39 @@
-import {
-  IsNumber,
-  IsBoolean,
-  IsObject,
-  IsString,
-  ValidateNested,
-  IsInt,
-} from "class-validator";
-import { Type } from "class-transformer";
+import { Type } from 'class-transformer';
+import { IsArray, IsString, IsUUID, ValidateNested } from 'class-validator';
+import { UUID } from 'src/common/types';
 
-export class GetTranslationsReqParamsDTO {
-  @IsString()
-  readonly group: string;
-}
+class TranslationValue {
+  @IsUUID()
+  localeId: UUID;
 
-export class GetTranslationsReqQueryDTO {
-  @IsInt()
-  readonly skip: number = 0;
-
-  @IsInt()
-  readonly take: number = 9999;
-}
-
-export class TranslationValueDto {
   @IsString()
   value: string;
 }
 
-export class TranslationsDto {
-  [language: string]: TranslationValueDto;
+class Translation {
+  @IsUUID()
+  id: UUID;
+
+  @IsUUID()
+  groupId: UUID;
+
+  @IsString()
+  key: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TranslationValue)
+  values: TranslationValue[];
 }
 
-export class GetTranslationsResDTO {
-  @IsObject()
-  @ValidateNested()
-  @Type(() => TranslationsDto)
-  translations: TranslationsDto;
+export class GetTranslationsResDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Translation)
+  translations: Translation[];
+}
 
-  @IsNumber()
-  count: number;
-
-  @IsBoolean()
-  hasPrevPage: boolean;
-
-  @IsBoolean()
-  hasNextPage: boolean;
+export class GetTranslationsReqParamDto {
+  @IsUUID()
+  groupId: UUID;
 }

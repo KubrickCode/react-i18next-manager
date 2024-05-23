@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Define directories
-const backendDir = path.join(__dirname, "../nest/src");
+const backendDir = path.join(__dirname, "../backend/src");
 const frontendDir = path.join(__dirname, "../frontend/src/core/codegen");
 
 // Function to transform DTO content

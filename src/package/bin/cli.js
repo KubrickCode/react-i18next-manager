@@ -6,7 +6,7 @@ program.version("0.3.9");
 
 program
   .command("studio")
-  .description("Start the Nest server")
+  .description("Start the server")
   .action(() => {
     require("../dist/main.js");
   });

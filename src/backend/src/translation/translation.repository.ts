@@ -1,38 +1,64 @@
-import { DBService } from "../db/db.service";
-import { Service } from "typedi";
-import { EditTranslationBody } from "./translation.controller";
+import { Injectable } from '@nestjs/common';
+import { UUID } from 'src/common/types';
+import { generateUUID } from 'src/common/utils';
+import { DB, DBService } from 'src/db/db.service';
 
 type AddTranslationParams = {
-  group: string;
+  groupId: UUID;
   key: string;
-  translations: {
-    language: string;
+  values: {
+    localeId: UUID;
     value: string;
   }[];
 };
 
-@Service()
+type EditTranslationParams = {
+  id: UUID;
+  newKey: string;
+  newValues: {
+    localeId: UUID;
+    value: string;
+  }[];
+};
+
+@Injectable()
 export class TranslationRepository {
-  constructor(private readonly dbService: DBService) {}
+  private db: DB;
 
-  async getLanguages() {
-    return this.dbService.getLanguages();
+  constructor(private readonly dbService: DBService) {
+    this.initializeDb();
   }
 
-  async getTranslations() {
-    return this.dbService.getTranslations();
+  private async initializeDb() {
+    this.db = await this.dbService.getDb();
   }
 
-  async addTranslation({ group, key, translations }: AddTranslationParams) {
-    this.dbService.addTranslation(group, key, translations);
+  async getTranslations({ groupId }: { groupId: UUID }) {
+    return this.db.get('translations').filter({ groupId }).value();
   }
 
-  async deleteTranslation(group: string, key: string) {
-    this.dbService.deleteTranslation(group, key);
+  async addTranslation(params: AddTranslationParams) {
+    const translations = this.db.get('translations').value();
+    translations.push({ id: generateUUID(), ...params });
+    this.db.write();
   }
 
-  async editTranslation(group: string, key: string, data: EditTranslationBody) {
-    this.dbService.deleteTranslation(group, key);
-    this.dbService.addTranslation(group, data.newKey, data.translations);
+  async editTranslation({ id, newKey, newValues }: EditTranslationParams) {
+    const translations = this.db.get('translations').value();
+    const index = translations.findIndex((t) => t.id === id);
+    if (index !== -1) {
+      translations[index].key = newKey;
+      translations[index].values = newValues;
+    }
+    this.db.write();
+  }
+
+  async deleteTranslation({ id }: { id: UUID }) {
+    const translations = this.db.get('translations').value();
+    const index = translations.findIndex((t) => t.id === id);
+    if (index !== -1) {
+      translations.splice(index, 1);
+    }
+    this.db.write();
   }
 }

@@ -1,8 +1,32 @@
-#!/usr/bin/env node
-import "reflect-metadata";
-import { Container } from "typedi";
-import { App } from "./app/app";
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import * as express from 'express';
+import { join } from 'path';
 
-(async () => {
-  await Container.get(App).startServer(Number(process.env.PORT || 4321));
-})();
+const bootstrap = async () => {
+  const app = await NestFactory.create(AppModule);
+
+  app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+
+  app.use(express.static(join(__dirname, '.')));
+
+  app.use(
+    (
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction,
+    ) => {
+      if (!req.path.startsWith('/api')) {
+        res.sendFile(join(__dirname, 'index.html'));
+      } else {
+        next();
+      }
+    },
+  );
+
+  await app.listen(3001);
+};
+
+bootstrap();

@@ -1,127 +1,51 @@
-import { Service } from "typedi";
-import fs from "fs";
-import path from "path";
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import * as lowdb from 'lowdb';
+import * as FileAsync from 'lowdb/adapters/FileAsync';
+import { join } from 'path';
+import { DBSchema, LocaleSchema, GroupSchema } from './db.schema';
+import * as fs from 'fs';
 
-export type TranslationData = {
-  [language: string]: {
-    [key: string]: string;
-  };
-};
+export type DB = lowdb.LowdbAsync<DBSchema>;
+export type { DBSchema, LocaleSchema, GroupSchema };
 
-export type Config = {
-  groups: Group[];
-  languages: string[];
-};
+@Injectable()
+export class DBService implements OnModuleInit {
+  private db: DB;
 
-export type Group = {
-  key: string;
-  children?: Group[];
-};
-
-@Service()
-export class DBService {
-  private config: Config = {
-    groups: [],
-    languages: [],
-  };
-  private data: TranslationData = {};
-  private resourcePath: string;
-  private configPath: string;
-
-  constructor() {
-    const targetPath = this.getTargetPath();
-    this.resourcePath = targetPath + "/i18n.json";
-    this.configPath = targetPath + "/config.json";
-    this.loadConfig();
-    this.loadData();
+  async onModuleInit() {
+    await this.initializeDb();
   }
 
-  private getTargetPath() {
-    const i18nConfigFilePath = path.join("./", "i18n-config.json");
-    const i18nConfigFile = fs.readFileSync(i18nConfigFilePath, "utf8");
-    const { targetPath } = JSON.parse(i18nConfigFile);
+  private async initializeDb() {
+    const targetPath = this.getTargetPath();
+    const file = join(targetPath, 'db.json');
+
+    const adapter = new FileAsync<DBSchema>(file);
+
+    this.db = await lowdb(adapter);
+
+    await this.db.defaults({ locales: [] }).write();
+  }
+
+  private getTargetPath(): string {
+    if (process.env.NODE_ENV === 'development') return 'src/db/sample';
+
+    const configFilePath = join(process.cwd(), 'i18n-config.json');
+    if (!fs.existsSync(configFilePath)) {
+      throw new Error('i18n-config.json file not found in the root directory.');
+    }
+
+    const configFile = fs.readFileSync(configFilePath, 'utf8');
+
+    const { targetPath } = JSON.parse(configFile);
+    if (!targetPath) {
+      throw new Error('targetPath is required in i18n-config.json file.');
+    }
     return targetPath;
   }
 
-  private loadConfig() {
-    const configFile = fs.readFileSync(this.configPath, "utf8");
-    this.config = JSON.parse(configFile);
-  }
-
-  private loadData() {
-    const fileContent = fs.readFileSync(this.resourcePath, "utf8");
-    this.data = JSON.parse(fileContent);
-  }
-
-  private saveData() {
-    const sortedData: TranslationData = {};
-    this.config.languages.forEach((language) => {
-      sortedData[language] = this.sortObjectKeys(this.data[language]);
-    });
-
-    fs.writeFileSync(this.resourcePath, JSON.stringify(sortedData, null, 2));
-  }
-
-  private sortObjectKeys(obj: { [key: string]: string }): {
-    [key: string]: string;
-  } {
-    const sortedKeys = Object.keys(obj).sort();
-    const result: { [key: string]: string } = {};
-    sortedKeys.forEach((key) => {
-      result[key] = obj[key];
-    });
-    return result;
-  }
-
-  getGroups() {
-    return this.config.groups;
-  }
-
-  getLanguages() {
-    return this.config.languages;
-  }
-
-  getTranslations() {
-    return this.data;
-  }
-
-  addTranslation(
-    group: string,
-    key: string,
-    translations: Array<{ language: string; value: string }>
-  ) {
-    translations.forEach(({ language, value }) => {
-      if (!this.data[language]) {
-        this.data[language] = {};
-      }
-      this.data[language][`ui.${group}.${key}`] = value;
-    });
-    this.saveData();
-  }
-
-  deleteTranslation(group: string, key: string) {
-    const fullKey = `ui.${group}.${key}`;
-    this.config.languages.forEach((language) => {
-      if (this.data[language] && this.data[language][fullKey]) {
-        delete this.data[language][fullKey];
-      }
-    });
-    this.saveData();
-  }
-
-  saveGroups(groups: Group[]): Promise<void> {
-    this.config.groups = groups;
-
-    const data = JSON.stringify(this.config, null, 2);
-    fs.writeFileSync(this.configPath, data);
-    return Promise.resolve();
-  }
-
-  saveLanguages(languages: string[]): Promise<void> {
-    this.config.languages = languages;
-
-    const data = JSON.stringify(this.config, null, 2);
-    fs.writeFileSync(this.configPath, data);
-    return Promise.resolve();
+  async getDb(): Promise<DB> {
+    if (!this.db) await this.initializeDb();
+    return this.db;
   }
 }
