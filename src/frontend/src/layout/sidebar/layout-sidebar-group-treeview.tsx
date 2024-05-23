@@ -10,15 +10,15 @@ import { IconButton } from "~/core/button";
 import { DeleteModal, ModalToggle } from "~/core/modal";
 import { Box, Flex, VStack } from "~/core/layout";
 import { useColorModeValue } from "~/core/color-mode";
-
-import { useLayoutContext } from "../context";
-import { convertGroupsToTreeData } from "../utils";
-import { AddGroupModal } from "./add-group-modal";
 import {
   EditGroupLabelReqBodyDto,
   EditGroupPositionReqBodyDto,
 } from "~/core/codegen";
 import { GET_GROUPS } from "~/core/react-query/keys";
+
+import { useLayoutContext } from "../context";
+import { convertGroupsToTreeData } from "../utils";
+import { AddGroupModal } from "./add-group-modal";
 
 export const LayoutSidebarGroupTreeView = () => {
   const { groups, handleSelectedGroup } = useLayoutContext();
