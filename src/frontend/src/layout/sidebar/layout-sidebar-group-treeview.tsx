@@ -18,13 +18,14 @@ import {
   EditGroupLabelReqBodyDto,
   EditGroupPositionReqBodyDto,
 } from "~/core/codegen";
+import { GET_GROUPS } from "~/core/react-query/keys";
 
 export const LayoutSidebarGroupTreeView = () => {
   const { groups, handleSelectedGroup } = useLayoutContext();
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
 
-  const refetchQueryKeys = [["getGroups"]];
+  const refetchQueryKeys = [[GET_GROUPS]];
   const { mutate: editGroupPosition } =
     useMutation<EditGroupPositionReqBodyDto>({
       refetchQueryKeys,
@@ -110,7 +111,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
   const inputBgColor = useColorModeValue("white", "gray.800");
 
-  const refetchQueryKeys = [["getGroups"]];
+  const refetchQueryKeys = [[GET_GROUPS]];
   const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
     refetchQueryKeys,
   });

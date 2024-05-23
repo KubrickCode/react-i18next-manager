@@ -5,6 +5,7 @@ import { useLayoutContext } from "~/layout/context";
 
 import { TranslationsTableRow } from "./translations-table-row";
 import { Checkbox } from "~/core/checkbox";
+import { GET_TRANSLATIONS } from "~/core/react-query/keys";
 
 type TranslationsTableProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -17,10 +18,9 @@ export const TranslationsTable = ({
 }: TranslationsTableProps) => {
   const { locales, selectedGroup } = useLayoutContext();
 
-  const queryKey = `getTranslations-${selectedGroup?.id}}`;
   const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
     `/translations/${selectedGroup?.id}`,
-    queryKey
+    GET_TRANSLATIONS(selectedGroup?.id ?? "")
   );
 
   if (locales.length < 1) return null;

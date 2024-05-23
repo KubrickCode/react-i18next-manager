@@ -28,6 +28,7 @@ import {
   EditLocalesPositionReqBodyDto,
 } from "~/core/codegen";
 import { AddLocaleModal } from "~/shared/add-locale-modal";
+import { GET_LOCALES } from "~/core/react-query/keys";
 
 type LocaleManagementModalProps = ModalProps;
 
@@ -37,7 +38,7 @@ export const LocaleManagementModal = ({
 }: LocaleManagementModalProps) => {
   const { locales } = useLayoutContext();
 
-  const refetchQueryKeys = [[`getLocales`]];
+  const refetchQueryKeys = [[GET_LOCALES]];
   const [editMode, setEditMode] = useState(false);
   const [selectedLocale, setSelectedLocale] = useState<{
     id: string;
