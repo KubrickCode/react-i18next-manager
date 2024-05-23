@@ -1,10 +1,12 @@
 import { GetTranslationsResDto } from "~/core/codegen";
-import { Table, Tbody, Th, Thead, Tr } from "~/core/table";
+import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
 import { KEY, LINK, useQuery } from "~/core/react-query";
 import { useLayoutContext } from "~/layout/context";
+import { Checkbox } from "~/core/checkbox";
+import { Center } from "~/core/layout";
 
 import { TranslationsTableRow } from "./translations-table-row";
-import { Checkbox } from "~/core/checkbox";
+import { Text } from "~/core/text";
 
 type TranslationsTableProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -45,6 +47,8 @@ export const TranslationsTable = ({
     }
   };
 
+  const hasTranslations = translations.length > 0;
+
   return (
     <Table layout="fixed" size="sm">
       <Thead>
@@ -67,14 +71,26 @@ export const TranslationsTable = ({
         </Tr>
       </Thead>
       <Tbody>
-        {translations.map((translation) => (
-          <TranslationsTableRow
-            key={translation.id}
-            isSelected={selectedIds.includes(translation.id)}
-            onSelect={() => handleSelect(translation.id)}
-            translation={translation}
-          />
-        ))}
+        {hasTranslations ? (
+          translations.map((translation) => (
+            <TranslationsTableRow
+              key={translation.id}
+              isSelected={selectedIds.includes(translation.id)}
+              onSelect={() => handleSelect(translation.id)}
+              translation={translation}
+            />
+          ))
+        ) : (
+          <Tr>
+            <Td colSpan={locales.length + 3}>
+              <Center padding={20}>
+                <Text color="gray.500" fontSize="sm">
+                  No translations found
+                </Text>
+              </Center>
+            </Td>
+          </Tr>
+        )}
       </Tbody>
     </Table>
   );
