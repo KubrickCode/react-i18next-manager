@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
-import { useMutation, LINK } from "~/core/react-query";
+import { useMutation, LINK, KEY } from "~/core/react-query";
 import { NodeRendererProps, Tree } from "~/core/tree";
 import { Input, SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
@@ -14,7 +14,6 @@ import {
   EditGroupLabelReqBodyDto,
   EditGroupPositionReqBodyDto,
 } from "~/core/codegen";
-import { GET_GROUPS } from "~/core/react-query/keys";
 
 import { useLayoutContext } from "../context";
 import { convertGroupsToTreeData } from "../utils";
@@ -25,7 +24,7 @@ export const LayoutSidebarGroupTreeView = () => {
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
 
-  const refetchQueryKeys = [[GET_GROUPS]];
+  const refetchQueryKeys = [[KEY.GET_GROUPS]];
   const { mutate: editGroupPosition } =
     useMutation<EditGroupPositionReqBodyDto>({
       refetchQueryKeys,
@@ -111,7 +110,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
   const inputBgColor = useColorModeValue("white", "gray.800");
 
-  const refetchQueryKeys = [[GET_GROUPS]];
+  const refetchQueryKeys = [[KEY.GET_GROUPS]];
   const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
     refetchQueryKeys,
   });

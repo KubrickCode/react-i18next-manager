@@ -10,8 +10,7 @@ import {
 import { useColorModeValue } from "~/core/color-mode";
 import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
-import { LINK, useMutation } from "~/core/react-query";
-import { GET_TRANSLATIONS } from "~/core/react-query/keys";
+import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { Text } from "~/core/text";
 import { useLayoutContext } from "~/layout/context";
@@ -38,7 +37,7 @@ export const TranslationsTableRow = ({
   const hoveredIconButtonBackground = useColorModeValue("gray.200", "gray.700");
 
   const { mutate: editTranslation } = useMutation<EditTranslationReqBodyDto>({
-    refetchQueryKeys: [[GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
+    refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
   });
 
   const handleEditTranslation = () => {

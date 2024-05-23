@@ -12,8 +12,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { useMutation, LINK } from "~/core/react-query";
-import { GET_GROUPS } from "~/core/react-query/keys";
+import { useMutation, LINK, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 type AddGroupModalProps = ModalProps & {
@@ -32,7 +31,7 @@ export const AddGroupModal = ({
   const [label, setLabel] = useState("");
 
   const { mutate: addGroup } = useMutation<AddGroupReqBodyDto>({
-    refetchQueryKeys: [[GET_GROUPS]],
+    refetchQueryKeys: [[KEY.GET_GROUPS]],
   });
 
   const handleSubmit = () => {

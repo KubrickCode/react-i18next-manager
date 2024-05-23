@@ -11,7 +11,7 @@ import {
   ModalProps,
   ModalToggle,
 } from "~/core/modal";
-import { useMutation, LINK } from "~/core/react-query";
+import { useMutation, LINK, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { Button, IconButton } from "~/core/button";
 import { Input } from "~/core/input";
@@ -28,7 +28,6 @@ import {
   EditLocalesPositionReqBodyDto,
 } from "~/core/codegen";
 import { AddLocaleModal } from "~/shared/add-locale-modal";
-import { GET_LOCALES } from "~/core/react-query/keys";
 
 type LocaleManagementModalProps = ModalProps;
 
@@ -38,7 +37,7 @@ export const LocaleManagementModal = ({
 }: LocaleManagementModalProps) => {
   const { locales } = useLayoutContext();
 
-  const refetchQueryKeys = [[GET_LOCALES]];
+  const refetchQueryKeys = [[KEY.GET_LOCALES]];
   const [editMode, setEditMode] = useState(false);
   const [selectedLocale, setSelectedLocale] = useState<{
     id: string;

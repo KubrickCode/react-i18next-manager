@@ -12,8 +12,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { LINK, useMutation } from "~/core/react-query";
-import { GET_LOCALES } from "~/core/react-query/keys";
+import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 type AddLocaleModalProps = ModalProps & {
@@ -30,7 +29,7 @@ export const AddLocaleModal = ({
   const [label, setLabel] = useState("");
 
   const { mutate: addLocale } = useMutation<AddLocaleReqBodyDto>({
-    refetchQueryKeys: [[GET_LOCALES]],
+    refetchQueryKeys: [[KEY.GET_LOCALES]],
   });
 
   const handleSubmit = () => {

@@ -1,11 +1,10 @@
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Th, Thead, Tr } from "~/core/table";
-import { LINK, useQuery } from "~/core/react-query";
+import { KEY, LINK, useQuery } from "~/core/react-query";
 import { useLayoutContext } from "~/layout/context";
 
 import { TranslationsTableRow } from "./translations-table-row";
 import { Checkbox } from "~/core/checkbox";
-import { GET_TRANSLATIONS } from "~/core/react-query/keys";
 
 type TranslationsTableProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -20,7 +19,7 @@ export const TranslationsTable = ({
 
   const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
     LINK.GET_TRANSLATIONS(selectedGroup?.id ?? ""),
-    GET_TRANSLATIONS(selectedGroup?.id ?? "")
+    KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")
   );
 
   if (locales.length < 1) return null;

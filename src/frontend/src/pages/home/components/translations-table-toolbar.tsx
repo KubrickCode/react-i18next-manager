@@ -4,11 +4,10 @@ import { Button, IconButton } from "~/core/button";
 import { SearchInput } from "~/core/input";
 import { Flex, HStack } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
-import { useQueryClient } from "~/core/react-query";
+import { KEY, useQueryClient } from "~/core/react-query";
 import { useLayoutContext } from "~/layout/context";
 import { Text } from "~/core/text";
 import { AddLocaleModal } from "~/shared/add-locale-modal";
-import { GET_TRANSLATIONS } from "~/core/react-query/keys";
 
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
@@ -29,7 +28,7 @@ export const TranslationsTableToolbar = ({
   const handleRefresh = () => {
     selectedGroup &&
       queryClient.invalidateQueries({
-        queryKey: [GET_TRANSLATIONS(selectedGroup?.id ?? "")],
+        queryKey: [KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")],
       });
   };
 
