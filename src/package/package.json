@@ -28,7 +28,7 @@
   },
   "scripts": {
     "build-frontend": "cd ../frontend && yarn build",
-    "build-backend": "cd ../nest && yarn build",
+    "build-backend": "cd ../backend && yarn build",
     "build": "yarn build-frontend && yarn build-backend && node build.js"
   },
   "files": [
