@@ -43,6 +43,7 @@ export const AddTranslationModal = ({
         values,
       },
     });
+    onClose();
   };
 
   return (
