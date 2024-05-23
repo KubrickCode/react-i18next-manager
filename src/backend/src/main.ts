@@ -29,9 +29,14 @@ const bootstrap = async () => {
     },
   );
 
-  console.log('I18n studio is running on port', process.env.PORT || 4321);
+  const port = Number(process.env.PORT) || 4321;
 
-  await app.listen(Number(process.env.PORT || 4321));
+  await app.listen(port);
+
+  console.log(
+    `\x1b[36m%s\x1b[0m`,
+    `I18n studio is running on http://localhost:${port}`,
+  );
 };
 
 bootstrap();
