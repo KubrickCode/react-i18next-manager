@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { join } from 'path';
-import { DB, DBService, GroupSchema } from 'src/db/db.service';
+import {
+  DB,
+  DBService,
+  GroupSchema,
+  TranslationSchema,
+} from 'src/db/db.service';
 import * as fs from 'fs';
 
 @Injectable()
@@ -53,5 +58,66 @@ export class CommonService {
     const targetPath = this.dbService.getTargetPath();
     const i18nFilePath = join(targetPath, 'i18n.json');
     fs.writeFileSync(i18nFilePath, JSON.stringify(i18nData, null, 2));
+
+    this.generateTypedI18nKeys(groups, translations);
+  }
+
+  private generateTypedI18nKeys(
+    groups: GroupSchema[],
+    translations: TranslationSchema[],
+  ) {
+    const groupPathMap = {};
+
+    const buildGroupPathMap = (group: GroupSchema, parentPath: string = '') => {
+      const currentPath = parentPath
+        ? `${parentPath}.${group.label}`
+        : group.label;
+      groupPathMap[group.id] = currentPath;
+      group.children.forEach((childGroup) =>
+        buildGroupPathMap(childGroup, currentPath),
+      );
+    };
+
+    groups.forEach((group) => buildGroupPathMap(group));
+
+    const keys: { [key: string]: any } = {};
+
+    translations.forEach((translation) => {
+      const groupLabel = groupPathMap[translation.groupId];
+      const keyPath = `${groupLabel}.${translation.key}`;
+      const keyParts = keyPath.split('.');
+
+      let current = keys;
+      keyParts.forEach((part, index) => {
+        if (!current[part]) {
+          current[part] = index === keyParts.length - 1 ? keyPath : {};
+        }
+        current = current[part];
+      });
+    });
+
+    const generateTypeScript = (obj: any, indent = ''): string => {
+      let result = '';
+      for (const key of Object.keys(obj)) {
+        if (typeof obj[key] === 'string') {
+          result += `${indent}${key}: "${obj[key]}",\n`;
+        } else {
+          result += `${indent}${key}: {\n${generateTypeScript(obj[key], indent + '  ')}${indent}},\n`;
+        }
+      }
+      return result;
+    };
+
+    const typeSafeI18nKeys = `const i18n = {
+  keys: {
+${generateTypeScript(keys, '    ')}
+  }
+};
+
+export default i18n;
+`;
+
+    const outputPath = join(this.dbService.getTargetPath(), 'i18n-keys.ts');
+    fs.writeFileSync(outputPath, typeSafeI18nKeys, 'utf-8');
   }
 }

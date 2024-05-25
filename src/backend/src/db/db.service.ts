@@ -2,11 +2,16 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as lowdb from 'lowdb';
 import * as FileAsync from 'lowdb/adapters/FileAsync';
 import { join } from 'path';
-import { DBSchema, LocaleSchema, GroupSchema } from './db.schema';
+import {
+  DBSchema,
+  LocaleSchema,
+  GroupSchema,
+  TranslationSchema,
+} from './db.schema';
 import * as fs from 'fs';
 
 export type DB = lowdb.LowdbAsync<DBSchema>;
-export type { DBSchema, LocaleSchema, GroupSchema };
+export type { DBSchema, LocaleSchema, GroupSchema, TranslationSchema };
 
 @Injectable()
 export class DBService implements OnModuleInit {
