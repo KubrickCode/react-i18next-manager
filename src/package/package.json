@@ -29,7 +29,8 @@
   "scripts": {
     "build-frontend": "cd ../frontend && yarn build",
     "build-backend": "cd ../backend && yarn build",
-    "build": "yarn build-frontend && yarn build-backend && node build.js"
+    "build": "yarn build-frontend && yarn build-backend && node build.js",
+    "i18n": "npx @kubrick/react-i18next-manager"
   },
   "files": [
     "dist",
