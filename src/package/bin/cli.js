@@ -30,7 +30,7 @@ program
             require("../dist/main.js");
           } else {
             console.log(
-              "Please create the i18n-config.json file and restart the server."
+              `Please create the i18n-config.json file by running "npx @kubrick/react-i18next-manager init" and restart the server.`
             );
             process.exit(1);
           }
