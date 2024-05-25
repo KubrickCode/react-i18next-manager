@@ -17,3 +17,5 @@ export const ADD_TRANSLATION = (groupId: string) => `/translations/${groupId}`;
 export const EDIT_TRANSLATION = (translationId: string) =>
   `/translations/${translationId}`;
 export const GET_TRANSLATIONS = (groupId: string) => `/translations/${groupId}`;
+
+export const GENERATE_I18N_JSON = "/generate-i18n";
