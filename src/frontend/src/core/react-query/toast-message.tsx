@@ -13,5 +13,5 @@ export default {
   EDIT_TRANSLATION: "translation updated successfully",
   DELETE_TRANSLATIONS: "translations deleted successfully",
 
-  GENERATE_I18N_JSON: "i18n.json generated successfully",
+  GENERATE_I18N_RESOURCES: "i18n resources generated successfully",
 };

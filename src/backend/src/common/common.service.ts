@@ -4,6 +4,7 @@ import {
   DB,
   DBService,
   GroupSchema,
+  LocaleSchema,
   TranslationSchema,
 } from 'src/db/db.service';
 import * as fs from 'fs';
@@ -20,8 +21,22 @@ export class CommonService {
     this.db = await this.dbService.getDb();
   }
 
-  async generateI18nJson() {
+  async generateI18nResources() {
     const { locales, groups, translations } = this.db.value();
+
+    await this.generateI18nJson({ locales, groups, translations });
+    this.generateTypedI18nKeys({ groups, translations });
+  }
+
+  private async generateI18nJson({
+    locales,
+    groups,
+    translations,
+  }: {
+    locales: LocaleSchema[];
+    groups: GroupSchema[];
+    translations: TranslationSchema[];
+  }) {
     const i18nData = {};
 
     locales.forEach((locale) => {
@@ -59,13 +74,16 @@ export class CommonService {
     const i18nFilePath = join(targetPath, 'i18n.json');
     fs.writeFileSync(i18nFilePath, JSON.stringify(i18nData, null, 2));
 
-    this.generateTypedI18nKeys(groups, translations);
+    return { groups, translations };
   }
 
-  private generateTypedI18nKeys(
-    groups: GroupSchema[],
-    translations: TranslationSchema[],
-  ) {
+  private generateTypedI18nKeys({
+    groups,
+    translations,
+  }: {
+    groups: GroupSchema[];
+    translations: TranslationSchema[];
+  }) {
     const groupPathMap = {};
 
     const buildGroupPathMap = (group: GroupSchema, parentPath: string = '') => {

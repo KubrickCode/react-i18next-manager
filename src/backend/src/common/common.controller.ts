@@ -7,8 +7,8 @@ export class CommonController {
 
   @Post('generate-i18n')
   @HttpCode(HttpStatus.CREATED)
-  async generateI18nJson() {
-    await this.commonService.generateI18nJson();
-    return { message: 'i18n.json generated successfully' };
+  async generateI18nResources() {
+    await this.commonService.generateI18nResources();
+    return { message: 'I18n resources generated successfully' };
   }
 }

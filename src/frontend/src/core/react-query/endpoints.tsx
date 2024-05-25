@@ -16,5 +16,5 @@ export default {
   EDIT_TRANSLATION: (translationId: string) => `/translations/${translationId}`,
   GET_TRANSLATIONS: (groupId: string) => `/translations/${groupId}`,
 
-  GENERATE_I18N_JSON: "/generate-i18n",
+  GENERATE_I18N_RESOURCES: "/generate-i18n",
 };

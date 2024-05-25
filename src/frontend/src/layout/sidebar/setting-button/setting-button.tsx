@@ -28,13 +28,13 @@ export const SettingButton = () => {
   );
   const darkModeLabel = useColorModeValue("Dark Mode", "Light Mode");
 
-  const { mutate: generateI18nJson } = useMutation({
-    toastMessage: TOAST_MESSAGE.GENERATE_I18N_JSON,
+  const { mutate: generateI18nResources } = useMutation({
+    toastMessage: TOAST_MESSAGE.GENERATE_I18N_RESOURCES,
   });
 
-  const handleGenerateI18nJson = () => {
-    generateI18nJson({
-      link: LINK.GENERATE_I18N_JSON,
+  const handleGenerateI18nResources = () => {
+    generateI18nResources({
+      link: LINK.GENERATE_I18N_RESOURCES,
       method: "post",
     });
   };
@@ -60,8 +60,11 @@ export const SettingButton = () => {
         <MenuModalToggle icon={FaLanguage} modal={LocaleManagementModal}>
           {LABELS.LOCALE_MANAGEMENT}
         </MenuModalToggle>
-        <MenuItem icon={<AiOutlineFileSync />} onClick={handleGenerateI18nJson}>
-          <Text>Generate I18n Json</Text>
+        <MenuItem
+          icon={<AiOutlineFileSync />}
+          onClick={handleGenerateI18nResources}
+        >
+          <Text>Generate I18n Resources</Text>
         </MenuItem>
       </MenuList>
     </Menu>
