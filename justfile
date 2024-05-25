@@ -28,8 +28,17 @@ deps-test-web:
 deps-upgrade-test-web:
   cd "{{ test_web_dir }}" && yarn add @kubrick/react-i18next-manager
 
+package-build:
+  cd "{{ package_dir }}" && yarn build
+
+package-init:
+  cd "{{ package_dir }}" && chmod +x dist/init.js && npx init
+
 package-publish:
   cd "{{ package_dir }}" && npm publish --access public
+
+package-studio:
+  cd "{{ package_dir }}" && chmod +x dist/main.js && npx @kubrick/react-i18next-manager studio
 
 package-version *version:
   cd "{{ package_dir }}" && npm version {{version}}
@@ -67,22 +76,5 @@ run svc *args:
       just run frontend &
       just run backend
       ;;
-
-    package-build)
-      cd "{{ package_dir }}"
-      yarn build
-      ;;
-
-    package-studio)
-      cd "{{ package_dir }}"
-      chmod +x dist/main.js
-      npx @kubrick/react-i18next-manager studio
-      ;;
-
-    package-init)
-      cd "{{ package_dir }}"
-      chmod +x dist/init.js
-      npx init
-      ;;
-
+      
   esac
