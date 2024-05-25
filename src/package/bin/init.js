@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const defaultConfig = {
-  targetPath: "./sample",
+  targetPath: "./i18n",
 };
 
 const configPath = path.join(process.cwd(), "i18n-config.json");
