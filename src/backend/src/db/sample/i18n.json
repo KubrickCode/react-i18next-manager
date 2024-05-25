@@ -1,0 +1,28 @@
+{
+  "en": {
+    "translation": {
+      "common.store": "Store",
+      "common.product": "Product",
+      "common.label.commonLabel": "Common Label",
+      "common.label.commonLabel2": "Common Label2",
+      "common.label.form.commonLabelForm": "Common Label Form",
+      "common.label.form.commonLabelForm2": "Common Label Form2",
+      "common.label.section.commonLabelSection": "Common Label Section",
+      "common.label.section.commonLabelSection2": "Common Label Section2",
+      "error.existsProduct": "Exists Product"
+    }
+  },
+  "ko": {
+    "translation": {
+      "common.store": "상점",
+      "common.product": "상품",
+      "common.label.commonLabel": "공통 라벨",
+      "common.label.commonLabel2": "공통 라벨2",
+      "common.label.form.commonLabelForm": "공통 라벨 폼",
+      "common.label.form.commonLabelForm2": "공통 라벨 폼2",
+      "common.label.section.commonLabelSection": "공통 라벨 섹션",
+      "common.label.section.commonLabelSection2": "공통 라벨 섹션2",
+      "error.existsProduct": "존재하는 상품"
+    }
+  }
+}
