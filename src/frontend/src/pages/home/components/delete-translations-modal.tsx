@@ -8,7 +8,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { KEY, LINK, useMutation } from "~/core/react-query";
+import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { useLayoutContext } from "~/layout/context";
 
@@ -28,6 +28,7 @@ export const DeleteTranslationModal = ({
   const { mutate: deleteTranslations } =
     useMutation<DeleteTranslationsReqBodyDto>({
       refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
+      toastMessage: TOAST_MESSAGE.DELETE_TRANSLATIONS,
     });
 
   const handleSubmit = () => {

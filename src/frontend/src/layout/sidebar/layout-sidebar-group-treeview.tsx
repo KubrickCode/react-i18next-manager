@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
-import { useMutation, LINK, KEY } from "~/core/react-query";
+import { useMutation, LINK, KEY, TOAST_MESSAGE } from "~/core/react-query";
 import { NodeRendererProps, Tree } from "~/core/tree";
 import { Input, SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
@@ -28,6 +28,7 @@ export const LayoutSidebarGroupTreeView = () => {
   const { mutate: editGroupPosition } =
     useMutation<EditGroupPositionReqBodyDto>({
       refetchQueryKeys,
+      toastMessage: TOAST_MESSAGE.EDIT_GROUP_POSITION,
     });
 
   const treeData = convertGroupsToTreeData(groups);
@@ -113,6 +114,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
   const refetchQueryKeys = [[KEY.GET_GROUPS]];
   const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
     refetchQueryKeys,
+    toastMessage: TOAST_MESSAGE.EDIT_GROUP_LABEL,
   });
 
   const handleEdit = () => {

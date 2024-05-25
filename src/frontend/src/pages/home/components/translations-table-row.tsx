@@ -10,7 +10,7 @@ import {
 import { useColorModeValue } from "~/core/color-mode";
 import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
-import { KEY, LINK, useMutation } from "~/core/react-query";
+import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { Text } from "~/core/text";
 import { useLayoutContext } from "~/layout/context";
@@ -38,6 +38,7 @@ export const TranslationsTableRow = ({
 
   const { mutate: editTranslation } = useMutation<EditTranslationReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
+    toastMessage: TOAST_MESSAGE.EDIT_TRANSLATION,
   });
 
   const handleEditTranslation = () => {

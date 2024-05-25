@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { useMutation, LINK, KEY } from "~/core/react-query";
+import { useMutation, LINK, KEY, TOAST_MESSAGE } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 type AddGroupModalProps = ModalProps & {
@@ -32,6 +32,7 @@ export const AddGroupModal = ({
 
   const { mutate: addGroup } = useMutation<AddGroupReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_GROUPS]],
+    toastMessage: TOAST_MESSAGE.ADD_GROUP,
   });
 
   const handleSubmit = () => {
