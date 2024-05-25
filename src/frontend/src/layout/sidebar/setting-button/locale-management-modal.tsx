@@ -183,6 +183,7 @@ export const LocaleManagementModal = ({
                                       ),
                                       link: LINK.DELETE_LOCALE(locale.id),
                                       refetchQueryKeys,
+                                      toastMessage: TOAST_MESSAGE.DELETE_LOCALE,
                                     }}
                                   >
                                     <IconButton

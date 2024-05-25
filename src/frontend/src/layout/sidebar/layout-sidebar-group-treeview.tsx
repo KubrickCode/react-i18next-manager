@@ -217,6 +217,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
                 body: <Text>Are you sure you want to delete?</Text>,
                 link: LINK.DELETE_GROUP(node.id),
                 refetchQueryKeys,
+                toastMessage: TOAST_MESSAGE.DELETE_GROUP,
                 onComplete() {
                   tree.delete(node.id);
                 },

@@ -14,6 +14,7 @@ type DeleteModelProps = ModalProps & {
   link: string;
   onComplete?: () => void;
   refetchQueryKeys?: QueryKey[];
+  toastMessage?: string;
 };
 
 export const DeleteModal = ({
@@ -21,10 +22,12 @@ export const DeleteModal = ({
   link,
   onComplete,
   refetchQueryKeys,
+  toastMessage,
   ...modalProps
 }: DeleteModelProps) => {
   const { mutate } = useMutation({
     refetchQueryKeys,
+    toastMessage,
   });
 
   return (
