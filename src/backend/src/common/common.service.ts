@@ -96,26 +96,20 @@ export class CommonService {
       });
     });
 
-    const generateTypeScript = (obj: any, indent = ''): string => {
-      let result = '';
+    const generateTypeScript = (obj: any): string => {
+      let result = '{';
       for (const key of Object.keys(obj)) {
         if (typeof obj[key] === 'string') {
-          result += `${indent}${key}: "${obj[key]}",\n`;
+          result += `${key}: "${obj[key]}",`;
         } else {
-          result += `${indent}${key}: {\n${generateTypeScript(obj[key], indent + '  ')}${indent}},\n`;
+          result += `${key}: ${generateTypeScript(obj[key])},`;
         }
       }
+      result += '}';
       return result;
     };
 
-    const typeSafeI18nKeys = `const i18n = {
-  keys: {
-${generateTypeScript(keys, '    ')}
-  }
-};
-
-export default i18n;
-`;
+    const typeSafeI18nKeys = `const i18n = {keys: ${generateTypeScript(keys)}};export default i18n;`;
 
     const outputPath = join(this.dbService.getTargetPath(), 'i18n-keys.ts');
     fs.writeFileSync(outputPath, typeSafeI18nKeys, 'utf-8');

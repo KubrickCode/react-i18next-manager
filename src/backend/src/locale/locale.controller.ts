@@ -19,6 +19,7 @@ import {
 } from './dto/edit-locale-label.dto';
 import { DeleteLocaleReqParamDto } from './dto/delete-locale.dto';
 import { EditLocalesPositionReqBodyDto } from './dto/edit-locales-position.dto';
+import i18n from 'src/db/sample/i18n-keys';
 
 @Controller('locales')
 export class LocaleController {
@@ -28,6 +29,7 @@ export class LocaleController {
   @HttpCode(HttpStatus.OK)
   @ResponseDtoInterceptor(GetLocalesResDto)
   async getLocales() {
+    console.log(i18n.keys.common.label.commonLabel);
     return await this.localeService.getLocales();
   }
 
