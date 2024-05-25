@@ -7,7 +7,7 @@ import { ModalToggle } from "~/core/modal";
 import { KEY, useQueryClient } from "~/core/react-query";
 import { useLayoutContext } from "~/layout/context";
 import { Text } from "~/core/text";
-import { AddLocaleModal } from "~/shared/add-locale-modal";
+import { LocaleManagementModal } from "~/shared/locale-management-modal";
 
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
@@ -36,7 +36,7 @@ export const TranslationsTableToolbar = ({
     return (
       <Flex alignItems="center" gap={2}>
         <Text>Please</Text>
-        <ModalToggle modal={AddLocaleModal} modalProps={{ position: 0 }}>
+        <ModalToggle modal={LocaleManagementModal}>
           <Button size="sm" textDecoration="underline" variant="link">
             Add Locale
           </Button>

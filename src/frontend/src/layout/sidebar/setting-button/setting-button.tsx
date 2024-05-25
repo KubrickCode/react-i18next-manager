@@ -16,8 +16,7 @@ import { Text } from "~/core/text";
 import { useColorMode, useColorModeValue } from "~/core/color-mode";
 import { IconButton } from "~/core/button";
 import { LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
-
-import { LocaleManagementModal } from "./locale-management-modal";
+import { LocaleManagementModal } from "~/shared/locale-management-modal";
 
 export const SettingButton = () => {
   const { toggleColorMode } = useColorMode();
