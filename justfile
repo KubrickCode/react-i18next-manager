@@ -2,7 +2,6 @@ root_dir := justfile_directory()
 frontend_dir := root_dir + "/src/frontend"
 backend_dir := root_dir + "/src/backend"
 package_dir := root_dir + "/src/package"
-test_web_dir := root_dir + "/src/test-web"
 scripts_dir := root_dir + "/src/scripts"
 
 codegen:
@@ -21,12 +20,6 @@ deps-backend:
 
 deps-package:
   cd "{{ package_dir }}" && yarn install
-
-deps-test-web:
-  cd "{{ test_web_dir }}" && yarn install
-
-deps-upgrade-test-web:
-  cd "{{ test_web_dir }}" && yarn add @kubrick/react-i18next-manager
 
 package-build:
   cd "{{ package_dir }}" && yarn build
@@ -55,21 +48,6 @@ run svc *args:
     backend)
       cd "{{ backend_dir }}"
       PORT=3001 yarn dev
-      ;;
-
-    test-web)
-      cd "{{ test_web_dir }}"
-      GENERATE_SOURCEMAP=false yarn dev
-      ;;
-
-    test-web-studio)
-      cd "{{ test_web_dir }}"
-      yarn i18n studio
-      ;;
-
-    test-web-init)
-      cd "{{ test_web_dir }}"
-      yarn i18n init
       ;;
 
     app)
