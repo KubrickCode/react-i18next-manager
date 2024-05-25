@@ -10,7 +10,7 @@ codegen:
 default:
   @just --list
 
-deps: deps-frontend deps-backend deps-package deps-test-web
+deps: deps-frontend deps-backend deps-package
 
 deps-frontend:
   cd "{{ frontend_dir }}" && yarn install
