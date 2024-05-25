@@ -25,6 +25,10 @@ export class DBService implements OnModuleInit {
     const targetPath = this.getTargetPath();
     const file = join(targetPath, 'db.json');
 
+    if (!fs.existsSync(targetPath)) {
+      fs.mkdirSync(targetPath, { recursive: true });
+    }
+
     if (!fs.existsSync(file)) {
       const initialData: DBSchema = {
         locales: [],
