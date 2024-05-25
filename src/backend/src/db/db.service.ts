@@ -34,11 +34,9 @@ export class DBService implements OnModuleInit {
     this.db = await lowdb(adapter);
 
     await this.db.defaults({ locales: [] }).write();
-
-    await this.generateI18nJson();
   }
 
-  private getTargetPath(): string {
+  getTargetPath(): string {
     if (process.env.NODE_ENV === 'development') return 'src/db/sample';
 
     const configFilePath = join(process.cwd(), 'i18n-config.json');
@@ -58,45 +56,5 @@ export class DBService implements OnModuleInit {
   async getDb(): Promise<DB> {
     if (!this.db) await this.initializeDb();
     return this.db;
-  }
-
-  private async generateI18nJson() {
-    const { locales, groups, translations } = this.db.value();
-    const i18nData = {};
-
-    locales.forEach((locale) => {
-      i18nData[locale.label] = { translation: {} };
-    });
-
-    const groupPathMap = {};
-
-    const buildGroupPathMap = (group: GroupSchema, parentPath: string = '') => {
-      const currentPath = parentPath
-        ? `${parentPath}.${group.label}`
-        : group.label;
-      groupPathMap[group.id] = currentPath;
-      group.children.forEach((childGroup) =>
-        buildGroupPathMap(childGroup, currentPath),
-      );
-    };
-
-    groups.forEach((group) => buildGroupPathMap(group));
-
-    translations.forEach((translation) => {
-      const translationKey =
-        groupPathMap[translation.groupId] + '.' + translation.key;
-      translation.values.forEach((value) => {
-        const localeLabel = locales.find(
-          (locale) => locale.id === value.localeId,
-        )?.label;
-        if (localeLabel && i18nData[localeLabel]) {
-          i18nData[localeLabel].translation[translationKey] = value.value;
-        }
-      });
-    });
-
-    const targetPath = this.getTargetPath();
-    const i18nFilePath = join(targetPath, 'i18n.json');
-    fs.writeFileSync(i18nFilePath, JSON.stringify(i18nData, null, 2));
   }
 }
