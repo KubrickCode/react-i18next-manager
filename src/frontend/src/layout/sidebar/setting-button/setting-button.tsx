@@ -16,7 +16,6 @@ import { Text } from "~/core/text";
 import { useColorMode, useColorModeValue } from "~/core/color-mode";
 import { IconButton } from "~/core/button";
 import { LINK, useMutation } from "~/core/react-query";
-import { useToast } from "~/core/toast";
 
 import { LocaleManagementModal } from "./locale-management-modal";
 
@@ -29,15 +28,15 @@ export const SettingButton = () => {
   );
   const darkModeLabel = useColorModeValue("Dark Mode", "Light Mode");
 
-  const { mutate: generateI18nJson } = useMutation({});
-  const toast = useToast();
+  const { mutate: generateI18nJson } = useMutation({
+    toastMessage: "i18n.json generated",
+  });
 
   const handleGenerateI18nJson = () => {
     generateI18nJson({
       link: LINK.GENERATE_I18N_JSON,
       method: "post",
     });
-    toast({ description: "i18n.json generated" });
   };
 
   return (
