@@ -2,17 +2,17 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { LocaleRepository } from './locale.repository';
 import { UUID } from 'src/common/types';
 
-type AddLocaleParams = {
+type AddParams = {
   label: string;
   position: number;
 };
 
-type EditLocaleLabelParams = {
+type EditLabelParams = {
   id: UUID;
   newLabel: string;
 };
 
-type EditLocalesPositionParams = {
+type EditPositionParams = {
   locales: {
     id: UUID;
     position: number;
@@ -23,12 +23,12 @@ type EditLocalesPositionParams = {
 export class LocaleService {
   constructor(private readonly localeRepository: LocaleRepository) {}
 
-  async getLocales() {
-    return { locales: await this.localeRepository.getLocales() };
+  async getAll() {
+    return { locales: await this.localeRepository.findMany() };
   }
 
-  async addLocale({ label, position }: AddLocaleParams) {
-    const exists = await this.localeRepository.getLocaleByLabel({
+  async add({ label, position }: AddParams) {
+    const exists = await this.localeRepository.findByLabel({
       label,
     });
     if (exists) {
@@ -37,11 +37,15 @@ export class LocaleService {
       );
     }
 
-    return await this.localeRepository.addLocale({ label, position });
+    return await this.localeRepository.create({ label, position });
   }
 
-  async editLocaleLabel({ id, newLabel }: EditLocaleLabelParams) {
-    const label = await this.localeRepository.getLocaleByLabel({
+  async editPosition(params: EditPositionParams) {
+    return await this.localeRepository.updatePosition(params);
+  }
+
+  async editLabel({ id, newLabel }: EditLabelParams) {
+    const label = await this.localeRepository.findByLabel({
       label: newLabel,
     });
     if (label && label.id !== id) {
@@ -50,14 +54,10 @@ export class LocaleService {
       );
     }
 
-    return await this.localeRepository.editLocaleLabel({ id, newLabel });
+    return await this.localeRepository.updateLabel({ id, newLabel });
   }
 
-  async editLocalesPosition(params: EditLocalesPositionParams) {
-    return await this.localeRepository.editLocalesPosition(params);
-  }
-
-  async deleteLocale({ id }: { id: UUID }) {
-    return await this.localeRepository.deleteLocale({ id });
+  async delete({ id }: { id: UUID }) {
+    return await this.localeRepository.delete({ id });
   }
 }

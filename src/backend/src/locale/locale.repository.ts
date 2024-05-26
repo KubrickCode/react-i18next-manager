@@ -3,17 +3,17 @@ import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DBService, DB } from 'src/db/db.service';
 
-type AddLocaleParams = {
+type CreateParams = {
   label: string;
   position: number;
 };
 
-type EditLocaleLabelParams = {
+type UpdateLabelParams = {
   id: UUID;
   newLabel: string;
 };
 
-type EditLocalesPositionParams = {
+type UpdatePositionParams = {
   locales: {
     id: UUID;
     position: number;
@@ -32,15 +32,15 @@ export class LocaleRepository {
     this.db = await this.dbService.get();
   }
 
-  async getLocales() {
+  async findMany() {
     return this.db.get('locales').sortBy('position').value();
   }
 
-  async getLocaleByLabel({ label }: { label: string }) {
+  async findByLabel({ label }: { label: string }) {
     return this.db.get('locales').find({ label }).value();
   }
 
-  async addLocale({ label, position }: AddLocaleParams) {
+  async create({ label, position }: CreateParams) {
     const locales = this.db.get('locales').value();
     const id = generateUUID();
     locales.push({ id, label, position });
@@ -53,7 +53,7 @@ export class LocaleRepository {
     this.db.write();
   }
 
-  async editLocaleLabel({ id, newLabel }: EditLocaleLabelParams) {
+  async updateLabel({ id, newLabel }: UpdateLabelParams) {
     const locales = this.db.get('locales').value();
     const locale = locales.find((locale) => locale.id === id);
 
@@ -62,7 +62,7 @@ export class LocaleRepository {
     this.db.write();
   }
 
-  async editLocalesPosition({ locales }: EditLocalesPositionParams) {
+  async updatePosition({ locales }: UpdatePositionParams) {
     const localesData = this.db.get('locales').value();
     locales.forEach((locale) => {
       const localeData = localesData.find((data) => data.id === locale.id);
@@ -73,7 +73,7 @@ export class LocaleRepository {
     this.db.write();
   }
 
-  async deleteLocale({ id }: { id: UUID }) {
+  async delete({ id }: { id: UUID }) {
     const locales = this.db.get('locales').value();
     const localeIndex = locales.findIndex((locale) => locale.id === id);
 

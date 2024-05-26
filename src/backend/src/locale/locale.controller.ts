@@ -27,29 +27,29 @@ export class LocaleController {
   @Get()
   @HttpCode(HttpStatus.OK)
   @ResponseDtoInterceptor(GetLocalesResDto)
-  async getLocales() {
-    return await this.localeService.getLocales();
+  async getAll() {
+    return await this.localeService.getAll();
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async addLocale(@Body() body: AddLocaleReqBodyDto) {
-    return await this.localeService.addLocale(body);
+  async add(@Body() body: AddLocaleReqBodyDto) {
+    return await this.localeService.add(body);
   }
 
   @Patch('position')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async editLocalesPosition(@Body() body: EditLocalesPositionReqBodyDto) {
-    return await this.localeService.editLocalesPosition(body);
+  async editPosition(@Body() body: EditLocalesPositionReqBodyDto) {
+    return await this.localeService.editPosition(body);
   }
 
   @Patch('label/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async editLocaleLabel(
+  async editLabel(
     @Param() param: EditLocaleLabelReqParamDto,
     @Body() body: EditLocaleLabelReqBodyDto,
   ) {
-    return await this.localeService.editLocaleLabel({
+    return await this.localeService.editLabel({
       ...param,
       ...body,
     });
@@ -57,7 +57,7 @@ export class LocaleController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteLocale(@Param() { id }: DeleteLocaleReqParamDto) {
-    return await this.localeService.deleteLocale({ id });
+  async delete(@Param() { id }: DeleteLocaleReqParamDto) {
+    return await this.localeService.delete({ id });
   }
 }
