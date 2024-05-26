@@ -153,7 +153,10 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
             backgroundColor={inputBgColor}
             onChange={(e) => setLabel(replaceBlank(e.target.value))}
             onKeyDown={(e) => {
-              if (e.key === "Escape") node.reset();
+              if (e.key === "Escape") {
+                setLabel(node.data.label);
+                node.reset();
+              }
               if (e.key === "Enter") handleEdit();
             }}
             size="sm"
@@ -161,7 +164,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
           />
         ) : (
           <>
-            <Text marginBottom={1}>{label}</Text>
+            <Text marginBottom={1}>{node.data.label}</Text>
             {node.data.children &&
               node.data.children.length > 0 &&
               (node.isOpen ? <MdArrowDropDown /> : <MdArrowRight />)}
