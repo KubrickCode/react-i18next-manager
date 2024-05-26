@@ -31,7 +31,7 @@ export class GroupRepository {
   }
 
   private async initializeDb() {
-    this.db = await this.dbService.getDb();
+    this.db = await this.dbService.get();
   }
 
   async getGroups() {

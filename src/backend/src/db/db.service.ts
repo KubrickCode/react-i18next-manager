@@ -18,10 +18,10 @@ export class DBService implements OnModuleInit {
   private db: DB;
 
   async onModuleInit() {
-    await this.initializeDb();
+    await this.initialize();
   }
 
-  private async initializeDb() {
+  private async initialize() {
     const targetPath = this.getTargetPath();
     const file = join(targetPath, 'db.json');
 
@@ -62,8 +62,8 @@ export class DBService implements OnModuleInit {
     return targetPath;
   }
 
-  async getDb(): Promise<DB> {
-    if (!this.db) await this.initializeDb();
+  async get(): Promise<DB> {
+    if (!this.db) await this.initialize();
     return this.db;
   }
 }

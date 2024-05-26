@@ -34,7 +34,7 @@ export class TranslationRepository {
   }
 
   private async initializeDb() {
-    this.db = await this.dbService.getDb();
+    this.db = await this.dbService.get();
   }
 
   async getTranslations({ groupId }: { groupId: UUID }) {

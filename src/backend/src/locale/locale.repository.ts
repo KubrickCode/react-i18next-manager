@@ -29,7 +29,7 @@ export class LocaleRepository {
   }
 
   private async initializeDb() {
-    this.db = await this.dbService.getDb();
+    this.db = await this.dbService.get();
   }
 
   async getLocales() {
