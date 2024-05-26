@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DBService, DB, DBSchema, GroupSchema } from 'src/db/db.service';
@@ -50,7 +54,9 @@ export class GroupRepository {
         newGroup.position = parentGroup.children.length;
         parentGroup.children.push(newGroup);
       } else {
-        throw new Error(`Parent group with id ${parentId} not found`);
+        throw new NotFoundException(
+          `Parent group with id ${parentId} not found`,
+        );
       }
     } else {
       this.checkDuplicateLabel(groups, label);
@@ -69,7 +75,7 @@ export class GroupRepository {
     const group = this.findGroupById(groups, id);
 
     if (!group) {
-      throw new Error(`Group with id ${id} not found`);
+      throw new NotFoundException(`Group with id ${id} not found`);
     }
 
     const parentGroup = this.findParentGroup(groups, id);
@@ -91,7 +97,7 @@ export class GroupRepository {
     const group = this.findGroupById(groups, id);
 
     if (!group) {
-      throw new Error(`Group with id ${id} not found`);
+      throw new NotFoundException(`Group with id ${id} not found`);
     }
 
     const parentGroup = this.findParentGroup(groups, id);
@@ -125,7 +131,9 @@ export class GroupRepository {
     if (
       groups.some((group) => group.label === label && group.id !== excludeId)
     ) {
-      throw new Error(`Group with label "${label}" already exists.`);
+      throw new ConflictException(
+        `Group with label "${label}" already exists.`,
+      );
     }
   }
 
@@ -139,7 +147,7 @@ export class GroupRepository {
     });
 
     if (duplicateTranslation) {
-      throw new Error(
+      throw new ConflictException(
         `Translation with key "${label}" already exists in the parent group.`,
       );
     }
@@ -210,7 +218,9 @@ export class GroupRepository {
     const groupIndex = groups.findIndex((group) => group.id === id);
 
     if (groupIndex === -1) {
-      throw new Error(`Group with id ${id} not found in the given group list`);
+      throw new NotFoundException(
+        `Group with id ${id} not found in the given group list`,
+      );
     }
 
     const [movedGroup] = groups.splice(groupIndex, 1);
