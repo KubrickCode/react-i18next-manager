@@ -41,7 +41,7 @@ export class GroupRepository {
   async findManyByParentId({ parentId }: { parentId: UUID | null }) {
     const groups = this.db.get('groups').value();
     if (!parentId) {
-      return groups.filter((group) => !this.findParentGroup(groups, group.id));
+      return groups.filter((group) => !this.findParentById({ id: group.id }));
     }
 
     return this.findById({ id: parentId }).children;
@@ -76,7 +76,7 @@ export class GroupRepository {
       throw new NotFoundException(`Group with id ${id} not found`);
     }
 
-    const parentGroup = this.findParentGroup(groups, id);
+    const parentGroup = this.findParentById({ id });
     const siblings = parentGroup ? parentGroup.children : groups;
 
     this.checkDuplicateLabel(siblings, newLabel, id);
@@ -98,7 +98,7 @@ export class GroupRepository {
       throw new NotFoundException(`Group with id ${id} not found`);
     }
 
-    const parentGroup = this.findParentGroup(groups, id);
+    const parentGroup = this.findParentById({ id });
 
     if (parentGroup) {
       this.reorder(parentGroup.children, id, position);
@@ -203,15 +203,11 @@ export class GroupRepository {
     }
   }
 
-  private findParentGroup(groups: GroupSchema[], id: UUID): GroupSchema | null {
-    for (const group of groups) {
-      if (group.children.some((child) => child.id === id)) {
-        return group;
-      }
-      const found = this.findParentGroup(group.children, id);
-      if (found) return found;
-    }
-    return null;
+  private findParentById({ groups, id }: { groups?: GroupSchema[]; id: UUID }) {
+    return this.findParentById({
+      groups: groups ?? this.db.get('groups').value(),
+      id,
+    });
   }
 
   private reorder(groups: GroupSchema[], id: UUID, newPosition: number) {
