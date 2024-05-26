@@ -37,9 +37,13 @@ export class LocaleRepository {
   }
 
   async addLocale({ label, position }: AddLocaleParams) {
-    const id = generateUUID();
-
     const locales = this.db.get('locales').value();
+
+    if (locales.some((locale) => locale.label === label)) {
+      throw new Error(`Locale with label "${label}" already exists.`);
+    }
+
+    const id = generateUUID();
     locales.push({ id, label, position });
     this.db.write();
 
