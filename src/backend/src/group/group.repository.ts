@@ -46,15 +46,19 @@ export class GroupRepository {
     if (parentId) {
       const parentGroup = this.findGroupById(groups, parentId);
       if (parentGroup) {
+        this.checkDuplicateLabel(parentGroup.children, label);
         newGroup.position = parentGroup.children.length;
         parentGroup.children.push(newGroup);
       } else {
         throw new Error(`Parent group with id ${parentId} not found`);
       }
     } else {
+      this.checkDuplicateLabel(groups, label);
       newGroup.position = groups.length;
       groups.push(newGroup);
     }
+
+    this.checkDuplicateLabelInTranslations(parentId, label);
 
     this.db.write();
     return newGroup;
@@ -63,6 +67,20 @@ export class GroupRepository {
   async editGroupLabel({ id, newLabel }: EditGroupLabelParams) {
     const groups = this.db.get('groups').value();
     const group = this.findGroupById(groups, id);
+
+    if (!group) {
+      throw new Error(`Group with id ${id} not found`);
+    }
+
+    const parentGroup = this.findParentGroup(groups, id);
+    const siblings = parentGroup ? parentGroup.children : groups;
+
+    this.checkDuplicateLabel(siblings, newLabel, id);
+
+    this.checkDuplicateLabelInTranslations(
+      parentGroup ? parentGroup.id : null,
+      newLabel,
+    );
 
     group.label = newLabel;
     this.db.write();
@@ -97,6 +115,34 @@ export class GroupRepository {
       (translation) => !allGroupIds.includes(translation.groupId),
     );
     this.db.set('translations', updatedTranslations).write();
+  }
+
+  private checkDuplicateLabel(
+    groups: GroupSchema[],
+    label: string,
+    excludeId?: UUID,
+  ) {
+    if (
+      groups.some((group) => group.label === label && group.id !== excludeId)
+    ) {
+      throw new Error(`Group with label "${label}" already exists.`);
+    }
+  }
+
+  private checkDuplicateLabelInTranslations(
+    parentId: UUID | null,
+    label: string,
+  ) {
+    const translations = this.db.get('translations').value();
+    const duplicateTranslation = translations.some((translation) => {
+      return translation.groupId === parentId && translation.key === label;
+    });
+
+    if (duplicateTranslation) {
+      throw new Error(
+        `Translation with key "${label}" already exists in the parent group.`,
+      );
+    }
   }
 
   private collectGroupAndChildIds(groups: GroupSchema[], id: UUID): UUID[] {
