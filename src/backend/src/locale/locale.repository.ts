@@ -44,12 +44,12 @@ export class LocaleRepository {
     const locales = this.db.get('locales').value();
     const id = generateUUID();
     locales.push({ id, label, position });
-    this.db.write();
 
     const translations = this.db.get('translations').value();
     translations.forEach((translation) => {
       translation.values.push({ localeId: id, value: '' });
     });
+
     this.db.write();
   }
 
