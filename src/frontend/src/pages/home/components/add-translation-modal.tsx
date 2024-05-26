@@ -14,6 +14,7 @@ import {
 } from "~/core/modal";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
+import { replaceBlank } from "~/core/utils";
 import { useLayoutContext } from "~/layout/context";
 
 type AddTranslationModalProps = ModalProps;
@@ -63,7 +64,10 @@ export const AddTranslationModal = ({
             <Text fontSize="xs" fontWeight="lighter">
               Key
             </Text>
-            <Input onChange={(e) => setKey(e.target.value)} value={key} />
+            <Input
+              onChange={(e) => setKey(replaceBlank(e.target.value))}
+              value={key}
+            />
           </VStack>
           {locales.map((locale) => (
             <VStack key={locale.id} alignItems="baseline" width="full">

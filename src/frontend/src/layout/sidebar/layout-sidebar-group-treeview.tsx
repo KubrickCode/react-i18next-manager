@@ -14,6 +14,7 @@ import {
   EditGroupLabelReqBodyDto,
   EditGroupPositionReqBodyDto,
 } from "~/core/codegen";
+import { replaceBlank } from "~/core/utils";
 
 import { useLayoutContext } from "../context";
 import { convertGroupsToTreeData } from "../utils";
@@ -150,7 +151,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
           <Input
             autoFocus
             backgroundColor={inputBgColor}
-            onChange={(e) => setLabel(e.target.value)}
+            onChange={(e) => setLabel(replaceBlank(e.target.value))}
             onKeyDown={(e) => {
               if (e.key === "Escape") node.reset();
               if (e.key === "Enter") handleEdit();

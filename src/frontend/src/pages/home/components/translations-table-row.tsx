@@ -13,6 +13,7 @@ import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
+import { replaceBlank } from "~/core/utils";
 import { useLayoutContext } from "~/layout/context";
 
 type TranslationsTableRowProps = {
@@ -68,7 +69,7 @@ export const TranslationsTableRow = ({
             onChange={(e) =>
               setTranslationForm((prev) => ({
                 ...prev,
-                key: e.target.value,
+                key: replaceBlank(e.target.value),
               }))
             }
           />

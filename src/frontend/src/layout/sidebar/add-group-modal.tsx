@@ -14,6 +14,7 @@ import {
 } from "~/core/modal";
 import { useMutation, LINK, KEY, TOAST_MESSAGE } from "~/core/react-query";
 import { Text } from "~/core/text";
+import { replaceBlank } from "~/core/utils";
 
 type AddGroupModalProps = ModalProps & {
   onComplete: () => void;
@@ -67,7 +68,7 @@ export const AddGroupModal = ({
             </Text>
             <Input
               placeholder="Group Name"
-              onChange={(e) => setLabel(e.target.value)}
+              onChange={(e) => setLabel(replaceBlank(e.target.value))}
               value={label}
             />
           </VStack>
