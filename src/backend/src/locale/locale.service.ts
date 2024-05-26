@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { LocaleRepository } from './locale.repository';
 import { UUID } from 'src/common/types';
 
@@ -27,8 +27,17 @@ export class LocaleService {
     return { locales: await this.localeRepository.getLocales() };
   }
 
-  async addLocale(params: AddLocaleParams) {
-    return await this.localeRepository.addLocale(params);
+  async addLocale({ label, position }: AddLocaleParams) {
+    const exists = await this.localeRepository.getLocaleByLabel({
+      label,
+    });
+    if (exists) {
+      throw new ConflictException(
+        `Locale with label "${label}" already exists.`,
+      );
+    }
+
+    return await this.localeRepository.addLocale({ label, position });
   }
 
   async editLocaleLabel(params: EditLocaleLabelParams) {

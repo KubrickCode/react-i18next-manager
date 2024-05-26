@@ -36,15 +36,12 @@ export class LocaleRepository {
     return this.db.get('locales').sortBy('position').value();
   }
 
+  async getLocaleByLabel({ label }: { label: string }) {
+    return this.db.get('locales').find({ label }).value();
+  }
+
   async addLocale({ label, position }: AddLocaleParams) {
     const locales = this.db.get('locales').value();
-
-    if (locales.some((locale) => locale.label === label)) {
-      throw new ConflictException(
-        `Locale with label "${label}" already exists.`,
-      );
-    }
-
     const id = generateUUID();
     locales.push({ id, label, position });
     this.db.write();
