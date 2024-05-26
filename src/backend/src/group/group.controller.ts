@@ -30,23 +30,23 @@ export class GroupController {
   @Get()
   @HttpCode(HttpStatus.OK)
   @ResponseDtoInterceptor(GetGroupsResDto)
-  async getGroups() {
-    return await this.groupService.getGroups();
+  async getAll() {
+    return await this.groupService.getAll();
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async addLocale(@Body() body: AddGroupReqBodyDto) {
-    return await this.groupService.addGroup(body);
+  async add(@Body() body: AddGroupReqBodyDto) {
+    return await this.groupService.add(body);
   }
 
   @Patch('position/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async editGroupPosition(
+  async editPosition(
     @Param() param: EditGroupPositionReqParamDto,
     @Body() body: EditGroupPositionReqBodyDto,
   ) {
-    return await this.groupService.editGroupPosition({
+    return await this.groupService.editPosition({
       ...param,
       ...body,
     });
@@ -54,11 +54,11 @@ export class GroupController {
 
   @Patch('label/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async editLocale(
+  async editLabel(
     @Param() param: EditGroupLabelReqParamDto,
     @Body() body: EditGroupLabelReqBodyDto,
   ) {
-    return await this.groupService.editGroupLabel({
+    return await this.groupService.editLabel({
       ...param,
       ...body,
     });
@@ -66,7 +66,7 @@ export class GroupController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteGroup(@Param() { id }: DeleteGroupReqParamDto) {
-    return await this.groupService.deleteGroup({ id });
+  async delete(@Param() { id }: DeleteGroupReqParamDto) {
+    return await this.groupService.delete({ id });
   }
 }

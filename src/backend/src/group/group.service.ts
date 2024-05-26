@@ -2,17 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { GroupRepository } from './group.repository';
 import { UUID } from 'src/common/types';
 
-type AddGroupParams = {
+type AddParams = {
   label: string;
   parentId: UUID | null;
 };
 
-type EditGroupLabelParams = {
+type EditLabelParams = {
   id: UUID;
   newLabel: string;
 };
 
-type EditGroupPositionParams = {
+type EditPositionParams = {
   id: UUID;
   position: number;
 };
@@ -21,23 +21,23 @@ type EditGroupPositionParams = {
 export class GroupService {
   constructor(private readonly groupRepository: GroupRepository) {}
 
-  async getGroups() {
-    return { groups: await this.groupRepository.getGroups() };
+  async getAll() {
+    return { groups: await this.groupRepository.findMany() };
   }
 
-  async addGroup(params: AddGroupParams) {
-    return await this.groupRepository.addGroup(params);
+  async add(params: AddParams) {
+    return await this.groupRepository.create(params);
   }
 
-  async editGroupLabel(params: EditGroupLabelParams) {
-    return await this.groupRepository.editGroupLabel(params);
+  async editPosition(params: EditPositionParams) {
+    return await this.groupRepository.updatePosition(params);
   }
 
-  async editGroupPosition(params: EditGroupPositionParams) {
-    return await this.groupRepository.editGroupPosition(params);
+  async editLabel(params: EditLabelParams) {
+    return await this.groupRepository.updateLabel(params);
   }
 
-  async deleteGroup({ id }: { id: UUID }) {
-    return await this.groupRepository.deleteGroup({ id });
+  async delete({ id }: { id: UUID }) {
+    return await this.groupRepository.delete({ id });
   }
 }

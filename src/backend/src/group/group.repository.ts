@@ -7,17 +7,17 @@ import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DBService, DB, DBSchema, GroupSchema } from 'src/db/db.service';
 
-type AddGroupParams = {
+type CreateParams = {
   label: string;
   parentId: UUID | null;
 };
 
-type EditGroupLabelParams = {
+type UpdateLabelParams = {
   id: UUID;
   newLabel: string;
 };
 
-type EditGroupPositionParams = {
+type UpdatePositionParams = {
   id: UUID;
   position: number;
 };
@@ -34,11 +34,11 @@ export class GroupRepository {
     this.db = await this.dbService.get();
   }
 
-  async getGroups() {
+  async findMany() {
     return this.db.get('groups').value();
   }
 
-  async addGroup({ label, parentId }: AddGroupParams) {
+  async create({ label, parentId }: CreateParams) {
     const groups = this.db.get('groups').value();
     const newGroup: GroupSchema = {
       id: generateUUID(),
@@ -48,7 +48,7 @@ export class GroupRepository {
     };
 
     if (parentId) {
-      const parentGroup = this.findGroupById(groups, parentId);
+      const parentGroup = this.findById(groups, parentId);
       if (parentGroup) {
         this.checkDuplicateLabel(parentGroup.children, label);
         newGroup.position = parentGroup.children.length;
@@ -70,9 +70,9 @@ export class GroupRepository {
     return newGroup;
   }
 
-  async editGroupLabel({ id, newLabel }: EditGroupLabelParams) {
+  async updateLabel({ id, newLabel }: UpdateLabelParams) {
     const groups = this.db.get('groups').value();
-    const group = this.findGroupById(groups, id);
+    const group = this.findById(groups, id);
 
     if (!group) {
       throw new NotFoundException(`Group with id ${id} not found`);
@@ -92,9 +92,9 @@ export class GroupRepository {
     this.db.write();
   }
 
-  async editGroupPosition({ id, position }: EditGroupPositionParams) {
+  async updatePosition({ id, position }: UpdatePositionParams) {
     const groups = this.db.get('groups').value();
-    const group = this.findGroupById(groups, id);
+    const group = this.findById(groups, id);
 
     if (!group) {
       throw new NotFoundException(`Group with id ${id} not found`);
@@ -103,18 +103,18 @@ export class GroupRepository {
     const parentGroup = this.findParentGroup(groups, id);
 
     if (parentGroup) {
-      this.reorderGroups(parentGroup.children, id, position);
+      this.reorder(parentGroup.children, id, position);
     } else {
-      this.reorderGroups(groups, id, position);
+      this.reorder(groups, id, position);
     }
 
     this.db.write();
   }
 
-  async deleteGroup({ id }: { id: UUID }) {
+  async delete({ id }: { id: UUID }) {
     const groups = this.db.get('groups').value();
     const allGroupIds = this.collectGroupAndChildIds(groups, id);
-    this.findGroupAndDelete({ id, groups });
+    this.findAndDelete({ id, groups });
 
     const translations = this.db.get('translations').value();
     const updatedTranslations = translations.filter(
@@ -162,7 +162,7 @@ export class GroupRepository {
       }
     };
 
-    const targetGroup = this.findGroupById(groups, id);
+    const targetGroup = this.findById(groups, id);
     if (targetGroup) {
       collect(targetGroup);
     }
@@ -170,16 +170,16 @@ export class GroupRepository {
     return groupIds;
   }
 
-  private findGroupById(groups: GroupSchema[], id: UUID): GroupSchema | null {
+  private findById(groups: GroupSchema[], id: UUID): GroupSchema | null {
     for (const group of groups) {
       if (group.id === id) return group;
-      const found = this.findGroupById(group.children, id);
+      const found = this.findById(group.children, id);
       if (found) return found;
     }
     return null;
   }
 
-  private findGroupAndDelete({
+  private findAndDelete({
     id,
     groups,
   }: {
@@ -195,7 +195,7 @@ export class GroupRepository {
 
     for (const group of groups) {
       if (group.children) {
-        this.findGroupAndDelete({
+        this.findAndDelete({
           id,
           groups: group.children,
         });
@@ -214,7 +214,7 @@ export class GroupRepository {
     return null;
   }
 
-  private reorderGroups(groups: GroupSchema[], id: UUID, newPosition: number) {
+  private reorder(groups: GroupSchema[], id: UUID, newPosition: number) {
     const groupIndex = groups.findIndex((group) => group.id === id);
 
     if (groupIndex === -1) {
