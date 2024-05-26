@@ -173,7 +173,7 @@ export class GroupRepository {
 
     for (const group of groups) {
       if (group.id === id) return group;
-      const found = this.findById({ id });
+      const found = this.findById({ id: group.id });
       if (found) return found;
     }
     return null;
