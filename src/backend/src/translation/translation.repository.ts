@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DB, DBService, GroupSchema } from 'src/db/db.service';
@@ -52,7 +56,7 @@ export class TranslationRepository {
     const translation = translations.find((t) => t.id === id);
 
     if (!translation) {
-      throw new Error(`Translation with id "${id}" not found`);
+      throw new NotFoundException(`Translation with id "${id}" not found`);
     }
 
     this.checkDuplicateKeyInGroup(translation.groupId, newKey, id);
@@ -82,7 +86,7 @@ export class TranslationRepository {
       .filter({ groupId })
       .value();
     if (translations.some((t) => t.key === key && t.id !== excludeId)) {
-      throw new Error(
+      throw new ConflictException(
         `Translation key "${key}" already exists in the group "${groupId}".`,
       );
     }
@@ -93,12 +97,12 @@ export class TranslationRepository {
     const group = this.findGroupById(groups, groupId);
 
     if (!group) {
-      throw new Error(`Group with id "${groupId}" not found.`);
+      throw new NotFoundException(`Group with id "${groupId}" not found.`);
     }
 
     const checkLabel = (group: GroupSchema) => {
       if (group.label === key) {
-        throw new Error(
+        throw new ConflictException(
           `Translation key "${key}" conflicts with a group label in the hierarchy.`,
         );
       }
