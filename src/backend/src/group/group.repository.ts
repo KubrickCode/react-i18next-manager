@@ -38,6 +38,15 @@ export class GroupRepository {
     return this.db.get('groups').value();
   }
 
+  async findManyByParentId({ parentId }: { parentId: UUID | null }) {
+    const groups = this.db.get('groups').value();
+    if (!parentId) {
+      return groups.filter((group) => !this.findParentGroup(groups, group.id));
+    }
+
+    return this.findById({ id: parentId }).children;
+  }
+
   async create({ label, parentId }: CreateParams) {
     const groups = this.db.get('groups').value();
     const newGroup: GroupSchema = {
@@ -48,31 +57,20 @@ export class GroupRepository {
     };
 
     if (parentId) {
-      const parentGroup = this.findById(groups, parentId);
-      if (parentGroup) {
-        this.checkDuplicateLabel(parentGroup.children, label);
-        newGroup.position = parentGroup.children.length;
-        parentGroup.children.push(newGroup);
-      } else {
-        throw new NotFoundException(
-          `Parent group with id ${parentId} not found`,
-        );
-      }
+      const parentGroup = this.findById({ id: parentId });
+      newGroup.position = parentGroup.children.length;
+      parentGroup.children.push(newGroup);
     } else {
-      this.checkDuplicateLabel(groups, label);
       newGroup.position = groups.length;
       groups.push(newGroup);
     }
 
-    this.checkDuplicateLabelInTranslations(parentId, label);
-
     this.db.write();
-    return newGroup;
   }
 
   async updateLabel({ id, newLabel }: UpdateLabelParams) {
     const groups = this.db.get('groups').value();
-    const group = this.findById(groups, id);
+    const group = this.findById({ id });
 
     if (!group) {
       throw new NotFoundException(`Group with id ${id} not found`);
@@ -94,7 +92,7 @@ export class GroupRepository {
 
   async updatePosition({ id, position }: UpdatePositionParams) {
     const groups = this.db.get('groups').value();
-    const group = this.findById(groups, id);
+    const group = this.findById({ id });
 
     if (!group) {
       throw new NotFoundException(`Group with id ${id} not found`);
@@ -113,7 +111,7 @@ export class GroupRepository {
 
   async delete({ id }: { id: UUID }) {
     const groups = this.db.get('groups').value();
-    const allGroupIds = this.collectGroupAndChildIds(groups, id);
+    const allGroupIds = this.collectGroupAndChildIds(id);
     this.findAndDelete({ id, groups });
 
     const translations = this.db.get('translations').value();
@@ -153,7 +151,7 @@ export class GroupRepository {
     }
   }
 
-  private collectGroupAndChildIds(groups: GroupSchema[], id: UUID): UUID[] {
+  private collectGroupAndChildIds(id: UUID): UUID[] {
     const groupIds: UUID[] = [];
     const collect = (group: GroupSchema) => {
       groupIds.push(group.id);
@@ -162,7 +160,7 @@ export class GroupRepository {
       }
     };
 
-    const targetGroup = this.findById(groups, id);
+    const targetGroup = this.findById({ id });
     if (targetGroup) {
       collect(targetGroup);
     }
@@ -170,10 +168,12 @@ export class GroupRepository {
     return groupIds;
   }
 
-  private findById(groups: GroupSchema[], id: UUID): GroupSchema | null {
+  private findById({ id }: { id: UUID }): GroupSchema | null {
+    const groups = this.db.get('groups').value();
+
     for (const group of groups) {
       if (group.id === id) return group;
-      const found = this.findById(group.children, id);
+      const found = this.findById({ id });
       if (found) return found;
     }
     return null;
