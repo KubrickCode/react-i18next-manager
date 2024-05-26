@@ -7,7 +7,7 @@ import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DB, DBService, GroupSchema } from 'src/db/db.service';
 
-type AddTranslationParams = {
+type CreateParams = {
   groupId: UUID;
   key: string;
   values: {
@@ -16,7 +16,7 @@ type AddTranslationParams = {
   }[];
 };
 
-type EditTranslationParams = {
+type UpdateParams = {
   id: UUID;
   newKey: string;
   newValues: {
@@ -37,11 +37,11 @@ export class TranslationRepository {
     this.db = await this.dbService.get();
   }
 
-  async getTranslations({ groupId }: { groupId: UUID }) {
+  async findManyByGroupId({ groupId }: { groupId: UUID }) {
     return this.db.get('translations').filter({ groupId }).value();
   }
 
-  async addTranslation(params: AddTranslationParams) {
+  async create(params: CreateParams) {
     const { groupId, key } = params;
     this.checkDuplicateKeyInGroup(groupId, key);
     this.checkDuplicateKeyWithGroupLabels(groupId, key);
@@ -51,7 +51,7 @@ export class TranslationRepository {
     this.db.write();
   }
 
-  async editTranslation({ id, newKey, newValues }: EditTranslationParams) {
+  async update({ id, newKey, newValues }: UpdateParams) {
     const translations = this.db.get('translations').value();
     const translation = translations.find((t) => t.id === id);
 
@@ -67,7 +67,7 @@ export class TranslationRepository {
     this.db.write();
   }
 
-  async deleteTranslation({ id }: { id: UUID }) {
+  async delete({ id }: { id: UUID }) {
     const translations = this.db.get('translations').value();
     const index = translations.findIndex((t) => t.id === id);
     if (index !== -1) {

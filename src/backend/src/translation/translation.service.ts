@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { TranslationRepository } from './translation.repository';
 import { UUID } from 'src/common/types';
 
-type AddTranslationParams = {
+type AddParams = {
   groupId: UUID;
   key: string;
   values: {
@@ -11,7 +11,7 @@ type AddTranslationParams = {
   }[];
 };
 
-type EditTranslationParams = {
+type EditParams = {
   id: UUID;
   newKey: string;
   newValues: {
@@ -24,25 +24,25 @@ type EditTranslationParams = {
 export class TranslationService {
   constructor(private readonly translationRepository: TranslationRepository) {}
 
-  async getTranslations({ groupId }: { groupId: UUID }) {
+  async getAll({ groupId }: { groupId: UUID }) {
     return {
-      translations: await this.translationRepository.getTranslations({
+      translations: await this.translationRepository.findManyByGroupId({
         groupId,
       }),
     };
   }
 
-  async addTranslation(params: AddTranslationParams) {
-    await this.translationRepository.addTranslation(params);
+  async add(params: AddParams) {
+    await this.translationRepository.create(params);
   }
 
-  async editTranslation(params: EditTranslationParams) {
-    await this.translationRepository.editTranslation(params);
+  async edit(params: EditParams) {
+    await this.translationRepository.update(params);
   }
 
-  async deleteTranslations({ translations }: { translations: { id: UUID }[] }) {
+  async deleteMany({ translations }: { translations: { id: UUID }[] }) {
     for (const { id } of translations) {
-      await this.translationRepository.deleteTranslation({ id });
+      await this.translationRepository.delete({ id });
     }
   }
 }

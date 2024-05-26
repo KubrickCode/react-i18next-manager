@@ -31,23 +31,23 @@ export class TranslationController {
   @Get(':groupId')
   @HttpCode(HttpStatus.OK)
   @ResponseDtoInterceptor(GetTranslationsResDto)
-  async getTranslations(@Param() param: GetTranslationsReqParamDto) {
-    return await this.translationService.getTranslations(param);
+  async getAll(@Param() param: GetTranslationsReqParamDto) {
+    return await this.translationService.getAll(param);
   }
 
   @Post('/delete')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteTranslation(@Body() body: DeleteTranslationsReqBodyDto) {
-    return await this.translationService.deleteTranslations(body);
+  async deleteMany(@Body() body: DeleteTranslationsReqBodyDto) {
+    return await this.translationService.deleteMany(body);
   }
 
   @Post(':groupId')
   @HttpCode(HttpStatus.CREATED)
-  async addTranslation(
+  async add(
     @Param() param: AddTranslationReqParamDto,
     @Body() body: AddTranslationReqBodyDto,
   ) {
-    return await this.translationService.addTranslation({
+    return await this.translationService.add({
       ...param,
       ...body,
     });
@@ -55,11 +55,11 @@ export class TranslationController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async editTranslation(
+  async edit(
     @Param() param: EditTranslationReqParamDto,
     @Body() body: EditTranslationReqBodyDto,
   ) {
-    return await this.translationService.editTranslation({
+    return await this.translationService.edit({
       ...param,
       ...body,
     });
