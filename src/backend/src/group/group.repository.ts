@@ -151,7 +151,7 @@ export class GroupRepository {
     }
   }
 
-  private collectGroupAndChildIds(id: UUID): UUID[] {
+  private collectGroupAndChildIds(id: UUID) {
     const groupIds: UUID[] = [];
     const collect = (group: GroupSchema) => {
       groupIds.push(group.id);
@@ -168,7 +168,7 @@ export class GroupRepository {
     return groupIds;
   }
 
-  private findById({ id }: { id: UUID }): GroupSchema | null {
+  private findById({ id }: { id: UUID }) {
     const groups = this.db.get('groups').value();
 
     for (const group of groups) {
