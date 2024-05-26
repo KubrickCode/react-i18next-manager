@@ -9,9 +9,14 @@ import { TranslationsTableToolbar } from "./components/translations-table-toolba
 export const HomePage = () => {
   const { selectedGroup } = useLayoutContext();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [term, setTerm] = useState("");
 
   const handleSelectedIds = (ids: string[]) => {
     setSelectedIds(ids);
+  };
+
+  const handleTerm = (term: string) => {
+    setTerm(term);
   };
 
   return (
@@ -20,11 +25,13 @@ export const HomePage = () => {
         <>
           <TranslationsTableToolbar
             handleSelectedIds={handleSelectedIds}
+            handleTerm={handleTerm}
             selectedIds={selectedIds}
           />
           <TranslationsTable
             handleSelectedIds={handleSelectedIds}
             selectedIds={selectedIds}
+            term={term}
           />
         </>
       )}

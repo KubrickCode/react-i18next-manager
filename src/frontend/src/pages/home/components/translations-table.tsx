@@ -11,11 +11,13 @@ import { Text } from "~/core/text";
 type TranslationsTableProps = {
   handleSelectedIds: (ids: string[]) => void;
   selectedIds: string[];
+  term: string;
 };
 
 export const TranslationsTable = ({
   handleSelectedIds,
   selectedIds,
+  term,
 }: TranslationsTableProps) => {
   const { locales, selectedGroup } = useLayoutContext();
 
@@ -72,14 +74,25 @@ export const TranslationsTable = ({
       </Thead>
       <Tbody>
         {hasTranslations ? (
-          translations.map((translation) => (
-            <TranslationsTableRow
-              key={translation.id}
-              isSelected={selectedIds.includes(translation.id)}
-              onSelect={() => handleSelect(translation.id)}
-              translation={translation}
-            />
-          ))
+          translations
+            .filter((translation) => {
+              const key = translation.key.toLowerCase();
+              const values = translation.values.map((value) =>
+                value.value.toLowerCase()
+              );
+              return (
+                key.includes(term.toLowerCase()) ||
+                values.some((val) => val.includes(term.toLowerCase()))
+              );
+            })
+            .map((translation) => (
+              <TranslationsTableRow
+                key={translation.id}
+                isSelected={selectedIds.includes(translation.id)}
+                onSelect={() => handleSelect(translation.id)}
+                translation={translation}
+              />
+            ))
         ) : (
           <Tr>
             <Td colSpan={locales.length + 3}>

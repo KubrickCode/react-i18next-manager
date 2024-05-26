@@ -14,11 +14,13 @@ import { DeleteTranslationModal } from "./delete-translations-modal";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;
+  handleTerm: (term: string) => void;
   selectedIds: string[];
 };
 
 export const TranslationsTableToolbar = ({
   handleSelectedIds,
+  handleTerm,
   selectedIds,
 }: TranslationsTableToolbarProps) => {
   const { locales, selectedGroup } = useLayoutContext();
@@ -66,7 +68,12 @@ export const TranslationsTableToolbar = ({
       <ModalToggle modal={AddTranslationModal}>
         <Button size="sm">Add Key</Button>
       </ModalToggle>
-      <SearchInput size="sm" width="auto" />
+      <SearchInput
+        size="sm"
+        width="auto"
+        onChange={(e) => handleTerm(e.target.value)}
+        onReset={() => handleTerm("")}
+      />
     </HStack>
   );
 };
