@@ -40,8 +40,17 @@ export class LocaleService {
     return await this.localeRepository.addLocale({ label, position });
   }
 
-  async editLocaleLabel(params: EditLocaleLabelParams) {
-    return await this.localeRepository.editLocaleLabel(params);
+  async editLocaleLabel({ id, newLabel }: EditLocaleLabelParams) {
+    const label = await this.localeRepository.getLocaleByLabel({
+      label: newLabel,
+    });
+    if (label && label.id !== id) {
+      throw new ConflictException(
+        `Locale with label "${newLabel}" already exists.`,
+      );
+    }
+
+    return await this.localeRepository.editLocaleLabel({ id, newLabel });
   }
 
   async editLocalesPosition(params: EditLocalesPositionParams) {
