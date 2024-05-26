@@ -127,7 +127,7 @@ export class CommonService {
       return result;
     };
 
-    const typeSafeI18nKeys = `const i18n = {keys: ${generateTypeScript(keys)}};export default i18n;`;
+    const typeSafeI18nKeys = `export const i18n = {keys: ${generateTypeScript(keys)}};export default i18n;`;
 
     const outputPath = join(this.dbService.getTargetPath(), 'i18n-keys.ts');
     fs.writeFileSync(outputPath, typeSafeI18nKeys, 'utf-8');
