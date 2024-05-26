@@ -49,11 +49,17 @@ export class TranslationRepository {
 
   async editTranslation({ id, newKey, newValues }: EditTranslationParams) {
     const translations = this.db.get('translations').value();
-    const index = translations.findIndex((t) => t.id === id);
-    if (index !== -1) {
-      translations[index].key = newKey;
-      translations[index].values = newValues;
+    const translation = translations.find((t) => t.id === id);
+
+    if (!translation) {
+      throw new Error(`Translation with id "${id}" not found`);
     }
+
+    this.checkDuplicateKeyInGroup(translation.groupId, newKey, id);
+    this.checkDuplicateKeyWithGroupLabels(translation.groupId, newKey);
+
+    translation.key = newKey;
+    translation.values = newValues;
     this.db.write();
   }
 
