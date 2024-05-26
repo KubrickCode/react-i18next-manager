@@ -9,7 +9,7 @@ type AddLocaleParams = {
 
 type EditLocaleLabelParams = {
   id: UUID;
-  newLabel?: string;
+  newLabel: string;
 };
 
 type EditLocalesPositionParams = {
