@@ -15,6 +15,14 @@ type MutateParams<TBody> = {
   config?: RequestConfig;
 };
 
+type ErrorResponse = {
+  response: {
+    data: {
+      message: string;
+    };
+  };
+};
+
 export const useMutation = <TBody, TData = unknown>({
   refetchQueryKeys,
   toastMessage,
@@ -27,7 +35,7 @@ export const useMutation = <TBody, TData = unknown>({
 >) => {
   const toast = useToast();
 
-  return useTanstackMutation<TData, unknown, MutateParams<TBody>>({
+  return useTanstackMutation<TData, ErrorResponse, MutateParams<TBody>>({
     mutationFn: async ({ link, method, body, config }) => {
       const response = await api[method](link, body, config);
       return response.data;
@@ -40,6 +48,7 @@ export const useMutation = <TBody, TData = unknown>({
       return await Promise.all(promises || []);
     },
     onError: (error) => {
+      toast({ description: error.response.data.message, status: "error" });
       console.error(error);
     },
   });
