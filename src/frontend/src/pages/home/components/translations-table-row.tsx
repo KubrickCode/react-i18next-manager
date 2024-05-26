@@ -8,22 +8,24 @@ import {
   GetTranslationsResDto,
 } from "~/core/codegen";
 import { useColorModeValue } from "~/core/color-mode";
+import { Highlight } from "~/core/highlight";
 import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
-import { Text } from "~/core/text";
 import { useLayoutContext } from "~/layout/context";
 
 type TranslationsTableRowProps = {
   isSelected: boolean;
   onSelect: () => void;
+  term: string;
   translation: GetTranslationsResDto["translations"][number];
 };
 
 export const TranslationsTableRow = ({
   isSelected,
   onSelect,
+  term,
   translation,
 }: TranslationsTableRowProps) => {
   const { locales, selectedGroup } = useLayoutContext();
@@ -71,7 +73,7 @@ export const TranslationsTableRow = ({
             }
           />
         ) : (
-          <Text fontSize="sm">{translation.key}</Text>
+          <Highlight query={term}>{translation.key}</Highlight>
         )}
       </Td>
       {locales.map((locale) => {
@@ -105,7 +107,7 @@ export const TranslationsTableRow = ({
                 }}
               />
             ) : (
-              <Text fontSize="sm">{valueObj?.value}</Text>
+              <Highlight query={term}>{valueObj?.value ?? ""}</Highlight>
             )}
           </Td>
         );

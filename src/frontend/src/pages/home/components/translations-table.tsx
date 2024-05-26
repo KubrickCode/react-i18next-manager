@@ -90,6 +90,7 @@ export const TranslationsTable = ({
                 key={translation.id}
                 isSelected={selectedIds.includes(translation.id)}
                 onSelect={() => handleSelect(translation.id)}
+                term={term}
                 translation={translation}
               />
             ))
