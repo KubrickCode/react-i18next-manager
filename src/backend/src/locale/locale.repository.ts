@@ -58,6 +58,15 @@ export class LocaleRepository {
     const locales = this.db.get('locales').value();
     const locale = locales.find((locale) => locale.id === id);
 
+    if (
+      locales.some(
+        (otherLocale) =>
+          otherLocale.label === newLabel && otherLocale.id !== id,
+      )
+    ) {
+      throw new Error(`Locale with label "${newLabel}" already exists.`);
+    }
+
     typeof newLabel === 'string' && (locale.label = newLabel);
 
     this.db.write();
