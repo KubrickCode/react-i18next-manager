@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DBService, DB } from 'src/db/db.service';
@@ -40,7 +40,9 @@ export class LocaleRepository {
     const locales = this.db.get('locales').value();
 
     if (locales.some((locale) => locale.label === label)) {
-      throw new Error(`Locale with label "${label}" already exists.`);
+      throw new ConflictException(
+        `Locale with label "${label}" already exists.`,
+      );
     }
 
     const id = generateUUID();
@@ -64,7 +66,9 @@ export class LocaleRepository {
           otherLocale.label === newLabel && otherLocale.id !== id,
       )
     ) {
-      throw new Error(`Locale with label "${newLabel}" already exists.`);
+      throw new ConflictException(
+        `Locale with label "${newLabel}" already exists.`,
+      );
     }
 
     typeof newLabel === 'string' && (locale.label = newLabel);
