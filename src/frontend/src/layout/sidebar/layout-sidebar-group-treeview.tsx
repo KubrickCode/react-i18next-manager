@@ -200,9 +200,6 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
               modalProps={{
                 parentId: node.id,
                 parentName: node.data.label,
-                onComplete() {
-                  tree.reset();
-                },
               }}
             >
               <IconButton

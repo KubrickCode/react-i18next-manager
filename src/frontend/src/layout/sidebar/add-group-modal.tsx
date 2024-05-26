@@ -17,7 +17,6 @@ import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
 
 type AddGroupModalProps = ModalProps & {
-  onComplete: () => void;
   parentId: string | null;
   parentName: string;
 };
@@ -25,7 +24,6 @@ type AddGroupModalProps = ModalProps & {
 export const AddGroupModal = ({
   isOpen,
   onClose,
-  onComplete,
   parentId,
   parentName,
 }: AddGroupModalProps) => {
@@ -46,7 +44,6 @@ export const AddGroupModal = ({
       },
     });
     onClose();
-    onComplete();
   };
 
   return (
