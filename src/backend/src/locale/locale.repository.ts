@@ -80,7 +80,6 @@ export class LocaleRepository {
     if (localeIndex === -1) return;
 
     locales.splice(localeIndex, 1);
-    this.db.write();
 
     const translations = this.db.get('translations').value();
     translations.forEach((translation) => {
