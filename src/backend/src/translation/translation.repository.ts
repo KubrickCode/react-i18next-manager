@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
-import { DB, DBService } from 'src/db/db.service';
+import { DB, DBService, GroupSchema } from 'src/db/db.service';
 
 type AddTranslationParams = {
   groupId: UUID;
@@ -38,6 +38,10 @@ export class TranslationRepository {
   }
 
   async addTranslation(params: AddTranslationParams) {
+    const { groupId, key } = params;
+    this.checkDuplicateKeyInGroup(groupId, key);
+    this.checkDuplicateKeyWithGroupLabels(groupId, key);
+
     const translations = this.db.get('translations').value();
     translations.push({ id: generateUUID(), ...params });
     this.db.write();
@@ -60,5 +64,50 @@ export class TranslationRepository {
       translations.splice(index, 1);
     }
     this.db.write();
+  }
+
+  private checkDuplicateKeyInGroup(
+    groupId: UUID,
+    key: string,
+    excludeId?: UUID,
+  ) {
+    const translations = this.db
+      .get('translations')
+      .filter({ groupId })
+      .value();
+    if (translations.some((t) => t.key === key && t.id !== excludeId)) {
+      throw new Error(
+        `Translation key "${key}" already exists in the group "${groupId}".`,
+      );
+    }
+  }
+
+  private checkDuplicateKeyWithGroupLabels(groupId: UUID, key: string) {
+    const groups = this.db.get('groups').value();
+    const group = this.findGroupById(groups, groupId);
+
+    if (!group) {
+      throw new Error(`Group with id "${groupId}" not found.`);
+    }
+
+    const checkLabel = (group: GroupSchema) => {
+      if (group.label === key) {
+        throw new Error(
+          `Translation key "${key}" conflicts with a group label in the hierarchy.`,
+        );
+      }
+      group.children.forEach(checkLabel);
+    };
+
+    checkLabel(group);
+  }
+
+  private findGroupById(groups: GroupSchema[], id: UUID): GroupSchema | null {
+    for (const group of groups) {
+      if (group.id === id) return group;
+      const found = this.findGroupById(group.children, id);
+      if (found) return found;
+    }
+    return null;
   }
 }
