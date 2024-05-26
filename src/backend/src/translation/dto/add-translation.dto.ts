@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsString, IsUUID, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsString,
+  IsUUID,
+  NotContains,
+  ValidateNested,
+} from 'class-validator';
 import { Trim } from 'src/common/decorator/trim.decorator';
 import { UUID } from 'src/common/types';
 
@@ -14,6 +20,7 @@ class TranslationValue {
 
 export class AddTranslationReqBodyDto {
   @IsString()
+  @NotContains(' ')
   @Trim()
   key: string;
 

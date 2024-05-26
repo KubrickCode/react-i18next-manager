@@ -1,4 +1,4 @@
-import { IsString, IsUUID } from 'class-validator';
+import { IsString, IsUUID, NotContains } from 'class-validator';
 import { Trim } from 'src/common/decorator/trim.decorator';
 import { UUID } from 'src/common/types';
 
@@ -9,6 +9,7 @@ export class EditGroupLabelReqParamDto {
 
 export class EditGroupLabelReqBodyDto {
   @IsString()
+  @NotContains(' ')
   @Trim()
   newLabel: string;
 }
