@@ -15,13 +15,11 @@ class Group {
   @IsString()
   label: string;
 
+  @IsUUID()
+  parentId: UUID;
+
   @IsInt()
   position: number;
-
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Group)
-  children: Group[];
 }
 
 export class GetGroupsResDto {
