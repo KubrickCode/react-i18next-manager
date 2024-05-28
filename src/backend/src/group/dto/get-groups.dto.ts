@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsInt,
+  IsOptional,
   IsString,
   IsUUID,
   ValidateNested,
@@ -16,7 +17,8 @@ class Group {
   label: string;
 
   @IsUUID()
-  parentId: UUID;
+  @IsOptional()
+  parentId: UUID | null;
 
   @IsInt()
   position: number;
