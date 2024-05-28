@@ -42,10 +42,6 @@ export class TranslationRepository {
   }
 
   async create(params: CreateParams) {
-    const { groupId, key } = params;
-    this.checkDuplicateKeyInGroup(groupId, key);
-    this.checkDuplicateKeyWithGroupLabels(groupId, key);
-
     const translations = this.db.get('translations').value();
     translations.push({ id: generateUUID(), ...params });
     this.db.write();

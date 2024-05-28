@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { TranslationRepository } from './translation.repository';
 import { UUID } from 'src/common/types';
+import { GroupRepository } from 'src/group/group.repository';
 
 type AddParams = {
   groupId: UUID;
@@ -22,7 +23,10 @@ type EditParams = {
 
 @Injectable()
 export class TranslationService {
-  constructor(private readonly translationRepository: TranslationRepository) {}
+  constructor(
+    private readonly translationRepository: TranslationRepository,
+    private readonly groupRepository: GroupRepository,
+  ) {}
 
   async getAll({ groupId }: { groupId: UUID }) {
     return {
@@ -32,8 +36,30 @@ export class TranslationService {
     };
   }
 
-  async add(params: AddParams) {
-    await this.translationRepository.create(params);
+  async add({ groupId, key, values }: AddParams) {
+    const translations = await this.translationRepository.findManyByGroupId({
+      groupId,
+    });
+    if (translations.some((t) => t.key === key)) {
+      throw new ConflictException(
+        `Translation key "${key}" already exists in the group "${groupId}".`,
+      );
+    }
+
+    const groups = await this.groupRepository.findManyByParentId({
+      parentId: groupId,
+    });
+    if (groups.some((g) => g.label === key)) {
+      throw new ConflictException(
+        `Translation key "${key}" already exists as a group label in the group "${groupId}".`,
+      );
+    }
+
+    await this.translationRepository.create({
+      groupId,
+      key,
+      values,
+    });
   }
 
   async edit(params: EditParams) {
