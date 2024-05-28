@@ -8,9 +8,9 @@ export type LocaleSchema = {
 
 export type GroupSchema = {
   id: UUID;
+  parentId: UUID | null;
   label: string;
   position: number;
-  children: GroupSchema[];
 };
 
 export type TranslationSchema = {
