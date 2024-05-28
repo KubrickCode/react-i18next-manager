@@ -46,8 +46,16 @@ export class TranslationService {
     });
   }
 
-  async edit(params: EditParams) {
-    await this.translationRepository.update(params);
+  async edit({ id, newKey, newValues }: EditParams) {
+    const translation = await this.translationRepository.findById({ id });
+
+    await this.checkExistingKey({
+      excludeId: id,
+      groupId: translation.groupId,
+      key: newKey,
+    });
+
+    await this.translationRepository.update({ id, newKey, newValues });
   }
 
   async deleteMany({ translations }: { translations: { id: UUID }[] }) {
