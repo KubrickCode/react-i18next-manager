@@ -40,20 +40,16 @@ export class GroupRepository {
 
   async findManyByParentId({ parentId }: { parentId: UUID | null }) {
     const groups = this.db.get('groups').value();
-    if (!parentId) {
-      return groups.filter((group) => !this.findParentById({ id: group.id }));
-    }
-
-    return this.findById({ id: parentId }).children;
+    return groups.filter((group) => group.parentId === parentId);
   }
 
   async create({ label, parentId }: CreateParams) {
     const groups = this.db.get('groups').value();
     const newGroup: GroupSchema = {
       id: generateUUID(),
+      parentId,
       label,
       position: 0,
-      children: [],
     };
 
     if (parentId) {
