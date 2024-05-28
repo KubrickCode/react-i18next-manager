@@ -37,23 +37,7 @@ export class TranslationService {
   }
 
   async add({ groupId, key, values }: AddParams) {
-    const translations = await this.translationRepository.findManyByGroupId({
-      groupId,
-    });
-    if (translations.some((t) => t.key === key)) {
-      throw new ConflictException(
-        `Translation key "${key}" already exists in the group "${groupId}".`,
-      );
-    }
-
-    const groups = await this.groupRepository.findManyByParentId({
-      parentId: groupId,
-    });
-    if (groups.some((g) => g.label === key)) {
-      throw new ConflictException(
-        `Translation key "${key}" already exists as a group label in the group "${groupId}".`,
-      );
-    }
+    await this.checkExistingKey({ groupId, key });
 
     await this.translationRepository.create({
       groupId,
@@ -69,6 +53,34 @@ export class TranslationService {
   async deleteMany({ translations }: { translations: { id: UUID }[] }) {
     for (const { id } of translations) {
       await this.translationRepository.delete({ id });
+    }
+  }
+
+  private async checkExistingKey({
+    excludeId,
+    groupId,
+    key,
+  }: {
+    excludeId?: UUID;
+    groupId: UUID;
+    key: string;
+  }) {
+    const translations = await this.translationRepository.findManyByGroupId({
+      groupId,
+    });
+    if (translations.some((t) => t.key === key && t.id !== excludeId)) {
+      throw new ConflictException(
+        `Translation key "${key}" already exists in the group "${groupId}".`,
+      );
+    }
+
+    const groups = await this.groupRepository.findManyByParentId({
+      parentId: groupId,
+    });
+    if (groups.some((g) => g.label === key)) {
+      throw new ConflictException(
+        `Translation key "${key}" already exists as a group label in the group "${groupId}".`,
+      );
     }
   }
 }
