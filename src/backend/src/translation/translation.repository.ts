@@ -56,13 +56,12 @@ export class TranslationRepository {
     this.db.write();
   }
 
-  async delete({ id }: { id: UUID }) {
+  async deleteMany({ ids }: { ids: UUID[] }) {
     const translations = this.db.get('translations').value();
-    const index = translations.findIndex((t) => t.id === id);
-    if (index !== -1) {
-      translations.splice(index, 1);
-    }
-    this.db.write();
+    const remainingTranslations = translations.filter(
+      (translation) => !ids.includes(translation.id),
+    );
+    this.db.set('translations', remainingTranslations).write();
   }
 
   async deleteByGroupIds({ groupIds }: { groupIds: UUID[] }) {

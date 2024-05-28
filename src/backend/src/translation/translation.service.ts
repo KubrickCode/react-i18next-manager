@@ -59,9 +59,9 @@ export class TranslationService {
   }
 
   async deleteMany({ translations }: { translations: { id: UUID }[] }) {
-    for (const { id } of translations) {
-      await this.translationRepository.delete({ id });
-    }
+    await this.translationRepository.deleteMany({
+      ids: translations.map((t) => t.id),
+    });
   }
 
   private async checkExistingKey({
