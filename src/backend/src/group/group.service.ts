@@ -2,6 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { GroupRepository } from './group.repository';
 import { UUID } from 'src/common/types';
 import { TranslationRepository } from 'src/translation/translation.repository';
+import { GroupSchema } from 'src/db/db.schema';
 
 type AddParams = {
   label: string;
@@ -55,8 +56,21 @@ export class GroupService {
     return await this.groupRepository.create({ label, parentId });
   }
 
-  async editPosition(params: EditPositionParams) {
-    return await this.groupRepository.updatePosition(params);
+  async editPosition({ id, position }: EditPositionParams) {
+    const group = await this.groupRepository.findById({ id });
+
+    const siblings = await this.groupRepository.findManyByParentId({
+      parentId: group.parentId,
+    });
+
+    const reorderedSiblings = this.reorderSiblings(siblings, id, position);
+
+    for (const { id, position } of reorderedSiblings) {
+      await this.groupRepository.updatePosition({
+        id,
+        position,
+      });
+    }
   }
 
   async editLabel(params: EditLabelParams) {
@@ -65,5 +79,21 @@ export class GroupService {
 
   async delete({ id }: { id: UUID }) {
     return await this.groupRepository.delete({ id });
+  }
+
+  private reorderSiblings(
+    groups: GroupSchema[],
+    id: UUID,
+    newPosition: number,
+  ): GroupSchema[] {
+    const groupIndex = groups.findIndex((group) => group.id === id);
+
+    const [movedGroup] = groups.splice(groupIndex, 1);
+    groups.splice(newPosition, 0, movedGroup);
+
+    return groups.map((group, index) => {
+      group.position = index;
+      return group;
+    });
   }
 }

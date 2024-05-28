@@ -83,12 +83,9 @@ export class GroupRepository {
   }
 
   async updatePosition({ id, position }: UpdatePositionParams) {
-    const groups = this.db.get('groups').value();
-    const group = this.findById({ id });
+    const group = await this.findById({ id });
 
-    const siblings = groups.filter((g) => g.parentId === group.parentId);
-
-    this.reorder(siblings, id, position);
+    group.position = position;
 
     this.db.write();
   }
