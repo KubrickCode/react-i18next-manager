@@ -1,8 +1,8 @@
 type Group  = {
 id: string;
 label: string;
+parentId: string;
 position: number;
-children: Group[];
 }
 export type GetGroupsResDto  = {
 groups: Group[];
