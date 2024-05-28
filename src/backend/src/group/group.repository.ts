@@ -1,11 +1,7 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
-import { DBService, DB, DBSchema, GroupSchema } from 'src/db/db.service';
+import { DBService, DB, GroupSchema } from 'src/db/db.service';
 
 type CreateParams = {
   label: string;
@@ -75,61 +71,14 @@ export class GroupRepository {
     this.db.write();
   }
 
-  async delete({ id }: { id: UUID }) {
+  async deleteMany({ ids }: { ids: UUID[] }) {
     const groups = this.db.get('groups').value();
-    const allGroupIds = this.collectGroupAndChildIds(id);
-    this.findAndDelete({ id, groups });
-
-    const translations = this.db.get('translations').value();
-    const updatedTranslations = translations.filter(
-      (translation) => !allGroupIds.includes(translation.groupId),
-    );
-    this.db.set('translations', updatedTranslations).write();
-  }
-
-  private collectGroupAndChildIds(id: UUID) {
-    const groupIds: UUID[] = [];
-    const collect = (group: GroupSchema) => {
-      groupIds.push(group.id);
-      if (group.children) {
-        group.children.forEach(collect);
-      }
-    };
-
-    const targetGroup = this.findById({ id });
-    if (targetGroup) {
-      collect(targetGroup);
-    }
-
-    return groupIds;
+    const remainingGroups = groups.filter((group) => !ids.includes(group.id));
+    this.db.set('groups', remainingGroups).write();
   }
 
   async findById({ id }: { id: UUID }) {
     const groups = this.db.get('groups').value();
     return groups.find((group) => group.id === id);
-  }
-
-  private findAndDelete({
-    id,
-    groups,
-  }: {
-    id: UUID;
-    groups: DBSchema['groups'];
-  }) {
-    const index = groups.findIndex((group) => group.id === id);
-
-    if (index !== -1) {
-      groups.splice(index, 1);
-      return;
-    }
-
-    for (const group of groups) {
-      if (group.children) {
-        this.findAndDelete({
-          id,
-          groups: group.children,
-        });
-      }
-    }
   }
 }

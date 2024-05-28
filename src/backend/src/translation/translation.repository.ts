@@ -120,4 +120,12 @@ export class TranslationRepository {
     }
     return null;
   }
+
+  async deleteByGroupIds({ groupIds }: { groupIds: UUID[] }) {
+    const translations = this.db.get('translations').value();
+    const updatedTranslations = translations.filter(
+      (translation) => !groupIds.includes(translation.groupId),
+    );
+    this.db.set('translations', updatedTranslations).write();
+  }
 }

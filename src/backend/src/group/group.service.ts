@@ -65,9 +65,14 @@ export class GroupService {
   }
 
   async delete({ id }: { id: UUID }) {
-    const group = await this.groupRepository.findById({ id });
+    const allGroupIds = await this.collectAllGroupIds(id);
+    allGroupIds.push(id);
 
-    return await this.groupRepository.delete({ id });
+    await this.translationRepository.deleteByGroupIds({
+      groupIds: allGroupIds,
+    });
+
+    await this.groupRepository.deleteMany({ ids: allGroupIds });
   }
 
   private async checkExistingLabel({
@@ -98,6 +103,20 @@ export class GroupService {
         );
       }
     }
+  }
+
+  private async collectAllGroupIds(parentId: UUID): Promise<UUID[]> {
+    const children = await this.groupRepository.findManyByParentId({
+      parentId,
+    });
+    const ids = await Promise.all(
+      children.map(async (child) => {
+        const childIds = await this.collectAllGroupIds(child.id);
+        return [child.id, ...childIds];
+      }),
+    );
+
+    return ids.flat();
   }
 
   private reorderSiblings(
