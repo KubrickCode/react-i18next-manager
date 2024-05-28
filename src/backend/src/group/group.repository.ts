@@ -61,22 +61,7 @@ export class GroupRepository {
   }
 
   async updateLabel({ id, newLabel }: UpdateLabelParams) {
-    const groups = this.db.get('groups').value();
-    const group = this.findById({ id });
-
-    if (!group) {
-      throw new NotFoundException(`Group with id ${id} not found`);
-    }
-
-    const parentGroup = this.findParentById({ id });
-    const siblings = parentGroup ? parentGroup.children : groups;
-
-    this.checkDuplicateLabel(siblings, newLabel, id);
-
-    this.checkDuplicateLabelInTranslations(
-      parentGroup ? parentGroup.id : null,
-      newLabel,
-    );
+    const group = await this.findById({ id });
 
     group.label = newLabel;
     this.db.write();
@@ -100,36 +85,6 @@ export class GroupRepository {
       (translation) => !allGroupIds.includes(translation.groupId),
     );
     this.db.set('translations', updatedTranslations).write();
-  }
-
-  private checkDuplicateLabel(
-    groups: GroupSchema[],
-    label: string,
-    excludeId?: UUID,
-  ) {
-    if (
-      groups.some((group) => group.label === label && group.id !== excludeId)
-    ) {
-      throw new ConflictException(
-        `Group with label "${label}" already exists.`,
-      );
-    }
-  }
-
-  private checkDuplicateLabelInTranslations(
-    parentId: UUID | null,
-    label: string,
-  ) {
-    const translations = this.db.get('translations').value();
-    const duplicateTranslation = translations.some((translation) => {
-      return translation.groupId === parentId && translation.key === label;
-    });
-
-    if (duplicateTranslation) {
-      throw new ConflictException(
-        `Translation with key "${label}" already exists in the parent group.`,
-      );
-    }
   }
 
   private collectGroupAndChildIds(id: UUID) {
@@ -176,29 +131,5 @@ export class GroupRepository {
         });
       }
     }
-  }
-
-  private findParentById({ groups, id }: { groups?: GroupSchema[]; id: UUID }) {
-    return this.findParentById({
-      groups: groups ?? this.db.get('groups').value(),
-      id,
-    });
-  }
-
-  private reorder(groups: GroupSchema[], id: UUID, newPosition: number) {
-    const groupIndex = groups.findIndex((group) => group.id === id);
-
-    if (groupIndex === -1) {
-      throw new NotFoundException(
-        `Group with id ${id} not found in the given group list`,
-      );
-    }
-
-    const [movedGroup] = groups.splice(groupIndex, 1);
-    groups.splice(newPosition, 0, movedGroup);
-
-    groups.forEach((group, index) => {
-      group.position = index;
-    });
   }
 }

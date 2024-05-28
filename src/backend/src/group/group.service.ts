@@ -53,8 +53,15 @@ export class GroupService {
     }
   }
 
-  async editLabel(params: EditLabelParams) {
-    return await this.groupRepository.updateLabel(params);
+  async editLabel({ id, newLabel }: EditLabelParams) {
+    const group = await this.groupRepository.findById({ id });
+
+    await this.checkExistingLabel({
+      label: newLabel,
+      parentId: group.parentId,
+    });
+
+    return await this.groupRepository.updateLabel({ id, newLabel });
   }
 
   async delete({ id }: { id: UUID }) {
