@@ -30,6 +30,11 @@ export class GroupRepository {
     this.db = await this.dbService.get();
   }
 
+  async findById({ id }: { id: UUID }) {
+    const groups = this.db.get('groups').value();
+    return groups.find((group) => group.id === id);
+  }
+
   async findMany() {
     return this.db.get('groups').value();
   }
@@ -75,10 +80,5 @@ export class GroupRepository {
     const groups = this.db.get('groups').value();
     const remainingGroups = groups.filter((group) => !ids.includes(group.id));
     this.db.set('groups', remainingGroups).write();
-  }
-
-  async findById({ id }: { id: UUID }) {
-    const groups = this.db.get('groups').value();
-    return groups.find((group) => group.id === id);
   }
 }
