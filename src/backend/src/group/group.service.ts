@@ -31,27 +31,7 @@ export class GroupService {
   }
 
   async add({ label, parentId }: AddParams) {
-    const groups = await this.groupRepository.findManyByParentId({ parentId });
-    const existsInParent = groups.some((group) => group.label === label);
-    if (existsInParent) {
-      throw new ConflictException(
-        `Group with label "${label}" already exists in parent`,
-      );
-    }
-
-    if (parentId) {
-      const translations = await this.translationRepository.findManyByGroupId({
-        groupId: parentId,
-      });
-      const existsInParentTranslations = translations.some(
-        (translation) => translation.key === label,
-      );
-      if (existsInParentTranslations) {
-        throw new ConflictException(
-          `Translation with key "${label}" already exists in parent`,
-        );
-      }
-    }
+    await this.checkExistingLabel({ label, parentId });
 
     return await this.groupRepository.create({ label, parentId });
   }
@@ -78,7 +58,39 @@ export class GroupService {
   }
 
   async delete({ id }: { id: UUID }) {
+    const group = await this.groupRepository.findById({ id });
+
     return await this.groupRepository.delete({ id });
+  }
+
+  private async checkExistingLabel({
+    label,
+    parentId,
+  }: {
+    label: string;
+    parentId: UUID | null;
+  }) {
+    const groups = await this.groupRepository.findManyByParentId({ parentId });
+    const existsInParent = groups.some((group) => group.label === label);
+    if (existsInParent) {
+      throw new ConflictException(
+        `Group with label "${label}" already exists in parent`,
+      );
+    }
+
+    if (parentId) {
+      const translations = await this.translationRepository.findManyByGroupId({
+        groupId: parentId,
+      });
+      const existsInParentTranslations = translations.some(
+        (translation) => translation.key === label,
+      );
+      if (existsInParentTranslations) {
+        throw new ConflictException(
+          `Translation with key "${label}" already exists in parent`,
+        );
+      }
+    }
   }
 
   private reorderSiblings(
