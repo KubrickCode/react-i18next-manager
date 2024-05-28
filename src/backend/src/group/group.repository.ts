@@ -52,14 +52,10 @@ export class GroupRepository {
       position: 0,
     };
 
-    if (parentId) {
-      const parentGroup = this.findById({ id: parentId });
-      newGroup.position = parentGroup.children.length;
-      parentGroup.children.push(newGroup);
-    } else {
-      newGroup.position = groups.length;
-      groups.push(newGroup);
-    }
+    const siblings = await this.findManyByParentId({ parentId });
+
+    newGroup.position = siblings.length;
+    groups.push(newGroup);
 
     this.db.write();
   }
@@ -90,17 +86,9 @@ export class GroupRepository {
     const groups = this.db.get('groups').value();
     const group = this.findById({ id });
 
-    if (!group) {
-      throw new NotFoundException(`Group with id ${id} not found`);
-    }
+    const siblings = groups.filter((g) => g.parentId === group.parentId);
 
-    const parentGroup = this.findParentById({ id });
-
-    if (parentGroup) {
-      this.reorder(parentGroup.children, id, position);
-    } else {
-      this.reorder(groups, id, position);
-    }
+    this.reorder(siblings, id, position);
 
     this.db.write();
   }
@@ -164,15 +152,9 @@ export class GroupRepository {
     return groupIds;
   }
 
-  private findById({ id }: { id: UUID }) {
+  async findById({ id }: { id: UUID }) {
     const groups = this.db.get('groups').value();
-
-    for (const group of groups) {
-      if (group.id === id) return group;
-      const found = this.findById({ id: group.id });
-      if (found) return found;
-    }
-    return null;
+    return groups.find((group) => group.id === id);
   }
 
   private findAndDelete({
