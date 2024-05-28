@@ -8,6 +8,7 @@ import {
   TranslationSchema,
 } from 'src/db/db.service';
 import * as fs from 'fs';
+import { UUID } from './types';
 
 @Injectable()
 export class CommonService {
@@ -43,19 +44,7 @@ export class CommonService {
       i18nData[locale.label] = { translation: {} };
     });
 
-    const groupPathMap = {};
-
-    const buildGroupPathMap = (group: GroupSchema, parentPath: string = '') => {
-      const currentPath = parentPath
-        ? `${parentPath}.${group.label}`
-        : group.label;
-      groupPathMap[group.id] = currentPath;
-      group.children.forEach((childGroup) =>
-        buildGroupPathMap(childGroup, currentPath),
-      );
-    };
-
-    groups.forEach((group) => buildGroupPathMap(group));
+    const groupPathMap = this.buildGroupPathMap(groups);
 
     translations.forEach((translation) => {
       const translationKey =
@@ -84,19 +73,7 @@ export class CommonService {
     groups: GroupSchema[];
     translations: TranslationSchema[];
   }) {
-    const groupPathMap = {};
-
-    const buildGroupPathMap = (group: GroupSchema, parentPath: string = '') => {
-      const currentPath = parentPath
-        ? `${parentPath}.${group.label}`
-        : group.label;
-      groupPathMap[group.id] = currentPath;
-      group.children.forEach((childGroup) =>
-        buildGroupPathMap(childGroup, currentPath),
-      );
-    };
-
-    groups.forEach((group) => buildGroupPathMap(group));
+    const groupPathMap = this.buildGroupPathMap(groups);
 
     const keys: { [key: string]: any } = {};
 
@@ -131,5 +108,22 @@ export class CommonService {
 
     const outputPath = join(this.dbService.getTargetPath(), 'i18n-keys.ts');
     fs.writeFileSync(outputPath, typeSafeI18nKeys, 'utf-8');
+  }
+
+  private buildGroupPathMap(groups: GroupSchema[]): { [key: string]: string } {
+    const groupPathMap: { [key: string]: string } = {};
+
+    const buildPath = (groupId: UUID, path: string) => {
+      groupPathMap[groupId] = path;
+      groups
+        .filter((group) => group.parentId === groupId)
+        .forEach((group) => buildPath(group.id, `${path}.${group.label}`));
+    };
+
+    groups
+      .filter((group) => group.parentId === null)
+      .forEach((group) => buildPath(group.id, group.label));
+
+    return groupPathMap;
   }
 }
