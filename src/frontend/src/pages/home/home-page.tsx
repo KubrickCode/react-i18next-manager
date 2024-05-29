@@ -5,9 +5,10 @@ import { useLayoutContext } from "~/layout/context";
 
 import { TranslationsTable } from "./components/translations-table";
 import { TranslationsTableToolbar } from "./components/translations-table-toolbar";
+import { HomePageEmptySection } from "./components/empty-section";
 
 export const HomePage = () => {
-  const { selectedGroup } = useLayoutContext();
+  const { locales, selectedGroup } = useLayoutContext();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [term, setTerm] = useState("");
 
@@ -21,7 +22,7 @@ export const HomePage = () => {
 
   return (
     <Page>
-      {selectedGroup && (
+      {selectedGroup && locales.length > 0 ? (
         <>
           <TranslationsTableToolbar
             handleSelectedIds={handleSelectedIds}
@@ -34,6 +35,8 @@ export const HomePage = () => {
             term={term}
           />
         </>
+      ) : (
+        <HomePageEmptySection />
       )}
     </Page>
   );
