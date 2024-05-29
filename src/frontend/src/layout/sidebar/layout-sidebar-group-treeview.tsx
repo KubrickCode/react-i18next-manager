@@ -106,6 +106,7 @@ export type TreeData = {
 };
 
 const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
+  const { handleSelectedGroup } = useLayoutContext();
   const [label, setLabel] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -221,6 +222,8 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
                 toastMessage: TOAST_MESSAGE.DELETE_GROUP,
                 onComplete() {
                   tree.delete(node.id);
+                  tree.select(null);
+                  handleSelectedGroup(null);
                 },
               }}
             >
