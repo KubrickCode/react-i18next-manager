@@ -52,11 +52,10 @@ export class TranslationRepository extends DBAdapter {
   }
 
   async deleteMany({ ids }: { ids: UUID[] }) {
-    const translations = this.db.get('translations').value();
-    const remainingTranslations = translations.filter(
-      (translation) => !ids.includes(translation.id),
-    );
-    this.db.set('translations', remainingTranslations).write();
+    this.db
+      .get('translations')
+      .remove((translation) => ids.includes(translation.id))
+      .write();
   }
 
   async deleteByGroupIds({ groupIds }: { groupIds: UUID[] }) {
