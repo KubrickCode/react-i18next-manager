@@ -26,8 +26,7 @@ export class GroupRepository extends DBAdapter {
   }
 
   async findById({ id }: { id: UUID }) {
-    const groups = this.db.get('groups').value();
-    return groups.find((group) => group.id === id);
+    return this.db.get('groups').find({ id }).value();
   }
 
   async findMany() {
