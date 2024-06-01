@@ -64,5 +64,9 @@ export class GroupRepository extends DBAdapter {
       .get('groups')
       .remove((group) => ids.includes(group.id))
       .write();
+    this.db
+      .get('translations')
+      .remove((translation) => ids.includes(translation.groupId))
+      .write();
   }
 }
