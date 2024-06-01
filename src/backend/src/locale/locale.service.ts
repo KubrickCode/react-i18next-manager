@@ -24,7 +24,12 @@ export class LocaleService {
   constructor(private readonly localeRepository: LocaleRepository) {}
 
   async getAll() {
-    return { locales: await this.localeRepository.findMany() };
+    const locales = await this.localeRepository.findMany({
+      sortBy: 'position',
+    });
+    return {
+      locales,
+    };
   }
 
   async add({ label, position }: AddParams) {

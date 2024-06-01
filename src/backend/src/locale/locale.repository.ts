@@ -4,6 +4,10 @@ import { generateUUID } from 'src/common/utils';
 import { DBAdapter } from 'src/db/db.adapter';
 import { DBService } from 'src/db/db.service';
 
+type FindMayParams = {
+  sortBy?: string;
+};
+
 type CreateParams = {
   label: string;
   position: number;
@@ -27,8 +31,8 @@ export class LocaleRepository extends DBAdapter {
     super(dbService);
   }
 
-  async findMany() {
-    return this.db.get('locales').sortBy('position').value();
+  async findMany({ sortBy }: FindMayParams = {}) {
+    return this.db.get('locales').sortBy(sortBy).value();
   }
 
   async findByLabel({ label }: { label: string }) {
