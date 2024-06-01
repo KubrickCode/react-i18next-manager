@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DBAdapter } from 'src/db/db.adapter';
-import { DBService, GroupSchema } from 'src/db/db.service';
+import { DBService } from 'src/db/db.service';
 
 type CreateParams = {
   label: string;
@@ -38,20 +38,17 @@ export class GroupRepository extends DBAdapter {
   }
 
   async create({ label, parentId }: CreateParams) {
-    const groups = this.db.get('groups').value();
-    const newGroup: GroupSchema = {
-      id: generateUUID(),
-      parentId,
-      label,
-      position: 0,
-    };
-
     const siblings = await this.findManyByParentId({ parentId });
 
-    newGroup.position = siblings.length;
-    groups.push(newGroup);
-
-    this.db.write();
+    this.db
+      .get('groups')
+      .push({
+        id: generateUUID(),
+        parentId,
+        label,
+        position: siblings.length,
+      })
+      .write();
   }
 
   async updateLabel({ id, newLabel }: UpdateLabelParams) {
