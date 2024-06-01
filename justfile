@@ -59,3 +59,6 @@ run svc *args:
 
 test:
   cd "{{ backend_dir }}" && yarn test
+
+test-cov:
+  cd "{{ backend_dir }}" && yarn test:cov
