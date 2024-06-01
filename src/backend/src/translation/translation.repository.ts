@@ -29,8 +29,7 @@ export class TranslationRepository extends DBAdapter {
   }
 
   async findById({ id }: { id: UUID }) {
-    const translations = this.db.get('translations').value();
-    return translations.find((t) => t.id === id);
+    return this.db.get('translations').find({ id }).value();
   }
 
   async findManyByGroupId({ groupId }: { groupId: UUID }) {
