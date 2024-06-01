@@ -45,25 +45,19 @@ export class DBService implements OnModuleInit {
 
   private async initialize() {
     const targetPath = this.getTargetPath();
-    const file = join(targetPath, 'db.json');
-
     if (!fs.existsSync(targetPath)) {
       fs.mkdirSync(targetPath, { recursive: true });
     }
 
-    if (!fs.existsSync(file)) {
-      const initialData: DBSchema = {
+    const file = join(targetPath, 'db.json');
+    const adapter = new FileAsync<DBSchema>(file);
+    this.db = await lowdb(adapter);
+    this.db
+      .defaults({
         locales: [],
         groups: [],
         translations: [],
-      };
-      fs.writeFileSync(file, JSON.stringify(initialData, null, 2));
-    }
-
-    const adapter = new FileAsync<DBSchema>(file);
-
-    this.db = await lowdb(adapter);
-
-    await this.db.defaults({ locales: [] }).write();
+      })
+      .write();
   }
 }
