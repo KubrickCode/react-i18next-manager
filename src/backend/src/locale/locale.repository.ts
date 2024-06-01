@@ -19,10 +19,8 @@ type UpdateLabelParams = {
 };
 
 type UpdatePositionParams = {
-  locales: {
-    id: UUID;
-    position: number;
-  }[];
+  id: UUID;
+  position: number;
 };
 
 @Injectable()
@@ -56,15 +54,8 @@ export class LocaleRepository extends DBAdapter {
     this.db.get('locales').find({ id }).assign({ label: newLabel }).write();
   }
 
-  async updatePosition({ locales }: UpdatePositionParams) {
-    const localesData = this.db.get('locales').value();
-    locales.forEach((locale) => {
-      const localeData = localesData.find((data) => data.id === locale.id);
-      if (localeData) {
-        localeData.position = locale.position;
-      }
-    });
-    this.db.write();
+  async updatePosition({ id, position }: UpdatePositionParams) {
+    this.db.get('locales').find({ id }).assign({ position }).write();
   }
 
   async delete({ id }: { id: UUID }) {
