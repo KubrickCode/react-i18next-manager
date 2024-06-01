@@ -44,11 +44,11 @@ export class TranslationRepository extends DBAdapter {
   }
 
   async update({ id, newKey, newValues }: UpdateParams) {
-    const translation = await this.findById({ id });
-
-    translation.key = newKey;
-    translation.values = newValues;
-    this.db.write();
+    return this.db
+      .get('translations')
+      .find({ id })
+      .assign({ key: newKey, values: newValues })
+      .write();
   }
 
   async deleteMany({ ids }: { ids: UUID[] }) {
