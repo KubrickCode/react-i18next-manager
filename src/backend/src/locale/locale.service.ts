@@ -45,8 +45,11 @@ export class LocaleService {
     return await this.localeRepository.create({ label, position });
   }
 
-  async editPosition(params: EditPositionParams) {
-    return await this.localeRepository.updatePosition(params);
+  async editPosition({ locales }: EditPositionParams) {
+    const promises = locales.map((locale) =>
+      this.localeRepository.updatePosition(locale),
+    );
+    await Promise.all(promises);
   }
 
   async editLabel({ id, newLabel }: EditLabelParams) {
