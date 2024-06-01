@@ -53,12 +53,7 @@ export class LocaleRepository extends DBAdapter {
   }
 
   async updateLabel({ id, newLabel }: UpdateLabelParams) {
-    const locales = this.db.get('locales').value();
-    const locale = locales.find((locale) => locale.id === id);
-
-    locale.label = newLabel;
-
-    this.db.write();
+    this.db.get('locales').find({ id }).assign({ label: newLabel }).write();
   }
 
   async updatePosition({ locales }: UpdatePositionParams) {
