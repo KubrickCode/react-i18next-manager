@@ -38,16 +38,15 @@ export class LocaleRepository extends DBAdapter {
   }
 
   async create({ label, position }: CreateParams) {
-    const locales = this.db.get('locales').value();
     const id = generateUUID();
-    locales.push({ id, label, position });
 
-    const translations = this.db.get('translations').value();
-    translations.forEach((translation) => {
-      translation.values.push({ localeId: id, value: '' });
-    });
-
-    this.db.write();
+    this.db.get('locales').push({ id, label, position }).write();
+    this.db
+      .get('translations')
+      .each((translation) => {
+        translation.values.push({ localeId: id, value: '' });
+      })
+      .write();
   }
 
   async updateLabel({ id, newLabel }: UpdateLabelParams) {
