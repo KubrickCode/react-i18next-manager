@@ -22,51 +22,11 @@ export class CommonService extends DBAdapter {
     const i18nData = this.buildI18nData({ locales, groups, translations });
     this.writeI18nJson(i18nData);
 
-    this.generateTypedI18nKeys({ groups, translations });
-  }
-
-  private generateTypedI18nKeys({
-    groups,
-    translations,
-  }: {
-    groups: GroupSchema[];
-    translations: TranslationSchema[];
-  }) {
-    const groupPathMap = this.buildGroupPathMap(groups);
-
-    const keys: { [key: string]: any } = {};
-
-    translations.forEach((translation) => {
-      const groupLabel = groupPathMap[translation.groupId];
-      const keyPath = `${groupLabel}.${translation.key}`;
-      const keyParts = keyPath.split('.');
-
-      let current = keys;
-      keyParts.forEach((part, index) => {
-        if (!current[part]) {
-          current[part] = index === keyParts.length - 1 ? keyPath : {};
-        }
-        current = current[part];
-      });
+    const typeSafeI18nKeys = this.generateTypeSafeI18nKeys({
+      groups,
+      translations,
     });
-
-    const generateTypeScript = (obj: any): string => {
-      let result = '{';
-      for (const key of Object.keys(obj)) {
-        if (typeof obj[key] === 'string') {
-          result += `${key}: "${obj[key]}",`;
-        } else {
-          result += `${key}: ${generateTypeScript(obj[key])},`;
-        }
-      }
-      result += '}';
-      return result;
-    };
-
-    const typeSafeI18nKeys = `export const i18n = {keys: ${generateTypeScript(keys)}};export default i18n;`;
-
-    const outputPath = join(this.dbService.getTargetPath(), 'i18n-keys.ts');
-    fs.writeFileSync(outputPath, typeSafeI18nKeys, 'utf-8');
+    this.writeTypeSafeI18nKeys(typeSafeI18nKeys);
   }
 
   private buildI18nData({
@@ -147,5 +107,62 @@ export class CommonService extends DBAdapter {
     const targetPath = this.dbService.getTargetPath();
     const i18nFilePath = join(targetPath, 'i18n.json');
     fs.writeFileSync(i18nFilePath, JSON.stringify(i18nData, null, 2));
+  }
+
+  private generateTypeSafeI18nKeys({
+    groups,
+    translations,
+  }: {
+    groups: GroupSchema[];
+    translations: TranslationSchema[];
+  }): string {
+    const groupPathMap = this.buildGroupPathMap(groups);
+    const keys = this.buildTranslationKeys(translations, groupPathMap);
+    return this.generateTypeScript(keys);
+  }
+
+  private buildTranslationKeys(
+    translations: TranslationSchema[],
+    groupPathMap: { [key: string]: string },
+  ): { [key: string]: any } {
+    const keys: { [key: string]: any } = {};
+
+    translations.forEach((translation) => {
+      const groupLabel = groupPathMap[translation.groupId];
+      const keyPath = `${groupLabel}.${translation.key}`;
+      const keyParts = keyPath.split('.');
+
+      let current = keys;
+      keyParts.forEach((part, index) => {
+        if (!current[part]) {
+          current[part] = index === keyParts.length - 1 ? keyPath : {};
+        }
+        current = current[part];
+      });
+    });
+
+    return keys;
+  }
+
+  private generateTypeScript(keys: { [key: string]: any }): string {
+    const generateTypeScriptRecursive = (obj: any): string => {
+      let result = '{';
+      for (const key of Object.keys(obj)) {
+        if (typeof obj[key] === 'string') {
+          result += `${key}: "${obj[key]}",`;
+        } else {
+          result += `${key}: ${generateTypeScriptRecursive(obj[key])},`;
+        }
+      }
+      result += '}';
+      return result;
+    };
+
+    return `export const i18n = { keys: ${generateTypeScriptRecursive(keys)} }; export default i18n;`;
+  }
+
+  private writeTypeSafeI18nKeys(typeSafeI18nKeys: string) {
+    const outputPath = join(this.dbService.getTargetPath(), 'i18n-keys.ts');
+    fs.writeFileSync(outputPath, typeSafeI18nKeys, 'utf-8');
   }
 }
