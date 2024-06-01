@@ -34,8 +34,7 @@ export class GroupRepository extends DBAdapter {
   }
 
   async findManyByParentId({ parentId }: { parentId: UUID | null }) {
-    const groups = this.db.get('groups').value();
-    return groups.filter((group) => group.parentId === parentId);
+    return this.db.get('groups').filter({ parentId }).value();
   }
 
   async create({ label, parentId }: CreateParams) {
