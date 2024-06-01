@@ -34,4 +34,38 @@ describe('LocaleService Integration', () => {
       { id: 'c50010a4-7c43-432d-89d2-2cac5e44eee2', label: 'ko', position: 1 },
     ]);
   });
+
+  it('순서가 바뀐 locales를 올바르게 정렬하여 반환', async () => {
+    const db = await dbService.get();
+    const testData = JSON.parse(
+      fs.readFileSync(
+        path.resolve(__dirname, '../../test/test-db.json'),
+        'utf-8',
+      ),
+    );
+
+    // 'ko'와 'en'의 순서를 바꿈
+    const modifiedTestData = {
+      ...testData,
+      locales: [
+        {
+          id: 'c50010a4-7c43-432d-89d2-2cac5e44eee2',
+          label: 'ko',
+          position: 1,
+        },
+        {
+          id: '9094373b-d01c-4359-bf18-3cc66a04505b',
+          label: 'en',
+          position: 0,
+        },
+      ],
+    };
+    db.setState(modifiedTestData).write();
+
+    const result = await service.getAll();
+    expect(result.locales).toEqual([
+      { id: '9094373b-d01c-4359-bf18-3cc66a04505b', label: 'en', position: 0 },
+      { id: 'c50010a4-7c43-432d-89d2-2cac5e44eee2', label: 'ko', position: 1 },
+    ]);
+  });
 });
