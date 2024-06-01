@@ -60,8 +60,9 @@ export class GroupRepository extends DBAdapter {
   }
 
   async deleteMany({ ids }: { ids: UUID[] }) {
-    const groups = this.db.get('groups').value();
-    const remainingGroups = groups.filter((group) => !ids.includes(group.id));
-    this.db.set('groups', remainingGroups).write();
+    this.db
+      .get('groups')
+      .remove((group) => ids.includes(group.id))
+      .write();
   }
 }
