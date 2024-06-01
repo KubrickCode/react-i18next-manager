@@ -37,9 +37,10 @@ export class TranslationRepository extends DBAdapter {
   }
 
   async create(params: CreateParams) {
-    const translations = this.db.get('translations').value();
-    translations.push({ id: generateUUID(), ...params });
-    this.db.write();
+    return this.db
+      .get('translations')
+      .push({ id: generateUUID(), ...params })
+      .write();
   }
 
   async update({ id, newKey, newValues }: UpdateParams) {
