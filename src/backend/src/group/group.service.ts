@@ -68,10 +68,6 @@ export class GroupService {
     const allGroupIds = await this.collectAllGroupIds(id);
     allGroupIds.push(id);
 
-    await this.translationRepository.deleteByGroupIds({
-      groupIds: allGroupIds,
-    });
-
     await this.groupRepository.deleteMany({ ids: allGroupIds });
   }
 
