@@ -56,3 +56,6 @@ run svc *args:
       ;;
       
   esac
+
+test:
+  cd "{{ backend_dir }}" && yarn test
