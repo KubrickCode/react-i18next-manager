@@ -66,7 +66,6 @@ export class GroupService {
 
   async delete({ id }: { id: UUID }) {
     const allGroupIds = await this.collectAllGroupIds(id);
-    allGroupIds.push(id);
 
     await this.groupRepository.deleteMany({ ids: allGroupIds });
   }
@@ -105,14 +104,13 @@ export class GroupService {
     const children = await this.groupRepository.findManyByParentId({
       parentId,
     });
-    const ids = await Promise.all(
-      children.map(async (child) => {
-        const childIds = await this.collectAllGroupIds(child.id);
-        return [child.id, ...childIds];
-      }),
-    );
 
-    return ids.flat();
+    const ids = [parentId];
+    for (const child of children) {
+      ids.push(...(await this.collectAllGroupIds(child.id)));
+    }
+
+    return ids;
   }
 
   private reorderSiblings(
