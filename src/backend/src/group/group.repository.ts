@@ -52,10 +52,7 @@ export class GroupRepository extends DBAdapter {
   }
 
   async updateLabel({ id, newLabel }: UpdateLabelParams) {
-    const group = await this.findById({ id });
-
-    group.label = newLabel;
-    this.db.write();
+    this.db.get('groups').find({ id }).assign({ label: newLabel }).write();
   }
 
   async updatePosition({ id, position }: UpdatePositionParams) {
