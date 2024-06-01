@@ -1,0 +1,32 @@
+name: Run Tests
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
+      - unlocked
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.13.1"
+
+      - uses: extractions/setup-just@v1
+
+      - name: Install dependencies
+        run: just deps
+
+      - name: Run tests
+        run: just test
