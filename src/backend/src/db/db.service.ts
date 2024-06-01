@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as lowdb from 'lowdb';
 import * as FileAsync from 'lowdb/adapters/FileAsync';
+import * as Memory from 'lowdb/adapters/Memory';
 import { join } from 'path';
 import {
   DBSchema,
@@ -10,7 +11,7 @@ import {
 } from './db.schema';
 import * as fs from 'fs';
 
-export type DB = lowdb.LowdbAsync<DBSchema>;
+export type DB = lowdb.LowdbSync<DBSchema> | lowdb.LowdbAsync<DBSchema>;
 export type { DBSchema, LocaleSchema, GroupSchema, TranslationSchema };
 
 @Injectable()
@@ -44,20 +45,32 @@ export class DBService implements OnModuleInit {
   }
 
   private async initialize() {
-    const targetPath = this.getTargetPath();
-    if (!fs.existsSync(targetPath)) {
-      fs.mkdirSync(targetPath, { recursive: true });
-    }
+    if (process.env.NODE_ENV === 'test') {
+      const adapter = new Memory<DBSchema>('test-db');
+      this.db = lowdb(adapter);
+      this.db
+        .defaults({
+          locales: [],
+          groups: [],
+          translations: [],
+        })
+        .write();
+    } else {
+      const targetPath = this.getTargetPath();
+      if (!fs.existsSync(targetPath)) {
+        fs.mkdirSync(targetPath, { recursive: true });
+      }
 
-    const file = join(targetPath, 'db.json');
-    const adapter = new FileAsync<DBSchema>(file);
-    this.db = await lowdb(adapter);
-    this.db
-      .defaults({
-        locales: [],
-        groups: [],
-        translations: [],
-      })
-      .write();
+      const file = join(targetPath, 'db.json');
+      const adapter = new FileAsync<DBSchema>(file);
+      this.db = await lowdb(adapter);
+      await this.db
+        .defaults({
+          locales: [],
+          groups: [],
+          translations: [],
+        })
+        .write();
+    }
   }
 }
