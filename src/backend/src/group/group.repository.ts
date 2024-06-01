@@ -56,11 +56,7 @@ export class GroupRepository extends DBAdapter {
   }
 
   async updatePosition({ id, position }: UpdatePositionParams) {
-    const group = await this.findById({ id });
-
-    group.position = position;
-
-    this.db.write();
+    this.db.get('groups').find({ id }).assign({ position }).write();
   }
 
   async deleteMany({ ids }: { ids: UUID[] }) {
