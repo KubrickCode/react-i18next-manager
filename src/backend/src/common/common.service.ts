@@ -19,45 +19,10 @@ export class CommonService extends DBAdapter {
   async generateI18nResources() {
     const { locales, groups, translations } = this.db.value();
 
-    await this.generateI18nJson({ locales, groups, translations });
+    const i18nData = this.buildI18nData({ locales, groups, translations });
+    this.writeI18nJson(i18nData);
+
     this.generateTypedI18nKeys({ groups, translations });
-  }
-
-  private async generateI18nJson({
-    locales,
-    groups,
-    translations,
-  }: {
-    locales: LocaleSchema[];
-    groups: GroupSchema[];
-    translations: TranslationSchema[];
-  }) {
-    const i18nData = {};
-
-    locales.forEach((locale) => {
-      i18nData[locale.label] = { translation: {} };
-    });
-
-    const groupPathMap = this.buildGroupPathMap(groups);
-
-    translations.forEach((translation) => {
-      const translationKey =
-        groupPathMap[translation.groupId] + '.' + translation.key;
-      translation.values.forEach((value) => {
-        const localeLabel = locales.find(
-          (locale) => locale.id === value.localeId,
-        )?.label;
-        if (localeLabel && i18nData[localeLabel]) {
-          i18nData[localeLabel].translation[translationKey] = value.value;
-        }
-      });
-    });
-
-    const targetPath = this.dbService.getTargetPath();
-    const i18nFilePath = join(targetPath, 'i18n.json');
-    fs.writeFileSync(i18nFilePath, JSON.stringify(i18nData, null, 2));
-
-    return { groups, translations };
   }
 
   private generateTypedI18nKeys({
@@ -104,6 +69,26 @@ export class CommonService extends DBAdapter {
     fs.writeFileSync(outputPath, typeSafeI18nKeys, 'utf-8');
   }
 
+  private buildI18nData({
+    locales,
+    groups,
+    translations,
+  }: {
+    locales: LocaleSchema[];
+    groups: GroupSchema[];
+    translations: TranslationSchema[];
+  }): any {
+    const initializedLocales = this.initializeLocales(locales);
+    const groupPathMap = this.buildGroupPathMap(groups);
+    const populatedTranslations = this.populateTranslations(
+      initializedLocales,
+      translations,
+      locales,
+      groupPathMap,
+    );
+    return populatedTranslations;
+  }
+
   private buildGroupPathMap(groups: GroupSchema[]): { [key: string]: string } {
     const groupPathMap: { [key: string]: string } = {};
 
@@ -119,5 +104,48 @@ export class CommonService extends DBAdapter {
       .forEach((group) => buildPath(group.id, group.label));
 
     return groupPathMap;
+  }
+
+  private initializeLocales(locales: LocaleSchema[]): any {
+    return locales.reduce((acc, locale) => {
+      acc[locale.label] = { translation: {} };
+      return acc;
+    }, {});
+  }
+
+  private populateTranslations(
+    i18nData: any,
+    translations: TranslationSchema[],
+    locales: LocaleSchema[],
+    groupPathMap: { [key: string]: string },
+  ): any {
+    const newI18nData = { ...i18nData };
+
+    translations.forEach((translation) => {
+      const translationKey =
+        groupPathMap[translation.groupId] + '.' + translation.key;
+      translation.values.forEach((value) => {
+        const localeLabel = locales.find(
+          (locale) => locale.id === value.localeId,
+        )?.label;
+        if (localeLabel && newI18nData[localeLabel]) {
+          newI18nData[localeLabel] = {
+            ...newI18nData[localeLabel],
+            translation: {
+              ...newI18nData[localeLabel].translation,
+              [translationKey]: value.value,
+            },
+          };
+        }
+      });
+    });
+
+    return newI18nData;
+  }
+
+  private writeI18nJson(i18nData: any) {
+    const targetPath = this.dbService.getTargetPath();
+    const i18nFilePath = join(targetPath, 'i18n.json');
+    fs.writeFileSync(i18nFilePath, JSON.stringify(i18nData, null, 2));
   }
 }
