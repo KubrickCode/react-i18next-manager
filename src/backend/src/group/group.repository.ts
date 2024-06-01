@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
-import { DBService, DB, GroupSchema } from 'src/db/db.service';
+import { DBAdapter } from 'src/db/db.adapter';
+import { DBService, GroupSchema } from 'src/db/db.service';
 
 type CreateParams = {
   label: string;
@@ -19,15 +20,9 @@ type UpdatePositionParams = {
 };
 
 @Injectable()
-export class GroupRepository {
-  private db: DB;
-
-  constructor(private readonly dbService: DBService) {
-    this.initializeDb();
-  }
-
-  private async initializeDb() {
-    this.db = await this.dbService.get();
+export class GroupRepository extends DBAdapter {
+  constructor(protected readonly dbService: DBService) {
+    super(dbService);
   }
 
   async findById({ id }: { id: UUID }) {

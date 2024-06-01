@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
-import { DBService, DB } from 'src/db/db.service';
+import { DBAdapter } from 'src/db/db.adapter';
+import { DBService } from 'src/db/db.service';
 
 type CreateParams = {
   label: string;
@@ -21,15 +22,9 @@ type UpdatePositionParams = {
 };
 
 @Injectable()
-export class LocaleRepository {
-  private db: DB;
-
-  constructor(private readonly dbService: DBService) {
-    this.initializeDb();
-  }
-
-  private async initializeDb() {
-    this.db = await this.dbService.get();
+export class LocaleRepository extends DBAdapter {
+  constructor(protected readonly dbService: DBService) {
+    super(dbService);
   }
 
   async findMany() {

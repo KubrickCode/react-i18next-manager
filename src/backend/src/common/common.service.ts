@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { join } from 'path';
 import {
-  DB,
   DBService,
   GroupSchema,
   LocaleSchema,
@@ -9,17 +8,12 @@ import {
 } from 'src/db/db.service';
 import * as fs from 'fs';
 import { UUID } from './types';
+import { DBAdapter } from 'src/db/db.adapter';
 
 @Injectable()
-export class CommonService {
-  private db: DB;
-
-  constructor(private readonly dbService: DBService) {
-    this.initializeDb();
-  }
-
-  private async initializeDb() {
-    this.db = await this.dbService.get();
+export class CommonService extends DBAdapter {
+  constructor(protected readonly dbService: DBService) {
+    super(dbService);
   }
 
   async generateI18nResources() {
