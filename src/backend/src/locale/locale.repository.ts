@@ -59,16 +59,16 @@ export class LocaleRepository extends DBAdapter {
 
   async delete({ id }: { id: UUID }) {
     this.db.get('locales').remove({ id }).write();
-
-    const translations = this.db.get('translations').value();
-    translations.forEach((translation) => {
-      const valueIndex = translation.values.findIndex(
-        (value) => value.localeId === id,
-      );
-      if (valueIndex !== -1) {
-        translation.values.splice(valueIndex, 1);
-      }
-    });
-    this.db.write();
+    this.db
+      .get('translations')
+      .each((translation) => {
+        const valueIndex = translation.values.findIndex(
+          (value) => value.localeId === id,
+        );
+        if (valueIndex !== -1) {
+          translation.values.splice(valueIndex, 1);
+        }
+      })
+      .write();
   }
 }
