@@ -21,6 +21,28 @@ export class DBService implements OnModuleInit {
     await this.initialize();
   }
 
+  async get(): Promise<DB> {
+    if (!this.db) await this.initialize();
+    return this.db;
+  }
+
+  getTargetPath(): string {
+    if (process.env.NODE_ENV === 'development') return 'src/db/sample';
+
+    const configFilePath = join(process.cwd(), 'i18n-config.json');
+    if (!fs.existsSync(configFilePath)) {
+      throw new Error('i18n-config.json file not found in the root directory.');
+    }
+
+    const configFile = fs.readFileSync(configFilePath, 'utf8');
+
+    const { targetPath } = JSON.parse(configFile);
+    if (!targetPath) {
+      throw new Error('targetPath is required in i18n-config.json file.');
+    }
+    return targetPath;
+  }
+
   private async initialize() {
     const targetPath = this.getTargetPath();
     const file = join(targetPath, 'db.json');
@@ -43,27 +65,5 @@ export class DBService implements OnModuleInit {
     this.db = await lowdb(adapter);
 
     await this.db.defaults({ locales: [] }).write();
-  }
-
-  getTargetPath(): string {
-    if (process.env.NODE_ENV === 'development') return 'src/db/sample';
-
-    const configFilePath = join(process.cwd(), 'i18n-config.json');
-    if (!fs.existsSync(configFilePath)) {
-      throw new Error('i18n-config.json file not found in the root directory.');
-    }
-
-    const configFile = fs.readFileSync(configFilePath, 'utf8');
-
-    const { targetPath } = JSON.parse(configFile);
-    if (!targetPath) {
-      throw new Error('targetPath is required in i18n-config.json file.');
-    }
-    return targetPath;
-  }
-
-  async get(): Promise<DB> {
-    if (!this.db) await this.initialize();
-    return this.db;
   }
 }
