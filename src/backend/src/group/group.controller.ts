@@ -40,18 +40,6 @@ export class GroupController {
     return await this.groupService.add(body);
   }
 
-  @Patch('position/:id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async editPosition(
-    @Param() param: EditGroupPositionReqParamDto,
-    @Body() body: EditGroupPositionReqBodyDto,
-  ) {
-    return await this.groupService.editPosition({
-      ...param,
-      ...body,
-    });
-  }
-
   @Patch('label/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async editLabel(
@@ -59,6 +47,18 @@ export class GroupController {
     @Body() body: EditGroupLabelReqBodyDto,
   ) {
     return await this.groupService.editLabel({
+      ...param,
+      ...body,
+    });
+  }
+
+  @Patch('position/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async editPosition(
+    @Param() param: EditGroupPositionReqParamDto,
+    @Body() body: EditGroupPositionReqBodyDto,
+  ) {
+    return await this.groupService.editPosition({
       ...param,
       ...body,
     });
