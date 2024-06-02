@@ -117,4 +117,14 @@ describe('GroupService Integration', () => {
     const updatedGroup = groups.find((g) => g.id === group.id);
     expect(updatedGroup.label).toBe(newLabel);
   });
+
+  it('group label 변경 성공(1단 부모 그룹)', async () => {
+    const group = initialGroups[2];
+    const newLabel = 'test1-1-new';
+    await service.editLabel({ id: group.id, newLabel });
+
+    const groups = db.get('groups').value();
+    const updatedGroup = groups.find((g) => g.id === group.id);
+    expect(updatedGroup.label).toBe(newLabel);
+  });
 });
