@@ -5,6 +5,7 @@ import { DBService } from 'src/db/db.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ConflictException } from '@nestjs/common';
+import { UUID } from 'src/common/types';
 
 describe('LocaleService Integration', () => {
   let service: LocaleService;
@@ -85,6 +86,33 @@ describe('LocaleService Integration', () => {
     const existingLocale = { label: 'en', position: 2 };
 
     await expect(service.add(existingLocale)).rejects.toThrow(
+      ConflictException,
+    );
+  });
+
+  it('locale의 label을 정상적으로 업데이트', async () => {
+    const updatedLocale = {
+      id: '9094373b-d01c-4359-bf18-3cc66a04505b' as UUID,
+      newLabel: 'fr',
+    };
+
+    await service.editLabel(updatedLocale);
+
+    const db = await dbService.get();
+    const locales = db.get('locales').value();
+
+    expect(locales).toContainEqual(
+      expect.objectContaining({ id: updatedLocale.id, label: 'fr' }),
+    );
+  });
+
+  it('이미 존재하는 locale label로 업데이트 시 ConflictException 발생', async () => {
+    const updatedLocale = {
+      id: '9094373b-d01c-4359-bf18-3cc66a04505b' as UUID,
+      newLabel: 'ko',
+    };
+
+    await expect(service.editLabel(updatedLocale)).rejects.toThrow(
       ConflictException,
     );
   });
