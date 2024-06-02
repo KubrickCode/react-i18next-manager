@@ -3,6 +3,7 @@ import { DB, DBService, GroupSchema } from 'src/db/db.service';
 import { generateUUID } from 'src/common/utils';
 import { GroupService } from './group.service';
 import { groupModuleConfig } from './group.module.config';
+import { ConflictException } from '@nestjs/common';
 
 describe('GroupService Integration', () => {
   let module: TestingModule;
@@ -87,5 +88,14 @@ describe('GroupService Integration', () => {
       .filter({ parentId: initialGroups[0].id })
       .value();
     expect(groups).toContainEqual(expect.objectContaining(newGroup));
+  });
+
+  it('group 추가 실패(최상위 그룹) - label 충돌', async () => {
+    const newGroup = {
+      label: 'test1',
+      parentId: null,
+    };
+
+    expect(service.add(newGroup)).rejects.toThrow(ConflictException);
   });
 });
