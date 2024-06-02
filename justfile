@@ -57,8 +57,8 @@ run svc *args:
       
   esac
 
-test:
-  cd "{{ backend_dir }}" && yarn test
+test *args:
+  cd "{{ backend_dir }}" && yarn test {{args}}
 
 test-cov:
   cd "{{ backend_dir }}" && yarn test:cov
