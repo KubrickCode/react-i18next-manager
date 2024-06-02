@@ -107,4 +107,42 @@ describe('GroupService Integration', () => {
 
     expect(service.add(newGroup)).rejects.toThrow(ConflictException);
   });
+
+  it('group label 변경 성공(최상위 그룹)', async () => {
+    const group = initialGroups[0];
+    const newLabel = 'test1-new';
+    await service.editLabel({ id: group.id, newLabel });
+
+    const groups = db.get('groups').value();
+    const updatedGroup = groups.find((g) => g.id === group.id);
+    expect(updatedGroup.label).toBe(newLabel);
+  });
+
+  it('group label 변경 성공(1단 부모 그룹)', async () => {
+    const group = initialGroups[2];
+    const newLabel = 'test1-1-new';
+    await service.editLabel({ id: group.id, newLabel });
+
+    const groups = db.get('groups').value();
+    const updatedGroup = groups.find((g) => g.id === group.id);
+    expect(updatedGroup.label).toBe(newLabel);
+  });
+
+  it('group label 변경 실패(최상위 그룹) - label 충돌', async () => {
+    const group = initialGroups[0];
+    const newLabel = initialGroups[1].label;
+
+    expect(service.editLabel({ id: group.id, newLabel })).rejects.toThrow(
+      ConflictException,
+    );
+  });
+
+  it('group label 변경 실패(1단 부모 그룹) - label 충돌', async () => {
+    const group = initialGroups[2];
+    const newLabel = initialGroups[3].label;
+
+    expect(service.editLabel({ id: group.id, newLabel })).rejects.toThrow(
+      ConflictException,
+    );
+  });
 });
