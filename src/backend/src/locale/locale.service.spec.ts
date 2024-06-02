@@ -4,7 +4,7 @@ import { LocaleRepository } from './locale.repository';
 import { DB, DBService, LocaleSchema } from 'src/db/db.service';
 import { ConflictException } from '@nestjs/common';
 import { generateUUID } from 'src/common/utils';
-import { LocaleFactory } from 'src/test/factories/locale.factory';
+import { LocaleFactory } from 'src/test/locale.factory';
 
 describe('LocaleService Integration', () => {
   let module: TestingModule;
