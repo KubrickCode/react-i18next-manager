@@ -7,6 +7,7 @@ import { generateUUID } from 'src/common/utils';
 import { LocaleFactory } from 'src/test/factories/locale.factory';
 
 describe('LocaleService Integration', () => {
+  let module: TestingModule;
   let service: LocaleService;
   let dbService: DBService;
   let db: DB;
@@ -25,7 +26,7 @@ describe('LocaleService Integration', () => {
   ];
 
   beforeAll(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       providers: [LocaleService, LocaleRepository, DBService],
     }).compile();
 
@@ -42,6 +43,10 @@ describe('LocaleService Integration', () => {
       groups: [],
       translations: [],
     }).write();
+  });
+
+  afterAll(async () => {
+    await module.close();
   });
 
   it('모든 locales 반환 성공', async () => {
