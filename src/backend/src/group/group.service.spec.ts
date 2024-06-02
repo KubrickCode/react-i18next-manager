@@ -107,4 +107,14 @@ describe('GroupService Integration', () => {
 
     expect(service.add(newGroup)).rejects.toThrow(ConflictException);
   });
+
+  it('group label 변경 성공(최상위 그룹)', async () => {
+    const group = initialGroups[0];
+    const newLabel = 'test1-new';
+    await service.editLabel({ id: group.id, newLabel });
+
+    const groups = db.get('groups').value();
+    const updatedGroup = groups.find((g) => g.id === group.id);
+    expect(updatedGroup.label).toBe(newLabel);
+  });
 });
