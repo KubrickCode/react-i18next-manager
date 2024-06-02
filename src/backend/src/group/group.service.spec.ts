@@ -183,4 +183,52 @@ describe('GroupService Integration', () => {
       expect.objectContaining({ id: groupB.id, position: 2 }),
     ]);
   });
+
+  it('group 이동 성공(1단 부모 그룹)', async () => {
+    const groupAId = generateUUID();
+    const groupA = {
+      id: groupAId,
+      label: 'groupA',
+      parentId: null,
+      position: 0,
+    };
+    const groupA_A = {
+      id: generateUUID(),
+      label: 'groupA_A',
+      parentId: groupAId,
+      position: 0,
+    };
+    const groupA_B = {
+      id: generateUUID(),
+      label: 'groupA_B',
+      parentId: groupAId,
+      position: 1,
+    };
+    const groupA_C = {
+      id: generateUUID(),
+      label: 'groupA_C',
+      parentId: groupAId,
+      position: 2,
+    };
+
+    db.setState({
+      locales: [],
+      groups: [groupA, groupA_A, groupA_B, groupA_C],
+      translations: [],
+    }).write();
+
+    await service.editPosition({ id: groupA_C.id, position: 0 });
+
+    const groups = db
+      .get('groups')
+      .filter({ parentId: groupAId })
+      .sortBy('position')
+      .value();
+
+    expect(groups).toEqual([
+      expect.objectContaining({ id: groupA_C.id, position: 0 }),
+      expect.objectContaining({ id: groupA_A.id, position: 1 }),
+      expect.objectContaining({ id: groupA_B.id, position: 2 }),
+    ]);
+  });
 });
