@@ -231,4 +231,16 @@ describe('GroupService Integration', () => {
       expect.objectContaining({ id: groupA_B.id, position: 2 }),
     ]);
   });
+
+  it('group 삭제 성공(최상위 그룹)', async () => {
+    const group = initialGroups[0];
+    await service.delete({ id: group.id });
+
+    const groups = db.get('groups').value();
+    expect(groups).not.toContainEqual(expect.objectContaining(group));
+
+    // 자식 그룹들도 모두 삭제되었는지 확인
+    const childGroups = groups.filter((g) => g.parentId === group.id);
+    expect(childGroups).toHaveLength(0);
+  });
 });
