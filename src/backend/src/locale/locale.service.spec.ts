@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LocaleService } from './locale.service';
-import { LocaleRepository } from './locale.repository';
 import { DB, DBService, LocaleSchema } from 'src/db/db.service';
 import { ConflictException } from '@nestjs/common';
 import { generateUUID } from 'src/common/utils';
 import { LocaleFactory } from 'src/test/locale.factory';
+import { localeModuleConfig } from './locale.module.config';
 
 describe('LocaleService Integration', () => {
   let module: TestingModule;
@@ -26,9 +26,7 @@ describe('LocaleService Integration', () => {
   ];
 
   beforeAll(async () => {
-    module = await Test.createTestingModule({
-      providers: [LocaleService, LocaleRepository, DBService],
-    }).compile();
+    module = await Test.createTestingModule(localeModuleConfig).compile();
 
     service = module.get<LocaleService>(LocaleService);
     dbService = module.get<DBService>(DBService);
