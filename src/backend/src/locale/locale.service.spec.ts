@@ -4,6 +4,7 @@ import { LocaleRepository } from './locale.repository';
 import { DBService } from 'src/db/db.service';
 import * as fs from 'fs';
 import * as path from 'path';
+import { ConflictException } from '@nestjs/common';
 
 describe('LocaleService Integration', () => {
   let service: LocaleService;
@@ -78,5 +79,13 @@ describe('LocaleService Integration', () => {
     const locales = db.get('locales').value();
 
     expect(locales).toContainEqual(expect.objectContaining(newLocale));
+  });
+
+  it('이미 존재하는 locale label 추가 시 ConflictException 발생', async () => {
+    const existingLocale = { label: 'en', position: 2 };
+
+    await expect(service.add(existingLocale)).rejects.toThrow(
+      ConflictException,
+    );
   });
 });
