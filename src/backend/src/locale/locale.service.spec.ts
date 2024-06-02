@@ -116,4 +116,21 @@ describe('LocaleService Integration', () => {
       ConflictException,
     );
   });
+
+  it('여러 locales의 위치를 정상적으로 업데이트', async () => {
+    const updateLocales = [
+      { id: '9094373b-d01c-4359-bf18-3cc66a04505b' as UUID, position: 1 }, // 'en'을 1번 위치로
+      { id: 'c50010a4-7c43-432d-89d2-2cac5e44eee2' as UUID, position: 0 }, // 'ko'를 0번 위치로
+    ];
+
+    await service.editPosition({ locales: updateLocales });
+
+    const db = await dbService.get();
+    const locales = db.get('locales').sortBy('position').value();
+
+    expect(locales).toEqual([
+      { id: 'c50010a4-7c43-432d-89d2-2cac5e44eee2', label: 'ko', position: 0 },
+      { id: '9094373b-d01c-4359-bf18-3cc66a04505b', label: 'en', position: 1 },
+    ]);
+  });
 });
