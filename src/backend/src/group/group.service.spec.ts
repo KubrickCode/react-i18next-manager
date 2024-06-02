@@ -63,4 +63,15 @@ describe('GroupService Integration', () => {
 
     expect(result.groups).toEqual(initialGroups);
   });
+
+  it('group 추가 성공(최상위 그룹)', async () => {
+    const newGroup = {
+      label: 'test3',
+      parentId: null,
+    };
+    await service.add(newGroup);
+
+    const groups = db.getState().groups;
+    expect(groups).toContainEqual(expect.objectContaining(newGroup));
+  });
 });
