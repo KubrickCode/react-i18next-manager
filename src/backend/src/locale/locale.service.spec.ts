@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LocaleService } from './locale.service';
 import { LocaleRepository } from './locale.repository';
-import { DBService } from 'src/db/db.service';
+import { DB, DBService } from 'src/db/db.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ConflictException } from '@nestjs/common';
@@ -10,6 +10,7 @@ import { convertUUID } from 'src/common/utils';
 describe('LocaleService Integration', () => {
   let service: LocaleService;
   let dbService: DBService;
+  let db: DB;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -19,7 +20,7 @@ describe('LocaleService Integration', () => {
     service = module.get<LocaleService>(LocaleService);
     dbService = module.get<DBService>(DBService);
 
-    const db = await dbService.get();
+    db = await dbService.get();
     const testData = JSON.parse(
       fs.readFileSync(
         path.resolve(__dirname, '../../test/test-db.json'),
@@ -38,7 +39,6 @@ describe('LocaleService Integration', () => {
   });
 
   it('순서가 바뀐 locales를 올바르게 정렬하여 반환', async () => {
-    const db = await dbService.get();
     const testData = JSON.parse(
       fs.readFileSync(
         path.resolve(__dirname, '../../test/test-db.json'),
@@ -76,7 +76,6 @@ describe('LocaleService Integration', () => {
 
     await service.add(newLocale);
 
-    const db = await dbService.get();
     const locales = db.get('locales').value();
 
     expect(locales).toContainEqual(expect.objectContaining(newLocale));
@@ -98,7 +97,6 @@ describe('LocaleService Integration', () => {
 
     await service.editLabel(updatedLocale);
 
-    const db = await dbService.get();
     const locales = db.get('locales').value();
 
     expect(locales).toContainEqual(
@@ -125,7 +123,6 @@ describe('LocaleService Integration', () => {
 
     await service.editPosition({ locales: updateLocales });
 
-    const db = await dbService.get();
     const locales = db.get('locales').sortBy('position').value();
 
     expect(locales).toEqual([
@@ -139,7 +136,6 @@ describe('LocaleService Integration', () => {
 
     await service.delete({ id: localeId });
 
-    const db = await dbService.get();
     const locales = db.get('locales').value();
 
     expect(locales).not.toContainEqual(
