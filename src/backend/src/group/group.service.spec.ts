@@ -145,4 +145,42 @@ describe('GroupService Integration', () => {
       ConflictException,
     );
   });
+
+  it('group 이동 성공(최상위 그룹)', async () => {
+    const groupA = {
+      id: generateUUID(),
+      label: 'groupA',
+      parentId: null,
+      position: 0,
+    };
+    const groupB = {
+      id: generateUUID(),
+      label: 'groupB',
+      parentId: null,
+      position: 1,
+    };
+    const groupC = {
+      id: generateUUID(),
+      label: 'groupC',
+      parentId: null,
+      position: 2,
+    };
+
+    db.setState({
+      locales: [],
+      groups: [groupA, groupB, groupC],
+      translations: [],
+    }).write();
+
+    // groupC를 0번 위치로 이동
+    await service.editPosition({ id: groupC.id, position: 0 });
+
+    const groups = db.get('groups').sortBy('position').value();
+
+    expect(groups).toEqual([
+      expect.objectContaining({ id: groupC.id, position: 0 }),
+      expect.objectContaining({ id: groupA.id, position: 1 }),
+      expect.objectContaining({ id: groupB.id, position: 2 }),
+    ]);
+  });
 });
