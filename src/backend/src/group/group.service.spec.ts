@@ -3,6 +3,7 @@ import { DB, DBService, GroupSchema } from 'src/db/db.service';
 import { generateUUID } from 'src/common/utils';
 import { GroupService } from './group.service';
 import { groupModuleConfig } from './group.module.config';
+import { ConflictException } from '@nestjs/common';
 
 describe('GroupService Integration', () => {
   let module: TestingModule;
@@ -62,5 +63,48 @@ describe('GroupService Integration', () => {
     const result = await service.getAll();
 
     expect(result.groups).toEqual(initialGroups);
+  });
+
+  it('group 추가 성공(최상위 그룹)', async () => {
+    const newGroup = {
+      label: 'test3',
+      parentId: null,
+    };
+    await service.add(newGroup);
+
+    const groups = db.getState().groups;
+    expect(groups).toContainEqual(expect.objectContaining(newGroup));
+  });
+
+  it('group 추가 성공(1단 부모 그룹)', async () => {
+    const newGroup = {
+      label: 'test1-3',
+      parentId: initialGroups[0].id,
+    };
+    await service.add(newGroup);
+
+    const groups = db
+      .get('groups')
+      .filter({ parentId: initialGroups[0].id })
+      .value();
+    expect(groups).toContainEqual(expect.objectContaining(newGroup));
+  });
+
+  it('group 추가 실패(최상위 그룹) - label 충돌', async () => {
+    const newGroup = {
+      label: 'test1',
+      parentId: null,
+    };
+
+    expect(service.add(newGroup)).rejects.toThrow(ConflictException);
+  });
+
+  it('group 추가 실패(1단 부모 그룹) - label 충돌', async () => {
+    const newGroup = {
+      label: initialGroups[2].label,
+      parentId: initialGroups[0].id,
+    };
+
+    expect(service.add(newGroup)).rejects.toThrow(ConflictException);
   });
 });
