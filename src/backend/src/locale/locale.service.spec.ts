@@ -133,4 +133,17 @@ describe('LocaleService Integration', () => {
       { id: '9094373b-d01c-4359-bf18-3cc66a04505b', label: 'en', position: 1 },
     ]);
   });
+
+  it('존재하는 locale 삭제 성공', async () => {
+    const localeId = '9094373b-d01c-4359-bf18-3cc66a04505b';
+
+    await service.delete({ id: localeId });
+
+    const db = await dbService.get();
+    const locales = db.get('locales').value();
+
+    expect(locales).not.toContainEqual(
+      expect.objectContaining({ id: localeId }),
+    );
+  });
 });
