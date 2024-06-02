@@ -37,12 +37,6 @@ export class LocaleController {
     return await this.localeService.add(body);
   }
 
-  @Patch('position')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async editPosition(@Body() body: EditLocalesPositionReqBodyDto) {
-    return await this.localeService.editPosition(body);
-  }
-
   @Patch('label/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async editLabel(
@@ -53,6 +47,12 @@ export class LocaleController {
       ...param,
       ...body,
     });
+  }
+
+  @Patch('position')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async editPosition(@Body() body: EditLocalesPositionReqBodyDto) {
+    return await this.localeService.editPosition(body);
   }
 
   @Delete(':id')

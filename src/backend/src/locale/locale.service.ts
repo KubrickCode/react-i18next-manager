@@ -45,13 +45,6 @@ export class LocaleService {
     return await this.localeRepository.create({ label, position });
   }
 
-  async editPosition({ locales }: EditPositionParams) {
-    const promises = locales.map((locale) =>
-      this.localeRepository.updatePosition(locale),
-    );
-    await Promise.all(promises);
-  }
-
   async editLabel({ id, newLabel }: EditLabelParams) {
     const label = await this.localeRepository.findByLabel({
       label: newLabel,
@@ -63,6 +56,13 @@ export class LocaleService {
     }
 
     return await this.localeRepository.updateLabel({ id, newLabel });
+  }
+
+  async editPosition({ locales }: EditPositionParams) {
+    const promises = locales.map((locale) =>
+      this.localeRepository.updatePosition(locale),
+    );
+    await Promise.all(promises);
   }
 
   async delete({ id }: { id: UUID }) {
