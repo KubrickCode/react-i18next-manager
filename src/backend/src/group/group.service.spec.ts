@@ -136,4 +136,13 @@ describe('GroupService Integration', () => {
       ConflictException,
     );
   });
+
+  it('group label 변경 실패(1단 부모 그룹) - label 충돌', async () => {
+    const group = initialGroups[2];
+    const newLabel = initialGroups[3].label;
+
+    expect(service.editLabel({ id: group.id, newLabel })).rejects.toThrow(
+      ConflictException,
+    );
+  });
 });
