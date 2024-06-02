@@ -2,8 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { DB, DBService, GroupSchema } from 'src/db/db.service';
 import { generateUUID } from 'src/common/utils';
 import { GroupService } from './group.service';
-import { GroupRepository } from './group.repository';
-import { TranslationRepository } from 'src/translation/translation.repository';
+import { groupModuleConfig } from './group.module.config';
 
 describe('GroupService Integration', () => {
   let module: TestingModule;
@@ -39,14 +38,7 @@ describe('GroupService Integration', () => {
   ];
 
   beforeAll(async () => {
-    module = await Test.createTestingModule({
-      providers: [
-        GroupService,
-        GroupRepository,
-        DBService,
-        TranslationRepository,
-      ],
-    }).compile();
+    module = await Test.createTestingModule(groupModuleConfig).compile();
 
     service = module.get<GroupService>(GroupService);
     dbService = module.get<DBService>(DBService);
