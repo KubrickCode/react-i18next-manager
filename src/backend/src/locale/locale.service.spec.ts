@@ -68,4 +68,15 @@ describe('LocaleService Integration', () => {
       { id: 'c50010a4-7c43-432d-89d2-2cac5e44eee2', label: 'ko', position: 1 },
     ]);
   });
+
+  it('새로운 locale을 정상적으로 추가', async () => {
+    const newLocale = { label: 'fr', position: 2 };
+
+    await service.add(newLocale);
+
+    const db = await dbService.get();
+    const locales = db.get('locales').value();
+
+    expect(locales).toContainEqual(expect.objectContaining(newLocale));
+  });
 });
