@@ -98,4 +98,13 @@ describe('GroupService Integration', () => {
 
     expect(service.add(newGroup)).rejects.toThrow(ConflictException);
   });
+
+  it('group 추가 실패(1단 부모 그룹) - label 충돌', async () => {
+    const newGroup = {
+      label: initialGroups[2].label,
+      parentId: initialGroups[0].id,
+    };
+
+    expect(service.add(newGroup)).rejects.toThrow(ConflictException);
+  });
 });
