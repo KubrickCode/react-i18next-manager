@@ -105,4 +105,15 @@ describe('LocaleService Integration', () => {
       expect.objectContaining({ id: updatedLocale.id, label: 'fr' }),
     );
   });
+
+  it('이미 존재하는 locale label로 업데이트 시 ConflictException 발생', async () => {
+    const updatedLocale = {
+      id: '9094373b-d01c-4359-bf18-3cc66a04505b' as UUID,
+      newLabel: 'ko',
+    };
+
+    await expect(service.editLabel(updatedLocale)).rejects.toThrow(
+      ConflictException,
+    );
+  });
 });
