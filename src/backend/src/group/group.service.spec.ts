@@ -74,4 +74,18 @@ describe('GroupService Integration', () => {
     const groups = db.getState().groups;
     expect(groups).toContainEqual(expect.objectContaining(newGroup));
   });
+
+  it('group 추가 성공(1단 부모 그룹)', async () => {
+    const newGroup = {
+      label: 'test1-3',
+      parentId: initialGroups[0].id,
+    };
+    await service.add(newGroup);
+
+    const groups = db
+      .get('groups')
+      .filter({ parentId: initialGroups[0].id })
+      .value();
+    expect(groups).toContainEqual(expect.objectContaining(newGroup));
+  });
 });
