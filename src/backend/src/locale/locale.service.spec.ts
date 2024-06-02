@@ -5,7 +5,7 @@ import { DBService } from 'src/db/db.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ConflictException } from '@nestjs/common';
-import { UUID } from 'src/common/types';
+import { convertUUID } from 'src/common/utils';
 
 describe('LocaleService Integration', () => {
   let service: LocaleService;
@@ -92,7 +92,7 @@ describe('LocaleService Integration', () => {
 
   it('locale의 label을 정상적으로 업데이트', async () => {
     const updatedLocale = {
-      id: '9094373b-d01c-4359-bf18-3cc66a04505b' as UUID,
+      id: convertUUID('9094373b-d01c-4359-bf18-3cc66a04505b'),
       newLabel: 'fr',
     };
 
@@ -108,7 +108,7 @@ describe('LocaleService Integration', () => {
 
   it('이미 존재하는 locale label로 업데이트 시 ConflictException 발생', async () => {
     const updatedLocale = {
-      id: '9094373b-d01c-4359-bf18-3cc66a04505b' as UUID,
+      id: convertUUID('9094373b-d01c-4359-bf18-3cc66a04505b'),
       newLabel: 'ko',
     };
 
@@ -119,8 +119,8 @@ describe('LocaleService Integration', () => {
 
   it('여러 locales의 위치를 정상적으로 업데이트', async () => {
     const updateLocales = [
-      { id: '9094373b-d01c-4359-bf18-3cc66a04505b' as UUID, position: 1 }, // 'en'을 1번 위치로
-      { id: 'c50010a4-7c43-432d-89d2-2cac5e44eee2' as UUID, position: 0 }, // 'ko'를 0번 위치로
+      { id: convertUUID('9094373b-d01c-4359-bf18-3cc66a04505b'), position: 1 }, // 'en'을 1번 위치로
+      { id: convertUUID('c50010a4-7c43-432d-89d2-2cac5e44eee2'), position: 0 }, // 'ko'를 0번 위치로
     ];
 
     await service.editPosition({ locales: updateLocales });
