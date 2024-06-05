@@ -1,5 +1,6 @@
+import { faker } from '@faker-js/faker';
 import { generateUUID } from 'src/common/utils';
-import { GroupSchema, LocaleSchema } from 'src/db/db.schema';
+import { GroupSchema, LocaleSchema, TranslationSchema } from 'src/db/db.schema';
 
 export const initialLocales: LocaleSchema[] = [
   {
@@ -40,5 +41,128 @@ export const initialGroups: GroupSchema[] = [
     parentId: initialParentId,
     label: 'test1-2',
     position: 1,
+  },
+];
+
+export const initialTranslations: TranslationSchema[] = [
+  {
+    id: generateUUID(),
+    groupId: initialGroups[0].id,
+    key: faker.word.noun(),
+    values: [
+      {
+        localeId: initialLocales[0].id,
+        value: faker.word.words(),
+      },
+      {
+        localeId: initialLocales[1].id,
+        value: faker.word.words(),
+      },
+    ],
+  },
+  {
+    id: generateUUID(),
+    groupId: initialGroups[0].id,
+    key: faker.word.noun(),
+    values: [
+      {
+        localeId: initialLocales[0].id,
+        value: faker.word.words(),
+      },
+      {
+        localeId: initialLocales[1].id,
+        value: faker.word.words(),
+      },
+    ],
+  },
+  {
+    id: generateUUID(),
+    groupId: initialGroups[1].id,
+    key: faker.word.noun(),
+    values: [
+      {
+        localeId: initialLocales[0].id,
+        value: faker.word.words(),
+      },
+      {
+        localeId: initialLocales[1].id,
+        value: faker.word.words(),
+      },
+    ],
+  },
+  {
+    id: generateUUID(),
+    groupId: initialGroups[1].id,
+    key: faker.word.noun(),
+    values: [
+      {
+        localeId: initialLocales[0].id,
+        value: faker.word.words(),
+      },
+      {
+        localeId: initialLocales[1].id,
+        value: faker.word.words(),
+      },
+    ],
+  },
+  {
+    id: generateUUID(),
+    groupId: initialGroups[2].id,
+    key: faker.word.noun(),
+    values: [
+      {
+        localeId: initialLocales[0].id,
+        value: faker.word.words(),
+      },
+      {
+        localeId: initialLocales[1].id,
+        value: faker.word.words(),
+      },
+    ],
+  },
+  {
+    id: generateUUID(),
+    groupId: initialGroups[2].id,
+    key: faker.word.noun(),
+    values: [
+      {
+        localeId: initialLocales[0].id,
+        value: faker.word.words(),
+      },
+      {
+        localeId: initialLocales[1].id,
+        value: faker.word.words(),
+      },
+    ],
+  },
+  {
+    id: generateUUID(),
+    groupId: initialGroups[3].id,
+    key: faker.word.noun(),
+    values: [
+      {
+        localeId: initialLocales[0].id,
+        value: faker.word.words(),
+      },
+      {
+        localeId: initialLocales[1].id,
+        value: faker.word.words(),
+      },
+    ],
+  },
+  {
+    id: generateUUID(),
+    groupId: initialGroups[3].id,
+    key: faker.word.noun(),
+    values: [
+      {
+        localeId: initialLocales[0].id,
+        value: faker.word.words(),
+      },
+      {
+        localeId: initialLocales[1].id,
+        value: faker.word.words(),
+      },
+    ],
   },
 ];
