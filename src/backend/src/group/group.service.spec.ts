@@ -4,7 +4,11 @@ import { generateUUID } from 'src/common/utils';
 import { GroupService } from './group.service';
 import { groupModuleConfig } from './group.module.config';
 import { ConflictException } from '@nestjs/common';
-import { initialGroups } from 'src/test/seed.data';
+import {
+  initialGroups,
+  initialLocales,
+  initialTranslations,
+} from 'src/test/seed.data';
 
 describe('GroupService Integration', () => {
   let module: TestingModule;
@@ -23,9 +27,9 @@ describe('GroupService Integration', () => {
 
   beforeEach(async () => {
     db.setState({
-      locales: [],
+      locales: [...initialLocales],
       groups: [...initialGroups],
-      translations: [],
+      translations: [...initialTranslations],
     }).write();
   });
 

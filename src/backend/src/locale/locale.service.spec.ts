@@ -4,7 +4,11 @@ import { DB, DBService } from 'src/db/db.service';
 import { ConflictException } from '@nestjs/common';
 import { LocaleFactory } from 'src/test/locale.factory';
 import { localeModuleConfig } from './locale.module.config';
-import { initialLocales } from 'src/test/seed.data';
+import {
+  initialGroups,
+  initialLocales,
+  initialTranslations,
+} from 'src/test/seed.data';
 
 describe('LocaleService Integration', () => {
   let module: TestingModule;
@@ -26,8 +30,8 @@ describe('LocaleService Integration', () => {
   beforeEach(async () => {
     db.setState({
       locales: [...initialLocales],
-      groups: [],
-      translations: [],
+      groups: [...initialGroups],
+      translations: [...initialTranslations],
     }).write();
   });
 
