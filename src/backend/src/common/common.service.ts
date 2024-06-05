@@ -158,7 +158,7 @@ export class CommonService extends DBAdapter {
       return result;
     };
 
-    return `export const i18n = { keys: ${generateTypeScriptRecursive(keys)} }; export default i18n;`;
+    return `export const i18nKeys = ${generateTypeScriptRecursive(keys)};`;
   }
 
   private writeTypeSafeI18nKeys(typeSafeI18nKeys: string) {
