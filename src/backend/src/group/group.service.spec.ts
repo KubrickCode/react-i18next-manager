@@ -9,6 +9,7 @@ import {
   initialLocales,
   initialTranslations,
 } from 'src/test/seed.data';
+import { faker } from '@faker-js/faker';
 
 describe('GroupService Integration', () => {
   let module: TestingModule;
@@ -246,6 +247,106 @@ describe('GroupService Integration', () => {
       .get('translations')
       .filter((translation) =>
         translationsUsingGroup.map((t) => t.id).includes(translation.id),
+      )
+      .value();
+    expect(remainingTranslations).toHaveLength(0);
+  });
+
+  it('재귀적으로 모든 자식 그룹 및 해당 translations 삭제 확인', async () => {
+    const parentGroupId = initialGroups[0].id;
+    const childGroupId1 = generateUUID();
+    const childGroupId2 = generateUUID();
+
+    const parentGroup = {
+      id: parentGroupId,
+      parentId: null,
+      label: 'parentGroup',
+      position: 0,
+    };
+    const childGroup1 = {
+      id: childGroupId1,
+      parentId: parentGroupId,
+      label: 'childGroup1',
+      position: 0,
+    };
+    const childGroup2 = {
+      id: childGroupId2,
+      parentId: parentGroupId,
+      label: 'childGroup2',
+      position: 1,
+    };
+
+    const translationForParentGroup = {
+      id: generateUUID(),
+      groupId: parentGroupId,
+      key: faker.word.noun(),
+      values: [
+        { localeId: initialLocales[0].id, value: faker.word.words() },
+        { localeId: initialLocales[1].id, value: faker.word.words() },
+      ],
+    };
+    const translationForChildGroup1 = {
+      id: generateUUID(),
+      groupId: childGroupId1,
+      key: faker.word.noun(),
+      values: [
+        { localeId: initialLocales[0].id, value: faker.word.words() },
+        { localeId: initialLocales[1].id, value: faker.word.words() },
+      ],
+    };
+    const translationForChildGroup2 = {
+      id: generateUUID(),
+      groupId: childGroupId2,
+      key: faker.word.noun(),
+      values: [
+        { localeId: initialLocales[0].id, value: faker.word.words() },
+        { localeId: initialLocales[1].id, value: faker.word.words() },
+      ],
+    };
+
+    db.setState({
+      locales: [...initialLocales],
+      groups: [parentGroup, childGroup1, childGroup2],
+      translations: [
+        translationForParentGroup,
+        translationForChildGroup1,
+        translationForChildGroup2,
+      ],
+    }).write();
+
+    // 삭제 이전에 자식 그룹과 translations이 존재하는지 확인
+    const existingChildGroups = db
+      .get('groups')
+      .filter({ parentId: parentGroupId })
+      .value();
+    expect(existingChildGroups).toHaveLength(2);
+
+    const existingTranslations = db
+      .get('translations')
+      .filter((translation) =>
+        [parentGroupId, childGroupId1, childGroupId2].includes(
+          translation.groupId,
+        ),
+      )
+      .value();
+    expect(existingTranslations).toHaveLength(3);
+
+    // 그룹 삭제
+    await service.delete({ id: parentGroupId });
+
+    // 그룹 삭제 이후 자식 그룹과 translations이 존재하지 않는지 확인
+    const remainingGroups = db
+      .get('groups')
+      .filter({ parentId: parentGroupId })
+      .value();
+    expect(remainingGroups).toHaveLength(0);
+
+    const remainingTranslations = db
+      .get('translations')
+      .filter((translation) =>
+        [parentGroupId, childGroupId1, childGroupId2].includes(
+          translation.groupId,
+        ),
       )
       .value();
     expect(remainingTranslations).toHaveLength(0);
