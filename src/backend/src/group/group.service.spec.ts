@@ -1,42 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DB, DBService, GroupSchema } from 'src/db/db.service';
+import { DB, DBService } from 'src/db/db.service';
 import { generateUUID } from 'src/common/utils';
 import { GroupService } from './group.service';
 import { groupModuleConfig } from './group.module.config';
 import { ConflictException } from '@nestjs/common';
+import { initialGroups } from 'src/test/seed.data';
 
 describe('GroupService Integration', () => {
   let module: TestingModule;
   let service: GroupService;
   let dbService: DBService;
   let db: DB;
-  const initialParentId = generateUUID();
-  const initialGroups: GroupSchema[] = [
-    {
-      id: initialParentId,
-      parentId: null,
-      label: 'test1',
-      position: 0,
-    },
-    {
-      id: generateUUID(),
-      parentId: null,
-      label: 'test2',
-      position: 1,
-    },
-    {
-      id: generateUUID(),
-      parentId: initialParentId,
-      label: 'test1-1',
-      position: 0,
-    },
-    {
-      id: generateUUID(),
-      parentId: initialParentId,
-      label: 'test1-2',
-      position: 1,
-    },
-  ];
 
   beforeAll(async () => {
     module = await Test.createTestingModule(groupModuleConfig).compile();
