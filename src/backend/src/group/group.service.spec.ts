@@ -221,4 +221,33 @@ describe('GroupService Integration', () => {
     const childGroups = groups.filter((g) => g.parentId === group.id);
     expect(childGroups).toHaveLength(0);
   });
+
+  it('groups 삭제 시 해당 그룹을 사용하는 translations도 삭제', async () => {
+    // 삭제할 그룹과 이를 사용하는 translations 설정
+    const groupIdToDelete = initialGroups[0].id;
+    const translationsUsingGroup = initialTranslations.filter(
+      (translation) => translation.groupId === groupIdToDelete,
+    );
+
+    // 삭제 이전에 translations이 존재하는지 확인
+    const existingTranslations = db
+      .get('translations')
+      .filter((translation) =>
+        translationsUsingGroup.map((t) => t.id).includes(translation.id),
+      )
+      .value();
+    expect(existingTranslations).toHaveLength(translationsUsingGroup.length);
+
+    // 그룹 삭제
+    await service.delete({ id: groupIdToDelete });
+
+    // 그룹 삭제 이후 translations이 존재하지 않는지 확인
+    const remainingTranslations = db
+      .get('translations')
+      .filter((translation) =>
+        translationsUsingGroup.map((t) => t.id).includes(translation.id),
+      )
+      .value();
+    expect(remainingTranslations).toHaveLength(0);
+  });
 });
