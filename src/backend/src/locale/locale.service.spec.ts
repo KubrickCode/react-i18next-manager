@@ -131,4 +131,33 @@ describe('LocaleService Integration', () => {
       expect.objectContaining({ id: initialLocales[0].id }),
     );
   });
+
+  it('locales 삭제 시 해당 locale을 사용하는 translation도 삭제', async () => {
+    // 삭제할 locale과 이를 사용하는 translations 설정
+    const localeIdToDelete = initialLocales[0].id;
+    const translationsUsingLocale = initialTranslations.filter((translation) =>
+      translation.values.some((value) => value.localeId === localeIdToDelete),
+    );
+
+    // 삭제 이전에 translations이 존재하는지 확인
+    const existingTranslations = db
+      .get('translations')
+      .filter((translation) =>
+        translationsUsingLocale.map((t) => t.id).includes(translation.id),
+      )
+      .value();
+    expect(existingTranslations).toHaveLength(translationsUsingLocale.length);
+
+    // locale 삭제
+    await service.delete({ id: localeIdToDelete });
+
+    // locale 삭제 이후 translations이 존재하지 않는지 확인
+    const remainingTranslations = db
+      .get('translations')
+      .filter((translation) =>
+        translationsUsingLocale.map((t) => t.id).includes(translation.id),
+      )
+      .value();
+    expect(remainingTranslations).toHaveLength(0);
+  });
 });
