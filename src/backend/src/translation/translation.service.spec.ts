@@ -175,4 +175,21 @@ describe('TranslationService Integration', () => {
 
     expect(result).toBeUndefined();
   });
+
+  it('여러 translation 삭제 성공', async () => {
+    const translations = initialTranslations.slice(0, 2);
+
+    await service.deleteMany({
+      translations: translations.map((translation) => ({ id: translation.id })),
+    });
+
+    const result = db
+      .get('translations')
+      .filter((translation) =>
+        translations.some((t) => t.id === translation.id),
+      )
+      .value();
+
+    expect(result).toHaveLength(0);
+  });
 });
