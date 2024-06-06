@@ -8,6 +8,7 @@ import {
   initialTranslations,
 } from 'src/test/seed.data';
 import { faker } from '@faker-js/faker';
+import { ConflictException } from '@nestjs/common';
 
 describe('TranslationService Integration', () => {
   let module: TestingModule;
@@ -70,5 +71,18 @@ describe('TranslationService Integration', () => {
         values: newValues,
       }),
     );
+  });
+
+  it('translation 추가 실패 - 이미 존재하는 key', async () => {
+    const key = initialTranslations[0].key;
+    const values = initialTranslations[0].values;
+
+    await expect(
+      service.add({
+        groupId: initialGroups[0].id,
+        key,
+        values,
+      }),
+    ).rejects.toThrow(ConflictException);
   });
 });
