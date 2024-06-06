@@ -7,6 +7,8 @@ import {
   initialLocales,
   initialTranslations,
 } from 'src/test/seed.data';
+import { faker } from '@faker-js/faker';
+import { ConflictException } from '@nestjs/common';
 
 describe('TranslationService Integration', () => {
   let module: TestingModule;
@@ -43,5 +45,66 @@ describe('TranslationService Integration', () => {
         (translation) => translation.groupId === initialGroups[0].id,
       ),
     );
+  });
+
+  it('translation 추가 성공', async () => {
+    const newKey = faker.word.noun();
+    const newValues = [
+      { localeId: initialLocales[0].id, value: faker.word.words() },
+      { localeId: initialLocales[1].id, value: faker.word.words() },
+    ];
+
+    await service.add({
+      groupId: initialGroups[0].id,
+      key: newKey,
+      values: newValues,
+    });
+
+    const result = db
+      .get('translations')
+      .filter((translation) => translation.groupId === initialGroups[0].id)
+      .value();
+
+    expect(result).toContainEqual(
+      expect.objectContaining({
+        key: newKey,
+        values: newValues,
+      }),
+    );
+  });
+
+  it('translation 추가 실패 - 이미 존재하는 key', async () => {
+    const key = initialTranslations[0].key;
+    const values = initialTranslations[0].values;
+
+    await expect(
+      service.add({
+        groupId: initialGroups[0].id,
+        key,
+        values,
+      }),
+    ).rejects.toThrow(ConflictException);
+  });
+
+  it('translation 추가 실패 - 소속 그룹의 자식 그룹 label과 중복되는 key', async () => {
+    const parentGroup = initialGroups[0];
+    const childGroup = db
+      .get('groups')
+      .find({ parentId: parentGroup.id })
+      .value();
+
+    const key = childGroup.label;
+    const values = [
+      { localeId: initialLocales[0].id, value: faker.word.words() },
+      { localeId: initialLocales[1].id, value: faker.word.words() },
+    ];
+
+    await expect(
+      service.add({
+        groupId: parentGroup.id,
+        key,
+        values,
+      }),
+    ).rejects.toThrow(ConflictException);
   });
 });
