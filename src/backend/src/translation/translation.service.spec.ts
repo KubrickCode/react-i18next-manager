@@ -7,6 +7,7 @@ import {
   initialLocales,
   initialTranslations,
 } from 'src/test/seed.data';
+import { faker } from '@faker-js/faker';
 
 describe('TranslationService Integration', () => {
   let module: TestingModule;
@@ -42,6 +43,32 @@ describe('TranslationService Integration', () => {
       initialTranslations.filter(
         (translation) => translation.groupId === initialGroups[0].id,
       ),
+    );
+  });
+
+  it('translation 추가 성공', async () => {
+    const newKey = faker.word.noun();
+    const newValues = [
+      { localeId: initialLocales[0].id, value: faker.word.words() },
+      { localeId: initialLocales[1].id, value: faker.word.words() },
+    ];
+
+    await service.add({
+      groupId: initialGroups[0].id,
+      key: newKey,
+      values: newValues,
+    });
+
+    const result = db
+      .get('translations')
+      .filter((translation) => translation.groupId === initialGroups[0].id)
+      .value();
+
+    expect(result).toContainEqual(
+      expect.objectContaining({
+        key: newKey,
+        values: newValues,
+      }),
     );
   });
 });
