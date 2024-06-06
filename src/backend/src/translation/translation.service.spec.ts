@@ -163,4 +163,33 @@ describe('TranslationService Integration', () => {
       }),
     ).rejects.toThrow(ConflictException);
   });
+
+  it('하나의 translation 삭제 성공', async () => {
+    const translation = initialTranslations[0];
+
+    await service.deleteMany({
+      translations: [{ id: translation.id }],
+    });
+
+    const result = db.get('translations').find({ id: translation.id }).value();
+
+    expect(result).toBeUndefined();
+  });
+
+  it('여러 translation 삭제 성공', async () => {
+    const translations = initialTranslations.slice(0, 2);
+
+    await service.deleteMany({
+      translations: translations.map((translation) => ({ id: translation.id })),
+    });
+
+    const result = db
+      .get('translations')
+      .filter((translation) =>
+        translations.some((t) => t.id === translation.id),
+      )
+      .value();
+
+    expect(result).toHaveLength(0);
+  });
 });
