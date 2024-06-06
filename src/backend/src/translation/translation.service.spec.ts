@@ -107,4 +107,28 @@ describe('TranslationService Integration', () => {
       }),
     ).rejects.toThrow(ConflictException);
   });
+
+  it('translation 수정 성공', async () => {
+    const translation = initialTranslations[0];
+    const newKey = faker.word.noun();
+    const newValues = [
+      { localeId: initialLocales[0].id, value: faker.word.words() },
+      { localeId: initialLocales[1].id, value: faker.word.words() },
+    ];
+
+    await service.edit({
+      id: translation.id,
+      newKey,
+      newValues,
+    });
+
+    const result = db.get('translations').find({ id: translation.id }).value();
+    const expected = {
+      ...translation,
+      key: newKey,
+      values: newValues,
+    };
+
+    expect(result).toEqual(expected);
+  });
 });
