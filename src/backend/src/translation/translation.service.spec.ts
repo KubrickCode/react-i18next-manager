@@ -144,4 +144,23 @@ describe('TranslationService Integration', () => {
       }),
     ).rejects.toThrow(ConflictException);
   });
+
+  it('translation 수정 실패 - 소속 그룹의 자식 그룹 label과 중복되는 key', async () => {
+    const translation = initialTranslations[0];
+    const parentGroup = initialGroups[0];
+    const childGroup = db
+      .get('groups')
+      .find({ parentId: parentGroup.id })
+      .value();
+
+    const key = childGroup.label;
+
+    await expect(
+      service.edit({
+        id: translation.id,
+        newKey: key,
+        newValues: translation.values,
+      }),
+    ).rejects.toThrow(ConflictException);
+  });
 });
