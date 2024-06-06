@@ -131,4 +131,17 @@ describe('TranslationService Integration', () => {
 
     expect(result).toEqual(expected);
   });
+
+  it('translation 수정 실패 - 이미 존재하는 key', async () => {
+    const translation = initialTranslations[0];
+    const key = initialTranslations[1].key;
+
+    await expect(
+      service.edit({
+        id: translation.id,
+        newKey: key,
+        newValues: translation.values,
+      }),
+    ).rejects.toThrow(ConflictException);
+  });
 });
