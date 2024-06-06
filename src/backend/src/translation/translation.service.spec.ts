@@ -163,4 +163,16 @@ describe('TranslationService Integration', () => {
       }),
     ).rejects.toThrow(ConflictException);
   });
+
+  it('하나의 translation 삭제 성공', async () => {
+    const translation = initialTranslations[0];
+
+    await service.deleteMany({
+      translations: [{ id: translation.id }],
+    });
+
+    const result = db.get('translations').find({ id: translation.id }).value();
+
+    expect(result).toBeUndefined();
+  });
 });
