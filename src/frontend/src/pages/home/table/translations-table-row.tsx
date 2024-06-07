@@ -15,7 +15,7 @@ import { Flex } from "~/core/layout";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
-import { useLayout } from "~/pages/home/context";
+import { useHomePageContext } from "../context";
 
 type TranslationsTableRowProps = {
   isSelected: boolean;
@@ -31,7 +31,7 @@ export const TranslationsTableRow = ({
   translation,
 }: TranslationsTableRowProps) => {
   const { locales } = useApp();
-  const { selectedGroup } = useLayout();
+  const { selectedGroup } = useHomePageContext();
   const [editMode, setEditMode] = useState(false);
   const [translationForm, setTranslationForm] = useState({
     key: translation.key,

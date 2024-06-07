@@ -26,18 +26,18 @@ const initialActions: Action = {
   handleSelectedGroup: () => {},
 };
 
-const LayoutContext = createContext<State & Action>({
+const HomePageContext = createContext<State & Action>({
   ...initialState,
   ...initialActions,
 });
 
-export const useLayout = () => useContext(LayoutContext);
+export const useHomePageContext = () => useContext(HomePageContext);
 
-type LayoutContextProviderProps = PropsWithChildren;
+type HomePageContextProviderProps = PropsWithChildren;
 
-export const LayoutContextProvider = ({
+export const HomePageContextProvider = ({
   children,
-}: LayoutContextProviderProps) => {
+}: HomePageContextProviderProps) => {
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup>(null);
   const { data, error, isLoading } = useQuery<GetGroupsResDto>(
     LINK.GET_GROUPS,
@@ -60,13 +60,13 @@ export const LayoutContextProvider = ({
   };
 
   return (
-    <LayoutContext.Provider
+    <HomePageContext.Provider
       value={{
         ...stateValue,
         ...actionValue,
       }}
     >
       {children}
-    </LayoutContext.Provider>
+    </HomePageContext.Provider>
   );
 };

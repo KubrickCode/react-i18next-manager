@@ -6,13 +6,15 @@ import { Image } from "~/core/image";
 import { useColorModeValue } from "~/core/color-mode";
 
 import { SettingButton } from "./setting-button";
-import { LayoutSidebarGroupTreeView } from "./layout-sidebar-group-treeview";
+import { HomePageSidebarGroupTreeView } from "./home-page-sidebar-group-treeview";
 
-export const LayoutSidebar = () => {
+export const HomePageSidebar = () => {
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");
+  const bgColor = useColorModeValue("white", "gray.800");
+  const fontColor = useColorModeValue("gray.800", "white");
 
   return (
-    <Sidebar>
+    <Sidebar backgroundColor={bgColor} color={fontColor}>
       <SidebarSection>
         <Flex alignItems="center" justifyContent="space-between">
           <Button
@@ -34,7 +36,7 @@ export const LayoutSidebar = () => {
         </Flex>
       </SidebarSection>
       <SidebarSection>
-        <LayoutSidebarGroupTreeView />
+        <HomePageSidebarGroupTreeView />
       </SidebarSection>
     </Sidebar>
   );

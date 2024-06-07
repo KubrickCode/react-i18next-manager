@@ -16,12 +16,12 @@ import {
 } from "~/core/codegen";
 import { replaceBlank } from "~/core/utils";
 
-import { useLayout } from "../context";
-import { convertGroupsToTreeData } from "../utils";
+import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
+import { useHomePageContext } from "../context";
 
-export const LayoutSidebarGroupTreeView = () => {
-  const { groups, handleSelectedGroup } = useLayout();
+export const HomePageSidebarGroupTreeView = () => {
+  const { groups, handleSelectedGroup } = useHomePageContext();
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
 
@@ -106,7 +106,7 @@ export type TreeData = {
 };
 
 const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
-  const { handleSelectedGroup } = useLayout();
+  const { handleSelectedGroup } = useHomePageContext();
   const [label, setLabel] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
 
