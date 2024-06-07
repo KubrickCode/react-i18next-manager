@@ -30,6 +30,15 @@ export const DeleteModal = ({
     toastMessage,
   });
 
+  const handleComplete = () => {
+    mutate({
+      link,
+      method: "delete",
+    });
+    onComplete?.();
+    modalProps.onClose();
+  };
+
   return (
     <Modal {...modalProps}>
       <ModalHeader>
@@ -37,16 +46,7 @@ export const DeleteModal = ({
       </ModalHeader>
       <ModalBody>{body}</ModalBody>
       <ModalFooter onClose={modalProps.onClose}>
-        <Button
-          colorScheme="red"
-          onClick={() => {
-            mutate({
-              link,
-              method: "delete",
-            });
-            onComplete?.();
-          }}
-        >
+        <Button colorScheme="red" onClick={handleComplete}>
           {LABELS.DELETE}
         </Button>
       </ModalFooter>
