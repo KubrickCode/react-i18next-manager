@@ -3,9 +3,9 @@ import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
 import { KEY, LINK, useQuery } from "~/core/react-query";
 import { Checkbox } from "~/core/checkbox";
 import { Center } from "~/core/layout";
-
 import { Text } from "~/core/text";
 import { useApp } from "~/core/app";
+
 import { useHomePageContext } from "../../context";
 import { TranslationsTableRow } from "./translations-table-row";
 

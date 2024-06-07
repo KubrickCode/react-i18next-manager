@@ -1,4 +1,5 @@
 import { GetGroupsResDto } from "~/core/codegen";
+
 import { TreeData } from "./group-treeview";
 
 const buildTree = ({

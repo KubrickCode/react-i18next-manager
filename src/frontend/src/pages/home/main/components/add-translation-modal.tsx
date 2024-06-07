@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useApp } from "~/core/app";
 
+import { useApp } from "~/core/app";
 import { Button } from "~/core/button";
 import { AddTranslationReqBodyDto } from "~/core/codegen";
 import { LABELS } from "~/core/constants";

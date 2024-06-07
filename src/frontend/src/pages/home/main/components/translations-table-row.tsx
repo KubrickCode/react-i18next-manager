@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaEdit, FaSave } from "react-icons/fa";
-import { useApp } from "~/core/app";
 
+import { useApp } from "~/core/app";
 import { Button, IconButton } from "~/core/button";
 import { Checkbox } from "~/core/checkbox";
 import {
@@ -15,6 +15,7 @@ import { Flex } from "~/core/layout";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
+
 import { useHomePageContext } from "../../context";
 
 type TranslationsTableRowProps = {

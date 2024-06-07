@@ -1,10 +1,13 @@
+import { useState } from "react";
+
 import { useApp } from "~/core/app";
 import { Box } from "~/core/layout";
 
-import { TranslationsTableToolbar } from "./components/translations-table-toolbar";
-import { TranslationsTable } from "./components/translations-table";
-import { EmptySection } from "./components/empty-section";
-import { useState } from "react";
+import {
+  TranslationsTableToolbar,
+  TranslationsTable,
+  EmptySection,
+} from "./components";
 
 export const HomePageMain = () => {
   const { locales } = useApp();

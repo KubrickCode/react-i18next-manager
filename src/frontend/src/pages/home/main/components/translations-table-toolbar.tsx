@@ -7,10 +7,10 @@ import { ModalToggle } from "~/core/modal";
 import { KEY, useQueryClient } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
+import { useApp } from "~/core/app";
 
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
-import { useApp } from "~/core/app";
 import { useHomePageContext } from "../../context";
 
 type TranslationsTableToolbarProps = {

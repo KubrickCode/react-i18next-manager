@@ -1,7 +1,7 @@
 import { Page } from "~/core/page";
+import { AppShell } from "~/core/app-shell";
 
 import { HomePageContextProvider } from "./context";
-import { AppShell } from "~/core/app-shell";
 import { HomePageSidebar } from "./sidebar";
 import { HomePageMain } from "./main";
 
