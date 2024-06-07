@@ -8,6 +8,7 @@ import { HomePageContextProvider } from "./context";
 import { AppShell } from "~/core/app-shell";
 import { HomePageSidebar } from "./sidebar";
 import { TranslationsTable, TranslationsTableToolbar } from "./table";
+import { Box } from "~/core/layout";
 
 export const HomePage = () => {
   const { locales } = useApp();
@@ -23,11 +24,11 @@ export const HomePage = () => {
   };
 
   return (
-    <HomePageContextProvider>
-      <AppShell sidebar={<HomePageSidebar />}>
-        <Page height="100vh" overflowY="auto">
+    <Page>
+      <HomePageContextProvider>
+        <AppShell sidebar={<HomePageSidebar />}>
           {locales.length > 0 ? (
-            <>
+            <Box as="main" height="100vh" overflowY="auto" padding="1rem">
               <TranslationsTableToolbar
                 handleSelectedIds={handleSelectedIds}
                 handleTerm={handleTerm}
@@ -38,12 +39,12 @@ export const HomePage = () => {
                 selectedIds={selectedIds}
                 term={term}
               />
-            </>
+            </Box>
           ) : (
             <HomePageEmptySection />
           )}
-        </Page>
-      </AppShell>
-    </HomePageContextProvider>
+        </AppShell>
+      </HomePageContextProvider>
+    </Page>
   );
 };
