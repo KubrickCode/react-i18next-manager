@@ -5,7 +5,7 @@ import { Flex } from "~/core/layout";
 import { Image } from "~/core/image";
 import { useColorModeValue } from "~/core/color-mode";
 
-import { GroupTreeView, SettingButton } from "./components";
+import { GroupTreeView, SettingMenu } from "./components";
 
 export const HomePageSidebar = () => {
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");
@@ -31,7 +31,7 @@ export const HomePageSidebar = () => {
           >
             {LABELS.APP_TITLE}
           </Button>
-          <SettingButton />
+          <SettingMenu />
         </Flex>
       </SidebarSection>
       <SidebarSection>

@@ -18,7 +18,7 @@ import { IconButton } from "~/core/button";
 import { LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 
-export const SettingButton = () => {
+export const SettingMenu = () => {
   const { toggleColorMode } = useColorMode();
 
   const darkModeIcon = useColorModeValue(

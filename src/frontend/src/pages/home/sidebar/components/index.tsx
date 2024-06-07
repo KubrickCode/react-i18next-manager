@@ -1,2 +1,2 @@
 export * from "./group-treeview";
-export * from "./setting-button";
+export * from "./setting-menu";
