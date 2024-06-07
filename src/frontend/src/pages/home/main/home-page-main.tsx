@@ -1,16 +1,16 @@
 import { useState } from "react";
 
-import { useApp } from "~/core/app";
 import { Box } from "~/core/layout";
 
 import {
   TranslationsTableToolbar,
   TranslationsTable,
-  EmptySection,
+  EmptyState,
 } from "./components";
+import { useHomePageContext } from "../context";
 
 export const HomePageMain = () => {
-  const { locales } = useApp();
+  const { selectedGroup } = useHomePageContext();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [term, setTerm] = useState("");
 
@@ -24,7 +24,7 @@ export const HomePageMain = () => {
 
   return (
     <Box as="main" height="100vh" overflowY="auto" padding="1rem">
-      {locales.length > 0 ? (
+      {selectedGroup ? (
         <>
           <TranslationsTableToolbar
             handleSelectedIds={handleSelectedIds}
@@ -38,7 +38,7 @@ export const HomePageMain = () => {
           />
         </>
       ) : (
-        <EmptySection />
+        <EmptyState />
       )}
     </Box>
   );
