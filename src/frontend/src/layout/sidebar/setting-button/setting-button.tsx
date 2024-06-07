@@ -22,8 +22,8 @@ export const SettingButton = () => {
   const { toggleColorMode } = useColorMode();
 
   const darkModeIcon = useColorModeValue(
-    <MdDarkMode size="1rem" />,
-    <CiLight color="white" size="1rem" />
+    <MdDarkMode />,
+    <CiLight color="white" />
   );
   const darkModeLabel = useColorModeValue("Dark Mode", "Light Mode");
 
@@ -56,8 +56,8 @@ export const SettingButton = () => {
         >
           <Text>{darkModeLabel}</Text>
         </MenuItem>
-        <MenuModalToggle icon={FaLanguage} modal={LocaleManagementModal}>
-          {LABELS.LOCALE_MANAGEMENT}
+        <MenuModalToggle icon={<FaLanguage />} modal={LocaleManagementModal}>
+          <Text>{LABELS.LOCALE_MANAGEMENT}</Text>
         </MenuModalToggle>
         <MenuItem
           icon={<AiOutlineFileSync />}

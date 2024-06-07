@@ -1,13 +1,10 @@
 import { ComponentPropsWithoutRef, ElementType } from "react";
 
-import { Box, Flex, HStack } from "../layout";
 import { useModal } from "../modal";
 import { MenuItem, MenuItemProps } from "./menu-item";
-import { Icon, IconType } from "../icon";
 
 export type MenuModalToggleProps<Modal extends ElementType = ElementType> =
-  Omit<MenuItemProps, "icon"> & {
-    icon?: IconType;
+  MenuItemProps & {
     modal: Modal;
     modalProps?: Omit<ComponentPropsWithoutRef<Modal>, "isOpen" | "onClose">;
   };
@@ -25,17 +22,8 @@ export const MenuModalToggle = <Modal extends ElementType>({
   };
 
   return (
-    <MenuItem onClick={handleClick}>
-      {icon ? (
-        <Flex alignItems="center" minWidth="100%">
-          <HStack spacing={2}>
-            <Icon as={icon} />
-            <Box flexGrow={1}>{children}</Box>
-          </HStack>
-        </Flex>
-      ) : (
-        children
-      )}
+    <MenuItem icon={icon} onClick={handleClick}>
+      {children}
     </MenuItem>
   );
 };
