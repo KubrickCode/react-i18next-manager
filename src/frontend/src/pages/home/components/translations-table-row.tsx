@@ -15,7 +15,7 @@ import { Flex } from "~/core/layout";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
-import { useLayout } from "~/layout/context";
+import { useLayout } from "~/pages/home/context";
 
 type TranslationsTableRowProps = {
   isSelected: boolean;

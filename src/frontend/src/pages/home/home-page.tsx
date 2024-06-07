@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { Page } from "~/core/page";
-import { useLayout } from "~/layout/context";
+import { useLayout } from "~/pages/home/context";
 
 import { TranslationsTable } from "./components/translations-table";
 import { TranslationsTableToolbar } from "./components/translations-table-toolbar";

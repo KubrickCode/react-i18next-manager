@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { HomePage, NotFoundPage } from "~/pages";
-import { Layout } from "~/layout";
+import { Layout } from "~/pages/home/layout";
 
 const PATH = {
   HOME: "/",

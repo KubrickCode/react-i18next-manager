@@ -1,7 +1,7 @@
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
 import { KEY, LINK, useQuery } from "~/core/react-query";
-import { useLayout } from "~/layout/context";
+import { useLayout } from "~/pages/home/context";
 import { Checkbox } from "~/core/checkbox";
 import { Center } from "~/core/layout";
 

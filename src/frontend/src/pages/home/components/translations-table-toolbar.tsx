@@ -5,7 +5,7 @@ import { SearchInput } from "~/core/input";
 import { Flex, HStack } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
 import { KEY, useQueryClient } from "~/core/react-query";
-import { useLayout } from "~/layout/context";
+import { useLayout } from "~/pages/home/context";
 import { Text } from "~/core/text";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 

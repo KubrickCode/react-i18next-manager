@@ -3,9 +3,8 @@ import { PropsWithChildren } from "react";
 import { Box } from "~/core/layout";
 import { useColorModeValue } from "~/core/color-mode";
 import { AppShell } from "~/core/app-shell";
-
 import { LayoutContextProvider } from "./context";
-import { LayoutSidebar } from "./sidebar";
+import { LayoutSidebar } from "./components/layout-sidebar";
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const bgColor = useColorModeValue("white", "gray.800");
