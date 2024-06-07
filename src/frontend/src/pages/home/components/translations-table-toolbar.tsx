@@ -26,14 +26,14 @@ export const TranslationsTableToolbar = ({
 }: TranslationsTableToolbarProps) => {
   const { locales } = useApp();
   const { selectedGroup } = useLayout();
-
   const queryClient = useQueryClient();
 
+  if (!selectedGroup) return null;
+
   const handleRefresh = () => {
-    selectedGroup &&
-      queryClient.invalidateQueries({
-        queryKey: [KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")],
-      });
+    queryClient.invalidateQueries({
+      queryKey: [KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")],
+    });
   };
 
   if (locales.length < 1)
@@ -51,7 +51,7 @@ export const TranslationsTableToolbar = ({
 
   return (
     <HStack marginTop={2}>
-      {selectedGroup && selectedIds.length > 0 && (
+      {selectedIds.length > 0 && (
         <ModalToggle
           modal={DeleteTranslationModal}
           modalProps={{
@@ -71,7 +71,12 @@ export const TranslationsTableToolbar = ({
         onClick={() => handleRefresh()}
         size="sm"
       />
-      <ModalToggle modal={AddTranslationModal}>
+      <ModalToggle
+        modal={AddTranslationModal}
+        modalProps={{
+          selectedGroup,
+        }}
+      >
         <Button size="sm">Add Key</Button>
       </ModalToggle>
       <SearchInput

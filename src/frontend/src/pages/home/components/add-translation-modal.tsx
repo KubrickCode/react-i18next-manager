@@ -16,16 +16,20 @@ import {
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
-import { useLayout } from "~/layout/context";
 
-type AddTranslationModalProps = ModalProps;
+type AddTranslationModalProps = ModalProps & {
+  selectedGroup: {
+    id: string;
+    label: string;
+  };
+};
 
 export const AddTranslationModal = ({
   isOpen,
   onClose,
+  selectedGroup,
 }: AddTranslationModalProps) => {
   const { locales } = useApp();
-  const { selectedGroup } = useLayout();
 
   const [key, setKey] = useState("");
   const [values, setValues] = useState<{ localeId: string; value: string }[]>(
@@ -33,13 +37,13 @@ export const AddTranslationModal = ({
   );
 
   const { mutate: addTranslation } = useMutation<AddTranslationReqBodyDto>({
-    refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
+    refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup.id)]],
     toastMessage: TOAST_MESSAGE.ADD_TRANSLATION,
   });
 
   const handleSubmit = () => {
     addTranslation({
-      link: LINK.ADD_TRANSLATION(selectedGroup?.id ?? ""),
+      link: LINK.ADD_TRANSLATION(selectedGroup.id),
       method: "post",
       body: {
         key,
@@ -60,7 +64,7 @@ export const AddTranslationModal = ({
             <Text fontSize="xs" fontWeight="lighter">
               Group
             </Text>
-            <Text fontWeight="semibold">{selectedGroup?.label}</Text>
+            <Text fontWeight="semibold">{selectedGroup.label}</Text>
           </VStack>
           <VStack alignItems="baseline" width="full">
             <Text fontSize="xs" fontWeight="lighter">
