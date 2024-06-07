@@ -20,7 +20,7 @@ import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
 import { useHomePageContext } from "../../context";
 
-export const HomePageSidebarGroupTreeView = () => {
+export const GroupTreeView = () => {
   const { groups, handleSelectedGroup } = useHomePageContext();
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");

@@ -5,7 +5,7 @@ import { ModalToggle } from "~/core/modal";
 import { Text } from "~/core/text";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 
-export const HomePageEmptySection = () => {
+export const EmptySection = () => {
   const { locales } = useApp();
 
   return (
