@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaEdit, FaSave } from "react-icons/fa";
+import { useApp } from "~/core/app";
 
 import { Button, IconButton } from "~/core/button";
 import { Checkbox } from "~/core/checkbox";
@@ -14,7 +15,7 @@ import { Flex } from "~/core/layout";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
-import { useLayoutContext } from "~/layout/context";
+import { useLayout } from "~/layout/context";
 
 type TranslationsTableRowProps = {
   isSelected: boolean;
@@ -29,7 +30,8 @@ export const TranslationsTableRow = ({
   term,
   translation,
 }: TranslationsTableRowProps) => {
-  const { locales, selectedGroup } = useLayoutContext();
+  const { locales } = useApp();
+  const { selectedGroup } = useLayout();
   const [editMode, setEditMode] = useState(false);
   const [translationForm, setTranslationForm] = useState({
     key: translation.key,

@@ -1,12 +1,12 @@
+import { useApp } from "~/core/app";
 import { Button } from "~/core/button";
 import { Flex } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
 import { Text } from "~/core/text";
-import { useLayoutContext } from "~/layout/context";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 
 export const HomePageEmptySection = () => {
-  const { locales } = useLayoutContext();
+  const { locales } = useApp();
 
   return (
     <Flex alignItems="center" gap={2}>

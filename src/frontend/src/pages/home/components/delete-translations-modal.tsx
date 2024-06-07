@@ -10,7 +10,7 @@ import {
 } from "~/core/modal";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
-import { useLayoutContext } from "~/layout/context";
+import { useLayout } from "~/layout/context";
 
 type DeleteTranslationModalProps = ModalProps & {
   handleSelectedIds: (ids: string[]) => void;
@@ -23,7 +23,7 @@ export const DeleteTranslationModal = ({
   isOpen,
   onClose,
 }: DeleteTranslationModalProps) => {
-  const { selectedGroup } = useLayoutContext();
+  const { selectedGroup } = useLayout();
 
   const { mutate: deleteTranslations } =
     useMutation<DeleteTranslationsReqBodyDto>({

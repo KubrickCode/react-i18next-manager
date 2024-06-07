@@ -1,12 +1,13 @@
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
 import { KEY, LINK, useQuery } from "~/core/react-query";
-import { useLayoutContext } from "~/layout/context";
+import { useLayout } from "~/layout/context";
 import { Checkbox } from "~/core/checkbox";
 import { Center } from "~/core/layout";
 
 import { TranslationsTableRow } from "./translations-table-row";
 import { Text } from "~/core/text";
+import { useApp } from "~/core/app";
 
 type TranslationsTableProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -19,7 +20,8 @@ export const TranslationsTable = ({
   selectedIds,
   term,
 }: TranslationsTableProps) => {
-  const { locales, selectedGroup } = useLayoutContext();
+  const { locales } = useApp();
+  const { selectedGroup } = useLayout();
 
   const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
     LINK.GET_TRANSLATIONS(selectedGroup?.id ?? ""),

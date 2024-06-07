@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useApp } from "~/core/app";
 
 import { Button } from "~/core/button";
 import { AddTranslationReqBodyDto } from "~/core/codegen";
@@ -15,7 +16,7 @@ import {
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
-import { useLayoutContext } from "~/layout/context";
+import { useLayout } from "~/layout/context";
 
 type AddTranslationModalProps = ModalProps;
 
@@ -23,7 +24,8 @@ export const AddTranslationModal = ({
   isOpen,
   onClose,
 }: AddTranslationModalProps) => {
-  const { locales, selectedGroup } = useLayoutContext();
+  const { locales } = useApp();
+  const { selectedGroup } = useLayout();
 
   const [key, setKey] = useState("");
   const [values, setValues] = useState<{ localeId: string; value: string }[]>(

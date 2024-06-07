@@ -5,12 +5,13 @@ import { SearchInput } from "~/core/input";
 import { Flex, HStack } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
 import { KEY, useQueryClient } from "~/core/react-query";
-import { useLayoutContext } from "~/layout/context";
+import { useLayout } from "~/layout/context";
 import { Text } from "~/core/text";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
+import { useApp } from "~/core/app";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -23,7 +24,8 @@ export const TranslationsTableToolbar = ({
   handleTerm,
   selectedIds,
 }: TranslationsTableToolbarProps) => {
-  const { locales, selectedGroup } = useLayoutContext();
+  const { locales } = useApp();
+  const { selectedGroup } = useLayout();
 
   const queryClient = useQueryClient();
 

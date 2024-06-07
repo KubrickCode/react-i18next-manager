@@ -22,12 +22,12 @@ import {
   Droppable,
 } from "~/core/drag-drop";
 import { Box, Divider, Flex } from "~/core/layout";
-import { useLayoutContext } from "~/layout/context";
 import {
   EditLocaleLabelReqBodyDto,
   EditLocalesPositionReqBodyDto,
 } from "~/core/codegen";
 import { AddLocaleModal } from "~/shared/add-locale-modal";
+import { useApp } from "~/core/app";
 
 type LocaleManagementModalProps = ModalProps;
 
@@ -35,7 +35,7 @@ export const LocaleManagementModal = ({
   isOpen,
   onClose,
 }: LocaleManagementModalProps) => {
-  const { locales } = useLayoutContext();
+  const { locales } = useApp();
 
   const refetchQueryKeys = [[KEY.GET_LOCALES]];
   const [editMode, setEditMode] = useState(false);

@@ -1,14 +1,16 @@
 import { useState } from "react";
 
 import { Page } from "~/core/page";
-import { useLayoutContext } from "~/layout/context";
+import { useLayout } from "~/layout/context";
 
 import { TranslationsTable } from "./components/translations-table";
 import { TranslationsTableToolbar } from "./components/translations-table-toolbar";
 import { HomePageEmptySection } from "./components/empty-section";
+import { useApp } from "~/core/app";
 
 export const HomePage = () => {
-  const { locales, selectedGroup } = useLayoutContext();
+  const { locales } = useApp();
+  const { selectedGroup } = useLayout();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [term, setTerm] = useState("");
 

@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
-import { GetGroupsResDto, GetLocalesResDto } from "~/core/codegen";
+import { GetGroupsResDto } from "~/core/codegen";
 import { KEY, LINK, useQuery } from "~/core/react-query";
 
 type SelectedGroup = {
@@ -8,12 +8,8 @@ type SelectedGroup = {
   label: string;
 } | null;
 
-type QueryState = {
-  groups: GetGroupsResDto["groups"];
-  locales: GetLocalesResDto["locales"];
-};
-
 type State = {
+  groups: GetGroupsResDto["groups"];
   selectedGroup: SelectedGroup;
 };
 
@@ -21,12 +17,8 @@ type Action = {
   handleSelectedGroup: (group: State["selectedGroup"]) => void;
 };
 
-const initialQueryState: QueryState = {
-  groups: [],
-  locales: [],
-};
-
 const initialState: State = {
+  groups: [],
   selectedGroup: null,
 };
 
@@ -34,13 +26,12 @@ const initialActions: Action = {
   handleSelectedGroup: () => {},
 };
 
-const LayoutContext = createContext<QueryState & State & Action>({
-  ...initialQueryState,
+const LayoutContext = createContext<State & Action>({
   ...initialState,
   ...initialActions,
 });
 
-export const useLayoutContext = () => useContext(LayoutContext);
+export const useLayout = () => useContext(LayoutContext);
 
 type LayoutContextProviderProps = PropsWithChildren;
 
@@ -48,35 +39,19 @@ export const LayoutContextProvider = ({
   children,
 }: LayoutContextProviderProps) => {
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup>(null);
-  const groupsQueryResult = useQuery<GetGroupsResDto>(
+  const { data, error, isLoading } = useQuery<GetGroupsResDto>(
     LINK.GET_GROUPS,
     KEY.GET_GROUPS
   );
 
-  const localesQueryResult = useQuery<GetLocalesResDto>(
-    LINK.GET_LOCALES,
-    KEY.GET_LOCALES
-  );
+  if (isLoading) return <>Loading...</>;
+  if (error) return <>{error.message}</>;
+  if (!data) return <>ERROR</>;
 
-  if (!groupsQueryResult.data || !localesQueryResult.data) return <>ERROR</>;
-  if (groupsQueryResult.error || localesQueryResult.error)
-    return (
-      <>
-        {groupsQueryResult.error?.message ?? localesQueryResult.error?.message}
-      </>
-    );
-  if (groupsQueryResult.isLoading || localesQueryResult.isLoading)
-    return <>Loading...</>;
-
-  const { groups } = groupsQueryResult.data;
-  const { locales } = localesQueryResult.data;
-
-  const queryStateValue: QueryState = {
-    groups,
-    locales,
-  };
+  const { groups } = data;
 
   const stateValue: State = {
+    groups,
     selectedGroup,
   };
 
@@ -87,7 +62,6 @@ export const LayoutContextProvider = ({
   return (
     <LayoutContext.Provider
       value={{
-        ...queryStateValue,
         ...stateValue,
         ...actionValue,
       }}
