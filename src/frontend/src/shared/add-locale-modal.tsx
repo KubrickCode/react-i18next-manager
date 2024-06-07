@@ -16,7 +16,7 @@ import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 type AddLocaleModalProps = ModalProps & {
-  onComplete: () => void;
+  onComplete?: () => void;
   position: number;
 };
 
@@ -43,7 +43,7 @@ export const AddLocaleModal = ({
       },
     });
     onClose();
-    onComplete();
+    onComplete?.();
   };
 
   return (

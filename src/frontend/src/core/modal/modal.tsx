@@ -4,8 +4,8 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
-  useColorModeValue,
 } from "@chakra-ui/react";
+import { Suspense } from "react";
 
 export type ModalProps = {
   children?: React.ReactNode;
@@ -20,8 +20,6 @@ export const Modal = ({
   onClose,
   size = "md",
 }: ModalProps) => {
-  const closeButtonColor = useColorModeValue("black", "white");
-
   return (
     <ChakraModal
       isCentered
@@ -32,8 +30,14 @@ export const Modal = ({
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton color={closeButtonColor} />
-        {children}
+        <ModalCloseButton
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+            }
+          }}
+        />
+        <Suspense fallback={<>Loading...</>}>{children}</Suspense>
       </ModalContent>
     </ChakraModal>
   );

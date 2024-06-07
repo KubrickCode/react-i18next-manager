@@ -1,42 +1,37 @@
-import { Flex, FlexProps } from "@chakra-ui/react";
-import { createElement } from "react";
+import { ComponentPropsWithoutRef, ElementType } from "react";
 
-import { useModalToggle } from "../modal";
+import { useModal } from "./context";
+import { Flex, FlexProps } from "../layout";
 
-export type ModalToggleProps<
-  Modal extends React.ElementType = React.ElementType
-> = FlexProps & {
-  modal: Modal;
-  modalProps?: Omit<
-    React.ComponentPropsWithoutRef<Modal>,
-    "isOpen" | "onClose"
-  >;
-};
+export type ModalToggleProps<Modal extends ElementType = ElementType> =
+  FlexProps & {
+    modal: Modal;
+    modalProps?: Omit<ComponentPropsWithoutRef<Modal>, "isOpen" | "onClose">;
+  };
 
-export const ModalToggle = ({
+export const ModalToggle = <Modal extends ElementType>({
   children,
   modal,
   modalProps: providedModalProps,
   ...otherProps
-}: ModalToggleProps) => {
-  const { getModalProps, getToggleProps } = useModalToggle();
+}: ModalToggleProps<Modal>) => {
+  const { openModal } = useModal();
+
+  const handleClick = () => {
+    openModal(modal, providedModalProps);
+  };
 
   return (
-    <>
-      <Flex
-        alignItems="center"
-        tabIndex={0}
-        {...getToggleProps()}
-        {...otherProps}
-      >
-        {children}
-      </Flex>
-      {getModalProps().isOpen &&
-        createElement(modal, {
-          children,
-          ...providedModalProps,
-          ...getModalProps(),
-        })}
-    </>
+    <Flex
+      alignItems="center"
+      onClick={(e) => {
+        handleClick();
+        e.stopPropagation();
+      }}
+      tabIndex={0}
+      {...otherProps}
+    >
+      {children}
+    </Flex>
   );
 };
