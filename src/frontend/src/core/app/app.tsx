@@ -7,15 +7,15 @@ import { AppContextProvider } from "./context";
 import { Layout } from "../layout";
 
 export const App = () => (
-  <ReactQueryProvider>
-    <AppContextProvider>
-      <ThemeProvider>
-        <ModalProvider>
-          <Layout>
+  <Layout>
+    <ReactQueryProvider>
+      <AppContextProvider>
+        <ThemeProvider>
+          <ModalProvider>
             <Router />
-          </Layout>
-        </ModalProvider>
-      </ThemeProvider>
-    </AppContextProvider>
-  </ReactQueryProvider>
+          </ModalProvider>
+        </ThemeProvider>
+      </AppContextProvider>
+    </ReactQueryProvider>
+  </Layout>
 );
