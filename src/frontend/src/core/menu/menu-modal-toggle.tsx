@@ -1,10 +1,9 @@
 import { ComponentPropsWithoutRef, ElementType } from "react";
-import { Icon } from "@chakra-ui/react";
-import { IconType } from "react-icons";
 
 import { Box, Flex, HStack } from "../layout";
 import { useModal } from "../modal";
 import { MenuItem, MenuItemProps } from "./menu-item";
+import { Icon, IconType } from "../icon";
 
 export type MenuModalToggleProps<Modal extends ElementType = ElementType> =
   Omit<MenuItemProps, "icon"> & {
