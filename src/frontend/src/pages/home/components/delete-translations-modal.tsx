@@ -10,11 +10,11 @@ import {
 } from "~/core/modal";
 import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
-import { useLayout } from "~/layout/context";
 
 type DeleteTranslationModalProps = ModalProps & {
   handleSelectedIds: (ids: string[]) => void;
   ids: string[];
+  selectedGroupId: string;
 };
 
 export const DeleteTranslationModal = ({
@@ -22,12 +22,11 @@ export const DeleteTranslationModal = ({
   ids,
   isOpen,
   onClose,
+  selectedGroupId,
 }: DeleteTranslationModalProps) => {
-  const { selectedGroup } = useLayout();
-
   const { mutate: deleteTranslations } =
     useMutation<DeleteTranslationsReqBodyDto>({
-      refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
+      refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroupId)]],
       toastMessage: TOAST_MESSAGE.DELETE_TRANSLATIONS,
     });
 

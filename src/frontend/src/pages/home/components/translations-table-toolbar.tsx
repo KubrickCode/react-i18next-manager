@@ -51,10 +51,14 @@ export const TranslationsTableToolbar = ({
 
   return (
     <HStack marginTop={2}>
-      {selectedIds.length > 0 && (
+      {selectedGroup && selectedIds.length > 0 && (
         <ModalToggle
           modal={DeleteTranslationModal}
-          modalProps={{ handleSelectedIds, ids: selectedIds }}
+          modalProps={{
+            handleSelectedIds,
+            ids: selectedIds,
+            selectedGroupId: selectedGroup.id,
+          }}
         >
           <Button colorScheme="red" size="sm">
             Delete {selectedIds.length} rows
