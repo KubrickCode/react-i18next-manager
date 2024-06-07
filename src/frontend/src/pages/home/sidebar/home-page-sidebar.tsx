@@ -5,8 +5,8 @@ import { Flex } from "~/core/layout";
 import { Image } from "~/core/image";
 import { useColorModeValue } from "~/core/color-mode";
 
-import { SettingButton } from "./setting-button";
-import { HomePageSidebarGroupTreeView } from "./home-page-sidebar-group-treeview";
+import { SettingButton } from "./components/setting-button";
+import { HomePageSidebarGroupTreeView } from "./components/home-page-sidebar-group-treeview";
 
 export const HomePageSidebar = () => {
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");

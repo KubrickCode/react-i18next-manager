@@ -4,10 +4,10 @@ import { KEY, LINK, useQuery } from "~/core/react-query";
 import { Checkbox } from "~/core/checkbox";
 import { Center } from "~/core/layout";
 
-import { TranslationsTableRow } from "./translations-table-row";
 import { Text } from "~/core/text";
 import { useApp } from "~/core/app";
-import { useHomePageContext } from "../context";
+import { useHomePageContext } from "../../context";
+import { TranslationsTableRow } from "./translations-table-row";
 
 type TranslationsTableProps = {
   handleSelectedIds: (ids: string[]) => void;

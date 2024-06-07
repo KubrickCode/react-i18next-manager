@@ -1,8 +1,8 @@
 import { useApp } from "~/core/app";
 import { Box } from "~/core/layout";
-import { TranslationsTableToolbar } from "./translations-table-toolbar";
-import { TranslationsTable } from "./translations-table";
-import { HomePageEmptySection } from "./empty-section";
+import { TranslationsTableToolbar } from "./components/translations-table-toolbar";
+import { TranslationsTable } from "./components/translations-table";
+import { HomePageEmptySection } from "./components/empty-section";
 import { useState } from "react";
 
 export const HomePageMain = () => {

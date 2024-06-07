@@ -18,7 +18,7 @@ import { replaceBlank } from "~/core/utils";
 
 import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
-import { useHomePageContext } from "../context";
+import { useHomePageContext } from "../../context";
 
 export const HomePageSidebarGroupTreeView = () => {
   const { groups, handleSelectedGroup } = useHomePageContext();

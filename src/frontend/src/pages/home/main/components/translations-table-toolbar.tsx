@@ -11,7 +11,7 @@ import { LocaleManagementModal } from "~/shared/locale-management-modal";
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
 import { useApp } from "~/core/app";
-import { useHomePageContext } from "../context";
+import { useHomePageContext } from "../../context";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;
