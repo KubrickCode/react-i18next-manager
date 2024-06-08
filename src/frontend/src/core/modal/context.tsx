@@ -34,8 +34,7 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
     Component: ElementType,
     props: ModalComponentProps<T> = {} as ModalComponentProps<T>
   ) => {
-    const id = uuidv4();
-    setModals((prev) => [...prev, { id, Component, props }]);
+    setModals((prev) => [...prev, { id: uuidv4(), Component, props }]);
   };
 
   const closeModal = (id: string) => {
