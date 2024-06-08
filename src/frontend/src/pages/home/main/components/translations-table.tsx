@@ -1,11 +1,10 @@
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
-import { KEY, LINK, useQuery } from "~/core/react-query";
+import { KEY, LINK, useSuspenseQuery } from "~/core/react-query";
 import { Checkbox } from "~/core/checkbox";
 import { Center } from "~/core/layout";
 import { Text } from "~/core/text";
 import { useApp } from "~/core/app";
-import { Loader } from "~/core/loader";
 
 import { useHomePageContext } from "../../context";
 import { TranslationsTableRow } from "./translations-table-row";
@@ -24,14 +23,12 @@ export const TranslationsTable = ({
   const { locales } = useApp();
   const { selectedGroup } = useHomePageContext();
 
-  const { data, error, isLoading } = useQuery<GetTranslationsResDto>(
+  const { data } = useSuspenseQuery<GetTranslationsResDto>(
     LINK.GET_TRANSLATIONS(selectedGroup?.id ?? ""),
     KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")
   );
 
   if (locales.length < 1) return null;
-  if (!data) return <>ERROR</>;
-  if (error) return <>{error.message}</>;
 
   const { translations } = data;
 
@@ -52,8 +49,6 @@ export const TranslationsTable = ({
   };
 
   const hasTranslations = translations.length > 0;
-
-  if (isLoading) return <Loader.Block />;
 
   return (
     <Table layout="fixed" size="sm">

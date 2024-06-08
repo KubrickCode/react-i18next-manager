@@ -1,9 +1,7 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 
 import { GetLocalesResDto } from "~/core/codegen";
-import { KEY, LINK, useQuery } from "~/core/react-query";
-
-import { Loader } from "../loader";
+import { KEY, LINK, useSuspenseQuery } from "~/core/react-query";
 
 type State = {
   locales: GetLocalesResDto["locales"];
@@ -18,13 +16,10 @@ export const useApp = () => useContext(AppContext);
 type AppContextProviderProps = PropsWithChildren;
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const { data, error, isLoading } = useQuery<GetLocalesResDto>(
+  const { data } = useSuspenseQuery<GetLocalesResDto>(
     LINK.GET_LOCALES,
     KEY.GET_LOCALES
   );
-
-  if (error) return <>{error.message}</>;
-  if (!data) return <>ERROR</>;
 
   const { locales } = data;
 
@@ -34,7 +29,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         locales,
       }}
     >
-      {isLoading ? <Loader.FullScreen /> : children}
+      {children}
     </AppContext.Provider>
   );
 };

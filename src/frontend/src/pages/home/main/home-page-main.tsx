@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { Box } from "~/core/layout";
+import { Loader } from "~/core/loader";
 
 import {
   TranslationsTableToolbar,
@@ -31,11 +32,13 @@ export const HomePageMain = () => {
             handleTerm={handleTerm}
             selectedIds={selectedIds}
           />
-          <TranslationsTable
-            handleSelectedIds={handleSelectedIds}
-            selectedIds={selectedIds}
-            term={term}
-          />
+          <Suspense fallback={<Loader.Block />}>
+            <TranslationsTable
+              handleSelectedIds={handleSelectedIds}
+              selectedIds={selectedIds}
+              term={term}
+            />
+          </Suspense>
         </>
       ) : (
         <EmptyState />

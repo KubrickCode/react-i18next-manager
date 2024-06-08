@@ -1,6 +1,7 @@
 import {
   UseQueryOptions,
   useQuery as useTanstackQuery,
+  useSuspenseQuery as useTanstackSuspenseQuery,
 } from "@tanstack/react-query";
 
 import { api, ResponseError } from "../axios";
@@ -21,6 +22,32 @@ export const useQuery = <TQueryFnData = unknown, TError = ResponseError>(
   };
 
   return useTanstackQuery<TQueryFnData, TError>({
+    queryKey: [key],
+    queryFn,
+    retry: false,
+    staleTime: QUERY_STALE_TIME,
+    refetchOnWindowFocus: false,
+    ...queryOptions,
+  });
+};
+
+export const useSuspenseQuery = <
+  TQueryFnData = unknown,
+  TError = ResponseError
+>(
+  link: string,
+  key: string | string[],
+  queryOptions?: Omit<
+    UseQueryOptions<TQueryFnData, TError>,
+    "queryKey" | "queryFn"
+  >
+) => {
+  const queryFn = async (): Promise<TQueryFnData> => {
+    const response = await api.get<TQueryFnData>(link);
+    return response.data;
+  };
+
+  return useTanstackSuspenseQuery<TQueryFnData, TError>({
     queryKey: [key],
     queryFn,
     retry: false,

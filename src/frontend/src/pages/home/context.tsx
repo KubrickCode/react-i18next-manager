@@ -1,8 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 import { GetGroupsResDto } from "~/core/codegen";
-import { Loader } from "~/core/loader";
-import { KEY, LINK, useQuery } from "~/core/react-query";
+import { KEY, LINK, useSuspenseQuery } from "~/core/react-query";
 
 type SelectedGroup = {
   id: string;
@@ -40,13 +39,10 @@ export const HomePageContextProvider = ({
   children,
 }: HomePageContextProviderProps) => {
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup>(null);
-  const { data, error, isLoading } = useQuery<GetGroupsResDto>(
+  const { data } = useSuspenseQuery<GetGroupsResDto>(
     LINK.GET_GROUPS,
     KEY.GET_GROUPS
   );
-
-  if (error) return <>{error.message}</>;
-  if (!data) return <>ERROR</>;
 
   const { groups } = data;
 
@@ -66,7 +62,7 @@ export const HomePageContextProvider = ({
         ...actionValue,
       }}
     >
-      {isLoading ? <Loader.Block /> : children}
+      {children}
     </HomePageContext.Provider>
   );
 };
