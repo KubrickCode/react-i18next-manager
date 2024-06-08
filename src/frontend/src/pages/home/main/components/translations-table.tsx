@@ -5,6 +5,7 @@ import { Checkbox } from "~/core/checkbox";
 import { Center } from "~/core/layout";
 import { Text } from "~/core/text";
 import { useApp } from "~/core/app";
+import { Loader } from "~/core/loader";
 
 import { useHomePageContext } from "../../context";
 import { TranslationsTableRow } from "./translations-table-row";
@@ -31,7 +32,6 @@ export const TranslationsTable = ({
   if (locales.length < 1) return null;
   if (!data) return <>ERROR</>;
   if (error) return <>{error.message}</>;
-  if (isLoading) return <>Loading...</>;
 
   const { translations } = data;
 
@@ -52,6 +52,8 @@ export const TranslationsTable = ({
   };
 
   const hasTranslations = translations.length > 0;
+
+  if (isLoading) return <Loader.Block />;
 
   return (
     <Table layout="fixed" size="sm">

@@ -3,6 +3,8 @@ import { createContext, PropsWithChildren, useContext } from "react";
 import { GetLocalesResDto } from "~/core/codegen";
 import { KEY, LINK, useQuery } from "~/core/react-query";
 
+import { Loader } from "../loader";
+
 type State = {
   locales: GetLocalesResDto["locales"];
 };
@@ -21,7 +23,6 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
     KEY.GET_LOCALES
   );
 
-  if (isLoading) return <>Loading...</>;
   if (error) return <>{error.message}</>;
   if (!data) return <>ERROR</>;
 
@@ -33,7 +34,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         locales,
       }}
     >
-      {children}
+      {isLoading ? <Loader.FullScreen /> : children}
     </AppContext.Provider>
   );
 };

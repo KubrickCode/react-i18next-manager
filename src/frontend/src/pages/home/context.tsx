@@ -1,6 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 import { GetGroupsResDto } from "~/core/codegen";
+import { Loader } from "~/core/loader";
 import { KEY, LINK, useQuery } from "~/core/react-query";
 
 type SelectedGroup = {
@@ -44,7 +45,6 @@ export const HomePageContextProvider = ({
     KEY.GET_GROUPS
   );
 
-  if (isLoading) return <>Loading...</>;
   if (error) return <>{error.message}</>;
   if (!data) return <>ERROR</>;
 
@@ -66,7 +66,7 @@ export const HomePageContextProvider = ({
         ...actionValue,
       }}
     >
-      {children}
+      {isLoading ? <Loader.Block /> : children}
     </HomePageContext.Provider>
   );
 };
