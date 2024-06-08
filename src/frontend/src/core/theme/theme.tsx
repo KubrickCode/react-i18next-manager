@@ -30,9 +30,7 @@ const chakraTheme = extendTheme({
   styles: {
     global: {
       body: {
-        backgroundColor: "white",
         fontSize: "md",
-        color: "gray.800",
       },
     },
   },

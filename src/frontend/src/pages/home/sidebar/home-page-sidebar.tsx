@@ -9,11 +9,8 @@ import { GroupTreeView, SettingMenu } from "./components";
 
 export const HomePageSidebar = () => {
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");
-  const bgColor = useColorModeValue("white", "gray.800");
-  const fontColor = useColorModeValue("gray.800", "white");
-
   return (
-    <Sidebar backgroundColor={bgColor} color={fontColor}>
+    <Sidebar>
       <SidebarSection>
         <Flex alignItems="center" justifyContent="space-between">
           <Button
