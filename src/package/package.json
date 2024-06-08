@@ -1,6 +1,6 @@
 {
   "name": "@kubrick/react-i18next-manager",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "type": "commonjs",
   "license": "MIT",
   "dependencies": {
