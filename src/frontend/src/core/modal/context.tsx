@@ -25,7 +25,7 @@ type ModalState<T = {}> = {
   props: ModalComponentProps<T>;
 };
 
-const ModalContext = createContext<ModalContextProps | undefined>(undefined);
+const ModalContext = createContext<ModalContextProps | null>(null);
 
 export const ModalProvider = ({ children }: PropsWithChildren) => {
   const [modals, setModals] = useState<ModalState[]>([]);
