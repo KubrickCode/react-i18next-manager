@@ -13,7 +13,7 @@ type ModalComponentProps<T = {}> = Partial<ModalProps> & T;
 
 type ModalContextProps = {
   openModal: <T = {}>(
-    Component: ElementType,
+    modal: ElementType,
     props?: ModalComponentProps<T>
   ) => void;
   closeModal: (id: string) => void;
@@ -21,7 +21,7 @@ type ModalContextProps = {
 
 type ModalState<T = {}> = {
   id: string;
-  Component: ElementType;
+  modal: ElementType;
   props: ModalComponentProps<T>;
 };
 
@@ -31,10 +31,10 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
   const [modals, setModals] = useState<ModalState[]>([]);
 
   const openModal = <T = {},>(
-    Component: ElementType,
+    modal: ElementType,
     props: ModalComponentProps<T> = {} as ModalComponentProps<T>
   ) => {
-    setModals((prev) => [...prev, { id: uuidv4(), Component, props }]);
+    setModals((prev) => [...prev, { id: uuidv4(), modal, props }]);
   };
 
   const closeModal = (id: string) => {
@@ -44,8 +44,8 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
-      {modals.map(({ id, Component, props }) => (
-        <Component
+      {modals.map(({ id, modal: Modal, props }) => (
+        <Modal
           key={id}
           isOpen={true}
           onClose={() => closeModal(id)}
