@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@hello-pangea/dnd": "^16.6.0",
+    "@kubrick/react-i18next-manager": "^0.6.3",
     "@saas-ui/react": "^2.8.1",
     "@tanstack/react-query": "^5.34.1",
     "@tanstack/react-query-devtools": "^5.34.1",
