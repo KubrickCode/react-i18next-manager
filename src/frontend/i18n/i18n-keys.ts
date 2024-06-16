@@ -1,0 +1,1 @@
+export const i18nKeys = {common: {groups: "common.groups",},};

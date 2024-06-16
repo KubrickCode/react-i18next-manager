@@ -1,0 +1,39 @@
+{
+  "locales": [
+    {
+      "id": "2352b029-c1f8-4db4-bfad-97eec3b776e1",
+      "label": "en",
+      "position": 0
+    },
+    {
+      "id": "feab9c35-c5e1-44c2-9416-bc118419ead2",
+      "label": "ko",
+      "position": 1
+    }
+  ],
+  "groups": [
+    {
+      "id": "f7694b9b-937c-4b78-b66f-76f8a35bf915",
+      "parentId": null,
+      "label": "common",
+      "position": 0
+    }
+  ],
+  "translations": [
+    {
+      "id": "fca17492-5514-4763-9c59-3371ce2adada",
+      "groupId": "f7694b9b-937c-4b78-b66f-76f8a35bf915",
+      "key": "groups",
+      "values": [
+        {
+          "localeId": "2352b029-c1f8-4db4-bfad-97eec3b776e1",
+          "value": "Groups"
+        },
+        {
+          "localeId": "feab9c35-c5e1-44c2-9416-bc118419ead2",
+          "value": "그룹"
+        }
+      ]
+    }
+  ]
+}
