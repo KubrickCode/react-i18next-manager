@@ -3,7 +3,6 @@ import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import { FaLanguage } from "react-icons/fa";
 import { AiOutlineFileSync } from "react-icons/ai";
-import { chakra } from "@chakra-ui/react";
 
 import {
   Menu,
@@ -20,8 +19,9 @@ import { useColorMode, useColorModeValue } from "~/core/color-mode";
 import { IconButton } from "~/core/button";
 import { LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
-import { Select, SelectButton, SelectList } from "~/core/select";
 import { Box } from "~/core/layout";
+
+import { LanguageSelect } from "./language-select";
 
 export const SettingMenu = () => {
   const { toggleColorMode } = useColorMode();
@@ -73,28 +73,10 @@ export const SettingMenu = () => {
         <MenuDivider />
         <MenuGroup title="Select Language">
           <Box paddingX={3}>
-            <Select
-              defaultValue="English"
-              name="language"
-              options={["English", "Korean"].map((lang) => ({
-                label: lang,
-                value: lang,
-              }))}
-            >
-              <CustomSelectButton width="100%" />
-              <SelectList />
-            </Select>
+            <LanguageSelect />
           </Box>
         </MenuGroup>
       </MenuList>
     </Menu>
   );
 };
-
-const CustomSelectButton = chakra(SelectButton, {
-  baseStyle: {
-    span: {
-      paddingY: "2",
-    },
-  },
-});
