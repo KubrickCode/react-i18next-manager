@@ -1,19 +1,19 @@
 {
   "locales": [
     {
-      "id": "2352b029-c1f8-4db4-bfad-97eec3b776e1",
+      "id": "a0160231-55f9-40f1-87a1-8e2486788e03",
       "label": "en",
       "position": 0
     },
     {
-      "id": "feab9c35-c5e1-44c2-9416-bc118419ead2",
+      "id": "413e9827-627c-429e-9d56-28d73fd5dbe2",
       "label": "ko",
       "position": 1
     }
   ],
   "groups": [
     {
-      "id": "f7694b9b-937c-4b78-b66f-76f8a35bf915",
+      "id": "92b64a04-e4f7-4f22-8b7e-719ae77e7eff",
       "parentId": null,
       "label": "common",
       "position": 0
@@ -21,16 +21,16 @@
   ],
   "translations": [
     {
-      "id": "fca17492-5514-4763-9c59-3371ce2adada",
-      "groupId": "f7694b9b-937c-4b78-b66f-76f8a35bf915",
+      "id": "9003d6f1-597b-44ec-af44-8a5372f35f1a",
+      "groupId": "92b64a04-e4f7-4f22-8b7e-719ae77e7eff",
       "key": "groups",
       "values": [
         {
-          "localeId": "2352b029-c1f8-4db4-bfad-97eec3b776e1",
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
           "value": "Groups"
         },
         {
-          "localeId": "feab9c35-c5e1-44c2-9416-bc118419ead2",
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
           "value": "그룹"
         }
       ]
