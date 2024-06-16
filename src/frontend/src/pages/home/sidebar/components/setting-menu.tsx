@@ -3,10 +3,13 @@ import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
 import { FaLanguage } from "react-icons/fa";
 import { AiOutlineFileSync } from "react-icons/ai";
+import { chakra } from "@chakra-ui/react";
 
 import {
   Menu,
   MenuButton,
+  MenuDivider,
+  MenuGroup,
   MenuItem,
   MenuList,
   MenuModalToggle,
@@ -17,6 +20,8 @@ import { useColorMode, useColorModeValue } from "~/core/color-mode";
 import { IconButton } from "~/core/button";
 import { LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
+import { Select, SelectButton, SelectList } from "~/core/select";
+import { Box } from "~/core/layout";
 
 export const SettingMenu = () => {
   const { toggleColorMode } = useColorMode();
@@ -65,7 +70,31 @@ export const SettingMenu = () => {
         >
           <Text>Generate I18n Resources</Text>
         </MenuItem>
+        <MenuDivider />
+        <MenuGroup title="Select Language">
+          <Box paddingX={3}>
+            <Select
+              defaultValue="English"
+              name="language"
+              options={["English", "Korean"].map((lang) => ({
+                label: lang,
+                value: lang,
+              }))}
+            >
+              <CustomSelectButton width="100%" />
+              <SelectList />
+            </Select>
+          </Box>
+        </MenuGroup>
       </MenuList>
     </Menu>
   );
 };
+
+const CustomSelectButton = chakra(SelectButton, {
+  baseStyle: {
+    span: {
+      paddingY: "2",
+    },
+  },
+});
