@@ -1,5 +1,11 @@
 import i18n from "i18next";
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  Context,
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 import {
   I18nextProvider,
   initReactI18next,
@@ -27,7 +33,12 @@ type I18nContextType = {
   language: string;
 };
 
-const I18nContext = createContext<I18nContextType | undefined>(undefined);
+const I18nContext = createContext<I18nContextType>({
+  changeLanguage: () => {
+    throw new Error("I18nContext has not been provided!");
+  },
+  language: DEFAULT_LANGUAGE,
+});
 
 export const I18nProvider = ({ children }: { children?: JSX.Element }) => {
   const forceUpdate = useForceUpdate();
@@ -56,7 +67,7 @@ export const I18nProvider = ({ children }: { children?: JSX.Element }) => {
   );
 };
 
-export const useI18n = () => useContext(I18nContext);
+export const useI18n = () => useContextOrThrow(I18nContext);
 
 const useForceUpdate = () => {
   const [, setTick] = useState(0);
@@ -64,6 +75,16 @@ const useForceUpdate = () => {
   return useCallback(() => {
     setTick((tick) => tick + 1);
   }, []);
+};
+
+const useContextOrThrow: <ContextType>(
+  context: Context<ContextType>
+) => ContextType = (context) => {
+  const contextValue = useContext(context);
+  if (contextValue == null) {
+    throw new Error("Context has not been provided!");
+  }
+  return contextValue;
 };
 
 export { useTranslation };
