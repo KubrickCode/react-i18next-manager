@@ -1,6 +1,10 @@
 import i18n from "i18next";
 import { createContext, useCallback, useContext, useState } from "react";
-import { I18nextProvider, initReactI18next } from "react-i18next";
+import {
+  I18nextProvider,
+  initReactI18next,
+  useTranslation,
+} from "react-i18next";
 
 import resources from "./i18n.json";
 
@@ -61,3 +65,5 @@ const useForceUpdate = () => {
     setTick((tick) => tick + 1);
   }, []);
 };
+
+export { useTranslation };

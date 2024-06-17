@@ -15,6 +15,7 @@ import {
   EditGroupPositionReqBodyDto,
 } from "~/core/codegen";
 import { replaceBlank } from "~/core/utils";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
@@ -24,6 +25,7 @@ export const GroupTreeView = () => {
   const { groups, handleSelectedGroup } = useHomePageContext();
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
+  const { t } = useTranslation();
 
   const refetchQueryKeys = [[KEY.GET_GROUPS]];
   const { mutate: editGroupPosition } =
@@ -50,7 +52,7 @@ export const GroupTreeView = () => {
         width="full"
       >
         <Flex alignItems="center" justifyContent="space-between">
-          <Text fontSize="xs">Groups</Text>
+          <Text fontSize="xs">{t(i18nKeys.common.groups)}</Text>
           <ModalToggle
             modal={AddGroupModal}
             modalProps={{
