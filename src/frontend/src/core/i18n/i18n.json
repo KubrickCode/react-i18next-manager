@@ -15,7 +15,8 @@
       "common.save": "Save",
       "setting.editLocalePositionSuccess": "locale position updated successfully",
       "setting.editLocaleLabelSuccess": "locale label updated successfully",
-      "setting.deleteLocaleSuccess": "locale deleted successfully"
+      "setting.deleteLocaleSuccess": "locale deleted successfully",
+      "common.deleteConfirmMessage": "Are you sure you want to delete?"
     }
   },
   "ko": {
@@ -34,7 +35,8 @@
       "common.save": "저장",
       "setting.editLocalePositionSuccess": "언어 코드 위치가 성공적으로 수정되었습니다",
       "setting.editLocaleLabelSuccess": "언어 코드가 성공적으로 수정되었습니다",
-      "setting.deleteLocaleSuccess": "언어 코드가 성공적으로 삭제되었습니다"
+      "setting.deleteLocaleSuccess": "언어 코드가 성공적으로 삭제되었습니다",
+      "common.deleteConfirmMessage": "정말 삭제하시겠습니까?"
     }
   }
 }
