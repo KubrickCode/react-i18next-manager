@@ -57,7 +57,7 @@ export const AddTranslationModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalHeader>
-        <Text>{t(i18nKeys.group.addGroup)}</Text>
+        <Text>{t(i18nKeys.translation.addTranslation)}</Text>
       </ModalHeader>
       <ModalBody>
         <VStack alignItems="baseline" gap={5}>
