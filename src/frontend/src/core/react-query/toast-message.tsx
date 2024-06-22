@@ -1,9 +1,4 @@
 export default {
-  ADD_LOCALE: "locale added successfully",
-  EDIT_LOCALES_POSITION: "locale position updated successfully",
-  EDIT_LOCALE_LABEL: "locale label updated successfully",
-  DELETE_LOCALE: "locale deleted successfully",
-
   ADD_GROUP: "group added successfully",
   EDIT_GROUP_LABEL: "group label updated successfully",
   EDIT_GROUP_POSITION: "group position updated successfully",

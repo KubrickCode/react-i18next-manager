@@ -11,7 +11,7 @@ import {
   ModalProps,
   ModalToggle,
 } from "~/core/modal";
-import { useMutation, LINK, KEY, TOAST_MESSAGE } from "~/core/react-query";
+import { useMutation, LINK, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { Button, IconButton } from "~/core/button";
 import { Input } from "~/core/input";
@@ -52,12 +52,12 @@ export const LocaleManagementModal = ({
   const { mutate: editLocalesPosition } =
     useMutation<EditLocalesPositionReqBodyDto>({
       refetchQueryKeys,
-      toastMessage: TOAST_MESSAGE.EDIT_LOCALES_POSITION,
+      toastMessage: t(i18nKeys.setting.editLocalePositionSuccess),
     });
 
   const { mutate: editLocaleLabel } = useMutation<EditLocaleLabelReqBodyDto>({
     refetchQueryKeys,
-    toastMessage: TOAST_MESSAGE.EDIT_LOCALE_LABEL,
+    toastMessage: t(i18nKeys.setting.editLocaleLabelSuccess),
   });
 
   const onDrag = (result: DropResult) => {
@@ -185,7 +185,9 @@ export const LocaleManagementModal = ({
                                       ),
                                       link: LINK.DELETE_LOCALE(locale.id),
                                       refetchQueryKeys,
-                                      toastMessage: TOAST_MESSAGE.DELETE_LOCALE,
+                                      toastMessage: t(
+                                        i18nKeys.setting.deleteLocaleSuccess
+                                      ),
                                     }}
                                   >
                                     <IconButton
