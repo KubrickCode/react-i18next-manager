@@ -532,6 +532,21 @@
           "value": "키"
         }
       ]
+    },
+    {
+      "id": "cb51f0ab-a4a0-4dec-b309-c9cf4339f67a",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "emptyLocaleMessage",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Please Add Locale First"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "언어 코드를 먼저 추가해주세요"
+        }
+      ]
     }
   ]
 }

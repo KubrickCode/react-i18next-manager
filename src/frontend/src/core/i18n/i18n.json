@@ -33,7 +33,8 @@
       "translation.deleteTranslations": "Delete Translations",
       "translation.addTranslation": "Add Translation",
       "common.group": "Group",
-      "common.key": "Key"
+      "common.key": "Key",
+      "setting.emptyLocaleMessage": "Please Add Locale First"
     }
   },
   "ko": {
@@ -70,7 +71,8 @@
       "translation.deleteTranslations": "번역 삭제",
       "translation.addTranslation": "번역 추가",
       "common.group": "그룹",
-      "common.key": "키"
+      "common.key": "키",
+      "setting.emptyLocaleMessage": "언어 코드를 먼저 추가해주세요"
     }
   }
 }
