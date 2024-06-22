@@ -180,7 +180,9 @@ export const LocaleManagementModal = ({
                                     modalProps={{
                                       body: (
                                         <Text>
-                                          Are you sure you want to delete?
+                                          {t(
+                                            i18nKeys.common.deleteConfirmMessage
+                                          )}
                                         </Text>
                                       ),
                                       link: LINK.DELETE_LOCALE(locale.id),
