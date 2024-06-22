@@ -16,7 +16,7 @@ import {
 import { Text } from "~/core/text";
 import { useColorMode, useColorModeValue } from "~/core/color-mode";
 import { IconButton } from "~/core/button";
-import { LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
+import { LINK, useMutation } from "~/core/react-query";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 import { Box } from "~/core/layout";
 import { i18nKeys, useTranslation } from "~/core/i18n";
@@ -37,7 +37,7 @@ export const SettingMenu = () => {
   );
 
   const { mutate: generateI18nResources } = useMutation({
-    toastMessage: TOAST_MESSAGE.GENERATE_I18N_RESOURCES,
+    toastMessage: t(i18nKeys.setting.generateI18nSuccess),
   });
 
   const handleGenerateI18nResources = () => {

@@ -7,7 +7,8 @@
       "setting.darkMode": "Dark Mode",
       "setting.localeManagement": "Locale Management",
       "setting.generateI18n": "Generate I18n Resources",
-      "common.close": "Close"
+      "common.close": "Close",
+      "setting.generateI18nSuccess": "i18n resources generated successfully"
     }
   },
   "ko": {
@@ -18,7 +19,8 @@
       "setting.darkMode": "다크모드 켜기",
       "setting.localeManagement": "언어 코드 관리",
       "setting.generateI18n": "I18n 리소스 생성",
-      "common.close": "닫기"
+      "common.close": "닫기",
+      "setting.generateI18nSuccess": "I18n 리소스가 성공적으로 생성되었습니다"
     }
   }
 }

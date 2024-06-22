@@ -130,6 +130,21 @@
           "value": "닫기"
         }
       ]
+    },
+    {
+      "id": "1a930c6a-1dd4-4a85-85cf-348757051ca1",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "generateI18nSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "i18n resources generated successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "I18n 리소스가 성공적으로 생성되었습니다"
+        }
+      ]
     }
   ]
 }

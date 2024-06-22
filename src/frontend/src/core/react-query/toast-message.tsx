@@ -12,6 +12,4 @@ export default {
   ADD_TRANSLATION: "translation added successfully",
   EDIT_TRANSLATION: "translation updated successfully",
   DELETE_TRANSLATIONS: "translations deleted successfully",
-
-  GENERATE_I18N_RESOURCES: "i18n resources generated successfully",
 };
