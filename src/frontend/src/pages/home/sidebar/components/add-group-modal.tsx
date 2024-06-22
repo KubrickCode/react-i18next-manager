@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Button } from "~/core/button";
 import { AddGroupReqBodyDto } from "~/core/codegen";
-import { LABELS } from "~/core/constants";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 import { Input } from "~/core/input";
 import { VStack } from "~/core/layout";
 import {
@@ -27,6 +27,7 @@ export const AddGroupModal = ({
   parentId,
   parentName,
 }: AddGroupModalProps) => {
+  const { t } = useTranslation();
   const [label, setLabel] = useState("");
 
   const { mutate: addGroup } = useMutation<AddGroupReqBodyDto>({
@@ -73,7 +74,7 @@ export const AddGroupModal = ({
       </ModalBody>
       <ModalFooter onClose={onClose}>
         <Button colorScheme="darkgray" onClick={handleSubmit}>
-          {LABELS.SAVE}
+          {t(i18nKeys.common.save)}
         </Button>
       </ModalFooter>
     </Modal>
