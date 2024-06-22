@@ -8,7 +8,14 @@
       "setting.localeManagement": "Locale Management",
       "setting.generateI18n": "Generate I18n Resources",
       "common.close": "Close",
-      "setting.generateI18nSuccess": "i18n resources generated successfully"
+      "setting.generateI18nSuccess": "i18n resources generated successfully",
+      "setting.addLocaleSuccess": "locale added successfully",
+      "setting.addLocale": "Add Locale",
+      "setting.newLocale": "New Locale",
+      "common.save": "Save",
+      "setting.editLocalePositionSuccess": "locale position updated successfully",
+      "setting.editLocaleLabelSuccess": "locale label updated successfully",
+      "setting.deleteLocaleSuccess": "locale deleted successfully"
     }
   },
   "ko": {
@@ -20,7 +27,14 @@
       "setting.localeManagement": "언어 코드 관리",
       "setting.generateI18n": "I18n 리소스 생성",
       "common.close": "닫기",
-      "setting.generateI18nSuccess": "I18n 리소스가 성공적으로 생성되었습니다"
+      "setting.generateI18nSuccess": "I18n 리소스가 성공적으로 생성되었습니다",
+      "setting.addLocaleSuccess": "언어 코드가 성공적으로 추가되었습니다",
+      "setting.addLocale": "언어 코드 추가",
+      "setting.newLocale": "새 언어  코드",
+      "common.save": "저장",
+      "setting.editLocalePositionSuccess": "언어 코드 위치가 성공적으로 수정되었습니다",
+      "setting.editLocaleLabelSuccess": "언어 코드가 성공적으로 수정되었습니다",
+      "setting.deleteLocaleSuccess": "언어 코드가 성공적으로 삭제되었습니다"
     }
   }
 }

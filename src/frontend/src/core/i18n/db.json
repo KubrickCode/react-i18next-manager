@@ -145,6 +145,111 @@
           "value": "I18n 리소스가 성공적으로 생성되었습니다"
         }
       ]
+    },
+    {
+      "id": "ee14867f-9acb-4b38-b0e6-6b534fd8bc20",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "addLocaleSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "locale added successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "언어 코드가 성공적으로 추가되었습니다"
+        }
+      ]
+    },
+    {
+      "id": "3f38fc99-db61-4083-be29-c9ab3756f931",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "addLocale",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Add Locale"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "언어 코드 추가"
+        }
+      ]
+    },
+    {
+      "id": "acff40c5-a072-4b3c-b5d0-23ff8b5160d7",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "newLocale",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "New Locale"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "새 언어  코드"
+        }
+      ]
+    },
+    {
+      "id": "872943f9-e1d0-497a-ad71-7cf891d18abf",
+      "groupId": "92b64a04-e4f7-4f22-8b7e-719ae77e7eff",
+      "key": "save",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Save"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "저장"
+        }
+      ]
+    },
+    {
+      "id": "72bde3ed-4ab3-4651-9a27-a88476a21b52",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "editLocalePositionSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "locale position updated successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "언어 코드 위치가 성공적으로 수정되었습니다"
+        }
+      ]
+    },
+    {
+      "id": "0da139b1-cec6-475b-92ad-caa812093b62",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "editLocaleLabelSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "locale label updated successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "언어 코드가 성공적으로 수정되었습니다"
+        }
+      ]
+    },
+    {
+      "id": "cbdb49a8-40cf-4ca4-bae3-1d14e6a3b943",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "deleteLocaleSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "locale deleted successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "언어 코드가 성공적으로 삭제되었습니다"
+        }
+      ]
     }
   ]
 }
