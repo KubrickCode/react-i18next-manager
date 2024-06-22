@@ -17,7 +17,8 @@
       "setting.editLocaleLabelSuccess": "locale label updated successfully",
       "setting.deleteLocaleSuccess": "locale deleted successfully",
       "common.deleteConfirmMessage": "Are you sure you want to delete?",
-      "common.delete": "Delete"
+      "common.delete": "Delete",
+      "common.deleteConfirmation": "Delete Confirmation"
     }
   },
   "ko": {
@@ -38,7 +39,8 @@
       "setting.editLocaleLabelSuccess": "언어 코드가 성공적으로 수정되었습니다",
       "setting.deleteLocaleSuccess": "언어 코드가 성공적으로 삭제되었습니다",
       "common.deleteConfirmMessage": "정말 삭제하시겠습니까?",
-      "common.delete": "삭제"
+      "common.delete": "삭제",
+      "common.deleteConfirmation": "삭제 확인"
     }
   }
 }
