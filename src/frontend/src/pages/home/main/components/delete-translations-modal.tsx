@@ -46,10 +46,10 @@ export const DeleteTranslationModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalHeader>
-        <Text>Delete Translations</Text>
+        <Text>{t(i18nKeys.translation.deleteTranslations)}</Text>
       </ModalHeader>
       <ModalBody>
-        <Text>Are you sure you want to delete?</Text>
+        <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>
       </ModalBody>
       <ModalFooter onClose={onClose}>
         <Button colorScheme="red" onClick={handleSubmit}>
