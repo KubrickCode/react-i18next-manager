@@ -29,6 +29,12 @@
       "parentId": null,
       "label": "group",
       "position": 2
+    },
+    {
+      "id": "f3798fc3-1272-4c45-854f-18a2555d56f4",
+      "parentId": null,
+      "label": "translation",
+      "position": 3
     }
   ],
   "translations": [
@@ -419,6 +425,51 @@
         {
           "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
           "value": "그룹이 성공적으로 삭제되었습니다"
+        }
+      ]
+    },
+    {
+      "id": "d85f8b4b-219e-4b8e-9e9c-d06a2252bcd4",
+      "groupId": "f3798fc3-1272-4c45-854f-18a2555d56f4",
+      "key": "addTranslationSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "translation added successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "번역이 성공적으로 추가되었습니다"
+        }
+      ]
+    },
+    {
+      "id": "17050f7c-cb9e-4807-8a3b-ac63b3fe9210",
+      "groupId": "f3798fc3-1272-4c45-854f-18a2555d56f4",
+      "key": "editTranslationSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "translation edited successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "번역이 성공적으로 수정되었습니다"
+        }
+      ]
+    },
+    {
+      "id": "58986cce-4395-44d0-913e-52dce12595d6",
+      "groupId": "f3798fc3-1272-4c45-854f-18a2555d56f4",
+      "key": "deleteTranslationSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "translations deleted successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "번역이 성공적으로 삭제되었습니다"
         }
       ]
     }

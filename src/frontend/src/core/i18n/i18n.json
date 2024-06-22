@@ -26,7 +26,10 @@
       "group.addGroupSuccess": "group added successfully",
       "group.editGroupPositionSuccess": "group position edited successfully",
       "group.editGroupLabelSuccess": "group label edited successfully",
-      "group.deleteGroupSuccess": "group deleted successfully"
+      "group.deleteGroupSuccess": "group deleted successfully",
+      "translation.addTranslationSuccess": "translation added successfully",
+      "translation.editTranslationSuccess": "translation edited successfully",
+      "translation.deleteTranslationSuccess": "translations deleted successfully"
     }
   },
   "ko": {
@@ -56,7 +59,10 @@
       "group.addGroupSuccess": "그룹이 성공적으로 추가되었습니다",
       "group.editGroupPositionSuccess": "그룹 위치가 성공적으로 수정되었습니다",
       "group.editGroupLabelSuccess": "그룹이 성공적으로 수정되었습니다",
-      "group.deleteGroupSuccess": "그룹이 성공적으로 삭제되었습니다"
+      "group.deleteGroupSuccess": "그룹이 성공적으로 삭제되었습니다",
+      "translation.addTranslationSuccess": "번역이 성공적으로 추가되었습니다",
+      "translation.editTranslationSuccess": "번역이 성공적으로 수정되었습니다",
+      "translation.deleteTranslationSuccess": "번역이 성공적으로 삭제되었습니다"
     }
   }
 }
