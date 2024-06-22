@@ -13,24 +13,28 @@ import {
   MenuList,
   MenuModalToggle,
 } from "~/core/menu";
-import { LABELS } from "~/core/constants";
 import { Text } from "~/core/text";
 import { useColorMode, useColorModeValue } from "~/core/color-mode";
 import { IconButton } from "~/core/button";
 import { LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 import { Box } from "~/core/layout";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { LanguageSelect } from "./language-select";
 
 export const SettingMenu = () => {
+  const { t } = useTranslation();
   const { toggleColorMode } = useColorMode();
 
   const darkModeIcon = useColorModeValue(
     <MdDarkMode />,
     <CiLight color="white" />
   );
-  const darkModeLabel = useColorModeValue("Dark Mode", "Light Mode");
+  const darkModeLabel = useColorModeValue(
+    t(i18nKeys.setting.darkMode),
+    t(i18nKeys.setting.lightMode)
+  );
 
   const { mutate: generateI18nResources } = useMutation({
     toastMessage: TOAST_MESSAGE.GENERATE_I18N_RESOURCES,
@@ -62,16 +66,16 @@ export const SettingMenu = () => {
           <Text>{darkModeLabel}</Text>
         </MenuItem>
         <MenuModalToggle icon={<FaLanguage />} modal={LocaleManagementModal}>
-          <Text>{LABELS.LOCALE_MANAGEMENT}</Text>
+          <Text>{t(i18nKeys.setting.localeManagement)}</Text>
         </MenuModalToggle>
         <MenuItem
           icon={<AiOutlineFileSync />}
           onClick={handleGenerateI18nResources}
         >
-          <Text>Generate I18n Resources</Text>
+          <Text>{t(i18nKeys.setting.generateI18n)}</Text>
         </MenuItem>
         <MenuDivider />
-        <MenuGroup title="Select Language">
+        <MenuGroup title={t(i18nKeys.setting.selectLanguage)}>
           <Box paddingX={3}>
             <LanguageSelect />
           </Box>

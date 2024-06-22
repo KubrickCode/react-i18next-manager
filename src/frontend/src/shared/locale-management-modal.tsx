@@ -28,6 +28,7 @@ import {
 } from "~/core/codegen";
 import { AddLocaleModal } from "~/shared/add-locale-modal";
 import { useApp } from "~/core/app";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 
 type LocaleManagementModalProps = ModalProps;
 
@@ -35,6 +36,7 @@ export const LocaleManagementModal = ({
   isOpen,
   onClose,
 }: LocaleManagementModalProps) => {
+  const { t } = useTranslation();
   const { locales } = useApp();
 
   const refetchQueryKeys = [[KEY.GET_LOCALES]];
@@ -82,7 +84,7 @@ export const LocaleManagementModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalHeader>
-        <Text>Locale Management</Text>
+        <Text>{t(i18nKeys.setting.localeManagement)}</Text>
       </ModalHeader>
       <ModalBody>
         <DragDropContext onDragEnd={onDrag}>
