@@ -3,11 +3,11 @@ import { ReactNode } from "react";
 import { Modal, ModalProps } from "./modal";
 import { QueryKey, useMutation } from "../react-query";
 import { ModalHeader } from "./modal-header";
-import { LABELS } from "../constants";
 import { ModalBody } from "./modal-body";
 import { ModalFooter } from "./modal-footer";
 import { Button } from "../button";
 import { Text } from "../text";
+import { i18nKeys, useTranslation } from "../i18n";
 
 type DeleteModelProps = ModalProps & {
   body: ReactNode;
@@ -25,6 +25,7 @@ export const DeleteModal = ({
   toastMessage,
   ...modalProps
 }: DeleteModelProps) => {
+  const { t } = useTranslation();
   const { mutate } = useMutation({
     refetchQueryKeys,
     toastMessage,
@@ -42,12 +43,12 @@ export const DeleteModal = ({
   return (
     <Modal {...modalProps}>
       <ModalHeader>
-        <Text>{LABELS.DELETE_CONFIRMATION}</Text>
+        <Text>{t(i18nKeys.common.deleteConfirmation)}</Text>
       </ModalHeader>
       <ModalBody>{body}</ModalBody>
       <ModalFooter onClose={modalProps.onClose}>
         <Button colorScheme="red" onClick={handleComplete}>
-          {LABELS.DELETE}
+          {t(i18nKeys.common.delete)}
         </Button>
       </ModalFooter>
     </Modal>
