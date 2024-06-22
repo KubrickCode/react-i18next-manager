@@ -54,6 +54,10 @@ run svc *args:
       just run frontend &
       just run backend
       ;;
+
+    i18n)
+      cd "{{ frontend_dir }}" && yarn i18n studio
+      ;;
       
   esac
 
