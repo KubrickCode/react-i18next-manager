@@ -23,6 +23,12 @@
       "parentId": null,
       "label": "setting",
       "position": 1
+    },
+    {
+      "id": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "parentId": null,
+      "label": "group",
+      "position": 2
     }
   ],
   "translations": [
@@ -293,6 +299,81 @@
         {
           "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
           "value": "삭제 확인"
+        }
+      ]
+    },
+    {
+      "id": "6693a675-d6cb-4c36-a09d-678b3baa5fc6",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "addGroup",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Add Group"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹 추가"
+        }
+      ]
+    },
+    {
+      "id": "8d9b3ca3-126d-4d31-ba15-292430a5346e",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "parentGroup",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Parent Group"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "상위 그룹"
+        }
+      ]
+    },
+    {
+      "id": "7c1162a8-ec32-4e8e-83b1-8fed6a77a445",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "newGroup",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "New Group"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "새 그룹"
+        }
+      ]
+    },
+    {
+      "id": "7267f9cb-242e-4244-8afd-5dd41435cfac",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "groupName",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Group Name"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹명"
+        }
+      ]
+    },
+    {
+      "id": "2f5f35cd-01ef-46b5-a3fa-a39c993cc52c",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "addGroupSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "group added successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹이 성공적으로 추가되었습니다"
         }
       ]
     }

@@ -18,7 +18,12 @@
       "setting.deleteLocaleSuccess": "locale deleted successfully",
       "common.deleteConfirmMessage": "Are you sure you want to delete?",
       "common.delete": "Delete",
-      "common.deleteConfirmation": "Delete Confirmation"
+      "common.deleteConfirmation": "Delete Confirmation",
+      "group.addGroup": "Add Group",
+      "group.parentGroup": "Parent Group",
+      "group.newGroup": "New Group",
+      "group.groupName": "Group Name",
+      "group.addGroupSuccess": "group added successfully"
     }
   },
   "ko": {
@@ -40,7 +45,12 @@
       "setting.deleteLocaleSuccess": "언어 코드가 성공적으로 삭제되었습니다",
       "common.deleteConfirmMessage": "정말 삭제하시겠습니까?",
       "common.delete": "삭제",
-      "common.deleteConfirmation": "삭제 확인"
+      "common.deleteConfirmation": "삭제 확인",
+      "group.addGroup": "그룹 추가",
+      "group.parentGroup": "상위 그룹",
+      "group.newGroup": "새 그룹",
+      "group.groupName": "그룹명",
+      "group.addGroupSuccess": "그룹이 성공적으로 추가되었습니다"
     }
   }
 }
