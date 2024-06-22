@@ -29,7 +29,8 @@
       "group.deleteGroupSuccess": "group deleted successfully",
       "translation.addTranslationSuccess": "translation added successfully",
       "translation.editTranslationSuccess": "translation edited successfully",
-      "translation.deleteTranslationSuccess": "translations deleted successfully"
+      "translation.deleteTranslationSuccess": "translations deleted successfully",
+      "translation.deleteTranslations": "Delete Translations"
     }
   },
   "ko": {
@@ -62,7 +63,8 @@
       "group.deleteGroupSuccess": "그룹이 성공적으로 삭제되었습니다",
       "translation.addTranslationSuccess": "번역이 성공적으로 추가되었습니다",
       "translation.editTranslationSuccess": "번역이 성공적으로 수정되었습니다",
-      "translation.deleteTranslationSuccess": "번역이 성공적으로 삭제되었습니다"
+      "translation.deleteTranslationSuccess": "번역이 성공적으로 삭제되었습니다",
+      "translation.deleteTranslations": "번역 삭제"
     }
   }
 }

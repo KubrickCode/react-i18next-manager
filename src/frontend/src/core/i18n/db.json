@@ -472,6 +472,21 @@
           "value": "번역이 성공적으로 삭제되었습니다"
         }
       ]
+    },
+    {
+      "id": "959138f6-4f1e-4c2e-a32c-d6175e3cfc9c",
+      "groupId": "f3798fc3-1272-4c45-854f-18a2555d56f4",
+      "key": "deleteTranslations",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Delete Translations"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "번역 삭제"
+        }
+      ]
     }
   ]
 }
