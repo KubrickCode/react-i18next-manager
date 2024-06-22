@@ -265,6 +265,21 @@
           "value": "정말 삭제하시겠습니까?"
         }
       ]
+    },
+    {
+      "id": "13f34290-94f1-487b-9ecb-c1087ce5ad9d",
+      "groupId": "92b64a04-e4f7-4f22-8b7e-719ae77e7eff",
+      "key": "delete",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Delete"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "삭제"
+        }
+      ]
     }
   ]
 }
