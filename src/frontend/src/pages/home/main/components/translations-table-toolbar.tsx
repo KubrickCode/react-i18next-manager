@@ -2,10 +2,9 @@ import { IoMdRefresh } from "react-icons/io";
 
 import { Button, IconButton } from "~/core/button";
 import { SearchInput } from "~/core/input";
-import { Flex, HStack } from "~/core/layout";
+import { HStack } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
 import { KEY, useQueryClient } from "~/core/react-query";
-import { Text } from "~/core/text";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 import { useApp } from "~/core/app";
 
@@ -38,15 +37,11 @@ export const TranslationsTableToolbar = ({
 
   if (locales.length < 1)
     return (
-      <Flex alignItems="center" gap={2}>
-        <Text>Please</Text>
-        <ModalToggle modal={LocaleManagementModal}>
-          <Button size="sm" textDecoration="underline" variant="link">
-            Add Locale
-          </Button>
-        </ModalToggle>
-        <Text>First</Text>
-      </Flex>
+      <ModalToggle modal={LocaleManagementModal}>
+        <Button size="sm" textDecoration="underline" variant="link">
+          Please Add Locale First
+        </Button>
+      </ModalToggle>
     );
 
   return (
