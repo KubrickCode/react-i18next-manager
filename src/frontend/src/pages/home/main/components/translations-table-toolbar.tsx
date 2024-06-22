@@ -7,6 +7,7 @@ import { ModalToggle } from "~/core/modal";
 import { KEY, useQueryClient } from "~/core/react-query";
 import { LocaleManagementModal } from "~/shared/locale-management-modal";
 import { useApp } from "~/core/app";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
@@ -23,6 +24,7 @@ export const TranslationsTableToolbar = ({
   handleTerm,
   selectedIds,
 }: TranslationsTableToolbarProps) => {
+  const { t } = useTranslation();
   const { locales } = useApp();
   const { selectedGroup } = useHomePageContext();
   const queryClient = useQueryClient();
@@ -39,7 +41,7 @@ export const TranslationsTableToolbar = ({
     return (
       <ModalToggle modal={LocaleManagementModal}>
         <Button size="sm" textDecoration="underline" variant="link">
-          Please Add Locale First
+          {t(i18nKeys.setting.emptyLocaleMessage)}
         </Button>
       </ModalToggle>
     );
