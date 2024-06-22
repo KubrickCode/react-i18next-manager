@@ -12,11 +12,12 @@ import { useColorModeValue } from "~/core/color-mode";
 import { Highlight } from "~/core/highlight";
 import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
-import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
+import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
 
 import { useHomePageContext } from "../../context";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 
 type TranslationsTableRowProps = {
   isSelected: boolean;
@@ -31,6 +32,7 @@ export const TranslationsTableRow = ({
   term,
   translation,
 }: TranslationsTableRowProps) => {
+  const { t } = useTranslation();
   const { locales } = useApp();
   const { selectedGroup } = useHomePageContext();
   const [editMode, setEditMode] = useState(false);
@@ -44,7 +46,7 @@ export const TranslationsTableRow = ({
 
   const { mutate: editTranslation } = useMutation<EditTranslationReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
-    toastMessage: TOAST_MESSAGE.EDIT_TRANSLATION,
+    toastMessage: t(i18nKeys.translation.editTranslationSuccess),
   });
 
   const handleEditTranslation = () => {
