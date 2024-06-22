@@ -13,7 +13,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { KEY, LINK, TOAST_MESSAGE, useMutation } from "~/core/react-query";
+import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
 
@@ -39,7 +39,7 @@ export const AddTranslationModal = ({
 
   const { mutate: addTranslation } = useMutation<AddTranslationReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup.id)]],
-    toastMessage: TOAST_MESSAGE.ADD_TRANSLATION,
+    toastMessage: t(i18nKeys.translation.addTranslationSuccess),
   });
 
   const handleSubmit = () => {
