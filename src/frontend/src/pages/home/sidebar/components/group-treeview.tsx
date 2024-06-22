@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
-import { useMutation, LINK, KEY, TOAST_MESSAGE } from "~/core/react-query";
+import { useMutation, LINK, KEY } from "~/core/react-query";
 import { NodeRendererProps, Tree } from "~/core/tree";
 import { Input, SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
@@ -20,6 +20,7 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
 import { useHomePageContext } from "../../context";
+import { t } from "i18next";
 
 export const GroupTreeView = () => {
   const { groups, handleSelectedGroup } = useHomePageContext();
@@ -31,7 +32,7 @@ export const GroupTreeView = () => {
   const { mutate: editGroupPosition } =
     useMutation<EditGroupPositionReqBodyDto>({
       refetchQueryKeys,
-      toastMessage: TOAST_MESSAGE.EDIT_GROUP_POSITION,
+      toastMessage: t(i18nKeys.group.editGroupPositionSuccess),
     });
 
   const treeData = convertGroupsToTreeData(groups);
@@ -118,7 +119,7 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
   const refetchQueryKeys = [[KEY.GET_GROUPS]];
   const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
     refetchQueryKeys,
-    toastMessage: TOAST_MESSAGE.EDIT_GROUP_LABEL,
+    toastMessage: t(i18nKeys.group.editGroupLabelSuccess),
   });
 
   const handleEdit = () => {
@@ -218,10 +219,10 @@ const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
             <ModalToggle
               modal={DeleteModal}
               modalProps={{
-                body: <Text>Are you sure you want to delete?</Text>,
+                body: <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>,
                 link: LINK.DELETE_GROUP(node.id),
                 refetchQueryKeys,
-                toastMessage: TOAST_MESSAGE.DELETE_GROUP,
+                toastMessage: t(i18nKeys.group.deleteGroupSuccess),
                 onComplete() {
                   tree.delete(node.id);
                   tree.select(null);
