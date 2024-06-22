@@ -23,7 +23,10 @@
       "group.parentGroup": "Parent Group",
       "group.newGroup": "New Group",
       "group.groupName": "Group Name",
-      "group.addGroupSuccess": "group added successfully"
+      "group.addGroupSuccess": "group added successfully",
+      "group.editGroupPositionSuccess": "group position edited successfully",
+      "group.editGroupLabelSuccess": "group label edited successfully",
+      "group.deleteGroupSuccess": "group deleted successfully"
     }
   },
   "ko": {
@@ -50,7 +53,10 @@
       "group.parentGroup": "상위 그룹",
       "group.newGroup": "새 그룹",
       "group.groupName": "그룹명",
-      "group.addGroupSuccess": "그룹이 성공적으로 추가되었습니다"
+      "group.addGroupSuccess": "그룹이 성공적으로 추가되었습니다",
+      "group.editGroupPositionSuccess": "그룹 위치가 성공적으로 수정되었습니다",
+      "group.editGroupLabelSuccess": "그룹이 성공적으로 수정되었습니다",
+      "group.deleteGroupSuccess": "그룹이 성공적으로 삭제되었습니다"
     }
   }
 }

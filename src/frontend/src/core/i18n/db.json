@@ -376,6 +376,51 @@
           "value": "그룹이 성공적으로 추가되었습니다"
         }
       ]
+    },
+    {
+      "id": "c2861ea8-02e9-48ac-952c-8949fe79f4b0",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "editGroupPositionSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "group position edited successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹 위치가 성공적으로 수정되었습니다"
+        }
+      ]
+    },
+    {
+      "id": "d3bda022-a620-49d6-a8f2-98ccfb7b471f",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "editGroupLabelSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "group label edited successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹이 성공적으로 수정되었습니다"
+        }
+      ]
+    },
+    {
+      "id": "448293de-61dd-4638-8deb-f7efc876f213",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "deleteGroupSuccess",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "group deleted successfully"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹이 성공적으로 삭제되었습니다"
+        }
+      ]
     }
   ]
 }
