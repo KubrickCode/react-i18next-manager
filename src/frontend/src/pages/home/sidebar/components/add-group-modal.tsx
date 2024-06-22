@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { useMutation, LINK, KEY, TOAST_MESSAGE } from "~/core/react-query";
+import { useMutation, LINK, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
 
@@ -32,7 +32,7 @@ export const AddGroupModal = ({
 
   const { mutate: addGroup } = useMutation<AddGroupReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_GROUPS]],
-    toastMessage: TOAST_MESSAGE.ADD_GROUP,
+    toastMessage: t(i18nKeys.group.addGroupSuccess),
   });
 
   const handleSubmit = () => {
@@ -50,22 +50,22 @@ export const AddGroupModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalHeader>
-        <Text>Add Group</Text>
+        <Text>{t(i18nKeys.group.addGroup)}</Text>
       </ModalHeader>
       <ModalBody>
         <VStack alignItems="baseline" gap={5}>
           <VStack alignItems="baseline">
             <Text fontSize="xs" fontWeight="lighter">
-              Parent Group
+              {t(i18nKeys.group.parentGroup)}
             </Text>
             <Text fontWeight="semibold">{parentName}</Text>
           </VStack>
           <VStack alignItems="baseline" width="full">
             <Text fontSize="xs" fontWeight="lighter">
-              New Group
+              {t(i18nKeys.group.newGroup)}
             </Text>
             <Input
-              placeholder="Group Name"
+              placeholder={t(i18nKeys.group.groupName)}
               onChange={(e) => setLabel(replaceBlank(e.target.value))}
               value={label}
             />

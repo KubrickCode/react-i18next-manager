@@ -1,5 +1,4 @@
 export default {
-  ADD_GROUP: "group added successfully",
   EDIT_GROUP_LABEL: "group label updated successfully",
   EDIT_GROUP_POSITION: "group position updated successfully",
   DELETE_GROUP: "group deleted successfully",
