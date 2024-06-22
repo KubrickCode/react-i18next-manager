@@ -17,6 +17,12 @@
       "parentId": null,
       "label": "common",
       "position": 0
+    },
+    {
+      "id": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "parentId": null,
+      "label": "setting",
+      "position": 1
     }
   ],
   "translations": [
@@ -32,6 +38,96 @@
         {
           "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
           "value": "그룹"
+        }
+      ]
+    },
+    {
+      "id": "535a7c97-668c-4e45-8d4c-61cd65430b0e",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "selectLanguage",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Select Language"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "언어 선"
+        }
+      ]
+    },
+    {
+      "id": "1612c985-4ff8-43b0-844f-414c96edd455",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "lightMode",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Light Mode"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "다크모드 끄기"
+        }
+      ]
+    },
+    {
+      "id": "b7bf11c5-ac27-4304-be7e-e2f16a34a905",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "darkMode",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Dark Mode"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "다크모드 켜기"
+        }
+      ]
+    },
+    {
+      "id": "0e944d7a-98f9-4b21-af74-1d13e050fc72",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "localeManagement",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Locale Management"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "언어 코드 관리"
+        }
+      ]
+    },
+    {
+      "id": "9205f2a5-98e5-49ee-a678-5ef83e889147",
+      "groupId": "bcbeea0f-37f8-47c4-ba65-c81c884a54f2",
+      "key": "generateI18n",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Generate I18n Resources"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "I18n 리소스 생성"
+        }
+      ]
+    },
+    {
+      "id": "d57c9326-25ee-4e85-a531-2f376d8f7c4f",
+      "groupId": "92b64a04-e4f7-4f22-8b7e-719ae77e7eff",
+      "key": "close",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Close"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "닫기"
         }
       ]
     }

@@ -1,1 +1,1 @@
-export const i18nKeys = {common: {groups: "common.groups",},};
+export const i18nKeys = {common: {groups: "common.groups",close: "common.close",},setting: {selectLanguage: "setting.selectLanguage",lightMode: "setting.lightMode",darkMode: "setting.darkMode",localeManagement: "setting.localeManagement",generateI18n: "setting.generateI18n",},};

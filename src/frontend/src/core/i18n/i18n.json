@@ -1,12 +1,24 @@
 {
   "en": {
     "translation": {
-      "common.groups": "Groups"
+      "common.groups": "Groups",
+      "setting.selectLanguage": "Select Language",
+      "setting.lightMode": "Light Mode",
+      "setting.darkMode": "Dark Mode",
+      "setting.localeManagement": "Locale Management",
+      "setting.generateI18n": "Generate I18n Resources",
+      "common.close": "Close"
     }
   },
   "ko": {
     "translation": {
-      "common.groups": "그룹"
+      "common.groups": "그룹",
+      "setting.selectLanguage": "언어 선",
+      "setting.lightMode": "다크모드 끄기",
+      "setting.darkMode": "다크모드 켜기",
+      "setting.localeManagement": "언어 코드 관리",
+      "setting.generateI18n": "I18n 리소스 생성",
+      "common.close": "닫기"
     }
   }
 }
