@@ -57,11 +57,7 @@ export const AddLocaleModal = ({
           <Text fontSize="xs" fontWeight="lighter">
             {t(i18nKeys.setting.newLocale)}
           </Text>
-          <Input
-            placeholder="Locale Code"
-            onChange={(e) => setLabel(e.target.value)}
-            value={label}
-          />
+          <Input onChange={(e) => setLabel(e.target.value)} value={label} />
         </VStack>
       </ModalBody>
       <ModalFooter onClose={onClose}>
