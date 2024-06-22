@@ -13,7 +13,7 @@
   "ko": {
     "translation": {
       "common.groups": "그룹",
-      "setting.selectLanguage": "언어 선",
+      "setting.selectLanguage": "언어 선택",
       "setting.lightMode": "다크모드 끄기",
       "setting.darkMode": "다크모드 켜기",
       "setting.localeManagement": "언어 코드 관리",
