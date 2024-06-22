@@ -58,7 +58,9 @@ export const TranslationsTableToolbar = ({
           }}
         >
           <Button colorScheme="red" size="sm">
-            Delete {selectedIds.length} rows
+            {t(i18nKeys.translation.deleteTranslationsRows, {
+              count: selectedIds.length,
+            })}
           </Button>
         </ModalToggle>
       )}

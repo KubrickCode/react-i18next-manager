@@ -547,6 +547,21 @@
           "value": "언어 코드를 먼저 추가해주세요"
         }
       ]
+    },
+    {
+      "id": "0152f6b2-6c6e-4e1d-8a70-bd3c5e08ee97",
+      "groupId": "f3798fc3-1272-4c45-854f-18a2555d56f4",
+      "key": "deleteTranslationsRows",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Delete {{ count }} rows"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "{{ count }} 행 삭제"
+        }
+      ]
     }
   ]
 }
