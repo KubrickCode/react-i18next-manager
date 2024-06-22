@@ -9,7 +9,7 @@ import {
 import {
   I18nextProvider,
   initReactI18next,
-  useTranslation,
+  useTranslation as useTranslationI18n,
 } from "react-i18next";
 
 import resources from "./i18n.json";
@@ -87,4 +87,4 @@ const useContextOrThrow: <ContextType>(
   return contextValue;
 };
 
-export { useTranslation };
+export const useTranslation = useTranslationI18n;
