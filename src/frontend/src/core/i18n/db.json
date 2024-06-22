@@ -487,6 +487,51 @@
           "value": "번역 삭제"
         }
       ]
+    },
+    {
+      "id": "e0a5be55-db13-4002-b7e7-f65686aacde5",
+      "groupId": "f3798fc3-1272-4c45-854f-18a2555d56f4",
+      "key": "addTranslation",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Add Translation"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "번역 추가"
+        }
+      ]
+    },
+    {
+      "id": "acdf6dc5-e380-4763-ba33-0075adb97537",
+      "groupId": "92b64a04-e4f7-4f22-8b7e-719ae77e7eff",
+      "key": "group",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Group"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹"
+        }
+      ]
+    },
+    {
+      "id": "63584b1e-8488-4d6e-8114-076005dcdc55",
+      "groupId": "92b64a04-e4f7-4f22-8b7e-719ae77e7eff",
+      "key": "key",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Key"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "키"
+        }
+      ]
     }
   ]
 }
