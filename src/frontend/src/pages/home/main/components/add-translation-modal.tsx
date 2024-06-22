@@ -57,19 +57,19 @@ export const AddTranslationModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalHeader>
-        <Text>Add Translation</Text>
+        <Text>{t(i18nKeys.group.addGroup)}</Text>
       </ModalHeader>
       <ModalBody>
         <VStack alignItems="baseline" gap={5}>
           <VStack alignItems="baseline">
             <Text fontSize="xs" fontWeight="lighter">
-              Group
+              {t(i18nKeys.common.group)}
             </Text>
             <Text fontWeight="semibold">{selectedGroup.label}</Text>
           </VStack>
           <VStack alignItems="baseline" width="full">
             <Text fontSize="xs" fontWeight="lighter">
-              Key
+              {t(i18nKeys.common.key)}
             </Text>
             <Input
               onChange={(e) => setKey(replaceBlank(e.target.value))}
