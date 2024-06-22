@@ -1,6 +1,6 @@
 import { Button } from "~/core/button";
 import { DeleteTranslationsReqBodyDto } from "~/core/codegen";
-import { LABELS } from "~/core/constants";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 import {
   Modal,
   ModalBody,
@@ -24,6 +24,7 @@ export const DeleteTranslationModal = ({
   onClose,
   selectedGroupId,
 }: DeleteTranslationModalProps) => {
+  const { t } = useTranslation();
   const { mutate: deleteTranslations } =
     useMutation<DeleteTranslationsReqBodyDto>({
       refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroupId)]],
@@ -52,7 +53,7 @@ export const DeleteTranslationModal = ({
       </ModalBody>
       <ModalFooter onClose={onClose}>
         <Button colorScheme="red" onClick={handleSubmit}>
-          {LABELS.DELETE}
+          {t(i18nKeys.common.delete)}
         </Button>
       </ModalFooter>
     </Modal>
