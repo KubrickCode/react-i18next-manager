@@ -76,7 +76,7 @@ export const TranslationsTableToolbar = ({
           selectedGroup,
         }}
       >
-        <Button size="sm">Add Key</Button>
+        <Button size="sm">{t(i18nKeys.translation.addTranslation)}</Button>
       </ModalToggle>
       <SearchInput
         size="sm"
