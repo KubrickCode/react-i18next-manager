@@ -14,6 +14,8 @@ export default defineConfig(({ mode }) => {
           data: {
             VITE_FAVICON:
               mode === "development" ? "logo-light.png" : "logo-dark.png",
+            VITE_TITLE:
+              mode === "development" ? "I18n Studio - DEV" : "I18n Studio",
           },
         },
       }),
