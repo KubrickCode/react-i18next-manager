@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useApp } from "~/core/app";
 import { Button } from "~/core/button";
 import { AddTranslationReqBodyDto } from "~/core/codegen";
-import { LABELS } from "~/core/constants";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 import { Input } from "~/core/input";
 import { VStack } from "~/core/layout";
 import {
@@ -29,6 +29,7 @@ export const AddTranslationModal = ({
   onClose,
   selectedGroup,
 }: AddTranslationModalProps) => {
+  const { t } = useTranslation();
   const { locales } = useApp();
 
   const [key, setKey] = useState("");
@@ -101,7 +102,7 @@ export const AddTranslationModal = ({
       </ModalBody>
       <ModalFooter onClose={onClose}>
         <Button colorScheme="darkgray" onClick={handleSubmit}>
-          {LABELS.SAVE}
+          {t(i18nKeys.common.save)}
         </Button>
       </ModalFooter>
     </Modal>
