@@ -3,11 +3,7 @@ import { Suspense, useState } from "react";
 import { Box } from "~/core/layout";
 import { Loader } from "~/core/loader";
 
-import {
-  TranslationsTableToolbar,
-  TranslationsTable,
-  EmptyState,
-} from "./components";
+import { TranslationsTableToolbar, TranslationsTable } from "./components";
 import { useHomePageContext } from "../context";
 
 export const HomePageMain = () => {
@@ -25,7 +21,7 @@ export const HomePageMain = () => {
 
   return (
     <Box as="main" height="100vh" overflowY="auto" padding="1rem">
-      {selectedGroup ? (
+      {selectedGroup && (
         <>
           <TranslationsTableToolbar
             handleSelectedIds={handleSelectedIds}
@@ -40,8 +36,6 @@ export const HomePageMain = () => {
             />
           </Suspense>
         </>
-      ) : (
-        <EmptyState />
       )}
     </Box>
   );
