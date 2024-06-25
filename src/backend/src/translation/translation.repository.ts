@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UUID } from 'src/common/types';
 import { generateUUID } from 'src/common/utils';
 import { DBAdapter } from 'src/db/db.adapter';
-import { DBService } from 'src/db/db.service';
+import { DBService, TranslationSchema } from 'src/db/db.service';
 
 type CreateParams = {
   groupId: UUID;
@@ -44,11 +44,12 @@ export class TranslationRepository extends DBAdapter {
   }
 
   async update({ id, newKey, newValues }: UpdateParams) {
-    return this.db
-      .get('translations')
-      .find({ id })
-      .assign({ key: newKey, values: newValues })
-      .write();
+    const updateData: Partial<TranslationSchema> = {};
+
+    if (!!newKey) updateData.key = newKey;
+    if (!!newValues) updateData.values = newValues;
+
+    return this.db.get('translations').find({ id }).assign(updateData).write();
   }
 
   async deleteMany({ ids }: { ids: UUID[] }) {
