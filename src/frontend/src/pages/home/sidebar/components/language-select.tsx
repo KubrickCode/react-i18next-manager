@@ -34,7 +34,7 @@ export const LanguageSelect = () => {
         border={selectButtonBorder}
         width="100%"
       />
-      <SelectList />
+      <CustomSelectList />
     </Select>
   );
 };
@@ -43,6 +43,17 @@ const CustomSelectButton = chakra(SelectButton, {
   baseStyle: {
     span: {
       paddingY: "2",
+    },
+  },
+});
+
+const CustomSelectList = chakra(SelectList, {
+  baseStyle: {
+    button: {
+      _hover: {
+        backgroundColor: "gray.100",
+      },
+      backgroundColor: "transparent",
     },
   },
 });
