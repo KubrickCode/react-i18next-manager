@@ -23,6 +23,10 @@ import {
   EditTranslationReqParamDto,
 } from './dto/edit-translation.dto';
 import { DeleteTranslationsReqBodyDto } from './dto/delete-translations.dto';
+import {
+  EditTranslationParentGroupReqBodyDto,
+  EditTranslationParentGroupReqParamDto,
+} from './dto/edit-translation-parent-group.dto';
 
 @Controller('translations')
 export class TranslationController {
@@ -60,6 +64,18 @@ export class TranslationController {
     @Body() body: EditTranslationReqBodyDto,
   ) {
     return await this.translationService.edit({
+      ...param,
+      ...body,
+    });
+  }
+
+  @Patch(':id/group')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async editParentGroup(
+    @Param() param: EditTranslationParentGroupReqParamDto,
+    @Body() body: EditTranslationParentGroupReqBodyDto,
+  ) {
+    return await this.translationService.editParentGroup({
       ...param,
       ...body,
     });

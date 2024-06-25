@@ -192,4 +192,43 @@ describe('TranslationService Integration', () => {
 
     expect(result).toHaveLength(0);
   });
+
+  it('translation 소속 그룹 변경 성공', async () => {
+    const translation = initialTranslations[0];
+    const newGroupId = initialGroups[1].id;
+
+    await service.editParentGroup({
+      id: translation.id,
+      newGroupId,
+    });
+
+    const result = db.get('translations').find({ id: translation.id }).value();
+    const expected = {
+      ...translation,
+      groupId: newGroupId,
+    };
+
+    expect(result).toEqual(expected);
+  });
+
+  it('translation 소속 그룹 변경 실패 - 이미 존재하는 key', async () => {
+    const translation = initialTranslations[0];
+    const newGroupId = initialGroups[0].id;
+
+    await service.add({
+      groupId: newGroupId,
+      key: translation.key,
+      values: [
+        { localeId: initialLocales[0].id, value: faker.word.words() },
+        { localeId: initialLocales[1].id, value: faker.word.words() },
+      ],
+    });
+
+    await expect(
+      service.editParentGroup({
+        id: translation.id,
+        newGroupId,
+      }),
+    ).rejects.toThrow(ConflictException);
+  });
 });

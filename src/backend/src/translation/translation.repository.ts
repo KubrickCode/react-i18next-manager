@@ -15,6 +15,7 @@ type CreateParams = {
 
 type UpdateParams = {
   id: UUID;
+  newGroupId?: UUID;
   newKey?: string;
   newValues?: {
     localeId: UUID;
@@ -43,9 +44,10 @@ export class TranslationRepository extends DBAdapter {
       .write();
   }
 
-  async update({ id, newKey, newValues }: UpdateParams) {
+  async update({ id, newGroupId, newKey, newValues }: UpdateParams) {
     const updateData: Partial<TranslationSchema> = {};
 
+    if (!!newGroupId) updateData.groupId = newGroupId;
     if (!!newKey) updateData.key = newKey;
     if (!!newValues) updateData.values = newValues;
 

@@ -58,6 +58,18 @@ export class TranslationService {
     await this.translationRepository.update({ id, newKey, newValues });
   }
 
+  async editParentGroup({ id, newGroupId }: { id: UUID; newGroupId: UUID }) {
+    const translation = await this.translationRepository.findById({ id });
+
+    await this.checkExistingKey({
+      excludeId: id,
+      groupId: newGroupId,
+      key: translation.key,
+    });
+
+    await this.translationRepository.update({ id, newGroupId });
+  }
+
   async deleteMany({ translations }: { translations: { id: UUID }[] }) {
     await this.translationRepository.deleteMany({
       ids: translations.map((t) => t.id),
