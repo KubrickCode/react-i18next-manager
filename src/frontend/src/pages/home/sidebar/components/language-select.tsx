@@ -47,13 +47,20 @@ const CustomSelectButton = chakra(SelectButton, {
   },
 });
 
-const CustomSelectList = chakra(SelectList, {
-  baseStyle: {
-    button: {
-      _hover: {
-        backgroundColor: "gray.100",
-      },
-      backgroundColor: "transparent",
-    },
-  },
-});
+const CustomSelectList = () => {
+  const selectListHoverBg = useColorModeValue("gray.100", "gray.600");
+
+  return (
+    <chakra.div
+      as={SelectList}
+      sx={{
+        button: {
+          _hover: {
+            backgroundColor: selectListHoverBg,
+          },
+          backgroundColor: "transparent",
+        },
+      }}
+    />
+  );
+};
