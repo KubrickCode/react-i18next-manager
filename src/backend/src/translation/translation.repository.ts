@@ -15,8 +15,8 @@ type CreateParams = {
 
 type UpdateParams = {
   id: UUID;
-  newKey: string;
-  newValues: {
+  newKey?: string;
+  newValues?: {
     localeId: UUID;
     value: string;
   }[];
