@@ -193,31 +193,35 @@ describe('TranslationService Integration', () => {
     expect(result).toHaveLength(0);
   });
 
-  it('translation 소속 그룹 변경 성공', async () => {
-    const translation = initialTranslations[0];
+  it('여러 translation 소속 그룹 변경 성공', async () => {
+    const translations = initialTranslations.slice(0, 2);
     const newGroupId = initialGroups[1].id;
 
-    await service.editParentGroup({
-      id: translation.id,
+    await service.editManyParentGroup({
+      translations: translations.map((translation) => ({ id: translation.id })),
       newGroupId,
     });
 
-    const result = db.get('translations').find({ id: translation.id }).value();
-    const expected = {
-      ...translation,
-      groupId: newGroupId,
-    };
-
-    expect(result).toEqual(expected);
+    translations.forEach((translation) => {
+      const result = db
+        .get('translations')
+        .find({ id: translation.id })
+        .value();
+      const expected = {
+        ...translation,
+        groupId: newGroupId,
+      };
+      expect(result).toEqual(expected);
+    });
   });
 
-  it('translation 소속 그룹 변경 실패 - 이미 존재하는 key', async () => {
-    const translation = initialTranslations[0];
+  it('여러 translation 소속 그룹 변경 실패 - 이미 존재하는 key', async () => {
+    const translations = initialTranslations.slice(0, 2);
     const newGroupId = initialGroups[0].id;
 
     await service.add({
       groupId: newGroupId,
-      key: translation.key,
+      key: translations[0].key,
       values: [
         { localeId: initialLocales[0].id, value: faker.word.words() },
         { localeId: initialLocales[1].id, value: faker.word.words() },
@@ -225,8 +229,10 @@ describe('TranslationService Integration', () => {
     });
 
     await expect(
-      service.editParentGroup({
-        id: translation.id,
+      service.editManyParentGroup({
+        translations: translations.map((translation) => ({
+          id: translation.id,
+        })),
         newGroupId,
       }),
     ).rejects.toThrow(ConflictException);
