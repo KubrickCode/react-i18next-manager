@@ -1,6 +1,7 @@
 import { chakra } from "@chakra-ui/react";
 import _ from "lodash";
 
+import { useColorModeValue } from "~/core/color-mode";
 import { useI18n } from "~/core/i18n";
 import { Select, SelectButton, SelectList } from "~/core/select";
 
@@ -10,6 +11,11 @@ const supportedLanguages = [
 ];
 
 export const LanguageSelect = () => {
+  const selectButtonBorder = useColorModeValue(
+    "1px solid lightgray",
+    "1px solid gray"
+  );
+
   const { changeLanguage, language: currentLanguage } = useI18n();
 
   const currentLanguageLabel = _.find(
@@ -29,7 +35,11 @@ export const LanguageSelect = () => {
         value: key,
       }))}
     >
-      <CustomSelectButton width="100%" />
+      <CustomSelectButton
+        backgroundColor="transparent"
+        border={selectButtonBorder}
+        width="100%"
+      />
       <SelectList />
     </Select>
   );
