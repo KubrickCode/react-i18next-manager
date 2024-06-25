@@ -1,5 +1,4 @@
 import { chakra } from "@chakra-ui/react";
-import _ from "lodash";
 
 import { useColorModeValue } from "~/core/color-mode";
 import { useI18n } from "~/core/i18n";
@@ -18,14 +17,9 @@ export const LanguageSelect = () => {
 
   const { changeLanguage, language: currentLanguage } = useI18n();
 
-  const currentLanguageLabel = _.find(
-    supportedLanguages,
-    (language) => language.key === currentLanguage
-  )?.label;
-
   return (
     <Select
-      defaultValue={currentLanguageLabel}
+      defaultValue={currentLanguage}
       name="language"
       onChange={(value) => {
         changeLanguage(value);
