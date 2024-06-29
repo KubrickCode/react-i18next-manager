@@ -30,12 +30,14 @@ type GroupTreeViewProps = {
     } | null
   ) => void;
   height: number;
+  width: number;
 };
 
 export const GroupTreeView = ({
   groups,
   handleSelectedGroup,
   height,
+  width,
 }: GroupTreeViewProps) => {
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
@@ -108,6 +110,7 @@ export const GroupTreeView = ({
         rowHeight={45}
         searchTerm={term}
         searchMatch={(node, term) => node.data.label.includes(term)}
+        width={width}
       >
         {(nodeProps) => (
           <Node {...nodeProps} handleSelectedGroup={handleSelectedGroup} />

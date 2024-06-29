@@ -56,6 +56,7 @@ export const MoveTranslationsGroupModal = ({
           groups={groups}
           handleSelectedGroup={handleSelectedGroup}
           height={300}
+          width={400}
         />
       </ModalBody>
       <ModalFooter onClose={onClose}>

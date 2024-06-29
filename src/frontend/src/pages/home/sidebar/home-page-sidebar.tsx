@@ -40,6 +40,7 @@ export const HomePageSidebar = () => {
           groups={groups}
           handleSelectedGroup={handleSelectedGroup}
           height={1000}
+          width={300}
         />
       </SidebarSection>
     </Sidebar>
