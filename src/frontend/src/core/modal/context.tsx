@@ -47,13 +47,8 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       {modals.map(({ id, modal: Modal, props }) => (
-        <Suspense fallback={<Loader.FullScreen />}>
-          <Modal
-            key={id}
-            isOpen={true}
-            onClose={() => closeModal(id)}
-            {...props}
-          />
+        <Suspense key={id} fallback={<Loader.FullScreen />}>
+          <Modal isOpen={true} onClose={() => closeModal(id)} {...props} />
         </Suspense>
       ))}
     </ModalContext.Provider>
