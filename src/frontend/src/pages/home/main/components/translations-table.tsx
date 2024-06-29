@@ -69,7 +69,7 @@ export const TranslationsTable = ({
               onChange={handleSelectAll}
             />
           </Th>
-          <Th paddingY={3}>KEY</Th>
+          <Th paddingY={3}>{t(i18nKeys.common.key)}</Th>
           {locales.map((locale) => (
             <Th key={locale.id}>{locale.label.toUpperCase()}</Th>
           ))}
