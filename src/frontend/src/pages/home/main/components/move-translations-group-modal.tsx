@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "~/core/button";
 import { GetGroupsResDto } from "~/core/codegen";
 import { i18nKeys, useTranslation } from "~/core/i18n";
+import { VStack } from "~/core/layout";
 import {
   Modal,
   ModalBody,
@@ -52,12 +53,25 @@ export const MoveTranslationsGroupModal = ({
         <Text>{t(i18nKeys.group.moveGroup)}</Text>
       </ModalHeader>
       <ModalBody>
-        <GroupTreeView
-          groups={groups}
-          handleSelectedGroup={handleSelectedGroup}
-          height={300}
-          width={400}
-        />
+        <VStack alignItems="baseline" gap={5}>
+          <VStack alignItems="baseline">
+            <Text fontSize="xs" fontWeight="lighter">
+              {t(i18nKeys.group.currentGroup)}
+            </Text>
+            <Text fontWeight="semibold">Test</Text>
+          </VStack>
+          <VStack alignItems="baseline">
+            <Text fontSize="xs" fontWeight="lighter">
+              {t(i18nKeys.group.selectTargetGroup)}
+            </Text>
+            <GroupTreeView
+              groups={groups}
+              handleSelectedGroup={handleSelectedGroup}
+              height={300}
+              width={400}
+            />
+          </VStack>
+        </VStack>
       </ModalBody>
       <ModalFooter onClose={onClose}>
         <Button colorScheme="darkgray" onClick={handleSubmit}>

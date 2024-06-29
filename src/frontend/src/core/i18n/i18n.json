@@ -36,7 +36,9 @@
       "common.key": "Key",
       "setting.emptyLocaleMessage": "Please Add Locale First",
       "translation.deleteTranslationsRows": "Delete {{ count }} rows",
-      "group.moveGroup": "Move Group"
+      "group.moveGroup": "Move Group",
+      "group.currentGroup": "Current Group",
+      "group.selectTargetGroup": "Select Target Group"
     }
   },
   "ko": {
@@ -76,7 +78,9 @@
       "common.key": "키",
       "setting.emptyLocaleMessage": "언어 코드를 먼저 추가해주세요",
       "translation.deleteTranslationsRows": "{{ count }} 행 삭제",
-      "group.moveGroup": "그룹 이동"
+      "group.moveGroup": "그룹 이동",
+      "group.currentGroup": "현재 그룹",
+      "group.selectTargetGroup": "이동 그룹 선택"
     }
   }
 }

@@ -577,6 +577,36 @@
           "value": "그룹 이동"
         }
       ]
+    },
+    {
+      "id": "3ab9c6cf-518d-40f6-968c-8baff2c39c02",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "currentGroup",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Current Group"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "현재 그룹"
+        }
+      ]
+    },
+    {
+      "id": "fef8250e-5ac1-4e16-949a-32949413e883",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "selectTargetGroup",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Select Target Group"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "이동 그룹 선택"
+        }
+      ]
     }
   ]
 }
