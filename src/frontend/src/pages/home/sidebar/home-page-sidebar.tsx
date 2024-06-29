@@ -39,6 +39,7 @@ export const HomePageSidebar = () => {
         <GroupTreeView
           groups={groups}
           handleSelectedGroup={handleSelectedGroup}
+          needsMutation
           height={1000}
           width={300}
         />

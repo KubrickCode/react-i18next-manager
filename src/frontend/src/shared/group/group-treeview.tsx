@@ -29,6 +29,7 @@ type GroupTreeViewProps = {
       label: string;
     } | null
   ) => void;
+  needsMutation?: boolean;
   height: number;
   width: number;
 };
@@ -36,6 +37,7 @@ type GroupTreeViewProps = {
 export const GroupTreeView = ({
   groups,
   handleSelectedGroup,
+  needsMutation = false,
   height,
   width,
 }: GroupTreeViewProps) => {
@@ -72,20 +74,22 @@ export const GroupTreeView = ({
       >
         <Flex alignItems="center" justifyContent="space-between">
           <Text fontSize="xs">{t(i18nKeys.group.groupList)}</Text>
-          <ModalToggle
-            modal={AddGroupModal}
-            modalProps={{
-              parentId: null,
-              parentName: "Root",
-            }}
-          >
-            <IconButton
-              aria-label="add"
-              icon={<FaPlus />}
-              size="xs"
-              variant="ghost"
-            />
-          </ModalToggle>
+          {needsMutation && (
+            <ModalToggle
+              modal={AddGroupModal}
+              modalProps={{
+                parentId: null,
+                parentName: "Root",
+              }}
+            >
+              <IconButton
+                aria-label="add"
+                icon={<FaPlus />}
+                size="xs"
+                variant="ghost"
+              />
+            </ModalToggle>
+          )}
         </Flex>
       </Box>
       <Tree
@@ -116,7 +120,11 @@ export const GroupTreeView = ({
         width={width}
       >
         {(nodeProps) => (
-          <Node {...nodeProps} handleSelectedGroup={handleSelectedGroup} />
+          <Node
+            {...nodeProps}
+            handleSelectedGroup={handleSelectedGroup}
+            needsMutation={needsMutation}
+          />
         )}
       </Tree>
     </VStack>
@@ -130,10 +138,17 @@ export type TreeData = {
 };
 
 type NodeProps = NodeRendererProps<TreeData> & {
+  needsMutation: boolean;
   handleSelectedGroup: GroupTreeViewProps["handleSelectedGroup"];
 };
 
-const Node = ({ node, tree, dragHandle, handleSelectedGroup }: NodeProps) => {
+const Node = ({
+  needsMutation,
+  node,
+  tree,
+  dragHandle,
+  handleSelectedGroup,
+}: NodeProps) => {
   const { t } = useTranslation();
   const [label, setLabel] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
@@ -204,70 +219,72 @@ const Node = ({ node, tree, dragHandle, handleSelectedGroup }: NodeProps) => {
         )}
       </Flex>
 
-      <Flex>
-        {(node.isSelected || isHovered) && (
-          <>
-            {node.isEditing ? (
-              <IconButton
-                aria-label="save-edit"
-                icon={<FaSave />}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleEdit();
+      {needsMutation && (
+        <Flex>
+          {(node.isSelected || isHovered) && (
+            <>
+              {node.isEditing ? (
+                <IconButton
+                  aria-label="save-edit"
+                  icon={<FaSave />}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEdit();
+                  }}
+                  size="xs"
+                  variant="ghost"
+                />
+              ) : (
+                <IconButton
+                  aria-label="edit"
+                  icon={<FaEdit />}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    node.edit();
+                  }}
+                  size="xs"
+                  variant="ghost"
+                />
+              )}
+              <ModalToggle
+                modal={AddGroupModal}
+                modalProps={{
+                  parentId: node.id,
+                  parentName: node.data.label,
                 }}
-                size="xs"
-                variant="ghost"
-              />
-            ) : (
-              <IconButton
-                aria-label="edit"
-                icon={<FaEdit />}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  node.edit();
+              >
+                <IconButton
+                  aria-label="add"
+                  icon={<FaPlus />}
+                  size="xs"
+                  variant="ghost"
+                />
+              </ModalToggle>
+              <ModalToggle
+                modal={DeleteModal}
+                modalProps={{
+                  body: <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>,
+                  link: LINK.DELETE_GROUP(node.id),
+                  refetchQueryKeys,
+                  toastMessage: t(i18nKeys.group.deleteGroupSuccess),
+                  onComplete() {
+                    tree.delete(node.id);
+                    tree.select(null);
+                    handleSelectedGroup(null);
+                  },
                 }}
-                size="xs"
-                variant="ghost"
-              />
-            )}
-            <ModalToggle
-              modal={AddGroupModal}
-              modalProps={{
-                parentId: node.id,
-                parentName: node.data.label,
-              }}
-            >
-              <IconButton
-                aria-label="add"
-                icon={<FaPlus />}
-                size="xs"
-                variant="ghost"
-              />
-            </ModalToggle>
-            <ModalToggle
-              modal={DeleteModal}
-              modalProps={{
-                body: <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>,
-                link: LINK.DELETE_GROUP(node.id),
-                refetchQueryKeys,
-                toastMessage: t(i18nKeys.group.deleteGroupSuccess),
-                onComplete() {
-                  tree.delete(node.id);
-                  tree.select(null);
-                  handleSelectedGroup(null);
-                },
-              }}
-            >
-              <IconButton
-                aria-label="delete"
-                icon={<FaTrash />}
-                size="xs"
-                variant="ghost"
-              />
-            </ModalToggle>
-          </>
-        )}
-      </Flex>
+              >
+                <IconButton
+                  aria-label="delete"
+                  icon={<FaTrash />}
+                  size="xs"
+                  variant="ghost"
+                />
+              </ModalToggle>
+            </>
+          )}
+        </Flex>
+      )}
     </Box>
   );
 };
