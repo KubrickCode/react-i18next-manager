@@ -87,7 +87,7 @@ export const MoveTranslationsGroupModal = ({
             <Text fontSize="xs" fontWeight="lighter">
               {t(i18nKeys.group.currentGroup)}
             </Text>
-            <Text fontWeight="semibold">Test</Text>
+            <Text fontWeight="semibold">{currentGroup.label}</Text>
           </VStack>
           <VStack alignItems="baseline">
             <Text fontSize="xs" fontWeight="lighter">
