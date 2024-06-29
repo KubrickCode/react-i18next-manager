@@ -40,7 +40,10 @@ export const GroupTreeView = ({
   width,
 }: GroupTreeViewProps) => {
   const [term, setTerm] = useState("");
-  const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
+  const treeNodeBgColor = useColorModeValue(
+    "rgba(0, 0, 0, 0.1)",
+    "rgba(255, 255, 255, 0.1)"
+  );
   const { t } = useTranslation();
 
   const refetchQueryKeys = [[KEY.GET_GROUPS]];
@@ -135,7 +138,10 @@ const Node = ({ node, tree, dragHandle, handleSelectedGroup }: NodeProps) => {
   const [label, setLabel] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
 
-  const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
+  const treeNodeBgColor = useColorModeValue(
+    "rgba(0, 0, 0, 0.1)",
+    "rgba(255, 255, 255, 0.1)"
+  );
   const inputBgColor = useColorModeValue("white", "gray.800");
 
   const refetchQueryKeys = [[KEY.GET_GROUPS]];
