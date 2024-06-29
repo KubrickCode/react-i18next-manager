@@ -1,6 +1,7 @@
 import { IoMdRefresh } from "react-icons/io";
 import { MdDriveFileMove } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
+import assert from "assert";
 
 import { Button, IconButton } from "~/core/button";
 import { SearchInput } from "~/core/input";
@@ -31,6 +32,7 @@ export const TranslationsTableToolbar = ({
   const { t } = useTranslation();
   const { locales } = useApp();
   const { selectedGroup } = useHomePageContext();
+  assert(selectedGroup);
   const queryClient = useQueryClient();
   const moveGroupButtonColorScheme = useColorModeValue("gray", "darkgray");
 
