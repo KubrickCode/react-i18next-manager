@@ -1,6 +1,7 @@
 import {
   ElementType,
   PropsWithChildren,
+  Suspense,
   createContext,
   useContext,
   useState,
@@ -8,6 +9,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 import { ModalProps } from "./modal";
+import { Loader } from "../loader";
 
 type ModalComponentProps<T = {}> = Partial<ModalProps> & T;
 
@@ -45,12 +47,14 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       {modals.map(({ id, modal: Modal, props }) => (
-        <Modal
-          key={id}
-          isOpen={true}
-          onClose={() => closeModal(id)}
-          {...props}
-        />
+        <Suspense fallback={<Loader.FullScreen />}>
+          <Modal
+            key={id}
+            isOpen={true}
+            onClose={() => closeModal(id)}
+            {...props}
+          />
+        </Suspense>
       ))}
     </ModalContext.Provider>
   );
