@@ -56,7 +56,10 @@ export const TranslationsTable = ({
         <Tr>
           <Th width="3%">
             <Checkbox
-              isChecked={selectedIds.length === translations.length}
+              isChecked={
+                hasTranslations && selectedIds.length === translations.length
+              }
+              isDisabled={!hasTranslations}
               isIndeterminate={
                 selectedIds.length > 0 &&
                 selectedIds.length < translations.length
