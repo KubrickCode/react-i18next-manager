@@ -652,6 +652,21 @@
           "value": "그룹을 선택하세요"
         }
       ]
+    },
+    {
+      "id": "e2fb519d-221a-42e3-b687-8a77cfb8b2d7",
+      "groupId": "f3798fc3-1272-4c45-854f-18a2555d56f4",
+      "key": "noTranslations",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "No Translations Found"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "등록된 번역 리소스가 없습니다"
+        }
+      ]
     }
   ]
 }

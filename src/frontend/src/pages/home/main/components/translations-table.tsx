@@ -5,6 +5,7 @@ import { Checkbox } from "~/core/checkbox";
 import { Center } from "~/core/layout";
 import { Text } from "~/core/text";
 import { useApp } from "~/core/app";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { useHomePageContext } from "../../context";
 import { TranslationsTableRow } from "./translations-table-row";
@@ -22,6 +23,7 @@ export const TranslationsTable = ({
 }: TranslationsTableProps) => {
   const { locales } = useApp();
   const { selectedGroup } = useHomePageContext();
+  const { t } = useTranslation();
 
   const { data } = useSuspenseQuery<GetTranslationsResDto>(
     LINK.GET_TRANSLATIONS(selectedGroup?.id ?? ""),
@@ -101,7 +103,7 @@ export const TranslationsTable = ({
             <Td colSpan={locales.length + 3}>
               <Center padding={20}>
                 <Text color="gray.500" fontSize="sm">
-                  No translations found
+                  {t(i18nKeys.translation.noTranslations)}
                 </Text>
               </Center>
             </Td>
