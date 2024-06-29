@@ -15,9 +15,9 @@ import { Flex } from "~/core/layout";
 import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
+import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { useHomePageContext } from "../../context";
-import { i18nKeys, useTranslation } from "~/core/i18n";
 
 type TranslationsTableRowProps = {
   isSelected: boolean;
