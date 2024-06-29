@@ -15,6 +15,7 @@ import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
 import { useHomePageContext } from "../../context";
 import { MoveTranslationsGroupModal } from "./move-translations-group-modal";
+import { FaTrash } from "react-icons/fa";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -62,7 +63,7 @@ export const TranslationsTableToolbar = ({
               selectedGroupId: selectedGroup.id,
             }}
           >
-            <Button colorScheme="red" size="sm">
+            <Button colorScheme="red" leftIcon={<FaTrash />} size="sm">
               {t(i18nKeys.translation.deleteTranslationsRows, {
                 count: selectedIds.length,
               })}
