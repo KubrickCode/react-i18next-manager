@@ -559,7 +559,7 @@
         },
         {
           "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
-          "value": "{{ count }} 행 삭제"
+          "value": "행 삭제({{ count }})"
         }
       ]
     },
