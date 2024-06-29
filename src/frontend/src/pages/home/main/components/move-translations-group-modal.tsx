@@ -44,6 +44,7 @@ export const MoveTranslationsGroupModal = ({
     KEY.GET_GROUPS_IN_MOVE_GROUP_MODAL
   );
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const { groups } = data;
 
@@ -54,7 +55,10 @@ export const MoveTranslationsGroupModal = ({
     });
 
   const handleSubmit = () => {
-    if (selectedGroup === null) return;
+    if (selectedGroup === null) {
+      setError(t(i18nKeys.group.selectTargetGroupEmptyError));
+      return;
+    }
 
     editTranslationsParentGroup({
       link: LINK.EDIT_TRANSLATIONS_PARENT_GROUP,
@@ -96,6 +100,11 @@ export const MoveTranslationsGroupModal = ({
               width={400}
             />
           </VStack>
+          {error && (
+            <Text color="danger" fontSize="sm">
+              {error}
+            </Text>
+          )}
         </VStack>
       </ModalBody>
       <ModalFooter onClose={onClose}>

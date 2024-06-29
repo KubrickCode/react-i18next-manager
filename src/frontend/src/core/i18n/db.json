@@ -637,6 +637,21 @@
           "value": "성공적으로 이동되었습니다"
         }
       ]
+    },
+    {
+      "id": "b92a40af-259c-4014-8f90-59dc237a62bd",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "selectTargetGroupEmptyError",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Group Selection Required"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹을 선택하세요"
+        }
+      ]
     }
   ]
 }
