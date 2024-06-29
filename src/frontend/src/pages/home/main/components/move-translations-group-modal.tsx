@@ -9,15 +9,15 @@ import {
 } from "~/core/modal";
 import { Text } from "~/core/text";
 
-type MoveGroupModalProps = ModalProps & {
+type MoveTranslationsGroupModalProps = ModalProps & {
   translationIds: string[];
 };
 
-export const MoveGroupModal = ({
+export const MoveTranslationsGroupModal = ({
   isOpen,
   onClose,
   translationIds,
-}: MoveGroupModalProps) => {
+}: MoveTranslationsGroupModalProps) => {
   const { t } = useTranslation();
 
   const handleSubmit = () => {

@@ -14,7 +14,7 @@ import { useColorModeValue } from "~/core/color-mode";
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
 import { useHomePageContext } from "../../context";
-import { MoveGroupModal } from "./move-group-modal";
+import { MoveTranslationsGroupModal } from "./move-translations-group-modal";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -69,7 +69,7 @@ export const TranslationsTableToolbar = ({
             </Button>
           </ModalToggle>
           <ModalToggle
-            modal={MoveGroupModal}
+            modal={MoveTranslationsGroupModal}
             modalProps={{
               translationIds: selectedIds,
             }}
