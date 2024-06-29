@@ -1,5 +1,6 @@
 import { IoMdRefresh } from "react-icons/io";
 import { MdDriveFileMove } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
 
 import { Button, IconButton } from "~/core/button";
 import { SearchInput } from "~/core/input";
@@ -15,7 +16,6 @@ import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
 import { useHomePageContext } from "../../context";
 import { MoveTranslationsGroupModal } from "./move-translations-group-modal";
-import { FaTrash } from "react-icons/fa";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;
