@@ -29,11 +29,13 @@ type GroupTreeViewProps = {
       label: string;
     } | null
   ) => void;
+  height: number;
 };
 
 export const GroupTreeView = ({
   groups,
   handleSelectedGroup,
+  height,
 }: GroupTreeViewProps) => {
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
@@ -84,7 +86,7 @@ export const GroupTreeView = ({
       <Tree
         data={treeData}
         openByDefault={false}
-        height={1000}
+        height={height}
         indent={24}
         onMove={({ dragIds, index: position }) => {
           editGroupPosition({

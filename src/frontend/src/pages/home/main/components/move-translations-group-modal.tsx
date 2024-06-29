@@ -55,6 +55,7 @@ export const MoveTranslationsGroupModal = ({
         <GroupTreeView
           groups={groups}
           handleSelectedGroup={handleSelectedGroup}
+          height={300}
         />
       </ModalBody>
       <ModalFooter onClose={onClose}>
