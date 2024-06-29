@@ -20,7 +20,6 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
 import { useHomePageContext } from "../../context";
-import { t } from "i18next";
 
 export const GroupTreeView = () => {
   const { groups, handleSelectedGroup } = useHomePageContext();
@@ -109,6 +108,7 @@ export type TreeData = {
 };
 
 const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
+  const { t } = useTranslation();
   const { handleSelectedGroup } = useHomePageContext();
   const [label, setLabel] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
