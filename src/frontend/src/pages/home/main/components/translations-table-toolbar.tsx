@@ -72,6 +72,7 @@ export const TranslationsTableToolbar = ({
             modal={MoveTranslationsGroupModal}
             modalProps={{
               currentGroup: selectedGroup,
+              onComplete: () => handleSelectedIds([]),
               translationIds: selectedIds,
             }}
           >

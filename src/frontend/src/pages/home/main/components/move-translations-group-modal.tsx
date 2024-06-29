@@ -27,7 +27,7 @@ type SelectedGroup = Group | null;
 
 type MoveTranslationsGroupModalProps = ModalProps & {
   currentGroup: Group;
-  onCompleted: () => void;
+  onComplete: () => void;
   translationIds: string[];
 };
 
@@ -35,7 +35,7 @@ export const MoveTranslationsGroupModal = ({
   currentGroup,
   isOpen,
   onClose,
-  onCompleted,
+  onComplete,
   translationIds,
 }: MoveTranslationsGroupModalProps) => {
   const { t } = useTranslation();
@@ -65,6 +65,7 @@ export const MoveTranslationsGroupModal = ({
       },
     });
     onClose();
+    onComplete();
   };
 
   const handleSelectedGroup = (group: SelectedGroup) => {
