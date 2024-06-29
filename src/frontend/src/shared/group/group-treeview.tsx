@@ -71,7 +71,7 @@ export const GroupTreeView = ({
         width="full"
       >
         <Flex alignItems="center" justifyContent="space-between">
-          <Text fontSize="xs">{t(i18nKeys.common.groups)}</Text>
+          <Text fontSize="xs">{t(i18nKeys.group.groupList)}</Text>
           <ModalToggle
             modal={AddGroupModal}
             modalProps={{
