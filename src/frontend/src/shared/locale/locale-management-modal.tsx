@@ -26,9 +26,10 @@ import {
   EditLocaleLabelReqBodyDto,
   EditLocalesPositionReqBodyDto,
 } from "~/core/codegen";
-import { AddLocaleModal } from "~/shared/add-locale-modal";
 import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
+
+import { AddLocaleModal } from "./add-locale-modal";
 
 type LocaleManagementModalProps = ModalProps;
 

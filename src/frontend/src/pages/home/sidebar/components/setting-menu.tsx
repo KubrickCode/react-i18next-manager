@@ -17,9 +17,9 @@ import { Text } from "~/core/text";
 import { useColorMode, useColorModeValue } from "~/core/color-mode";
 import { IconButton } from "~/core/button";
 import { LINK, useMutation } from "~/core/react-query";
-import { LocaleManagementModal } from "~/shared/locale-management-modal";
 import { Box } from "~/core/layout";
 import { i18nKeys, useTranslation } from "~/core/i18n";
+import { LocaleManagementModal } from "~/shared/locale";
 
 import { LanguageSelect } from "./language-select";
 

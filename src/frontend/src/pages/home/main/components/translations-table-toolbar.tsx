@@ -5,9 +5,9 @@ import { SearchInput } from "~/core/input";
 import { HStack } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
 import { KEY, useQueryClient } from "~/core/react-query";
-import { LocaleManagementModal } from "~/shared/locale-management-modal";
 import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
+import { LocaleManagementModal } from "~/shared/locale";
 
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
