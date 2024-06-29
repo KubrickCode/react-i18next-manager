@@ -57,8 +57,8 @@ export const TranslationsTableToolbar = ({
           <ModalToggle
             modal={DeleteTranslationModal}
             modalProps={{
-              handleSelectedIds,
               ids: selectedIds,
+              onComplete: () => handleSelectedIds([]),
               selectedGroupId: selectedGroup.id,
             }}
           >

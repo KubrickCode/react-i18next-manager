@@ -12,16 +12,16 @@ import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 type DeleteTranslationModalProps = ModalProps & {
-  handleSelectedIds: (ids: string[]) => void;
   ids: string[];
+  onComplete: () => void;
   selectedGroupId: string;
 };
 
 export const DeleteTranslationModal = ({
-  handleSelectedIds,
   ids,
   isOpen,
   onClose,
+  onComplete,
   selectedGroupId,
 }: DeleteTranslationModalProps) => {
   const { t } = useTranslation();
@@ -40,7 +40,7 @@ export const DeleteTranslationModal = ({
       },
     });
     onClose();
-    handleSelectedIds([]);
+    onComplete();
   };
 
   return (
