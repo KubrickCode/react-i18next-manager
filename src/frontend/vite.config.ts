@@ -6,6 +6,9 @@ import { createHtmlPlugin } from "vite-plugin-html";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
+    define: {
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+    },
     plugins: [
       react(),
       viteTsconfigPaths(),
