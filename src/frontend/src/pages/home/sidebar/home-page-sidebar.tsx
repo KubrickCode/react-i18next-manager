@@ -4,8 +4,9 @@ import { LABELS } from "~/core/constants";
 import { Flex } from "~/core/layout";
 import { Image } from "~/core/image";
 import { useColorModeValue } from "~/core/color-mode";
+import { GroupTreeView } from "~/shared/group";
 
-import { GroupTreeView, SettingMenu } from "./components";
+import { SettingMenu } from "./components";
 import { useHomePageContext } from "../context";
 
 export const HomePageSidebar = () => {
