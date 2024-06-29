@@ -6,9 +6,12 @@ import { Image } from "~/core/image";
 import { useColorModeValue } from "~/core/color-mode";
 
 import { GroupTreeView, SettingMenu } from "./components";
+import { useHomePageContext } from "../context";
 
 export const HomePageSidebar = () => {
+  const { groups, handleSelectedGroup } = useHomePageContext();
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");
+
   return (
     <Sidebar>
       <SidebarSection>
@@ -32,7 +35,10 @@ export const HomePageSidebar = () => {
         </Flex>
       </SidebarSection>
       <SidebarSection>
-        <GroupTreeView />
+        <GroupTreeView
+          groups={groups}
+          handleSelectedGroup={handleSelectedGroup}
+        />
       </SidebarSection>
     </Sidebar>
   );

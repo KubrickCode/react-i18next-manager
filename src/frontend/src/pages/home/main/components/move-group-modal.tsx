@@ -29,9 +29,7 @@ export const MoveGroupModal = ({
       <ModalHeader>
         <Text>{t(i18nKeys.group.moveGroup)}</Text>
       </ModalHeader>
-      <ModalBody>
-        <Text>Not Supported</Text>
-      </ModalBody>
+      <ModalBody>{/* <GroupTreeView /> */}</ModalBody>
       <ModalFooter onClose={onClose}>
         <Button colorScheme="darkgray" onClick={handleSubmit}>
           {t(i18nKeys.common.save)}

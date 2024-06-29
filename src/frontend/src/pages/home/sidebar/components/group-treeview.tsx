@@ -13,16 +13,28 @@ import { useColorModeValue } from "~/core/color-mode";
 import {
   EditGroupLabelReqBodyDto,
   EditGroupPositionReqBodyDto,
+  GetGroupsResDto,
 } from "~/core/codegen";
 import { replaceBlank } from "~/core/utils";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
-import { useHomePageContext } from "../../context";
 
-export const GroupTreeView = () => {
-  const { groups, handleSelectedGroup } = useHomePageContext();
+type GroupTreeViewProps = {
+  groups: GetGroupsResDto["groups"];
+  handleSelectedGroup: (
+    group: {
+      id: string;
+      label: string;
+    } | null
+  ) => void;
+};
+
+export const GroupTreeView = ({
+  groups,
+  handleSelectedGroup,
+}: GroupTreeViewProps) => {
   const [term, setTerm] = useState("");
   const treeNodeBgColor = useColorModeValue("gray.100", "gray.700");
   const { t } = useTranslation();
@@ -95,7 +107,9 @@ export const GroupTreeView = () => {
         searchTerm={term}
         searchMatch={(node, term) => node.data.label.includes(term)}
       >
-        {Node}
+        {(nodeProps) => (
+          <Node {...nodeProps} handleSelectedGroup={handleSelectedGroup} />
+        )}
       </Tree>
     </VStack>
   );
@@ -107,9 +121,12 @@ export type TreeData = {
   children?: TreeData[];
 };
 
-const Node = ({ node, tree, dragHandle }: NodeRendererProps<TreeData>) => {
+type NodeProps = NodeRendererProps<TreeData> & {
+  handleSelectedGroup: GroupTreeViewProps["handleSelectedGroup"];
+};
+
+const Node = ({ node, tree, dragHandle, handleSelectedGroup }: NodeProps) => {
   const { t } = useTranslation();
-  const { handleSelectedGroup } = useHomePageContext();
   const [label, setLabel] = useState(node.data.label);
   const [isHovered, setIsHovered] = useState(false);
 
