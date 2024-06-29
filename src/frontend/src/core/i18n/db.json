@@ -562,6 +562,21 @@
           "value": "{{ count }} 행 삭제"
         }
       ]
+    },
+    {
+      "id": "dbf2cacb-1eee-44e5-8fbc-fbd73cc782ac",
+      "groupId": "d5a3e5bc-a326-436b-9923-f2c1d1f5fab6",
+      "key": "moveGroup",
+      "values": [
+        {
+          "localeId": "a0160231-55f9-40f1-87a1-8e2486788e03",
+          "value": "Move Group"
+        },
+        {
+          "localeId": "413e9827-627c-429e-9d56-28d73fd5dbe2",
+          "value": "그룹 이동"
+        }
+      ]
     }
   ]
 }

@@ -12,6 +12,8 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
 import { useHomePageContext } from "../../context";
+import { MdDriveFileMove } from "react-icons/md";
+import { useColorModeValue } from "~/core/color-mode";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -28,6 +30,7 @@ export const TranslationsTableToolbar = ({
   const { locales } = useApp();
   const { selectedGroup } = useHomePageContext();
   const queryClient = useQueryClient();
+  const moveGroupButtonColorScheme = useColorModeValue("gray", "darkgray");
 
   if (!selectedGroup) return null;
 
@@ -49,20 +52,29 @@ export const TranslationsTableToolbar = ({
   return (
     <HStack marginTop={2}>
       {selectedIds.length > 0 && (
-        <ModalToggle
-          modal={DeleteTranslationModal}
-          modalProps={{
-            handleSelectedIds,
-            ids: selectedIds,
-            selectedGroupId: selectedGroup.id,
-          }}
-        >
-          <Button colorScheme="red" size="sm">
-            {t(i18nKeys.translation.deleteTranslationsRows, {
-              count: selectedIds.length,
-            })}
+        <>
+          <ModalToggle
+            modal={DeleteTranslationModal}
+            modalProps={{
+              handleSelectedIds,
+              ids: selectedIds,
+              selectedGroupId: selectedGroup.id,
+            }}
+          >
+            <Button colorScheme="red" size="sm">
+              {t(i18nKeys.translation.deleteTranslationsRows, {
+                count: selectedIds.length,
+              })}
+            </Button>
+          </ModalToggle>
+          <Button
+            colorScheme={moveGroupButtonColorScheme}
+            leftIcon={<MdDriveFileMove />}
+            size="sm"
+          >
+            {t(i18nKeys.group.moveGroup)}
           </Button>
-        </ModalToggle>
+        </>
       )}
       <IconButton
         aria-label="refresh"
