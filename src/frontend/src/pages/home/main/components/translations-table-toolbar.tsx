@@ -14,6 +14,7 @@ import { DeleteTranslationModal } from "./delete-translations-modal";
 import { useHomePageContext } from "../../context";
 import { MdDriveFileMove } from "react-icons/md";
 import { useColorModeValue } from "~/core/color-mode";
+import { MoveGroupModal } from "./move-group-modal";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -67,13 +68,20 @@ export const TranslationsTableToolbar = ({
               })}
             </Button>
           </ModalToggle>
-          <Button
-            colorScheme={moveGroupButtonColorScheme}
-            leftIcon={<MdDriveFileMove />}
-            size="sm"
+          <ModalToggle
+            modal={MoveGroupModal}
+            modalProps={{
+              translationIds: selectedIds,
+            }}
           >
-            {t(i18nKeys.group.moveGroup)}
-          </Button>
+            <Button
+              colorScheme={moveGroupButtonColorScheme}
+              leftIcon={<MdDriveFileMove />}
+              size="sm"
+            >
+              {t(i18nKeys.group.moveGroup)}
+            </Button>
+          </ModalToggle>
         </>
       )}
       <IconButton
