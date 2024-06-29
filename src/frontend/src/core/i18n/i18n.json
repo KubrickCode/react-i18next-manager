@@ -39,7 +39,8 @@
       "group.moveGroup": "Move Group",
       "group.currentGroup": "Current Group",
       "group.selectTargetGroup": "Select Target Group",
-      "group.groupList": "Group List"
+      "group.groupList": "Group List",
+      "group.moveGroupSuccess": "moved successfully"
     }
   },
   "ko": {
@@ -82,7 +83,8 @@
       "group.moveGroup": "그룹 이동",
       "group.currentGroup": "현재 그룹",
       "group.selectTargetGroup": "이동 그룹 선택",
-      "group.groupList": "그룹 목록"
+      "group.groupList": "그룹 목록",
+      "group.moveGroupSuccess": "성공적으로 이동되었습니다"
     }
   }
 }

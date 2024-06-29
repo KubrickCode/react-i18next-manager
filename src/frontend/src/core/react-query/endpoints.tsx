@@ -14,6 +14,7 @@ export default {
   DELETE_TRANSLATIONS: "/translations/delete",
   ADD_TRANSLATION: (groupId: string) => `/translations/${groupId}`,
   EDIT_TRANSLATION: (translationId: string) => `/translations/${translationId}`,
+  EDIT_TRANSLATIONS_PARENT_GROUP: "/translations/group",
   GET_TRANSLATIONS: (groupId: string) => `/translations/${groupId}`,
 
   GENERATE_I18N_RESOURCES: "/generate-i18n",

@@ -1,7 +1,10 @@
 import { useState } from "react";
 
 import { Button } from "~/core/button";
-import { GetGroupsResDto } from "~/core/codegen";
+import {
+  EditTranslationsParentGroupReqBodyDto,
+  GetGroupsResDto,
+} from "~/core/codegen";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { VStack } from "~/core/layout";
 import {
@@ -11,20 +14,24 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { KEY, LINK, useSuspenseQuery } from "~/core/react-query";
+import { KEY, LINK, useMutation, useSuspenseQuery } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { GroupTreeView } from "~/shared/group";
 
-type SelectedGroup = {
+type Group = {
   id: string;
   label: string;
-} | null;
+};
+
+type SelectedGroup = Group | null;
 
 type MoveTranslationsGroupModalProps = ModalProps & {
+  currentGroup: Group;
   translationIds: string[];
 };
 
 export const MoveTranslationsGroupModal = ({
+  currentGroup,
   isOpen,
   onClose,
   translationIds,
@@ -38,9 +45,24 @@ export const MoveTranslationsGroupModal = ({
 
   const { groups } = data;
 
+  const { mutate: editTranslationsParentGroup } =
+    useMutation<EditTranslationsParentGroupReqBodyDto>({
+      refetchQueryKeys: [[KEY.GET_TRANSLATIONS(currentGroup.id)]],
+      toastMessage: t(i18nKeys.group.moveGroupSuccess),
+    });
+
   const handleSubmit = () => {
-    console.log(selectedGroup);
-    console.log(translationIds);
+    if (selectedGroup === null) return;
+
+    editTranslationsParentGroup({
+      link: LINK.EDIT_TRANSLATIONS_PARENT_GROUP,
+      method: "patch",
+      body: {
+        translations: translationIds.map((id) => ({ id })),
+        newGroupId: selectedGroup.id,
+      },
+    });
+    onClose();
   };
 
   const handleSelectedGroup = (group: SelectedGroup) => {

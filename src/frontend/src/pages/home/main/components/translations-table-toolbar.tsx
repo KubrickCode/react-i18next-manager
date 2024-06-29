@@ -71,6 +71,7 @@ export const TranslationsTableToolbar = ({
           <ModalToggle
             modal={MoveTranslationsGroupModal}
             modalProps={{
+              currentGroup: selectedGroup,
               translationIds: selectedIds,
             }}
           >
