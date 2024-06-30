@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useApp } from "~/core/app";
 import { Button } from "~/core/button";
 import { AddTranslationReqBodyDto } from "~/core/codegen";
+import { z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { Input } from "~/core/input";
 import { VStack } from "~/core/layout";
@@ -16,6 +17,16 @@ import {
 import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
+
+const schema = z.object({
+  key: z.string(),
+  values: z.array(
+    z.object({
+      localeId: z.string().uuid(),
+      value: z.string(),
+    })
+  ),
+});
 
 type AddTranslationModalProps = ModalProps & {
   selectedGroup: {
@@ -39,6 +50,7 @@ export const AddTranslationModal = ({
 
   const { mutate: addTranslation } = useMutation<AddTranslationReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup.id)]],
+    schema,
     toastMessage: t(i18nKeys.translation.addTranslationSuccess),
   });
 
