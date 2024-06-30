@@ -13,7 +13,7 @@ import { EditGroupPositionReqBodyDto, GetGroupsResDto } from "~/core/codegen";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { z } from "~/core/form";
 
-import { convertGroupsToTreeData } from "../utils";
+import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
 import { GroupTreeviewNode } from "./group-treeview-node";
 
