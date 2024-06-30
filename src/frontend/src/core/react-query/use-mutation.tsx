@@ -23,16 +23,15 @@ type ErrorResponse = {
   };
 };
 
+export type UseMutationProps<TBody, TData> = {
+  refetchQueryKeys?: QueryKey[];
+  toastMessage?: string;
+} & Omit<UseMutationOptions<TData, unknown, MutateParams<TBody>>, "mutationFn">;
+
 export const useMutation = <TBody, TData = unknown>({
   refetchQueryKeys,
   toastMessage,
-}: {
-  refetchQueryKeys?: QueryKey[];
-  toastMessage?: string;
-} & Omit<
-  UseMutationOptions<TData, unknown, MutateParams<TBody>>,
-  "mutationFn"
->) => {
+}: UseMutationProps<TBody, TData>) => {
   const toast = useToast();
 
   return useTanstackMutation<TData, ErrorResponse, MutateParams<TBody>>({
