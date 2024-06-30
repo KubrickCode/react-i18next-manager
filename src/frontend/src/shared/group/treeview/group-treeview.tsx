@@ -1,28 +1,23 @@
 import { useState } from "react";
-import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
-import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
 
 import { useMutation, LINK, KEY } from "~/core/react-query";
-import { NodeRendererProps, Tree } from "~/core/tree";
-import { Input, SearchInput } from "~/core/input";
+import { Tree } from "~/core/tree";
+import { SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
 import { IconButton } from "~/core/button";
-import { DeleteModal, ModalToggle } from "~/core/modal";
+import { ModalToggle } from "~/core/modal";
 import { Box, Flex, VStack } from "~/core/layout";
 import { useColorModeValue } from "~/core/color-mode";
-import {
-  EditGroupLabelReqBodyDto,
-  EditGroupPositionReqBodyDto,
-  GetGroupsResDto,
-} from "~/core/codegen";
-import { replaceBlank } from "~/core/utils";
+import { EditGroupPositionReqBodyDto, GetGroupsResDto } from "~/core/codegen";
 import { i18nKeys, useTranslation } from "~/core/i18n";
+import { z } from "~/core/form";
 
 import { convertGroupsToTreeData } from "../utils";
 import { AddGroupModal } from "./add-group-modal";
-import { z } from "~/core/form";
+import { GroupTreeviewNode } from "./group-treeview-node";
 
-const editGroupPositionSchema = z.object({
+const schema = z.object({
   position: z.number().int(),
 });
 
@@ -57,7 +52,7 @@ export const GroupTreeView = ({
   const { mutate: editGroupPosition } =
     useMutation<EditGroupPositionReqBodyDto>({
       refetchQueryKeys,
-      schema: editGroupPositionSchema,
+      schema,
       toastMessage: t(i18nKeys.group.editGroupPositionSuccess),
     });
 
@@ -126,7 +121,7 @@ export const GroupTreeView = ({
         width={width}
       >
         {(nodeProps) => (
-          <Node
+          <GroupTreeviewNode
             {...nodeProps}
             handleSelectedGroup={handleSelectedGroup}
             needsMutation={needsMutation}
@@ -134,168 +129,5 @@ export const GroupTreeView = ({
         )}
       </Tree>
     </VStack>
-  );
-};
-
-const editGroupLabelSchema = z.object({
-  newLabel: z.string(),
-});
-
-export type TreeData = {
-  id: string;
-  label: string;
-  children?: TreeData[];
-};
-
-type NodeProps = NodeRendererProps<TreeData> & {
-  needsMutation: boolean;
-  handleSelectedGroup: GroupTreeViewProps["handleSelectedGroup"];
-};
-
-const Node = ({
-  needsMutation,
-  node,
-  tree,
-  dragHandle,
-  handleSelectedGroup,
-}: NodeProps) => {
-  const { t } = useTranslation();
-  const [label, setLabel] = useState(node.data.label);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const treeNodeBgColor = useColorModeValue(
-    "rgba(0, 0, 0, 0.1)",
-    "rgba(255, 255, 255, 0.1)"
-  );
-  const inputBgColor = useColorModeValue("white", "gray.800");
-
-  const refetchQueryKeys = [[KEY.GET_GROUPS]];
-  const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
-    refetchQueryKeys,
-    schema: editGroupLabelSchema,
-    toastMessage: t(i18nKeys.group.editGroupLabelSuccess),
-  });
-
-  const handleEdit = () => {
-    editGroupLabel({
-      link: LINK.EDIT_GROUP_LABEL(node.data.id),
-      method: "patch",
-      body: { newLabel: label },
-    });
-    node.submit(label);
-    node.select();
-  };
-
-  return (
-    <Box
-      _hover={{ backgroundColor: treeNodeBgColor }}
-      ref={dragHandle}
-      alignItems="center"
-      backgroundColor={node.state.isSelected ? treeNodeBgColor : "transparent"}
-      borderRadius={5}
-      cursor="pointer"
-      display="flex"
-      gap={2}
-      height={45}
-      onClick={() => node.isInternal && node.toggle()}
-      onMouseOver={() => setIsHovered(true)}
-      onMouseOut={() => setIsHovered(false)}
-      paddingLeft={`${(node.level + 1) * 1}rem`}
-      paddingRight="0.5rem"
-      width="full"
-    >
-      <Flex alignContent="flex-start" alignItems="center" width="full">
-        {node.isEditing ? (
-          <Input
-            autoFocus
-            backgroundColor={inputBgColor}
-            onChange={(e) => setLabel(replaceBlank(e.target.value))}
-            onKeyDown={(e) => {
-              if (e.key === "Escape") {
-                setLabel(node.data.label);
-                node.reset();
-              }
-              if (e.key === "Enter") handleEdit();
-            }}
-            size="sm"
-            value={label}
-          />
-        ) : (
-          <>
-            <Text marginBottom={1}>{node.data.label}</Text>
-            {node.data.children &&
-              node.data.children.length > 0 &&
-              (node.isOpen ? <MdArrowDropDown /> : <MdArrowRight />)}
-          </>
-        )}
-      </Flex>
-
-      {needsMutation && (
-        <Flex>
-          {(node.isSelected || isHovered) && (
-            <>
-              {node.isEditing ? (
-                <IconButton
-                  aria-label="save-edit"
-                  icon={<FaSave />}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEdit();
-                  }}
-                  size="xs"
-                  variant="ghost"
-                />
-              ) : (
-                <IconButton
-                  aria-label="edit"
-                  icon={<FaEdit />}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    node.edit();
-                  }}
-                  size="xs"
-                  variant="ghost"
-                />
-              )}
-              <ModalToggle
-                modal={AddGroupModal}
-                modalProps={{
-                  parentId: node.id,
-                  parentName: node.data.label,
-                }}
-              >
-                <IconButton
-                  aria-label="add"
-                  icon={<FaPlus />}
-                  size="xs"
-                  variant="ghost"
-                />
-              </ModalToggle>
-              <ModalToggle
-                modal={DeleteModal}
-                modalProps={{
-                  body: <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>,
-                  link: LINK.DELETE_GROUP(node.id),
-                  refetchQueryKeys,
-                  toastMessage: t(i18nKeys.group.deleteGroupSuccess),
-                  onComplete() {
-                    tree.delete(node.id);
-                    tree.select(null);
-                    handleSelectedGroup(null);
-                  },
-                }}
-              >
-                <IconButton
-                  aria-label="delete"
-                  icon={<FaTrash />}
-                  size="xs"
-                  variant="ghost"
-                />
-              </ModalToggle>
-            </>
-          )}
-        </Flex>
-      )}
-    </Box>
   );
 };
