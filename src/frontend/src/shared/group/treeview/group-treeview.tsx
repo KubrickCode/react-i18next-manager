@@ -18,8 +18,8 @@ import {
 import { replaceBlank } from "~/core/utils";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 
-import { convertGroupsToTreeData } from "./utils";
-import { AddGroupModal } from "./add-group-modal";
+import { convertGroupsToTreeData } from "../utils";
+import { AddGroupModal } from "../add-group-modal";
 import { z } from "~/core/form";
 
 const editGroupPositionSchema = z.object({

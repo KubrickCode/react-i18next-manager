@@ -1,6 +1,6 @@
 import { GetGroupsResDto } from "~/core/codegen";
 
-import { TreeData } from "./group-treeview";
+import { TreeData } from "./treeview/group-treeview";
 
 const buildTree = ({
   groups,

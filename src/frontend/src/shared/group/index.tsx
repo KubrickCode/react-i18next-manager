@@ -1,1 +1,1 @@
-export * from "./group-treeview";
+export * from "./treeview";
