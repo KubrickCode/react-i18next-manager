@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Button } from "~/core/button";
 import { AddGroupReqBodyDto } from "~/core/codegen";
+import { z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { Input } from "~/core/input";
 import { VStack } from "~/core/layout";
@@ -15,6 +16,11 @@ import {
 import { useMutation, LINK, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
+
+const schema = z.object({
+  label: z.string(),
+  parentId: z.string().uuid().nullable(),
+});
 
 type AddGroupModalProps = ModalProps & {
   parentId: string | null;
@@ -32,6 +38,7 @@ export const AddGroupModal = ({
 
   const { mutate: addGroup } = useMutation<AddGroupReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_GROUPS]],
+    schema,
     toastMessage: t(i18nKeys.group.addGroupSuccess),
   });
 

@@ -1,5 +1,6 @@
 import { Button } from "~/core/button";
 import { DeleteTranslationsReqBodyDto } from "~/core/codegen";
+import { z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import {
   Modal,
@@ -10,6 +11,14 @@ import {
 } from "~/core/modal";
 import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
+
+const schema = z.object({
+  translations: z.array(
+    z.object({
+      id: z.string().uuid(),
+    })
+  ),
+});
 
 type DeleteTranslationModalProps = ModalProps & {
   ids: string[];
@@ -28,6 +37,7 @@ export const DeleteTranslationModal = ({
   const { mutate: deleteTranslations } =
     useMutation<DeleteTranslationsReqBodyDto>({
       refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroupId)]],
+      schema,
       toastMessage: t(i18nKeys.translation.deleteTranslationSuccess),
     });
 

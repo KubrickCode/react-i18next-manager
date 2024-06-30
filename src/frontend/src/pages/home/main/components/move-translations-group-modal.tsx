@@ -5,6 +5,7 @@ import {
   EditTranslationsParentGroupReqBodyDto,
   GetGroupsResDto,
 } from "~/core/codegen";
+import { z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { VStack } from "~/core/layout";
 import {
@@ -17,6 +18,15 @@ import {
 import { KEY, LINK, useMutation, useSuspenseQuery } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { GroupTreeView } from "~/shared/group";
+
+const schema = z.object({
+  translations: z.array(
+    z.object({
+      id: z.string().uuid(),
+    })
+  ),
+  newGroupId: z.string().uuid(),
+});
 
 type Group = {
   id: string;
@@ -51,6 +61,7 @@ export const MoveTranslationsGroupModal = ({
   const { mutate: editTranslationsParentGroup } =
     useMutation<EditTranslationsParentGroupReqBodyDto>({
       refetchQueryKeys: [[KEY.GET_TRANSLATIONS(currentGroup.id)]],
+      schema,
       toastMessage: t(i18nKeys.group.moveGroupSuccess),
     });
 

@@ -30,6 +30,20 @@ import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { AddLocaleModal } from "./add-locale-modal";
+import { z } from "~/core/form";
+
+const editLocalesPositionSchema = z.object({
+  locales: z.array(
+    z.object({
+      id: z.string().uuid(),
+      position: z.number().int(),
+    })
+  ),
+});
+
+const editLocaleLabelSchema = z.object({
+  newLabel: z.string(),
+});
 
 type LocaleManagementModalProps = ModalProps;
 
@@ -53,11 +67,13 @@ export const LocaleManagementModal = ({
   const { mutate: editLocalesPosition } =
     useMutation<EditLocalesPositionReqBodyDto>({
       refetchQueryKeys,
+      schema: editLocalesPositionSchema,
       toastMessage: t(i18nKeys.setting.editLocalePositionSuccess),
     });
 
   const { mutate: editLocaleLabel } = useMutation<EditLocaleLabelReqBodyDto>({
     refetchQueryKeys,
+    schema: editLocaleLabelSchema,
     toastMessage: t(i18nKeys.setting.editLocaleLabelSuccess),
   });
 

@@ -18,6 +18,17 @@ import { replaceBlank } from "~/core/utils";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { useHomePageContext } from "../../context";
+import { z } from "~/core/form";
+
+const schema = z.object({
+  newKey: z.string(),
+  newValues: z.array(
+    z.object({
+      localeId: z.string().uuid(),
+      value: z.string(),
+    })
+  ),
+});
 
 type TranslationsTableRowProps = {
   isSelected: boolean;
@@ -46,6 +57,7 @@ export const TranslationsTableRow = ({
 
   const { mutate: editTranslation } = useMutation<EditTranslationReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
+    schema,
     toastMessage: t(i18nKeys.translation.editTranslationSuccess),
   });
 

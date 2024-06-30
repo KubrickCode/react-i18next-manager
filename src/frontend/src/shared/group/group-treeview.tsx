@@ -20,6 +20,11 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
+import { z } from "~/core/form";
+
+const editGroupPositionSchema = z.object({
+  position: z.number().int(),
+});
 
 type GroupTreeViewProps = {
   groups: GetGroupsResDto["groups"];
@@ -52,6 +57,7 @@ export const GroupTreeView = ({
   const { mutate: editGroupPosition } =
     useMutation<EditGroupPositionReqBodyDto>({
       refetchQueryKeys,
+      schema: editGroupPositionSchema,
       toastMessage: t(i18nKeys.group.editGroupPositionSuccess),
     });
 
@@ -131,6 +137,10 @@ export const GroupTreeView = ({
   );
 };
 
+const editGroupLabelSchema = z.object({
+  newLabel: z.string(),
+});
+
 export type TreeData = {
   id: string;
   label: string;
@@ -162,6 +172,7 @@ const Node = ({
   const refetchQueryKeys = [[KEY.GET_GROUPS]];
   const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
     refetchQueryKeys,
+    schema: editGroupLabelSchema,
     toastMessage: t(i18nKeys.group.editGroupLabelSuccess),
   });
 

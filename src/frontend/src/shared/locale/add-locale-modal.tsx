@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Button } from "~/core/button";
 import { AddLocaleReqBodyDto } from "~/core/codegen";
+import { z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { Input } from "~/core/input";
 import { VStack } from "~/core/layout";
@@ -14,6 +15,11 @@ import {
 } from "~/core/modal";
 import { KEY, LINK, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
+
+const schema = z.object({
+  label: z.string(),
+  position: z.number().int(),
+});
 
 type AddLocaleModalProps = ModalProps & {
   onComplete?: () => void;
@@ -31,6 +37,7 @@ export const AddLocaleModal = ({
 
   const { mutate: addLocale } = useMutation<AddLocaleReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_LOCALES]],
+    schema,
     toastMessage: t(i18nKeys.setting.addLocaleSuccess),
   });
 
