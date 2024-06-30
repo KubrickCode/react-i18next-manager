@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsNotEmpty,
   IsString,
   IsUUID,
   NotContains,
@@ -14,12 +15,14 @@ class TranslationValue {
   localeId: UUID;
 
   @IsString()
+  @IsNotEmpty()
   @Trim()
   value: string;
 }
 
 export class AddTranslationReqBodyDto {
   @IsString()
+  @IsNotEmpty()
   @NotContains(' ')
   @Trim()
   key: string;
