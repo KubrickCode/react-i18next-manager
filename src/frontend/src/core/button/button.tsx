@@ -1,8 +1,10 @@
 import {
   Button as ChakraButton,
-  ButtonProps,
+  ButtonProps as ChakraButtonProps,
   useColorModeValue,
 } from "@chakra-ui/react";
+
+export type ButtonProps = ChakraButtonProps;
 
 export const Button = (props: ButtonProps) => {
   const colorScheme = useColorModeValue("darkgray", "gray");
