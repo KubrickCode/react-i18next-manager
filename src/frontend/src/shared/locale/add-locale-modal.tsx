@@ -13,7 +13,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { KEY, LINK, useMutation } from "~/core/react-query";
+import { KEY, ENDPOINT, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 const schema = z.object({
@@ -43,7 +43,7 @@ export const AddLocaleModal = ({
 
   const handleSubmit = () => {
     addLocale({
-      link: LINK.ADD_LOCALE,
+      link: ENDPOINT.ADD_LOCALE,
       method: "post",
       body: {
         label,

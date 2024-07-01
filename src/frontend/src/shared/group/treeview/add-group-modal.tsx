@@ -13,7 +13,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { useMutation, LINK, KEY } from "~/core/react-query";
+import { useMutation, ENDPOINT, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
 
@@ -44,7 +44,7 @@ export const AddGroupModal = ({
 
   const handleSubmit = () => {
     addGroup({
-      link: LINK.ADD_GROUP,
+      link: ENDPOINT.ADD_GROUP,
       method: "post",
       body: {
         label,

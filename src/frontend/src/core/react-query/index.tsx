@@ -1,4 +1,4 @@
-export { default as LINK } from "./endpoints";
+export { default as ENDPOINT } from "./endpoints";
 export { default as KEY } from "./keys";
 export * from "./provider";
 export * from "./use-mutation";

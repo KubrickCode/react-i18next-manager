@@ -14,7 +14,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { KEY, LINK, useMutation } from "~/core/react-query";
+import { KEY, ENDPOINT, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
 
@@ -56,7 +56,7 @@ export const AddTranslationModal = ({
 
   const handleSubmit = () => {
     addTranslation({
-      link: LINK.ADD_TRANSLATION(selectedGroup.id),
+      link: ENDPOINT.ADD_TRANSLATION(selectedGroup.id),
       method: "post",
       body: {
         key,

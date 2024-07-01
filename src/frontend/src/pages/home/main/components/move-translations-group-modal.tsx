@@ -15,7 +15,12 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { KEY, LINK, useMutation, useSuspenseQuery } from "~/core/react-query";
+import {
+  KEY,
+  ENDPOINT,
+  useMutation,
+  useSuspenseQuery,
+} from "~/core/react-query";
 import { Text } from "~/core/text";
 import { GroupTreeView } from "~/shared/group";
 
@@ -50,7 +55,7 @@ export const MoveTranslationsGroupModal = ({
 }: MoveTranslationsGroupModalProps) => {
   const { t } = useTranslation();
   const { data } = useSuspenseQuery<GetGroupsResDto>(
-    LINK.GET_GROUPS,
+    ENDPOINT.GET_GROUPS,
     KEY.GET_GROUPS_IN_MOVE_GROUP_MODAL
   );
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup>(null);
@@ -72,7 +77,7 @@ export const MoveTranslationsGroupModal = ({
     }
 
     editTranslationsParentGroup({
-      link: LINK.EDIT_TRANSLATIONS_PARENT_GROUP,
+      link: ENDPOINT.EDIT_TRANSLATIONS_PARENT_GROUP,
       method: "patch",
       body: {
         translations: translationIds.map((id) => ({ id })),

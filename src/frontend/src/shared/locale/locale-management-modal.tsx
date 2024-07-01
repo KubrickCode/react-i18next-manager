@@ -11,7 +11,7 @@ import {
   ModalProps,
   ModalToggle,
 } from "~/core/modal";
-import { useMutation, LINK, KEY } from "~/core/react-query";
+import { useMutation, ENDPOINT, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { Button, IconButton } from "~/core/button";
 import { Input } from "~/core/input";
@@ -90,7 +90,7 @@ export const LocaleManagementModal = ({
     }));
 
     editLocalesPosition({
-      link: LINK.EDIT_LOCALES_POSITION,
+      link: ENDPOINT.EDIT_LOCALES_POSITION,
       method: "patch",
       body: {
         locales: updatedLocales,
@@ -157,7 +157,7 @@ export const LocaleManagementModal = ({
                                       onClick={() => {
                                         setEditMode(false);
                                         editLocaleLabel({
-                                          link: LINK.EDIT_LOCALE_LABEL(
+                                          link: ENDPOINT.EDIT_LOCALE_LABEL(
                                             selectedLocale.id
                                           ),
                                           method: "patch",
@@ -202,7 +202,7 @@ export const LocaleManagementModal = ({
                                           )}
                                         </Text>
                                       ),
-                                      link: LINK.DELETE_LOCALE(locale.id),
+                                      link: ENDPOINT.DELETE_LOCALE(locale.id),
                                       refetchQueryKeys,
                                       toastMessage: t(
                                         i18nKeys.setting.deleteLocaleSuccess

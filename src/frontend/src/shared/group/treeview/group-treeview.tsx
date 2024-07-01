@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-import { useMutation, LINK, KEY } from "~/core/react-query";
+import { useMutation, ENDPOINT, KEY } from "~/core/react-query";
 import { Tree } from "~/core/tree";
 import { SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
@@ -100,7 +100,7 @@ export const GroupTreeView = ({
         indent={24}
         onMove={({ dragIds, index: position }) => {
           editGroupPosition({
-            link: LINK.EDIT_GROUP_POSITION(dragIds[0]),
+            link: ENDPOINT.EDIT_GROUP_POSITION(dragIds[0]),
             method: "patch",
             body: { position },
           });

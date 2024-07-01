@@ -9,7 +9,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { KEY, LINK, useMutation } from "~/core/react-query";
+import { KEY, ENDPOINT, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 const schema = z.object({
@@ -43,7 +43,7 @@ export const DeleteTranslationModal = ({
 
   const handleSubmit = () => {
     deleteTranslations({
-      link: LINK.DELETE_TRANSLATIONS,
+      link: ENDPOINT.DELETE_TRANSLATIONS,
       method: "post",
       body: {
         translations: ids.map((id) => ({ id })),

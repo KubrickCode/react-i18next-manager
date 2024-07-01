@@ -10,7 +10,7 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 import { Input } from "~/core/input";
 import { Box, Flex } from "~/core/layout";
 import { DeleteModal, ModalToggle } from "~/core/modal";
-import { KEY, LINK, useMutation } from "~/core/react-query";
+import { KEY, ENDPOINT, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { NodeRendererProps } from "~/core/tree";
 import { replaceBlank } from "~/core/utils";
@@ -63,7 +63,7 @@ export const GroupTreeviewNode = ({
 
   const handleEdit = () => {
     editGroupLabel({
-      link: LINK.EDIT_GROUP_LABEL(node.data.id),
+      link: ENDPOINT.EDIT_GROUP_LABEL(node.data.id),
       method: "patch",
       body: { newLabel: label },
     });
@@ -160,7 +160,7 @@ export const GroupTreeviewNode = ({
                 modal={DeleteModal}
                 modalProps={{
                   body: <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>,
-                  link: LINK.DELETE_GROUP(node.id),
+                  link: ENDPOINT.DELETE_GROUP(node.id),
                   refetchQueryKeys,
                   toastMessage: t(i18nKeys.group.deleteGroupSuccess),
                   onComplete() {
