@@ -9,7 +9,7 @@ import { MethodType, RequestConfig, api } from "../axios";
 import { queryClient } from "./provider";
 import { useToast } from "../toast";
 
-type MutateParams<TBody> = {
+export type MutateParams<TBody> = {
   endpoint: string;
   method: MethodType;
   body?: TBody;
