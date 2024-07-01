@@ -1,5 +1,5 @@
-import { Flex, FlexProps } from "@chakra-ui/react";
 import { FieldValues, UseFormReturn } from "react-hook-form";
+import { Flex, FlexProps } from "../layout";
 
 export type FormProps<FormValues extends FieldValues = FieldValues> =
   FlexProps & {
