@@ -11,7 +11,7 @@ import { i18nKeys, useTranslation } from "../i18n";
 
 type DeleteModelProps = ModalProps & {
   body: ReactNode;
-  link: string;
+  endpoint: string;
   onComplete?: () => void;
   refetchQueryKeys?: QueryKey[];
   toastMessage?: string;
@@ -19,7 +19,7 @@ type DeleteModelProps = ModalProps & {
 
 export const DeleteModal = ({
   body,
-  link,
+  endpoint,
   onComplete,
   refetchQueryKeys,
   toastMessage,
@@ -33,7 +33,7 @@ export const DeleteModal = ({
 
   const handleComplete = () => {
     mutate({
-      link,
+      endpoint,
       method: "delete",
     });
     onComplete?.();

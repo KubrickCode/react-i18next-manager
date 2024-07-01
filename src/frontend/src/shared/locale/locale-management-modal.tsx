@@ -90,7 +90,7 @@ export const LocaleManagementModal = ({
     }));
 
     editLocalesPosition({
-      link: ENDPOINT.EDIT_LOCALES_POSITION,
+      endpoint: ENDPOINT.EDIT_LOCALES_POSITION,
       method: "patch",
       body: {
         locales: updatedLocales,
@@ -157,7 +157,7 @@ export const LocaleManagementModal = ({
                                       onClick={() => {
                                         setEditMode(false);
                                         editLocaleLabel({
-                                          link: ENDPOINT.EDIT_LOCALE_LABEL(
+                                          endpoint: ENDPOINT.EDIT_LOCALE_LABEL(
                                             selectedLocale.id
                                           ),
                                           method: "patch",
@@ -202,7 +202,9 @@ export const LocaleManagementModal = ({
                                           )}
                                         </Text>
                                       ),
-                                      link: ENDPOINT.DELETE_LOCALE(locale.id),
+                                      endpoint: ENDPOINT.DELETE_LOCALE(
+                                        locale.id
+                                      ),
                                       refetchQueryKeys,
                                       toastMessage: t(
                                         i18nKeys.setting.deleteLocaleSuccess

@@ -56,7 +56,7 @@ export const AddTranslationModal = ({
 
   const handleSubmit = () => {
     addTranslation({
-      link: ENDPOINT.ADD_TRANSLATION(selectedGroup.id),
+      endpoint: ENDPOINT.ADD_TRANSLATION(selectedGroup.id),
       method: "post",
       body: {
         key,

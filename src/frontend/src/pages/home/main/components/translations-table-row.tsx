@@ -63,7 +63,7 @@ export const TranslationsTableRow = ({
 
   const handleEditTranslation = () => {
     editTranslation({
-      link: ENDPOINT.EDIT_TRANSLATION(translation.id),
+      endpoint: ENDPOINT.EDIT_TRANSLATION(translation.id),
       method: "patch",
       body: {
         newKey: translationForm.key,

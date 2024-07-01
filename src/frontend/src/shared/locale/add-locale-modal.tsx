@@ -43,7 +43,7 @@ export const AddLocaleModal = ({
 
   const handleSubmit = () => {
     addLocale({
-      link: ENDPOINT.ADD_LOCALE,
+      endpoint: ENDPOINT.ADD_LOCALE,
       method: "post",
       body: {
         label,

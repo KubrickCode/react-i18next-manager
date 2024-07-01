@@ -10,7 +10,7 @@ import { queryClient } from "./provider";
 import { useToast } from "../toast";
 
 type MutateParams<TBody> = {
-  link: string;
+  endpoint: string;
   method: MethodType;
   body?: TBody;
   config?: RequestConfig;
@@ -38,7 +38,7 @@ export const useMutation = <TBody, TData = unknown>({
   const toast = useToast();
 
   return useTanstackMutation<TData, ErrorResponse, MutateParams<TBody>>({
-    mutationFn: async ({ link, method, body, config }) => {
+    mutationFn: async ({ endpoint, method, body, config }) => {
       if (schema) {
         try {
           schema.parse(body);
@@ -49,7 +49,7 @@ export const useMutation = <TBody, TData = unknown>({
           }
         }
       }
-      const response = await api[method](link, body, config);
+      const response = await api[method](endpoint, body, config);
       return response.data;
     },
     onSuccess: async () => {

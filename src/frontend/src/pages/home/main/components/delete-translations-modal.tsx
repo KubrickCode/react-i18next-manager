@@ -43,7 +43,7 @@ export const DeleteTranslationModal = ({
 
   const handleSubmit = () => {
     deleteTranslations({
-      link: ENDPOINT.DELETE_TRANSLATIONS,
+      endpoint: ENDPOINT.DELETE_TRANSLATIONS,
       method: "post",
       body: {
         translations: ids.map((id) => ({ id })),

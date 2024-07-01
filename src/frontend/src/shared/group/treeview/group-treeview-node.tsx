@@ -63,7 +63,7 @@ export const GroupTreeviewNode = ({
 
   const handleEdit = () => {
     editGroupLabel({
-      link: ENDPOINT.EDIT_GROUP_LABEL(node.data.id),
+      endpoint: ENDPOINT.EDIT_GROUP_LABEL(node.data.id),
       method: "patch",
       body: { newLabel: label },
     });
@@ -160,7 +160,7 @@ export const GroupTreeviewNode = ({
                 modal={DeleteModal}
                 modalProps={{
                   body: <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>,
-                  link: ENDPOINT.DELETE_GROUP(node.id),
+                  endpoint: ENDPOINT.DELETE_GROUP(node.id),
                   refetchQueryKeys,
                   toastMessage: t(i18nKeys.group.deleteGroupSuccess),
                   onComplete() {

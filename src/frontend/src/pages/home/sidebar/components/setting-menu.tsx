@@ -42,7 +42,7 @@ export const SettingMenu = () => {
 
   const handleGenerateI18nResources = () => {
     generateI18nResources({
-      link: ENDPOINT.GENERATE_I18N_RESOURCES,
+      endpoint: ENDPOINT.GENERATE_I18N_RESOURCES,
       method: "post",
     });
   };

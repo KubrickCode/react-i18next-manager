@@ -44,7 +44,7 @@ export const AddGroupModal = ({
 
   const handleSubmit = () => {
     addGroup({
-      link: ENDPOINT.ADD_GROUP,
+      endpoint: ENDPOINT.ADD_GROUP,
       method: "post",
       body: {
         label,

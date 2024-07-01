@@ -9,7 +9,7 @@ import { api, ResponseError } from "../axios";
 const QUERY_STALE_TIME = 1000 * 60 * 5;
 
 export const useQuery = <TQueryFnData = unknown, TError = ResponseError>(
-  link: string,
+  endpoint: string,
   key: string | string[],
   queryOptions?: Omit<
     UseQueryOptions<TQueryFnData, TError>,
@@ -17,7 +17,7 @@ export const useQuery = <TQueryFnData = unknown, TError = ResponseError>(
   >
 ) => {
   const queryFn = async (): Promise<TQueryFnData> => {
-    const response = await api.get<TQueryFnData>(link);
+    const response = await api.get<TQueryFnData>(endpoint);
     return response.data;
   };
 
@@ -35,7 +35,7 @@ export const useSuspenseQuery = <
   TQueryFnData = unknown,
   TError = ResponseError
 >(
-  link: string,
+  endpoint: string,
   key: string | string[],
   queryOptions?: Omit<
     UseQueryOptions<TQueryFnData, TError>,
@@ -43,7 +43,7 @@ export const useSuspenseQuery = <
   >
 ) => {
   const queryFn = async (): Promise<TQueryFnData> => {
-    const response = await api.get<TQueryFnData>(link);
+    const response = await api.get<TQueryFnData>(endpoint);
     return response.data;
   };
 

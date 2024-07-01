@@ -100,7 +100,7 @@ export const GroupTreeView = ({
         indent={24}
         onMove={({ dragIds, index: position }) => {
           editGroupPosition({
-            link: ENDPOINT.EDIT_GROUP_POSITION(dragIds[0]),
+            endpoint: ENDPOINT.EDIT_GROUP_POSITION(dragIds[0]),
             method: "patch",
             body: { position },
           });

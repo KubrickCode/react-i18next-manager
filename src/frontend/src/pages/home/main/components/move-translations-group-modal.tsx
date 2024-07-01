@@ -77,7 +77,7 @@ export const MoveTranslationsGroupModal = ({
     }
 
     editTranslationsParentGroup({
-      link: ENDPOINT.EDIT_TRANSLATIONS_PARENT_GROUP,
+      endpoint: ENDPOINT.EDIT_TRANSLATIONS_PARENT_GROUP,
       method: "patch",
       body: {
         translations: translationIds.map((id) => ({ id })),
