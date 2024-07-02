@@ -6,18 +6,17 @@ import { MutateParams, UseMutationProps, useMutation } from "../react-query";
 export type UseMutationFormProps<TBody, TData> = UseMutationProps<
   TBody,
   TData
-> & {
-  mutateParams: MutateParams<TBody>;
-};
+> &
+  MutateParams<TBody>;
 
 export const useMutationForm = <
   TBody extends FieldValues = FieldValues,
   TData = unknown
 >({
-  mutateParams,
   refetchQueryKeys,
   schema,
   toastMessage,
+  ...mutateParams
 }: UseMutationFormProps<TBody, TData>) => {
   const { mutate } = useMutation({
     refetchQueryKeys,
