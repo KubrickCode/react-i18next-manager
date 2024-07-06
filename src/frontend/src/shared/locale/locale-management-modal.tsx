@@ -14,7 +14,6 @@ import {
 import { useMutation, ENDPOINT, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { Button, IconButton } from "~/core/button";
-import { Input } from "~/core/input";
 import {
   DragDropContext,
   Draggable,
@@ -28,9 +27,9 @@ import {
 } from "~/core/codegen";
 import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
+import { MutationForm, z, Input } from "~/core/form";
 
 import { AddLocaleModal } from "./add-locale-modal";
-import { z } from "~/core/form";
 
 const editLocalesPositionSchema = z.object({
   locales: z.array(
@@ -56,13 +55,7 @@ export const LocaleManagementModal = ({
 
   const refetchQueryKeys = [[KEY.GET_LOCALES]];
   const [editMode, setEditMode] = useState(false);
-  const [selectedLocale, setSelectedLocale] = useState<{
-    id: string;
-    newLabel: string;
-  }>({
-    id: "",
-    newLabel: "",
-  });
+  const [selectedLocaleId, setSelectedLocaleId] = useState<string>();
 
   const { mutate: editLocalesPosition } =
     useMutation<EditLocalesPositionReqBodyDto>({
@@ -70,12 +63,6 @@ export const LocaleManagementModal = ({
       schema: editLocalesPositionSchema,
       toast: t(i18nKeys.setting.editLocalePositionSuccess),
     });
-
-  const { mutate: editLocaleLabel } = useMutation<EditLocaleLabelReqBodyDto>({
-    refetchQueryKeys,
-    schema: editLocaleLabelSchema,
-    toast: t(i18nKeys.setting.editLocaleLabelSuccess),
-  });
 
   const onDrag = (result: DropResult) => {
     if (!result.destination) return;
@@ -109,8 +96,7 @@ export const LocaleManagementModal = ({
             {(provided) => (
               <Box ref={provided.innerRef} {...provided.droppableProps}>
                 {locales.map((locale, idx) => {
-                  const isEditMode =
-                    editMode && selectedLocale.id === locale.id;
+                  const isEditMode = editMode && selectedLocaleId === locale.id;
                   return (
                     <Draggable
                       key={locale.id}
@@ -123,104 +109,98 @@ export const LocaleManagementModal = ({
                           {...provided.draggableProps}
                         >
                           <Box padding={3}>
-                            <Flex
-                              alignItems="center"
-                              gap={1}
-                              justifyContent="space-between"
+                            <MutationForm<EditLocaleLabelReqBodyDto>
+                              defaultValues={{ newLabel: locale.label }}
+                              endpoint={ENDPOINT.EDIT_LOCALE_LABEL(locale.id)}
+                              method="patch"
+                              refetchQueryKeys={refetchQueryKeys}
+                              schema={editLocaleLabelSchema}
+                              toast={t(i18nKeys.setting.editLocaleLabelSuccess)}
                             >
-                              <Flex alignItems="center" gap={2}>
-                                <Flex {...provided.dragHandleProps}>
-                                  <MdDragIndicator />
-                                </Flex>
-                                {isEditMode ? (
-                                  <Input
-                                    size="sm"
-                                    onChange={(e) =>
-                                      setSelectedLocale((prev) => ({
-                                        ...prev,
-                                        newLabel: e.target.value,
-                                      }))
-                                    }
-                                    value={selectedLocale.newLabel}
-                                  />
-                                ) : (
-                                  <Text marginBottom={1}>{locale.label}</Text>
-                                )}
-                              </Flex>
-                              <Flex gap={1}>
-                                {isEditMode ? (
-                                  <Flex gap={1}>
-                                    <IconButton
-                                      aria-label="save"
-                                      size="sm"
-                                      icon={<FaSave />}
-                                      onClick={() => {
-                                        setEditMode(false);
-                                        editLocaleLabel({
-                                          endpoint: ENDPOINT.EDIT_LOCALE_LABEL(
-                                            selectedLocale.id
-                                          ),
-                                          method: "patch",
-                                          body: {
-                                            newLabel: selectedLocale.newLabel,
-                                          },
-                                        });
-                                      }}
-                                    />
-                                    <Button
-                                      onClick={() => {
-                                        setEditMode(false);
-                                      }}
-                                      size="sm"
-                                    >
-                                      X
-                                    </Button>
+                              {({ submit }) => (
+                                <Flex
+                                  alignItems="center"
+                                  gap={1}
+                                  justifyContent="space-between"
+                                >
+                                  <Flex alignItems="center" gap={2}>
+                                    <Flex {...provided.dragHandleProps}>
+                                      <MdDragIndicator />
+                                    </Flex>
+                                    {isEditMode ? (
+                                      <Input name="newLabel" size="sm" />
+                                    ) : (
+                                      <Text marginBottom={1}>
+                                        {locale.label}
+                                      </Text>
+                                    )}
                                   </Flex>
-                                ) : (
-                                  <IconButton
-                                    aria-label="edit"
-                                    isDisabled={!!editMode}
-                                    size="sm"
-                                    icon={<FaRegEdit />}
-                                    onClick={() => {
-                                      setEditMode(true);
-                                      setSelectedLocale({
-                                        id: locale.id,
-                                        newLabel: locale.label,
-                                      });
-                                    }}
-                                  />
-                                )}
-                                {!isEditMode && (
-                                  <ModalToggle
-                                    modal={DeleteModal}
-                                    modalProps={{
-                                      body: (
-                                        <Text>
-                                          {t(
-                                            i18nKeys.common.deleteConfirmMessage
-                                          )}
-                                        </Text>
-                                      ),
-                                      endpoint: ENDPOINT.DELETE_LOCALE(
-                                        locale.id
-                                      ),
-                                      refetchQueryKeys,
-                                      toast: t(
-                                        i18nKeys.setting.deleteLocaleSuccess
-                                      ),
-                                    }}
-                                  >
-                                    <IconButton
-                                      aria-label="delete"
-                                      isDisabled={!!editMode}
-                                      size="sm"
-                                      icon={<FaTrash />}
-                                    />
-                                  </ModalToggle>
-                                )}
-                              </Flex>
-                            </Flex>
+                                  <Flex gap={1}>
+                                    {isEditMode ? (
+                                      <Flex gap={1}>
+                                        <IconButton
+                                          aria-label="save"
+                                          size="sm"
+                                          icon={<FaSave />}
+                                          onClick={() => {
+                                            setEditMode(false);
+                                            submit();
+                                          }}
+                                        />
+                                        <Button
+                                          onClick={() => {
+                                            setEditMode(false);
+                                          }}
+                                          size="sm"
+                                        >
+                                          X
+                                        </Button>
+                                      </Flex>
+                                    ) : (
+                                      <IconButton
+                                        aria-label="edit"
+                                        isDisabled={!!editMode}
+                                        size="sm"
+                                        icon={<FaRegEdit />}
+                                        onClick={() => {
+                                          setEditMode(true);
+                                          setSelectedLocaleId(locale.id);
+                                        }}
+                                      />
+                                    )}
+                                    {!isEditMode && (
+                                      <ModalToggle
+                                        modal={DeleteModal}
+                                        modalProps={{
+                                          body: (
+                                            <Text>
+                                              {t(
+                                                i18nKeys.common
+                                                  .deleteConfirmMessage
+                                              )}
+                                            </Text>
+                                          ),
+                                          endpoint: ENDPOINT.DELETE_LOCALE(
+                                            locale.id
+                                          ),
+                                          refetchQueryKeys,
+                                          toast: t(
+                                            i18nKeys.setting.deleteLocaleSuccess
+                                          ),
+                                        }}
+                                      >
+                                        <IconButton
+                                          aria-label="delete"
+                                          isDisabled={!!editMode}
+                                          size="sm"
+                                          icon={<FaTrash />}
+                                        />
+                                      </ModalToggle>
+                                    )}
+                                  </Flex>
+                                </Flex>
+                              )}
+                            </MutationForm>
                           </Box>
                           {idx < locales.length - 1 && <Divider />}
                         </Box>
