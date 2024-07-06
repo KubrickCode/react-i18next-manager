@@ -9,6 +9,7 @@ export type UseMutationFormProps<TBody, TData> = UseMutationProps<
 > &
   MutateParams<TBody> & {
     defaultValues?: DefaultValues<TBody>;
+    onComplete?: () => void;
   };
 
 export const useMutationForm = <
@@ -16,6 +17,7 @@ export const useMutationForm = <
   TData = unknown
 >({
   defaultValues,
+  onComplete,
   refetchQueryKeys,
   schema,
   toastMessage,
@@ -40,6 +42,7 @@ export const useMutationForm = <
       ...mutateParams,
       body: data,
     });
+    onComplete?.();
   };
 
   return {

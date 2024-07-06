@@ -39,6 +39,7 @@ export const MutationForm = <
   endpoint,
   defaultValues,
   method,
+  onComplete,
   schema,
 }: MutationFormProps<FormValues, MutationResult>) => {
   const { onSubmit, ...useFormReturn } = useMutationForm<
@@ -50,6 +51,7 @@ export const MutationForm = <
     defaultValues,
     endpoint,
     method,
+    onComplete,
     schema,
   });
 
