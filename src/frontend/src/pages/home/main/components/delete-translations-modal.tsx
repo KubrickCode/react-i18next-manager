@@ -1,6 +1,5 @@
-import { Button } from "~/core/button";
 import { DeleteTranslationsReqBodyDto } from "~/core/codegen";
-import { z } from "~/core/form";
+import { MutationForm, SubmitButton, z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import {
   Modal,
@@ -9,7 +8,7 @@ import {
   ModalHeader,
   ModalProps,
 } from "~/core/modal";
-import { KEY, ENDPOINT, useMutation } from "~/core/react-query";
+import { KEY, ENDPOINT } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 const schema = z.object({
@@ -34,38 +33,35 @@ export const DeleteTranslationModal = ({
   selectedGroupId,
 }: DeleteTranslationModalProps) => {
   const { t } = useTranslation();
-  const { mutate: deleteTranslations } =
-    useMutation<DeleteTranslationsReqBodyDto>({
-      refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroupId)]],
-      schema,
-      toastMessage: t(i18nKeys.translation.deleteTranslationSuccess),
-    });
 
-  const handleSubmit = () => {
-    deleteTranslations({
-      endpoint: ENDPOINT.DELETE_TRANSLATIONS,
-      method: "post",
-      body: {
-        translations: ids.map((id) => ({ id })),
-      },
-    });
+  const handleComplete = () => {
     onClose();
     onComplete();
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalHeader>
-        <Text>{t(i18nKeys.translation.deleteTranslations)}</Text>
-      </ModalHeader>
-      <ModalBody>
-        <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>
-      </ModalBody>
-      <ModalFooter onClose={onClose}>
-        <Button colorScheme="red" onClick={handleSubmit}>
-          {t(i18nKeys.common.delete)}
-        </Button>
-      </ModalFooter>
+      <MutationForm<DeleteTranslationsReqBodyDto>
+        defaultValues={{ translations: ids.map((id) => ({ id })) }}
+        endpoint={ENDPOINT.DELETE_TRANSLATIONS}
+        method="post"
+        onComplete={handleComplete}
+        refetchQueryKeys={[[KEY.GET_TRANSLATIONS(selectedGroupId)]]}
+        schema={schema}
+        toastMessage={t(i18nKeys.translation.deleteTranslationSuccess)}
+      >
+        <ModalHeader>
+          <Text>{t(i18nKeys.translation.deleteTranslations)}</Text>
+        </ModalHeader>
+        <ModalBody>
+          <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>
+        </ModalBody>
+        <ModalFooter onClose={onClose}>
+          <SubmitButton colorScheme="red">
+            {t(i18nKeys.common.delete)}
+          </SubmitButton>
+        </ModalFooter>
+      </MutationForm>
     </Modal>
   );
 };
