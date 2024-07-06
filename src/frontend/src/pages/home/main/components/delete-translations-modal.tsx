@@ -48,7 +48,7 @@ export const DeleteTranslationModal = ({
         onComplete={handleComplete}
         refetchQueryKeys={[[KEY.GET_TRANSLATIONS(selectedGroupId)]]}
         schema={schema}
-        toastMessage={t(i18nKeys.translation.deleteTranslationSuccess)}
+        toast={t(i18nKeys.translation.deleteTranslationSuccess)}
       >
         <ModalHeader>
           <Text>{t(i18nKeys.translation.deleteTranslations)}</Text>

@@ -27,13 +27,13 @@ type ErrorResponse = {
 export type UseMutationProps<TBody, TData> = {
   refetchQueryKeys?: QueryKey[];
   schema?: ZodType<TBody>;
-  toastMessage?: string;
+  toast?: string;
 } & Omit<UseMutationOptions<TData, unknown, MutateParams<TBody>>, "mutationFn">;
 
 export const useMutation = <TBody, TData = unknown>({
   refetchQueryKeys,
   schema,
-  toastMessage,
+  toast: toastMessage,
 }: UseMutationProps<TBody, TData>) => {
   const toast = useToast();
 

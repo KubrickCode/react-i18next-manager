@@ -20,12 +20,12 @@ export const useMutationForm = <
   onComplete,
   refetchQueryKeys,
   schema,
-  toastMessage,
+  toast,
   ...mutateParams
 }: UseMutationFormProps<TBody, TData>) => {
   const { mutate } = useMutation({
     refetchQueryKeys,
-    toastMessage,
+    toast,
   });
 
   const { handleSubmit, ...otherProps } = useForm<TBody>({

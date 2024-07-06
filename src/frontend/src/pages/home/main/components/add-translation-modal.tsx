@@ -54,7 +54,7 @@ export const AddTranslationModal = ({
         onComplete={onClose}
         refetchQueryKeys={[[KEY.GET_TRANSLATIONS(selectedGroup.id)]]}
         schema={schema}
-        toastMessage={t(i18nKeys.translation.addTranslationSuccess)}
+        toast={t(i18nKeys.translation.addTranslationSuccess)}
       >
         {({ setValue }) => (
           <>

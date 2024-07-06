@@ -42,7 +42,7 @@ export const MutationForm = <
   onComplete,
   refetchQueryKeys,
   schema,
-  toastMessage,
+  toast,
 }: MutationFormProps<FormValues, MutationResult>) => {
   const { onSubmit, ...useFormReturn } = useMutationForm<
     FormValues,
@@ -56,7 +56,7 @@ export const MutationForm = <
     onComplete,
     refetchQueryKeys,
     schema,
-    toastMessage,
+    toast,
   });
 
   return (
