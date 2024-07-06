@@ -68,55 +68,58 @@ export const AddTranslationModal = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalHeader>
-        <Text>{t(i18nKeys.translation.addTranslation)}</Text>
-      </ModalHeader>
-      <ModalBody>
-        <VStack alignItems="baseline" gap={5}>
-          <VStack alignItems="baseline">
-            <Text fontSize="xs" fontWeight="lighter">
-              {t(i18nKeys.common.group)}
-            </Text>
-            <Text fontWeight="semibold">{selectedGroup.label}</Text>
-          </VStack>
-          <VStack alignItems="baseline" width="full">
-            <Text fontSize="xs" fontWeight="lighter">
-              {t(i18nKeys.common.key)}
-            </Text>
-            <Input
-              onChange={(e) => setKey(replaceBlank(e.target.value))}
-              value={key}
-            />
-          </VStack>
-          {locales.map((locale) => (
-            <VStack key={locale.id} alignItems="baseline" width="full">
+      <MutationForm>
+        <ModalHeader>
+          <Text>{t(i18nKeys.translation.addTranslation)}</Text>
+        </ModalHeader>
+        <ModalBody>
+          <VStack alignItems="baseline" gap={5}>
+            <VStack alignItems="baseline">
               <Text fontSize="xs" fontWeight="lighter">
-                {locale.label}
+                {t(i18nKeys.common.group)}
+              </Text>
+              <Text fontWeight="semibold">{selectedGroup.label}</Text>
+            </VStack>
+            <VStack alignItems="baseline" width="full">
+              <Text fontSize="xs" fontWeight="lighter">
+                {t(i18nKeys.common.key)}
               </Text>
               <Input
-                onChange={(e) =>
-                  setValues((prev) =>
-                    prev.map((val) => {
-                      if (val.localeId === locale.id) {
-                        return { ...val, value: e.target.value };
-                      }
-                      return val;
-                    })
-                  )
-                }
-                value={
-                  values.find((val) => val.localeId === locale.id)?.value || ""
-                }
+                onChange={(e) => setKey(replaceBlank(e.target.value))}
+                value={key}
               />
             </VStack>
-          ))}
-        </VStack>
-      </ModalBody>
-      <ModalFooter onClose={onClose}>
-        <Button colorScheme="darkgray" onClick={handleSubmit}>
-          {t(i18nKeys.common.save)}
-        </Button>
-      </ModalFooter>
+            {locales.map((locale) => (
+              <VStack key={locale.id} alignItems="baseline" width="full">
+                <Text fontSize="xs" fontWeight="lighter">
+                  {locale.label}
+                </Text>
+                <Input
+                  onChange={(e) =>
+                    setValues((prev) =>
+                      prev.map((val) => {
+                        if (val.localeId === locale.id) {
+                          return { ...val, value: e.target.value };
+                        }
+                        return val;
+                      })
+                    )
+                  }
+                  value={
+                    values.find((val) => val.localeId === locale.id)?.value ||
+                    ""
+                  }
+                />
+              </VStack>
+            ))}
+          </VStack>
+        </ModalBody>
+        <ModalFooter onClose={onClose}>
+          <Button colorScheme="darkgray" onClick={handleSubmit}>
+            {t(i18nKeys.common.save)}
+          </Button>
+        </ModalFooter>
+      </MutationForm>
     </Modal>
   );
 };
