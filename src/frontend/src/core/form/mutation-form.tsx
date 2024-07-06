@@ -40,7 +40,9 @@ export const MutationForm = <
   defaultValues,
   method,
   onComplete,
+  refetchQueryKeys,
   schema,
+  toastMessage,
 }: MutationFormProps<FormValues, MutationResult>) => {
   const { onSubmit, ...useFormReturn } = useMutationForm<
     FormValues,
@@ -52,7 +54,9 @@ export const MutationForm = <
     endpoint,
     method,
     onComplete,
+    refetchQueryKeys,
     schema,
+    toastMessage,
   });
 
   return (
