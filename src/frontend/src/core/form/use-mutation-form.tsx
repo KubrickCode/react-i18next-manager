@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldValues, Resolver, useForm } from "react-hook-form";
+import { DefaultValues, FieldValues, Resolver, useForm } from "react-hook-form";
 
 import { MutateParams, UseMutationProps, useMutation } from "../react-query";
 
@@ -7,12 +7,15 @@ export type UseMutationFormProps<TBody, TData> = UseMutationProps<
   TBody,
   TData
 > &
-  MutateParams<TBody>;
+  MutateParams<TBody> & {
+    defaultValues?: DefaultValues<TBody>;
+  };
 
 export const useMutationForm = <
   TBody extends FieldValues = FieldValues,
   TData = unknown
 >({
+  defaultValues,
   refetchQueryKeys,
   schema,
   toastMessage,
@@ -24,6 +27,7 @@ export const useMutationForm = <
   });
 
   const { handleSubmit, ...otherProps } = useForm<TBody>({
+    defaultValues,
     ...(schema
       ? {
           resolver: zodResolver(schema) as Resolver<TBody>,
