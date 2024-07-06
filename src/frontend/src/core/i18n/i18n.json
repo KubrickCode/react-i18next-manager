@@ -42,7 +42,8 @@
       "group.groupList": "Group List",
       "group.moveGroupSuccess": "moved successfully",
       "group.selectTargetGroupEmptyError": "Group Selection Required",
-      "translation.noTranslations": "No Translations Found"
+      "translation.noTranslations": "No Translations Found",
+      "form.optional": "optional"
     }
   },
   "ko": {
@@ -88,7 +89,8 @@
       "group.groupList": "그룹 목록",
       "group.moveGroupSuccess": "성공적으로 이동되었습니다",
       "group.selectTargetGroupEmptyError": "그룹을 선택하세요",
-      "translation.noTranslations": "등록된 번역 리소스가 없습니다"
+      "translation.noTranslations": "등록된 번역 리소스가 없습니다",
+      "form.optional": "선택"
     }
   }
 }
