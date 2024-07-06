@@ -5,6 +5,7 @@ import {
   FormProvider,
   FormState,
   UseFormRegister,
+  UseFormSetError,
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
@@ -23,6 +24,7 @@ export type MutationFormProps<
           control: Control<FormValues>;
           formState: FormState<FormValues>;
           register: UseFormRegister<FormValues>;
+          setError: UseFormSetError<FormValues>;
           setValue: UseFormSetValue<FormValues>;
           submit: (e?: React.BaseSyntheticEvent) => Promise<void>;
           watch: UseFormWatch<FormValues>;
