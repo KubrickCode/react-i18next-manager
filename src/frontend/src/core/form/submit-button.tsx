@@ -16,10 +16,10 @@ export const SubmitButton = ({
 
   return (
     <Button
+      colorScheme="darkgray"
       isDisabled={isSubmitting}
       isLoading={isSubmitting}
       type="submit"
-      width="full"
       {...otherProps}
     >
       {children || t(i18nKeys.common.save)}
