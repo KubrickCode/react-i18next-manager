@@ -7,6 +7,7 @@ import {
   MutationForm,
   SubmitButton,
   z,
+  Label,
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import {
@@ -63,15 +64,11 @@ export const AddTranslationModal = ({
             <ModalBody>
               <Fields>
                 <Field>
-                  <Text fontSize="xs" fontWeight="lighter">
-                    {t(i18nKeys.common.group)}
-                  </Text>
-                  <Text fontWeight="semibold">{selectedGroup.label}</Text>
+                  <Label>{t(i18nKeys.common.group)}</Label>
+                  <Text fontWeight="bold">{selectedGroup.label}</Text>
                 </Field>
                 <Field>
-                  <Text fontSize="xs" fontWeight="lighter">
-                    {t(i18nKeys.common.key)}
-                  </Text>
+                  <Label>{t(i18nKeys.common.key)}</Label>
                   <Input
                     name="key"
                     onChange={(e) =>
@@ -81,9 +78,7 @@ export const AddTranslationModal = ({
                 </Field>
                 {locales.map((locale, index) => (
                   <Field key={locale.id}>
-                    <Text fontSize="xs" fontWeight="lighter">
-                      {locale.label}
-                    </Text>
+                    <Label>{locale.label}</Label>
                     <Input
                       name={`values.${index}.value`}
                       onChange={(e) =>
