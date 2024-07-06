@@ -67,7 +67,7 @@ export const MoveTranslationsGroupModal = ({
     useMutation<EditTranslationsParentGroupReqBodyDto>({
       refetchQueryKeys: [[KEY.GET_TRANSLATIONS(currentGroup.id)]],
       schema,
-      toastMessage: t(i18nKeys.group.moveGroupSuccess),
+      toast: t(i18nKeys.group.moveGroupSuccess),
     });
 
   const handleSubmit = () => {

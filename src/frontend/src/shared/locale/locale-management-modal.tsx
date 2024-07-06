@@ -68,13 +68,13 @@ export const LocaleManagementModal = ({
     useMutation<EditLocalesPositionReqBodyDto>({
       refetchQueryKeys,
       schema: editLocalesPositionSchema,
-      toastMessage: t(i18nKeys.setting.editLocalePositionSuccess),
+      toast: t(i18nKeys.setting.editLocalePositionSuccess),
     });
 
   const { mutate: editLocaleLabel } = useMutation<EditLocaleLabelReqBodyDto>({
     refetchQueryKeys,
     schema: editLocaleLabelSchema,
-    toastMessage: t(i18nKeys.setting.editLocaleLabelSuccess),
+    toast: t(i18nKeys.setting.editLocaleLabelSuccess),
   });
 
   const onDrag = (result: DropResult) => {
@@ -206,7 +206,7 @@ export const LocaleManagementModal = ({
                                         locale.id
                                       ),
                                       refetchQueryKeys,
-                                      toastMessage: t(
+                                      toast: t(
                                         i18nKeys.setting.deleteLocaleSuccess
                                       ),
                                     }}

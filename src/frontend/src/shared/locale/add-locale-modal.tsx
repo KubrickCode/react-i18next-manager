@@ -38,7 +38,7 @@ export const AddLocaleModal = ({
   const { mutate: addLocale } = useMutation<AddLocaleReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_LOCALES]],
     schema,
-    toastMessage: t(i18nKeys.setting.addLocaleSuccess),
+    toast: t(i18nKeys.setting.addLocaleSuccess),
   });
 
   const handleSubmit = () => {

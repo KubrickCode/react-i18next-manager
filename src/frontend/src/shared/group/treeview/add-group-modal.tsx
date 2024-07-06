@@ -39,7 +39,7 @@ export const AddGroupModal = ({
   const { mutate: addGroup } = useMutation<AddGroupReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_GROUPS]],
     schema,
-    toastMessage: t(i18nKeys.group.addGroupSuccess),
+    toast: t(i18nKeys.group.addGroupSuccess),
   });
 
   const handleSubmit = () => {

@@ -58,7 +58,7 @@ export const TranslationsTableRow = ({
   const { mutate: editTranslation } = useMutation<EditTranslationReqBodyDto>({
     refetchQueryKeys: [[KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")]],
     schema,
-    toastMessage: t(i18nKeys.translation.editTranslationSuccess),
+    toast: t(i18nKeys.translation.editTranslationSuccess),
   });
 
   const handleEditTranslation = () => {

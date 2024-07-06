@@ -53,7 +53,7 @@ export const GroupTreeView = ({
     useMutation<EditGroupPositionReqBodyDto>({
       refetchQueryKeys,
       schema,
-      toastMessage: t(i18nKeys.group.editGroupPositionSuccess),
+      toast: t(i18nKeys.group.editGroupPositionSuccess),
     });
 
   const treeData = convertGroupsToTreeData(groups);

@@ -14,7 +14,7 @@ type DeleteModelProps = ModalProps & {
   endpoint: string;
   onComplete?: () => void;
   refetchQueryKeys?: QueryKey[];
-  toastMessage?: string;
+  toast?: string;
 };
 
 export const DeleteModal = ({
@@ -22,13 +22,13 @@ export const DeleteModal = ({
   endpoint,
   onComplete,
   refetchQueryKeys,
-  toastMessage,
+  toast,
   ...modalProps
 }: DeleteModelProps) => {
   const { t } = useTranslation();
   const { mutate } = useMutation({
     refetchQueryKeys,
-    toastMessage,
+    toast,
   });
 
   const handleComplete = () => {

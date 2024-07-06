@@ -37,7 +37,7 @@ export const SettingMenu = () => {
   );
 
   const { mutate: generateI18nResources } = useMutation({
-    toastMessage: t(i18nKeys.setting.generateI18nSuccess),
+    toast: t(i18nKeys.setting.generateI18nSuccess),
   });
 
   const handleGenerateI18nResources = () => {

@@ -58,7 +58,7 @@ export const GroupTreeviewNode = ({
   const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
     refetchQueryKeys,
     schema,
-    toastMessage: t(i18nKeys.group.editGroupLabelSuccess),
+    toast: t(i18nKeys.group.editGroupLabelSuccess),
   });
 
   const handleEdit = () => {
@@ -162,7 +162,7 @@ export const GroupTreeviewNode = ({
                   body: <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>,
                   endpoint: ENDPOINT.DELETE_GROUP(node.id),
                   refetchQueryKeys,
-                  toastMessage: t(i18nKeys.group.deleteGroupSuccess),
+                  toast: t(i18nKeys.group.deleteGroupSuccess),
                   onComplete() {
                     tree.delete(node.id);
                     tree.select(null);
