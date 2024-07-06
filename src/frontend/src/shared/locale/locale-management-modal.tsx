@@ -213,12 +213,7 @@ export const LocaleManagementModal = ({
             )}
           </Droppable>
         </DragDropContext>
-        <ModalToggle
-          modal={AddLocaleModal}
-          modalProps={{
-            position: locales.length,
-          }}
-        >
+        <ModalToggle modal={AddLocaleModal}>
           <Button border="1px dotted lightgray" variant="outline" width="full">
             +
           </Button>

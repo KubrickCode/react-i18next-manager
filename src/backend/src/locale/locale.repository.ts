@@ -37,6 +37,10 @@ export class LocaleRepository extends DBAdapter {
     return this.db.get('locales').find({ label }).value();
   }
 
+  async count() {
+    return this.db.get('locales').size().value();
+  }
+
   async create({ label, position }: CreateParams) {
     const id = generateUUID();
 

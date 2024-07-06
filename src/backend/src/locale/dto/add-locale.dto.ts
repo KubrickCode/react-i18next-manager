@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { Trim } from 'src/common/decorator/trim.decorator';
 
 export class AddLocaleReqBodyDto {
@@ -6,7 +6,4 @@ export class AddLocaleReqBodyDto {
   @IsNotEmpty()
   @Trim()
   label: string;
-
-  @IsInt()
-  position: number;
 }
