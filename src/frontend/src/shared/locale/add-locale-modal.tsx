@@ -20,24 +20,14 @@ import { Text } from "~/core/text";
 
 const schema = z.object({
   label: z.string(),
-  position: z.number().int(),
 });
 
-type AddLocaleModalProps = ModalProps & {
-  position: number;
-};
-
-export const AddLocaleModal = ({
-  isOpen,
-  onClose,
-  position,
-}: AddLocaleModalProps) => {
+export const AddLocaleModal = ({ isOpen, onClose }: ModalProps) => {
   const { t } = useTranslation();
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <MutationForm<AddLocaleReqBodyDto>
-        defaultValues={{ position }}
         endpoint={ENDPOINT.ADD_LOCALE}
         method="post"
         onComplete={onClose}
