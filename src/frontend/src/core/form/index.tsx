@@ -1,4 +1,5 @@
 export * from "./context";
+export * from "./field/field-error";
 export * from "./field/field";
 export * from "./field/fields";
 export * from "./field/input";
