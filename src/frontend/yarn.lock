@@ -1360,10 +1360,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kubrick/react-i18next-manager@^0.6.6":
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/@kubrick/react-i18next-manager/-/react-i18next-manager-0.6.6.tgz#2ce2d30d6e39dff19b3df29dc56f91dc8b2903fa"
-  integrity sha512-6oVxXxortbLgSWYikxXdcNpRQcI2Q0wKa0S/0zwMVoWh9+IiJ2Hg8Rrl3OkP/Ko49quQpWoE+ZjvZjJgph0ElA==
+"@kubrick/react-i18next-manager@^0.6.7":
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/@kubrick/react-i18next-manager/-/react-i18next-manager-0.6.7.tgz#2b2d8d4e4177f8755d7abf428af279b6ad53b3b2"
+  integrity sha512-CHk10gU6RwxNVNS1Ar4JNzLtHRvb/ziNV60HWi03xrTzIPX1/zzjjcQ1DLh8266OXicDM99btblT7dhv5M3sqA==
   dependencies:
     "@nestjs/common" "^10.3.8"
     "@nestjs/core" "^10.3.8"
