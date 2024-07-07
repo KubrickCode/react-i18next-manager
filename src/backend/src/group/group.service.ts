@@ -41,6 +41,7 @@ export class GroupService {
     const group = await this.groupRepository.findById({ id });
 
     await this.checkExistingLabel({
+      excludeId: id,
       label: newLabel,
       parentId: group.parentId,
     });
@@ -103,14 +104,18 @@ export class GroupService {
   }
 
   private async checkExistingLabel({
+    excludeId,
     label,
     parentId,
   }: {
+    excludeId?: UUID;
     label: string;
     parentId: UUID | null;
   }) {
     const groups = await this.groupRepository.findManyByParentId({ parentId });
-    const existsInParent = groups.some((group) => group.label === label);
+    const existsInParent = groups.some(
+      (group) => group.label === label && group.id !== excludeId,
+    );
     if (existsInParent) {
       throw new ConflictException(
         `Group with label "${label}" already exists in parent`,
