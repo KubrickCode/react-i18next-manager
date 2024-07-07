@@ -215,6 +215,76 @@ describe('GroupService Integration', () => {
     ]);
   });
 
+  it('group 이동 성공(다른 parent 그룹으로 이동)', async () => {
+    const groupAId = generateUUID();
+    const groupBId = generateUUID();
+    const groupA = {
+      id: groupAId,
+      label: 'groupA',
+      parentId: null,
+      position: 0,
+    };
+    const groupB = {
+      id: groupBId,
+      label: 'groupB',
+      parentId: null,
+      position: 1,
+    };
+    const groupA_A = {
+      id: generateUUID(),
+      label: 'groupA_A',
+      parentId: groupAId,
+      position: 0,
+    };
+    const groupA_B = {
+      id: generateUUID(),
+      label: 'groupA_B',
+      parentId: groupAId,
+      position: 1,
+    };
+
+    db.setState({
+      locales: [],
+      groups: [groupA, groupB, groupA_A, groupA_B],
+      translations: [],
+    }).write();
+
+    // groupA_A를 groupB 아래로 이동
+    await service.editPosition({
+      id: groupA_A.id,
+      parentId: groupBId,
+      position: 0,
+    });
+
+    const groupAChildren = db
+      .get('groups')
+      .filter({ parentId: groupAId })
+      .sortBy('position')
+      .value();
+    const groupBChildren = db
+      .get('groups')
+      .filter({ parentId: groupBId })
+      .sortBy('position')
+      .value();
+
+    expect(groupAChildren).toEqual([
+      expect.objectContaining({
+        id: groupA_B.id,
+        label: groupA_B.label,
+        parentId: groupAId,
+        position: 0,
+      }),
+    ]);
+    expect(groupBChildren).toEqual([
+      expect.objectContaining({
+        id: groupA_A.id,
+        label: groupA_A.label,
+        parentId: groupBId,
+        position: 0,
+      }),
+    ]);
+  });
+
   it('group 삭제 성공(최상위 그룹)', async () => {
     const group = initialGroups[0];
     await service.delete({ id: group.id });
