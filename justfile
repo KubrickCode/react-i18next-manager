@@ -15,6 +15,9 @@ deps: deps-frontend deps-backend deps-package
 deps-frontend:
   cd "{{ frontend_dir }}" && yarn install
 
+deps-frontend-i18n:
+  cd "{{ frontend_dir }}" && yarn add @kubrick/react-i18next-manager
+
 deps-backend:
   cd "{{ backend_dir }}" && yarn install
 
