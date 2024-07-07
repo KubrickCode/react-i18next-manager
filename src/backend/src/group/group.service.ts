@@ -53,6 +53,12 @@ export class GroupService {
     const currentGroup = await this.groupRepository.findById({ id });
     const oldParentId = currentGroup.parentId;
 
+    await this.checkExistingLabel({
+      label: currentGroup.label,
+      parentId: parentId,
+      excludeId: id,
+    });
+
     if (oldParentId !== parentId) {
       const oldSiblings = await this.groupRepository.findManyByParentId({
         parentId: oldParentId,
