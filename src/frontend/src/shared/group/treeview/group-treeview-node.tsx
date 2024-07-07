@@ -74,7 +74,7 @@ export const GroupTreeviewNode = ({
   return (
     <Box
       _hover={{ backgroundColor: treeNodeBgColor }}
-      ref={dragHandle}
+      ref={needsMutation ? dragHandle : undefined}
       alignItems="center"
       backgroundColor={node.state.isSelected ? treeNodeBgColor : "transparent"}
       borderRadius={5}

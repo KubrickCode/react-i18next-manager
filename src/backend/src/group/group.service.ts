@@ -16,6 +16,7 @@ type EditLabelParams = {
 
 type EditPositionParams = {
   id: UUID;
+  parentId: UUID | null;
   position: number;
 };
 
@@ -47,11 +48,9 @@ export class GroupService {
     return await this.groupRepository.updateLabel({ id, newLabel });
   }
 
-  async editPosition({ id, position }: EditPositionParams) {
-    const group = await this.groupRepository.findById({ id });
-
+  async editPosition({ id, parentId, position }: EditPositionParams) {
     const siblings = await this.groupRepository.findManyByParentId({
-      parentId: group.parentId,
+      parentId,
     });
 
     const reorderedSiblings = this.reorderSiblings(siblings, id, position);
@@ -59,6 +58,7 @@ export class GroupService {
     for (const { id, position } of reorderedSiblings) {
       await this.groupRepository.updatePosition({
         id,
+        parentId,
         position,
       });
     }
@@ -118,14 +118,38 @@ export class GroupService {
     id: UUID,
     newPosition: number,
   ): GroupSchema[] {
-    const groupIndex = groups.findIndex((group) => group.id === id);
+    const currentGroup = groups.find((group) => group.id === id);
 
-    const [movedGroup] = groups.splice(groupIndex, 1);
-    groups.splice(newPosition, 0, movedGroup);
+    const remainingGroups = currentGroup
+      ? groups.filter((group) => group.id !== id)
+      : groups;
 
-    return groups.map((group, index) => {
-      group.position = index;
+    const updatedGroups = remainingGroups.map((group) => {
+      if (group.position >= newPosition) {
+        return {
+          ...group,
+          position: group.position + 1,
+        };
+      }
       return group;
     });
+
+    const newGroup = currentGroup || {
+      id,
+      position: newPosition,
+      parentId: null,
+      label: '',
+    };
+
+    newGroup.position = newPosition;
+
+    const reorderedGroups = [...updatedGroups, newGroup].sort(
+      (a, b) => a.position - b.position,
+    );
+
+    return reorderedGroups.map((group, index) => ({
+      ...group,
+      position: index,
+    }));
   }
 }

@@ -18,6 +18,7 @@ import { AddGroupModal } from "./add-group-modal";
 import { GroupTreeviewNode } from "./group-treeview-node";
 
 const schema = z.object({
+  parentId: z.string().nullable(),
   position: z.number().int(),
 });
 
@@ -98,13 +99,17 @@ export const GroupTreeView = ({
         openByDefault={false}
         height={height}
         indent={24}
-        onMove={({ dragIds, index: position }) => {
-          editGroupPosition({
-            endpoint: ENDPOINT.EDIT_GROUP_POSITION(dragIds[0]),
-            method: "patch",
-            body: { position },
-          });
-        }}
+        onMove={
+          needsMutation
+            ? ({ dragIds, index: position, parentId }) => {
+                editGroupPosition({
+                  endpoint: ENDPOINT.EDIT_GROUP_POSITION(dragIds[0]),
+                  method: "patch",
+                  body: { parentId, position },
+                });
+              }
+            : undefined
+        }
         onSelect={(nodes) =>
           handleSelectedGroup(
             nodes[0]?.data

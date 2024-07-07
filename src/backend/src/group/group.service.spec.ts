@@ -152,7 +152,7 @@ describe('GroupService Integration', () => {
     }).write();
 
     // groupC를 0번 위치로 이동
-    await service.editPosition({ id: groupC.id, position: 0 });
+    await service.editPosition({ id: groupC.id, parentId: null, position: 0 });
 
     const groups = db.get('groups').sortBy('position').value();
 
@@ -196,7 +196,11 @@ describe('GroupService Integration', () => {
       translations: [],
     }).write();
 
-    await service.editPosition({ id: groupA_C.id, position: 0 });
+    await service.editPosition({
+      id: groupA_C.id,
+      parentId: groupAId,
+      position: 0,
+    });
 
     const groups = db
       .get('groups')

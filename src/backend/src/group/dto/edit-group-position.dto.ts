@@ -1,4 +1,4 @@
-import { IsInt, IsUUID } from 'class-validator';
+import { IsInt, IsOptional, IsUUID } from 'class-validator';
 import { UUID } from 'src/common/types';
 
 export class EditGroupPositionReqParamDto {
@@ -7,6 +7,10 @@ export class EditGroupPositionReqParamDto {
 }
 
 export class EditGroupPositionReqBodyDto {
+  @IsUUID()
+  @IsOptional()
+  parentId: UUID | null;
+
   @IsInt()
   position: number;
 }
