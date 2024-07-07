@@ -107,6 +107,16 @@ describe('GroupService Integration', () => {
     expect(updatedGroup.label).toBe(newLabel);
   });
 
+  it('group label 변경 성공(자기 자신은 중복 체크에서 제외)', async () => {
+    const group = initialGroups[0];
+    const newLabel = group.label; // 동일한 이름으로 변경
+    await service.editLabel({ id: group.id, newLabel });
+
+    const groups = db.get('groups').value();
+    const updatedGroup = groups.find((g) => g.id === group.id);
+    expect(updatedGroup.label).toBe(newLabel);
+  });
+
   it('group label 변경 실패(최상위 그룹) - label 충돌', async () => {
     const group = initialGroups[0];
     const newLabel = initialGroups[1].label;
