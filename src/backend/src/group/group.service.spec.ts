@@ -295,6 +295,49 @@ describe('GroupService Integration', () => {
     ]);
   });
 
+  it('group 이동 실패(다른 parent 그룹으로 이동) - label 충돌', async () => {
+    const groupAId = generateUUID();
+    const groupBId = generateUUID();
+    const groupA = {
+      id: groupAId,
+      label: 'groupA',
+      parentId: null,
+      position: 0,
+    };
+    const groupB = {
+      id: groupBId,
+      label: 'groupB',
+      parentId: null,
+      position: 1,
+    };
+    const groupA_A = {
+      id: generateUUID(),
+      label: 'groupA_A',
+      parentId: groupAId,
+      position: 0,
+    };
+    const groupB_A = {
+      id: generateUUID(),
+      label: 'groupA_A',
+      parentId: groupBId,
+      position: 0,
+    };
+
+    db.setState({
+      locales: [],
+      groups: [groupA, groupB, groupA_A, groupB_A],
+      translations: [],
+    }).write();
+
+    await expect(
+      service.editPosition({
+        id: groupA_A.id,
+        parentId: groupBId,
+        position: 0,
+      }),
+    ).rejects.toThrow(ConflictException);
+  });
+
   it('group 삭제 성공(최상위 그룹)', async () => {
     const group = initialGroups[0];
     await service.delete({ id: group.id });
