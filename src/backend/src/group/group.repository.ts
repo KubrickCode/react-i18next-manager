@@ -16,6 +16,7 @@ type UpdateLabelParams = {
 
 type UpdatePositionParams = {
   id: UUID;
+  parentId: UUID | null;
   position: number;
 };
 
@@ -55,8 +56,8 @@ export class GroupRepository extends DBAdapter {
     this.db.get('groups').find({ id }).assign({ label: newLabel }).write();
   }
 
-  async updatePosition({ id, position }: UpdatePositionParams) {
-    this.db.get('groups').find({ id }).assign({ position }).write();
+  async updatePosition({ id, parentId, position }: UpdatePositionParams) {
+    this.db.get('groups').find({ id }).assign({ parentId, position }).write();
   }
 
   async deleteMany({ ids }: { ids: UUID[] }) {
