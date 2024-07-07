@@ -49,19 +49,51 @@ export class GroupService {
   }
 
   async editPosition({ id, parentId, position }: EditPositionParams) {
-    const siblings = await this.groupRepository.findManyByParentId({
+    const currentGroup = await this.groupRepository.findById({ id });
+    const oldParentId = currentGroup.parentId;
+
+    if (oldParentId !== parentId) {
+      const oldSiblings = await this.groupRepository.findManyByParentId({
+        parentId: oldParentId,
+      });
+      const remainingOldSiblings = oldSiblings.filter(
+        (group) => group.id !== id,
+      );
+
+      const reorderedOldSiblings = this.reorderSiblings(
+        remainingOldSiblings,
+        null,
+        0,
+      );
+
+      for (const { id, position } of reorderedOldSiblings) {
+        await this.groupRepository.updatePosition({
+          id,
+          parentId: oldParentId,
+          position,
+        });
+      }
+    }
+
+    const newSiblings = await this.groupRepository.findManyByParentId({
       parentId,
     });
 
-    const reorderedSiblings = this.reorderSiblings(siblings, id, position);
+    const reorderedNewSiblings = this.reorderSiblings(
+      newSiblings,
+      id,
+      position,
+    );
 
-    for (const { id, position } of reorderedSiblings) {
+    for (const { id, position } of reorderedNewSiblings) {
       await this.groupRepository.updatePosition({
         id,
         parentId,
         position,
       });
     }
+
+    await this.groupRepository.updatePosition({ id, parentId, position });
   }
 
   async delete({ id }: { id: UUID }) {
@@ -118,13 +150,7 @@ export class GroupService {
     id: UUID,
     newPosition: number,
   ): GroupSchema[] {
-    const currentGroup = groups.find((group) => group.id === id);
-
-    const remainingGroups = currentGroup
-      ? groups.filter((group) => group.id !== id)
-      : groups;
-
-    const updatedGroups = remainingGroups.map((group) => {
+    const updatedGroups = groups.map((group) => {
       if (group.position >= newPosition) {
         return {
           ...group,
@@ -134,22 +160,16 @@ export class GroupService {
       return group;
     });
 
-    const newGroup = currentGroup || {
-      id,
-      position: newPosition,
-      parentId: null,
-      label: '',
-    };
+    if (id) {
+      const newGroup = { id, position: newPosition, parentId: null, label: '' };
+      updatedGroups.push(newGroup);
+    }
 
-    newGroup.position = newPosition;
-
-    const reorderedGroups = [...updatedGroups, newGroup].sort(
-      (a, b) => a.position - b.position,
-    );
-
-    return reorderedGroups.map((group, index) => ({
-      ...group,
-      position: index,
-    }));
+    return updatedGroups
+      .sort((a, b) => a.position - b.position)
+      .map((group, index) => ({
+        ...group,
+        position: index,
+      }));
   }
 }
