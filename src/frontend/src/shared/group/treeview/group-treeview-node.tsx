@@ -94,6 +94,7 @@ export const GroupTreeviewNode = ({
           <Input
             autoFocus
             backgroundColor={inputBgColor}
+            onBlur={handleEdit}
             onChange={(e) => setLabel(replaceBlank(e.target.value))}
             onKeyDown={(e) => {
               if (e.key === "Escape") {
