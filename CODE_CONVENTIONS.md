@@ -79,3 +79,15 @@ const MyComponent = ({
   // ...
 };
 ```
+
+### Chakra UI 스타일 Prop 약어 사용
+
+Chakra UI의 스타일 prop을 사용할 때는 다음과 같이 약어를 사용하는 것을 규칙으로 합니다:
+
+// 예시
+
+```
+paddingX -> px
+marginY -> my
+backgroundColor -> bgColor
+```
