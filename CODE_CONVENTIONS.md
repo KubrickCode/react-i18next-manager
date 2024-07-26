@@ -92,4 +92,4 @@ marginY -> my
 backgroundColor -> bgColor
 ```
 
-### Import 정렬 규칙
+### Import 개행 규칙
