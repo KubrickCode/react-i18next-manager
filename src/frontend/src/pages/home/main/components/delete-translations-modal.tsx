@@ -1,13 +1,7 @@
 import { DeleteTranslationsReqBodyDto } from "~/core/codegen";
 import { MutationForm, SubmitButton, z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
-import {
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  ModalProps,
-} from "~/core/modal";
+import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
 import { KEY, ENDPOINT } from "~/core/react-query";
 import { Text } from "~/core/text";
 
@@ -19,7 +13,7 @@ const schema = z.object({
   ),
 });
 
-type DeleteTranslationModalProps = ModalProps & {
+type DeleteTranslationModalProps = {
   ids: string[];
   onComplete: () => void;
   selectedGroupId: string;
@@ -27,12 +21,11 @@ type DeleteTranslationModalProps = ModalProps & {
 
 export const DeleteTranslationModal = ({
   ids,
-  isOpen,
-  onClose,
   onComplete,
   selectedGroupId,
 }: DeleteTranslationModalProps) => {
   const { t } = useTranslation();
+  const { onClose } = useModal();
 
   const handleComplete = () => {
     onClose();
@@ -40,7 +33,7 @@ export const DeleteTranslationModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <>
       <MutationForm<DeleteTranslationsReqBodyDto>
         defaultValues={{ translations: ids.map((id) => ({ id })) }}
         endpoint={ENDPOINT.DELETE_TRANSLATIONS}
@@ -56,12 +49,12 @@ export const DeleteTranslationModal = ({
         <ModalBody>
           <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>
         </ModalBody>
-        <ModalFooter onClose={onClose}>
+        <ModalFooter>
           <SubmitButton colorScheme="red">
             {t(i18nKeys.common.delete)}
           </SubmitButton>
         </ModalFooter>
       </MutationForm>
-    </Modal>
+    </>
   );
 };

@@ -65,7 +65,10 @@ export const SettingMenu = () => {
         >
           <Text>{darkModeLabel}</Text>
         </MenuItem>
-        <MenuModalToggle icon={<FaLanguage />} modal={LocaleManagementModal}>
+        <MenuModalToggle
+          icon={<FaLanguage />}
+          modal={<LocaleManagementModal />}
+        >
           <Text>{t(i18nKeys.setting.localeManagement)}</Text>
         </MenuModalToggle>
         <MenuItem

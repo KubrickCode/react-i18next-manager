@@ -1,29 +1,23 @@
-import { ComponentPropsWithoutRef, ElementType } from "react";
+import { ReactElement } from "react";
 
-import { useModal } from "../modal";
 import { MenuItem, MenuItemProps } from "./menu-item";
+import { ModalToggle } from "../modal";
 
-export type MenuModalToggleProps<Modal extends ElementType = ElementType> =
-  MenuItemProps & {
-    modal: Modal;
-    modalProps?: Omit<ComponentPropsWithoutRef<Modal>, "isOpen" | "onClose">;
-  };
+export type MenuModalToggleProps<ModalProps> = MenuItemProps & {
+  modal: ReactElement<ModalProps>;
+};
 
-export const MenuModalToggle = <Modal extends ElementType>({
+export const MenuModalToggle = <ModalProps,>({
   children,
   icon,
   modal,
-  modalProps: providedModalProps,
-}: MenuModalToggleProps<Modal>) => {
-  const { openModal } = useModal();
-
-  const handleClick = () => {
-    openModal(modal, providedModalProps);
-  };
-
+  ...menuItemProps
+}: MenuModalToggleProps<ModalProps>) => {
   return (
-    <MenuItem icon={icon} onClick={handleClick}>
-      {children}
-    </MenuItem>
+    <ModalToggle modal={modal}>
+      <MenuItem icon={icon} {...menuItemProps}>
+        {children}
+      </MenuItem>
+    </ModalToggle>
   );
 };

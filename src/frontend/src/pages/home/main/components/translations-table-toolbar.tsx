@@ -46,7 +46,7 @@ export const TranslationsTableToolbar = ({
 
   if (locales.length < 1)
     return (
-      <ModalToggle modal={LocaleManagementModal}>
+      <ModalToggle modal={<LocaleManagementModal />}>
         <Button size="sm" textDecoration="underline" variant="link">
           {t(i18nKeys.setting.emptyLocaleMessage)}
         </Button>
@@ -58,12 +58,13 @@ export const TranslationsTableToolbar = ({
       {selectedIds.length > 0 && (
         <>
           <ModalToggle
-            modal={DeleteTranslationModal}
-            modalProps={{
-              ids: selectedIds,
-              onComplete: () => handleSelectedIds([]),
-              selectedGroupId: selectedGroup.id,
-            }}
+            modal={
+              <DeleteTranslationModal
+                ids={selectedIds}
+                onComplete={() => handleSelectedIds([])}
+                selectedGroupId={selectedGroup.id}
+              />
+            }
           >
             <Button colorScheme="red" leftIcon={<FaTrash />} size="sm">
               {t(i18nKeys.translation.deleteTranslationsRows, {
@@ -72,12 +73,13 @@ export const TranslationsTableToolbar = ({
             </Button>
           </ModalToggle>
           <ModalToggle
-            modal={MoveTranslationsGroupModal}
-            modalProps={{
-              currentGroup: selectedGroup,
-              onComplete: () => handleSelectedIds([]),
-              translationIds: selectedIds,
-            }}
+            modal={
+              <MoveTranslationsGroupModal
+                currentGroup={selectedGroup}
+                onComplete={() => handleSelectedIds([])}
+                translationIds={selectedIds}
+              />
+            }
           >
             <Button
               colorScheme={moveGroupButtonColorScheme}
@@ -96,10 +98,7 @@ export const TranslationsTableToolbar = ({
         size="sm"
       />
       <ModalToggle
-        modal={AddTranslationModal}
-        modalProps={{
-          selectedGroup,
-        }}
+        modal={<AddTranslationModal selectedGroup={selectedGroup} />}
       >
         <Button size="sm">{t(i18nKeys.translation.addTranslation)}</Button>
       </ModalToggle>

@@ -10,13 +10,7 @@ import {
   Label,
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
-import {
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  ModalProps,
-} from "~/core/modal";
+import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
 import { KEY, ENDPOINT } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
@@ -31,7 +25,7 @@ const schema = z.object({
   ),
 });
 
-type AddTranslationModalProps = ModalProps & {
+type AddTranslationModalProps = {
   selectedGroup: {
     id: string;
     label: string;
@@ -39,15 +33,14 @@ type AddTranslationModalProps = ModalProps & {
 };
 
 export const AddTranslationModal = ({
-  isOpen,
-  onClose,
   selectedGroup,
 }: AddTranslationModalProps) => {
   const { t } = useTranslation();
   const { locales } = useApp();
+  const { onClose } = useModal();
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <>
       <MutationForm<AddTranslationReqBodyDto>
         endpoint={ENDPOINT.ADD_TRANSLATION(selectedGroup.id)}
         method="post"
@@ -92,12 +85,12 @@ export const AddTranslationModal = ({
                 ))}
               </Fields>
             </ModalBody>
-            <ModalFooter onClose={onClose}>
+            <ModalFooter>
               <SubmitButton />
             </ModalFooter>
           </>
         )}
       </MutationForm>
-    </Modal>
+    </>
   );
 };

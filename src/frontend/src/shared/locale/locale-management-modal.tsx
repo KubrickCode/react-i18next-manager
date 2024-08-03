@@ -4,11 +4,9 @@ import { MdDragIndicator } from "react-icons/md";
 
 import {
   DeleteModal,
-  Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  ModalProps,
   ModalToggle,
 } from "~/core/modal";
 import { useMutation, ENDPOINT, KEY } from "~/core/react-query";
@@ -44,12 +42,7 @@ const editLocaleLabelSchema = z.object({
   newLabel: z.string(),
 });
 
-type LocaleManagementModalProps = ModalProps;
-
-export const LocaleManagementModal = ({
-  isOpen,
-  onClose,
-}: LocaleManagementModalProps) => {
+export const LocaleManagementModal = () => {
   const { t } = useTranslation();
   const { locales } = useApp();
 
@@ -86,7 +79,7 @@ export const LocaleManagementModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <>
       <ModalHeader>
         <Text>{t(i18nKeys.setting.localeManagement)}</Text>
       </ModalHeader>
@@ -170,24 +163,26 @@ export const LocaleManagementModal = ({
                                     )}
                                     {!isEditMode && (
                                       <ModalToggle
-                                        modal={DeleteModal}
-                                        modalProps={{
-                                          body: (
-                                            <Text>
-                                              {t(
-                                                i18nKeys.common
-                                                  .deleteConfirmMessage
-                                              )}
-                                            </Text>
-                                          ),
-                                          endpoint: ENDPOINT.DELETE_LOCALE(
-                                            locale.id
-                                          ),
-                                          refetchQueryKeys,
-                                          toast: t(
-                                            i18nKeys.setting.deleteLocaleSuccess
-                                          ),
-                                        }}
+                                        modal={
+                                          <DeleteModal
+                                            body={
+                                              <Text>
+                                                {t(
+                                                  i18nKeys.common
+                                                    .deleteConfirmMessage
+                                                )}
+                                              </Text>
+                                            }
+                                            endpoint={ENDPOINT.DELETE_LOCALE(
+                                              locale.id
+                                            )}
+                                            refetchQueryKeys={refetchQueryKeys}
+                                            toast={t(
+                                              i18nKeys.setting
+                                                .deleteLocaleSuccess
+                                            )}
+                                          />
+                                        }
                                       >
                                         <IconButton
                                           aria-label="delete"
@@ -213,13 +208,13 @@ export const LocaleManagementModal = ({
             )}
           </Droppable>
         </DragDropContext>
-        <ModalToggle modal={AddLocaleModal}>
+        <ModalToggle modal={<AddLocaleModal />}>
           <Button border="1px dotted lightgray" variant="outline" width="full">
             +
           </Button>
         </ModalToggle>
       </ModalBody>
-      <ModalFooter onClose={onClose} />
-    </Modal>
+      <ModalFooter />
+    </>
   );
 };
