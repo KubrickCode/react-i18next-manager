@@ -144,12 +144,11 @@ export const GroupTreeviewNode = ({
                 />
               )}
               <ModalToggle
-                modal={
-                  <AddGroupModal
-                    parentId={node.id}
-                    parentName={node.data.label}
-                  />
-                }
+                modal={AddGroupModal}
+                modalProps={{
+                  parentId: node.id,
+                  parentName: node.data.label,
+                }}
               >
                 <IconButton
                   aria-label="add"
@@ -159,21 +158,18 @@ export const GroupTreeviewNode = ({
                 />
               </ModalToggle>
               <ModalToggle
-                modal={
-                  <DeleteModal
-                    body={
-                      <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>
-                    }
-                    endpoint={ENDPOINT.DELETE_GROUP(node.id)}
-                    onComplete={() => {
-                      tree.delete(node.id);
-                      tree.select(null);
-                      handleSelectedGroup(null);
-                    }}
-                    refetchQueryKeys={refetchQueryKeys}
-                    toast={t(i18nKeys.group.deleteGroupSuccess)}
-                  />
-                }
+                modal={DeleteModal}
+                modalProps={{
+                  body: <Text>{t(i18nKeys.common.deleteConfirmMessage)}</Text>,
+                  endpoint: ENDPOINT.DELETE_GROUP(node.id),
+                  onComplete() {
+                    tree.delete(node.id);
+                    tree.select(null);
+                    handleSelectedGroup(null);
+                  },
+                  refetchQueryKeys,
+                  toast: t(i18nKeys.group.deleteGroupSuccess),
+                }}
               >
                 <IconButton
                   aria-label="delete"

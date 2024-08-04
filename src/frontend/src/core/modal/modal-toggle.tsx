@@ -1,9 +1,8 @@
 import { Flex, FlexProps, useDisclosure } from "@chakra-ui/react";
 import {
   PropsWithChildren,
-  ReactElement,
+  ElementType,
   Suspense,
-  cloneElement,
   createContext,
   useContext,
 } from "react";
@@ -12,12 +11,14 @@ import { Modal } from "./modal";
 import { Loader } from "../loader";
 
 export type ModalToggleProps<ModalProps> = FlexProps & {
-  modal: ReactElement<ModalProps>;
+  modal: ElementType;
+  modalProps?: ModalProps;
 };
 
 export const ModalToggle = <ModalProps,>({
   children,
-  modal,
+  modal: ModalContent,
+  modalProps,
   ...otherProps
 }: ModalToggleProps<ModalProps>) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,7 +32,7 @@ export const ModalToggle = <ModalProps,>({
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalProvider onClose={onClose}>
             <Suspense fallback={<Loader.Block />}>
-              {cloneElement(modal)}
+              <ModalContent {...modalProps} />
             </Suspense>
           </ModalProvider>
         </Modal>

@@ -163,26 +163,24 @@ export const LocaleManagementModal = () => {
                                     )}
                                     {!isEditMode && (
                                       <ModalToggle
-                                        modal={
-                                          <DeleteModal
-                                            body={
-                                              <Text>
-                                                {t(
-                                                  i18nKeys.common
-                                                    .deleteConfirmMessage
-                                                )}
-                                              </Text>
-                                            }
-                                            endpoint={ENDPOINT.DELETE_LOCALE(
-                                              locale.id
-                                            )}
-                                            refetchQueryKeys={refetchQueryKeys}
-                                            toast={t(
-                                              i18nKeys.setting
-                                                .deleteLocaleSuccess
-                                            )}
-                                          />
-                                        }
+                                        modal={DeleteModal}
+                                        modalProps={{
+                                          body: (
+                                            <Text>
+                                              {t(
+                                                i18nKeys.common
+                                                  .deleteConfirmMessage
+                                              )}
+                                            </Text>
+                                          ),
+                                          endPoint: ENDPOINT.DELETE_LOCALE(
+                                            locale.id
+                                          ),
+                                          refetchQueryKeys,
+                                          toast: t(
+                                            i18nKeys.setting.deleteLocaleSuccess
+                                          ),
+                                        }}
                                       >
                                         <IconButton
                                           aria-label="delete"
@@ -208,7 +206,7 @@ export const LocaleManagementModal = () => {
             )}
           </Droppable>
         </DragDropContext>
-        <ModalToggle modal={<AddLocaleModal />}>
+        <ModalToggle modal={AddLocaleModal}>
           <Button border="1px dotted lightgray" variant="outline" width="full">
             +
           </Button>

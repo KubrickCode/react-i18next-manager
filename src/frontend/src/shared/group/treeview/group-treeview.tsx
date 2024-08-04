@@ -78,7 +78,11 @@ export const GroupTreeView = ({
           <Text fontSize="xs">{t(i18nKeys.group.groupList)}</Text>
           {needsMutation && (
             <ModalToggle
-              modal={<AddGroupModal parentId={null} parentName="Root" />}
+              modal={AddGroupModal}
+              modalProps={{
+                parentId: null,
+                parentName: "Root",
+              }}
             >
               <IconButton
                 aria-label="add"
