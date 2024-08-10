@@ -1,26 +1,28 @@
 import { Flex, FlexProps, useDisclosure } from "@chakra-ui/react";
 import {
-  PropsWithChildren,
+  ComponentPropsWithoutRef,
   ElementType,
+  PropsWithChildren,
   Suspense,
   createContext,
+  createElement,
   useContext,
 } from "react";
 
-import { Modal } from "./modal";
 import { Loader } from "../loader";
+import { Modal } from "./modal";
 
-export type ModalToggleProps<ModalProps> = FlexProps & {
-  modal: ElementType;
-  modalProps?: ModalProps;
+export type ModalToggleProps<Modal extends ElementType> = FlexProps & {
+  modal: Modal;
+  modalProps?: ComponentPropsWithoutRef<Modal>;
 };
 
-export const ModalToggle = <ModalProps,>({
+export const ModalToggle = <Modal extends ElementType>({
   children,
-  modal: ModalContent,
+  modal,
   modalProps,
   ...otherProps
-}: ModalToggleProps<ModalProps>) => {
+}: ModalToggleProps<Modal>) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -28,15 +30,15 @@ export const ModalToggle = <ModalProps,>({
       <Flex alignItems="center" onClick={onOpen} tabIndex={0} {...otherProps}>
         {children}
       </Flex>
-      {isOpen && (
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalProvider onClose={onClose}>
-            <Suspense fallback={<Loader.Block />}>
-              <ModalContent {...modalProps} />
-            </Suspense>
-          </ModalProvider>
-        </Modal>
-      )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalProvider onClose={onClose}>
+          <Suspense fallback={<Loader.Block />}>
+            {createElement(modal, {
+              ...modalProps,
+            })}
+          </Suspense>
+        </ModalProvider>
+      </Modal>
     </>
   );
 };
@@ -45,23 +47,18 @@ const ModalContext = createContext<{ onClose: () => void } | undefined>(
   undefined
 );
 
-export const useModal = () => {
-  const context = useContext(ModalContext);
-  if (!context) {
-    throw new Error("useModalContext must be used within a ModalProvider");
-  }
-
-  return context;
-};
-
 type ModalProviderProps = PropsWithChildren & {
   onClose: () => void;
 };
 
-const ModalProvider = ({ children, onClose }: ModalProviderProps) => {
-  return (
-    <ModalContext.Provider value={{ onClose }}>
-      {children}
-    </ModalContext.Provider>
-  );
+const ModalProvider = ({ children, onClose }: ModalProviderProps) => (
+  <ModalContext.Provider value={{ onClose }}>{children}</ModalContext.Provider>
+);
+
+export const useModal = () => {
+  const context = useContext(ModalContext);
+  if (!context) {
+    throw new Error("useModal must be used within a ModalProvider");
+  }
+  return context;
 };
