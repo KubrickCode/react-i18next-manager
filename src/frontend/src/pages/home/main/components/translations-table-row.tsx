@@ -16,9 +16,9 @@ import { KEY, ENDPOINT, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
 import { i18nKeys, useTranslation } from "~/core/i18n";
+import { z } from "~/core/form";
 
 import { useHomePageContext } from "../../context";
-import { z } from "~/core/form";
 
 const schema = z.object({
   newKey: z.string(),
