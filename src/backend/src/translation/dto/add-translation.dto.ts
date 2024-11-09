@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -11,9 +12,11 @@ import { Trim } from 'src/common/decorator/trim.decorator';
 import { UUID } from 'src/common/types';
 
 class TranslationValue {
+  @ApiProperty()
   @IsUUID()
   localeId: UUID;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @Trim()
@@ -21,12 +24,14 @@ class TranslationValue {
 }
 
 export class AddTranslationReqBodyDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @NotContains(' ')
   @Trim()
   key: string;
 
+  @ApiProperty()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => TranslationValue)
@@ -34,6 +39,7 @@ export class AddTranslationReqBodyDto {
 }
 
 export class AddTranslationReqParamDto {
+  @ApiProperty()
   @IsUUID()
   groupId: UUID;
 }

@@ -1,13 +1,16 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsArray, IsUUID, ValidateNested } from 'class-validator';
 import { UUID } from 'src/common/types';
 
 class Translation {
+  @ApiProperty()
   @IsUUID()
   id: UUID;
 }
 
 export class DeleteTranslationsReqBodyDto {
+  @ApiProperty()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => Translation)

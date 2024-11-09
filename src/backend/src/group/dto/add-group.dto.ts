@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsOptional,
@@ -9,12 +10,14 @@ import { UUID } from 'crypto';
 import { Trim } from 'src/common/decorator/trim.decorator';
 
 export class AddGroupReqBodyDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @NotContains(' ')
   @Trim()
   label: string;
 
+  @ApiProperty()
   @IsUUID()
   @IsOptional()
   parentId: UUID | null;
