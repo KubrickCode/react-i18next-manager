@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-import { useMutation, ENDPOINT, KEY } from "~/core/react-query";
+import { useMutation, KEY } from "~/core/react-query";
 import { Tree } from "~/core/tree";
 import { SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
@@ -103,7 +103,10 @@ export const GroupTreeView = ({
           needsMutation
             ? ({ dragIds, index: position, parentId }) => {
                 editGroupPosition({
-                  endpoint: ENDPOINT.EDIT_GROUP_POSITION(dragIds[0]),
+                  endpoint: {
+                    path: "/api/groups/position/{id}",
+                    params: { id: dragIds[0] },
+                  },
                   method: "patch",
                   body: { parentId, position },
                 });

@@ -1,6 +1,6 @@
 import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
-import { KEY, ENDPOINT, useSuspenseQuery } from "~/core/react-query";
+import { KEY, useSuspenseQuery } from "~/core/react-query";
 import { Checkbox } from "~/core/checkbox";
 import { Center } from "~/core/layout";
 import { Text } from "~/core/text";
@@ -26,7 +26,10 @@ export const TranslationsTable = ({
   const { t } = useTranslation();
 
   const { data } = useSuspenseQuery<GetTranslationsResDto>(
-    ENDPOINT.GET_TRANSLATIONS(selectedGroup?.id ?? ""),
+    {
+      path: "/api/translations/{groupId}",
+      params: { groupId: selectedGroup?.id ?? "" },
+    },
     KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")
   );
 

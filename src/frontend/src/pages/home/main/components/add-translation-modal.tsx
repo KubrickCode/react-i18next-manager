@@ -11,7 +11,7 @@ import {
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { KEY, ENDPOINT } from "~/core/react-query";
+import { KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
 
@@ -42,7 +42,10 @@ export const AddTranslationModal = ({
   return (
     <>
       <MutationForm<AddTranslationReqBodyDto>
-        endpoint={ENDPOINT.ADD_TRANSLATION(selectedGroup.id)}
+        endpoint={{
+          path: "/api/translations/{groupId}",
+          params: { groupId: selectedGroup.id },
+        }}
         method="post"
         onComplete={onClose}
         refetchQueryKeys={[[KEY.GET_TRANSLATIONS(selectedGroup.id)]]}

@@ -16,7 +16,7 @@ import {
 import { Text } from "~/core/text";
 import { useColorMode, useColorModeValue } from "~/core/color-mode";
 import { IconButton } from "~/core/button";
-import { ENDPOINT, useMutation } from "~/core/react-query";
+import { useMutation } from "~/core/react-query";
 import { Box } from "~/core/layout";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { LocaleManagementModal } from "~/shared/locale";
@@ -42,7 +42,7 @@ export const SettingMenu = () => {
 
   const handleGenerateI18nResources = () => {
     generateI18nResources({
-      endpoint: ENDPOINT.GENERATE_I18N_RESOURCES,
+      endpoint: "/api/generate-i18n",
       method: "post",
     });
   };

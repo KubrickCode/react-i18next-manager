@@ -12,7 +12,7 @@ import { useColorModeValue } from "~/core/color-mode";
 import { Highlight } from "~/core/highlight";
 import { Input } from "~/core/input";
 import { Flex } from "~/core/layout";
-import { KEY, ENDPOINT, useMutation } from "~/core/react-query";
+import { KEY, useMutation } from "~/core/react-query";
 import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
 import { i18nKeys, useTranslation } from "~/core/i18n";
@@ -63,7 +63,10 @@ export const TranslationsTableRow = ({
 
   const handleEditTranslation = () => {
     editTranslation({
-      endpoint: ENDPOINT.EDIT_TRANSLATION(translation.id),
+      endpoint: {
+        path: "/api/translations/{id}",
+        params: { id: translation.id },
+      },
       method: "patch",
       body: {
         newKey: translationForm.key,

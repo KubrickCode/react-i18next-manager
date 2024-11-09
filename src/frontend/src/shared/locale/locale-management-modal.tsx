@@ -9,7 +9,7 @@ import {
   ModalHeader,
   ModalToggle,
 } from "~/core/modal";
-import { useMutation, ENDPOINT, KEY } from "~/core/react-query";
+import { useMutation, KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { Button, IconButton } from "~/core/button";
 import {
@@ -70,7 +70,7 @@ export const LocaleManagementModal = () => {
     }));
 
     editLocalesPosition({
-      endpoint: ENDPOINT.EDIT_LOCALES_POSITION,
+      endpoint: "/api/locales/position",
       method: "patch",
       body: {
         locales: updatedLocales,
@@ -104,7 +104,10 @@ export const LocaleManagementModal = () => {
                           <Box padding={3}>
                             <MutationForm<EditLocaleLabelReqBodyDto>
                               defaultValues={{ newLabel: locale.label }}
-                              endpoint={ENDPOINT.EDIT_LOCALE_LABEL(locale.id)}
+                              endpoint={{
+                                path: "/api/locales/label/{id}",
+                                params: { id: locale.id },
+                              }}
                               method="patch"
                               refetchQueryKeys={refetchQueryKeys}
                               schema={editLocaleLabelSchema}
@@ -173,9 +176,10 @@ export const LocaleManagementModal = () => {
                                               )}
                                             </Text>
                                           ),
-                                          endPoint: ENDPOINT.DELETE_LOCALE(
-                                            locale.id
-                                          ),
+                                          endpoint: {
+                                            path: "/api/locales/{id}",
+                                            params: { id: locale.id },
+                                          },
                                           refetchQueryKeys,
                                           toast: t(
                                             i18nKeys.setting.deleteLocaleSuccess

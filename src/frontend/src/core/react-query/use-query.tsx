@@ -5,11 +5,12 @@ import {
 } from "@tanstack/react-query";
 
 import { api, ResponseError } from "../axios";
+import { buildUrl, Endpoint } from "./utils";
 
 const QUERY_STALE_TIME = 1000 * 60 * 5;
 
 export const useQuery = <TQueryFnData = unknown, TError = ResponseError>(
-  endpoint: string,
+  endpoint: Endpoint,
   key: string | string[],
   queryOptions?: Omit<
     UseQueryOptions<TQueryFnData, TError>,
@@ -17,7 +18,7 @@ export const useQuery = <TQueryFnData = unknown, TError = ResponseError>(
   >
 ) => {
   const queryFn = async (): Promise<TQueryFnData> => {
-    const response = await api.get<TQueryFnData>(endpoint);
+    const response = await api.get<TQueryFnData>(buildUrl(endpoint));
     return response.data;
   };
 
@@ -35,7 +36,7 @@ export const useSuspenseQuery = <
   TQueryFnData = unknown,
   TError = ResponseError
 >(
-  endpoint: string,
+  endpoint: Endpoint,
   key: string | string[],
   queryOptions?: Omit<
     UseQueryOptions<TQueryFnData, TError>,
@@ -43,7 +44,7 @@ export const useSuspenseQuery = <
   >
 ) => {
   const queryFn = async (): Promise<TQueryFnData> => {
-    const response = await api.get<TQueryFnData>(endpoint);
+    const response = await api.get<TQueryFnData>(buildUrl(endpoint));
     return response.data;
   };
 

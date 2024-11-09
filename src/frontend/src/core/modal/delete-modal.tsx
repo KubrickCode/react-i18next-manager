@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { QueryKey } from "../react-query";
+import { Endpoint, QueryKey } from "../react-query";
 import { ModalHeader } from "./modal-header";
 import { ModalBody } from "./modal-body";
 import { ModalFooter } from "./modal-footer";
@@ -11,7 +11,7 @@ import { useModal } from "./modal-toggle";
 
 type DeleteModelProps = {
   body: ReactNode;
-  endpoint: string;
+  endpoint: Endpoint;
   onComplete?: () => void;
   refetchQueryKeys?: QueryKey[];
   toast?: string;

@@ -2,7 +2,7 @@ import { DeleteTranslationsReqBodyDto } from "~/core/codegen";
 import { MutationForm, SubmitButton, z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { KEY, ENDPOINT } from "~/core/react-query";
+import { KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 const schema = z.object({
@@ -36,7 +36,7 @@ export const DeleteTranslationModal = ({
     <>
       <MutationForm<DeleteTranslationsReqBodyDto>
         defaultValues={{ translations: ids.map((id) => ({ id })) }}
-        endpoint={ENDPOINT.DELETE_TRANSLATIONS}
+        endpoint="/api/translations/delete"
         method="post"
         onComplete={handleComplete}
         refetchQueryKeys={[[KEY.GET_TRANSLATIONS(selectedGroupId)]]}

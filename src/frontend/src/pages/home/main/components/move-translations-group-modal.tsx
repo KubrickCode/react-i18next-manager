@@ -13,7 +13,7 @@ import {
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { KEY, ENDPOINT, useSuspenseQuery } from "~/core/react-query";
+import { KEY, useSuspenseQuery } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { GroupTreeView } from "~/shared/group";
 
@@ -35,7 +35,7 @@ export const MoveTranslationsGroupModal = ({
 }: MoveTranslationsGroupModalProps) => {
   const { t } = useTranslation();
   const { data } = useSuspenseQuery<GetGroupsResDto>(
-    ENDPOINT.GET_GROUPS,
+    "/api/groups",
     KEY.GET_GROUPS_IN_MOVE_GROUP_MODAL
   );
   const { onClose } = useModal();
@@ -63,7 +63,7 @@ export const MoveTranslationsGroupModal = ({
       defaultValues={{
         translations: translationIds.map((id) => ({ id })),
       }}
-      endpoint={ENDPOINT.EDIT_TRANSLATIONS_PARENT_GROUP}
+      endpoint={"/api/translations/group"}
       method="patch"
       onComplete={handleComplete}
       refetchQueryKeys={[[KEY.GET_TRANSLATIONS(currentGroup.id)]]}

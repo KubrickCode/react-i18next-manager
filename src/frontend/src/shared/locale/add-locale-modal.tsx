@@ -9,7 +9,7 @@ import {
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { KEY, ENDPOINT } from "~/core/react-query";
+import { KEY } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 const schema = z.object({
@@ -22,7 +22,7 @@ export const AddLocaleModal = () => {
 
   return (
     <MutationForm<AddLocaleReqBodyDto>
-      endpoint={ENDPOINT.ADD_LOCALE}
+      endpoint="/api/locales"
       method="post"
       onComplete={onClose}
       refetchQueryKeys={[[KEY.GET_LOCALES]]}

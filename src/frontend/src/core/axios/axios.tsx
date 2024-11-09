@@ -1,13 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosError } from "axios";
 
-const API_HOST = window.location.origin + "/api";
-
 export type MethodType = "get" | "post" | "put" | "delete" | "patch";
 export type RequestConfig = AxiosRequestConfig;
 export type ResponseError = AxiosError;
 
 export const api = axios.create({
-  baseURL: API_HOST,
+  baseURL: window.location.origin,
 });
 
 api.interceptors.response.use(
