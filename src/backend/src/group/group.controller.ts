@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -22,26 +20,31 @@ import {
   EditGroupPositionReqBodyDto,
   EditGroupPositionReqParamDto,
 } from './dto/edit-group-position.dto';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 
 @Controller('groups')
 export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
   @Get()
-  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: GetGroupsResDto })
   @ResponseDtoInterceptor(GetGroupsResDto)
   async getAll() {
     return await this.groupService.getAll();
   }
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
+  @ApiCreatedResponse({ type: GetGroupsResDto })
   async add(@Body() body: AddGroupReqBodyDto) {
     return await this.groupService.add(body);
   }
 
   @Patch('label/:id')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async editLabel(
     @Param() param: EditGroupLabelReqParamDto,
     @Body() body: EditGroupLabelReqBodyDto,
@@ -53,7 +56,7 @@ export class GroupController {
   }
 
   @Patch('position/:id')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async editPosition(
     @Param() param: EditGroupPositionReqParamDto,
     @Body() body: EditGroupPositionReqBodyDto,
@@ -65,7 +68,7 @@ export class GroupController {
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async delete(@Param() { id }: DeleteGroupReqParamDto) {
     return await this.groupService.delete({ id });
   }

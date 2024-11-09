@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decorator';
 import { TranslationService } from './translation.service';
 import {
@@ -24,26 +15,31 @@ import {
 } from './dto/edit-translation.dto';
 import { DeleteTranslationsReqBodyDto } from './dto/delete-translations.dto';
 import { EditTranslationsParentGroupReqBodyDto } from './dto/edit-translations-parent-group.dto';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 
 @Controller('translations')
 export class TranslationController {
   constructor(private readonly translationService: TranslationService) {}
 
   @Get(':groupId')
-  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: GetTranslationsResDto })
   @ResponseDtoInterceptor(GetTranslationsResDto)
   async getAll(@Param() param: GetTranslationsReqParamDto) {
     return await this.translationService.getAll(param);
   }
 
   @Post('/delete')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async deleteMany(@Body() body: DeleteTranslationsReqBodyDto) {
     return await this.translationService.deleteMany(body);
   }
 
   @Post(':groupId')
-  @HttpCode(HttpStatus.CREATED)
+  @ApiCreatedResponse()
   async add(
     @Param() param: AddTranslationReqParamDto,
     @Body() body: AddTranslationReqBodyDto,
@@ -55,7 +51,7 @@ export class TranslationController {
   }
 
   @Patch('group')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async editManyParentGroup(
     @Body() body: EditTranslationsParentGroupReqBodyDto,
   ) {
@@ -65,7 +61,7 @@ export class TranslationController {
   }
 
   @Patch(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async edit(
     @Param() param: EditTranslationReqParamDto,
     @Body() body: EditTranslationReqBodyDto,

@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -19,26 +17,31 @@ import {
 } from './dto/edit-locale-label.dto';
 import { DeleteLocaleReqParamDto } from './dto/delete-locale.dto';
 import { EditLocalesPositionReqBodyDto } from './dto/edit-locales-position.dto';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 
 @Controller('locales')
 export class LocaleController {
   constructor(private readonly localeService: LocaleService) {}
 
   @Get()
-  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: GetLocalesResDto })
   @ResponseDtoInterceptor(GetLocalesResDto)
   async getAll() {
     return await this.localeService.getAll();
   }
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
+  @ApiCreatedResponse({ type: GetLocalesResDto })
   async add(@Body() body: AddLocaleReqBodyDto) {
     return await this.localeService.add(body);
   }
 
   @Patch('label/:id')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async editLabel(
     @Param() param: EditLocaleLabelReqParamDto,
     @Body() body: EditLocaleLabelReqBodyDto,
@@ -50,13 +53,13 @@ export class LocaleController {
   }
 
   @Patch('position')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async editPosition(@Body() body: EditLocalesPositionReqBodyDto) {
     return await this.localeService.editPosition(body);
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse()
   async delete(@Param() { id }: DeleteLocaleReqParamDto) {
     return await this.localeService.delete({ id });
   }
