@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as express from 'express';
 import { join } from 'path';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { writeFileSync } from 'fs';
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule, {
@@ -30,6 +32,15 @@ const bootstrap = async () => {
   );
 
   const port = Number(process.env.PORT) || 4321;
+
+  const config = new DocumentBuilder()
+    .setTitle('API')
+    .setDescription('API documentation')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  writeFileSync('./swagger-spec.json', JSON.stringify(document));
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(port);
 

@@ -2,10 +2,9 @@ root_dir := justfile_directory()
 frontend_dir := root_dir + "/src/frontend"
 backend_dir := root_dir + "/src/backend"
 package_dir := root_dir + "/src/package"
-scripts_dir := root_dir + "/src/scripts"
 
 codegen:
-  node "{{ scripts_dir }}/codegen.js"
+  cd "{{ backend_dir }}" && npx openapi-typescript swagger-spec.json --output {{ frontend_dir }}/src/core/codegen/generated.tsx
 
 default:
   @just --list
