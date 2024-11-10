@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LocaleService } from './locale.service';
-import { DB, DBService } from 'src/db/db.service';
+import { DB, DBService } from 'src/db';
 import { ConflictException } from '@nestjs/common';
 import { LocaleFactory } from 'src/test/locale.factory';
 import { localeModuleConfig } from './locale.module.config';

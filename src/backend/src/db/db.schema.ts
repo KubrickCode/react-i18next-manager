@@ -1,4 +1,4 @@
-import { UUID } from 'src/common/types';
+import { UUID } from 'src/common';
 
 export type LocaleSchema = {
   id: UUID;

@@ -1,20 +1,16 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
-import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decorator';
+import { ResponseDtoInterceptor } from 'src/common/decorator';
 import { TranslationService } from './translation.service';
 import {
   GetTranslationsReqParamDto,
   GetTranslationsResDto,
-} from './dto/get-translations.dto';
-import {
   AddTranslationReqBodyDto,
   AddTranslationReqParamDto,
-} from './dto/add-translation.dto';
-import {
   EditTranslationReqBodyDto,
   EditTranslationReqParamDto,
-} from './dto/edit-translation.dto';
-import { DeleteTranslationsReqBodyDto } from './dto/delete-translations.dto';
-import { EditTranslationsParentGroupReqBodyDto } from './dto/edit-translations-parent-group.dto';
+  DeleteTranslationsReqBodyDto,
+  EditTranslationsParentGroupReqBodyDto,
+} from './dto';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,

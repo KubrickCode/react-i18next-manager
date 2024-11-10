@@ -1,8 +1,8 @@
-import { DBModule } from 'src/db/db.module';
+import { DBModule } from 'src/db';
 import { TranslationController } from './translation.controller';
 import { TranslationService } from './translation.service';
 import { TranslationRepository } from './translation.repository';
-import { GroupRepository } from 'src/group/group.repository';
+import { GroupRepository } from 'src/group';
 
 export const translationModuleConfig = {
   imports: [DBModule],

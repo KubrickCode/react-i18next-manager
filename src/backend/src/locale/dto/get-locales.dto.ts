@@ -7,7 +7,7 @@ import {
   IsUUID,
   ValidateNested,
 } from 'class-validator';
-import { UUID } from 'src/common/types';
+import { UUID } from 'src/common';
 
 class GetLocalesResLocale {
   @ApiProperty()

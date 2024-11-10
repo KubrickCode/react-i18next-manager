@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UUID } from 'src/common/types';
-import { generateUUID } from 'src/common/utils';
-import { DBAdapter } from 'src/db/db.adapter';
-import { DBService } from 'src/db/db.service';
+import { UUID, generateUUID } from 'src/common';
+import { DBAdapter, DBService } from 'src/db';
 
 type FindMayParams = {
   sortBy?: string;

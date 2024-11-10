@@ -8,18 +8,16 @@ import {
   Post,
 } from '@nestjs/common';
 import { GroupService } from './group.service';
-import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decorator';
-import { GetGroupsResDto } from './dto/get-groups.dto';
-import { DeleteGroupReqParamDto } from './dto/delete-group.dto';
-import { AddGroupReqBodyDto } from './dto/add-group.dto';
+import { ResponseDtoInterceptor } from 'src/common/decorator';
 import {
+  GetGroupsResDto,
+  DeleteGroupReqParamDto,
+  AddGroupReqBodyDto,
   EditGroupLabelReqBodyDto,
   EditGroupLabelReqParamDto,
-} from './dto/edit-group-label.dto';
-import {
   EditGroupPositionReqBodyDto,
   EditGroupPositionReqParamDto,
-} from './dto/edit-group-position.dto';
+} from './dto';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,

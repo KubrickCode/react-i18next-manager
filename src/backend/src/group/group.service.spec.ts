@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DB, DBService } from 'src/db/db.service';
-import { generateUUID } from 'src/common/utils';
+import { DB, DBService } from 'src/db';
+import { generateUUID } from 'src/common';
 import { GroupService } from './group.service';
 import { groupModuleConfig } from './group.module.config';
 import { ConflictException } from '@nestjs/common';

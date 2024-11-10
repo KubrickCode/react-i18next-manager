@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsUUID, NotContains } from 'class-validator';
-import { Trim } from 'src/common/decorator/trim.decorator';
-import { UUID } from 'src/common/types';
+import { Trim } from 'src/common/decorator';
+import { UUID } from 'src/common';
 
 export class EditGroupLabelReqParamDto {
   @ApiProperty()

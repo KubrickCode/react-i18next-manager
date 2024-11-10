@@ -5,10 +5,10 @@ import {
   GroupSchema,
   LocaleSchema,
   TranslationSchema,
-} from 'src/db/db.service';
+  DBAdapter,
+} from 'src/db';
 import * as fs from 'fs';
 import { UUID } from './types';
-import { DBAdapter } from 'src/db/db.adapter';
 
 @Injectable()
 export class CommonService extends DBAdapter {

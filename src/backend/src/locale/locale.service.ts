@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { LocaleRepository } from './locale.repository';
-import { UUID } from 'src/common/types';
+import { UUID } from 'src/common';
 
 type EditLabelParams = {
   id: UUID;

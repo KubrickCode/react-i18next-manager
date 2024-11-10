@@ -8,8 +8,8 @@ import {
   NotContains,
   ValidateNested,
 } from 'class-validator';
-import { Trim } from 'src/common/decorator/trim.decorator';
-import { UUID } from 'src/common/types';
+import { Trim } from 'src/common/decorator';
+import { UUID } from 'src/common';
 
 class AddTranslationReqBodyTranslationValue {
   @ApiProperty()

@@ -8,15 +8,15 @@ import {
   Post,
 } from '@nestjs/common';
 import { LocaleService } from './locale.service';
-import { ResponseDtoInterceptor } from 'src/common/decorator/response-dto.decorator';
-import { GetLocalesResDto } from './dto/get-locales.dto';
-import { AddLocaleReqBodyDto } from './dto/add-locale.dto';
+import { ResponseDtoInterceptor } from 'src/common/decorator';
 import {
+  GetLocalesResDto,
+  AddLocaleReqBodyDto,
   EditLocaleLabelReqBodyDto,
   EditLocaleLabelReqParamDto,
-} from './dto/edit-locale-label.dto';
-import { DeleteLocaleReqParamDto } from './dto/delete-locale.dto';
-import { EditLocalesPositionReqBodyDto } from './dto/edit-locales-position.dto';
+  DeleteLocaleReqParamDto,
+  EditLocalesPositionReqBodyDto,
+} from './dto';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,

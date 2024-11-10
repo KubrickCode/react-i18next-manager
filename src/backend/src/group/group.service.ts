@@ -1,8 +1,8 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { GroupRepository } from './group.repository';
-import { UUID } from 'src/common/types';
-import { TranslationRepository } from 'src/translation/translation.repository';
-import { GroupSchema } from 'src/db/db.schema';
+import { UUID } from 'src/common';
+import { TranslationRepository } from 'src/translation';
+import { GroupSchema } from 'src/db';
 
 type AddParams = {
   label: string;

@@ -7,7 +7,7 @@ import {
   NotContains,
 } from 'class-validator';
 import { UUID } from 'crypto';
-import { Trim } from 'src/common/decorator/trim.decorator';
+import { Trim } from 'src/common/decorator';
 
 export class AddGroupReqBodyDto {
   @ApiProperty()

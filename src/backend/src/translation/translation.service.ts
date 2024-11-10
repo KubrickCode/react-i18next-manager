@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { TranslationRepository } from './translation.repository';
-import { UUID } from 'src/common/types';
-import { GroupRepository } from 'src/group/group.repository';
+import { UUID } from 'src/common';
+import { GroupRepository } from 'src/group';
 
 type AddParams = {
   groupId: UUID;

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DB, DBService } from 'src/db/db.service';
+import { DB, DBService } from 'src/db';
 import { TranslationService } from './translation.service';
 import { translationModuleConfig } from './translation.module.config';
 import {
