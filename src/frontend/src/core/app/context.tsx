@@ -1,10 +1,10 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 
-import { GetLocalesResDto } from "~/core/codegen";
 import { useSuspenseQuery } from "~/core/react-query";
+import { SchemaDto } from "../codegen";
 
 type State = {
-  locales: GetLocalesResDto["locales"];
+  locales: SchemaDto<"GetLocalesResDto">["locales"];
 };
 
 const AppContext = createContext<State>({
@@ -16,7 +16,8 @@ export const useApp = () => useContext(AppContext);
 type AppContextProviderProps = PropsWithChildren;
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const { data } = useSuspenseQuery<GetLocalesResDto>("/api/locales");
+  const { data } =
+    useSuspenseQuery<SchemaDto<"GetLocalesResDto">>("/api/locales");
 
   const { locales } = data;
 

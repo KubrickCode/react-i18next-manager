@@ -1,4 +1,3 @@
-import { GetTranslationsResDto } from "~/core/codegen";
 import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
 import { useSuspenseQuery } from "~/core/react-query";
 import { Checkbox } from "~/core/checkbox";
@@ -9,6 +8,7 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 
 import { useHomePageContext } from "../../context";
 import { TranslationsTableRow } from "./translations-table-row";
+import { SchemaDto } from "~/core/codegen";
 
 type TranslationsTableProps = {
   handleSelectedIds: (ids: string[]) => void;
@@ -25,7 +25,7 @@ export const TranslationsTable = ({
   const { selectedGroup } = useHomePageContext();
   const { t } = useTranslation();
 
-  const { data } = useSuspenseQuery<GetTranslationsResDto>({
+  const { data } = useSuspenseQuery<SchemaDto<"GetTranslationsResDto">>({
     path: "/api/translations/{groupId}",
     params: { groupId: selectedGroup?.id ?? "" },
   });

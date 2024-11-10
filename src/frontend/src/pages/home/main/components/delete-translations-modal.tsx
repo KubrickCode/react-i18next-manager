@@ -1,4 +1,4 @@
-import { DeleteTranslationsReqBodyDto } from "~/core/codegen";
+import { SchemaDto } from "~/core/codegen";
 import { MutationForm, SubmitButton, z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
@@ -34,7 +34,7 @@ export const DeleteTranslationModal = ({
 
   return (
     <>
-      <MutationForm<DeleteTranslationsReqBodyDto>
+      <MutationForm<SchemaDto<"DeleteTranslationsReqBodyDto">>
         defaultValues={{ translations: ids.map((id) => ({ id })) }}
         endpoint="/api/translations/delete"
         method="post"

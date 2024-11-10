@@ -1,4 +1,4 @@
-import { AddLocaleReqBodyDto } from "~/core/codegen";
+import { SchemaDto } from "~/core/codegen";
 import {
   Field,
   Label,
@@ -21,7 +21,7 @@ export const AddLocaleModal = () => {
   const { onClose } = useModal();
 
   return (
-    <MutationForm<AddLocaleReqBodyDto>
+    <MutationForm<SchemaDto<"AddLocaleReqBodyDto">>
       endpoint="/api/locales"
       method="post"
       onComplete={onClose}

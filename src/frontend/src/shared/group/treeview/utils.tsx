@@ -1,11 +1,11 @@
-import { GetGroupsResDto } from "~/core/codegen";
+import { SchemaDto } from "~/core/codegen";
 import { TreeData } from "./group-treeview-node";
 
 const buildTree = ({
   groups,
   parentId,
 }: {
-  groups: GetGroupsResDto["groups"];
+  groups: SchemaDto<"GetGroupsResDto">["groups"];
   parentId: string | null;
 }): TreeData[] => {
   return groups
@@ -19,7 +19,7 @@ const buildTree = ({
 };
 
 export const convertGroupsToTreeData = (
-  groups: GetGroupsResDto["groups"]
+  groups: SchemaDto<"GetGroupsResDto">["groups"]
 ): TreeData[] => {
   return buildTree({ groups, parentId: null });
 };

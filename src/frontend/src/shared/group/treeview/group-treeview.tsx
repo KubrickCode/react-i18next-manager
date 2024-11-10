@@ -9,13 +9,13 @@ import { IconButton } from "~/core/button";
 import { ModalToggle } from "~/core/modal";
 import { Box, Flex, VStack } from "~/core/layout";
 import { useColorModeValue } from "~/core/color-mode";
-import { EditGroupPositionReqBodyDto, GetGroupsResDto } from "~/core/codegen";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { z } from "~/core/form";
 
 import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
 import { GroupTreeviewNode } from "./group-treeview-node";
+import { SchemaDto } from "~/core/codegen";
 
 const schema = z.object({
   parentId: z.string().nullable(),
@@ -23,7 +23,7 @@ const schema = z.object({
 });
 
 type GroupTreeViewProps = {
-  groups: GetGroupsResDto["groups"];
+  groups: SchemaDto<"GetGroupsResDto">["groups"];
   handleSelectedGroup: (
     group: {
       id: string;
@@ -50,12 +50,13 @@ export const GroupTreeView = ({
   const { t } = useTranslation();
 
   const refetchQueryKeys = [[buildApiPath("/api/groups")]];
-  const { mutate: editGroupPosition } =
-    useMutation<EditGroupPositionReqBodyDto>({
-      refetchQueryKeys,
-      schema,
-      toast: t(i18nKeys.group.editGroupPositionSuccess),
-    });
+  const { mutate: editGroupPosition } = useMutation<
+    SchemaDto<"EditGroupPositionReqBodyDto">
+  >({
+    refetchQueryKeys,
+    schema,
+    toast: t(i18nKeys.group.editGroupPositionSuccess),
+  });
 
   const treeData = convertGroupsToTreeData(groups);
 

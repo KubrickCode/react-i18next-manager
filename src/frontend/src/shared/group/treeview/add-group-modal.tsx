@@ -1,4 +1,4 @@
-import { AddGroupReqBodyDto } from "~/core/codegen";
+import { SchemaDto } from "~/core/codegen";
 import {
   Field,
   Fields,
@@ -28,7 +28,7 @@ export const AddGroupModal = ({ parentId, parentName }: AddGroupModalProps) => {
   const { t } = useTranslation();
 
   return (
-    <MutationForm<AddGroupReqBodyDto>
+    <MutationForm<SchemaDto<"AddGroupReqBodyDto">>
       defaultValues={{ parentId }}
       endpoint="/api/groups"
       method="post"

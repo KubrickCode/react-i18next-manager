@@ -19,15 +19,12 @@ import {
   Droppable,
 } from "~/core/drag-drop";
 import { Box, Divider, Flex } from "~/core/layout";
-import {
-  EditLocaleLabelReqBodyDto,
-  EditLocalesPositionReqBodyDto,
-} from "~/core/codegen";
 import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { MutationForm, z, Input } from "~/core/form";
 
 import { AddLocaleModal } from "./add-locale-modal";
+import { SchemaDto } from "~/core/codegen";
 
 const editLocalesPositionSchema = z.object({
   locales: z.array(
@@ -50,12 +47,13 @@ export const LocaleManagementModal = () => {
   const [editMode, setEditMode] = useState(false);
   const [selectedLocaleId, setSelectedLocaleId] = useState<string>();
 
-  const { mutate: editLocalesPosition } =
-    useMutation<EditLocalesPositionReqBodyDto>({
-      refetchQueryKeys,
-      schema: editLocalesPositionSchema,
-      toast: t(i18nKeys.setting.editLocalePositionSuccess),
-    });
+  const { mutate: editLocalesPosition } = useMutation<
+    SchemaDto<"EditLocalesPositionReqBodyDto">
+  >({
+    refetchQueryKeys,
+    schema: editLocalesPositionSchema,
+    toast: t(i18nKeys.setting.editLocalePositionSuccess),
+  });
 
   const onDrag = (result: DropResult) => {
     if (!result.destination) return;
@@ -102,7 +100,9 @@ export const LocaleManagementModal = () => {
                           {...provided.draggableProps}
                         >
                           <Box padding={3}>
-                            <MutationForm<EditLocaleLabelReqBodyDto>
+                            <MutationForm<
+                              SchemaDto<"EditLocaleLabelReqBodyDto">
+                            >
                               defaultValues={{ newLabel: locale.label }}
                               endpoint={{
                                 path: "/api/locales/label/{id}",

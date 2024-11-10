@@ -1,5 +1,5 @@
 import { useApp } from "~/core/app";
-import { AddTranslationReqBodyDto } from "~/core/codegen";
+import { SchemaDto } from "~/core/codegen";
 import {
   Input,
   Field,
@@ -41,7 +41,7 @@ export const AddTranslationModal = ({
 
   return (
     <>
-      <MutationForm<AddTranslationReqBodyDto>
+      <MutationForm<SchemaDto<"AddTranslationReqBodyDto">>
         endpoint={{
           path: "/api/translations/{groupId}",
           params: { groupId: selectedGroup.id },

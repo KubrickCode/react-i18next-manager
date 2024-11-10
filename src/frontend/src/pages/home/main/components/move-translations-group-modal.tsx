@@ -1,7 +1,4 @@
-import {
-  EditTranslationsParentGroupReqBodyDto,
-  GetGroupsResDto,
-} from "~/core/codegen";
+import { SchemaDto } from "~/core/codegen";
 import {
   Field,
   FieldError,
@@ -34,7 +31,8 @@ export const MoveTranslationsGroupModal = ({
   translationIds,
 }: MoveTranslationsGroupModalProps) => {
   const { t } = useTranslation();
-  const { data } = useSuspenseQuery<GetGroupsResDto>("/api/groups");
+  const { data } =
+    useSuspenseQuery<SchemaDto<"GetGroupsResDto">>("/api/groups");
   const { onClose } = useModal();
 
   const { groups } = data;
@@ -56,7 +54,7 @@ export const MoveTranslationsGroupModal = ({
   });
 
   return (
-    <MutationForm<EditTranslationsParentGroupReqBodyDto>
+    <MutationForm<SchemaDto<"EditTranslationsParentGroupReqBodyDto">>
       defaultValues={{
         translations: translationIds.map((id) => ({ id })),
       }}

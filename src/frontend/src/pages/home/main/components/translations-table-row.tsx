@@ -4,10 +4,6 @@ import { FaEdit, FaSave } from "react-icons/fa";
 import { useApp } from "~/core/app";
 import { Button, IconButton } from "~/core/button";
 import { Checkbox } from "~/core/checkbox";
-import {
-  EditTranslationReqBodyDto,
-  GetTranslationsResDto,
-} from "~/core/codegen";
 import { useColorModeValue } from "~/core/color-mode";
 import { Highlight } from "~/core/highlight";
 import { Input } from "~/core/input";
@@ -19,6 +15,7 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 import { z } from "~/core/form";
 
 import { useHomePageContext } from "../../context";
+import { SchemaDto } from "~/core/codegen";
 
 const schema = z.object({
   newKey: z.string(),
@@ -34,7 +31,7 @@ type TranslationsTableRowProps = {
   isSelected: boolean;
   onSelect: () => void;
   term: string;
-  translation: GetTranslationsResDto["translations"][number];
+  translation: SchemaDto<"GetTranslationsResDto">["translations"][number];
 };
 
 export const TranslationsTableRow = ({
@@ -55,7 +52,9 @@ export const TranslationsTableRow = ({
   const hoveredBackground = useColorModeValue("gray.50", "gray.900");
   const hoveredIconButtonBackground = useColorModeValue("gray.200", "gray.700");
 
-  const { mutate: editTranslation } = useMutation<EditTranslationReqBodyDto>({
+  const { mutate: editTranslation } = useMutation<
+    SchemaDto<"EditTranslationReqBodyDto">
+  >({
     refetchQueryKeys: [
       [
         buildApiPath({

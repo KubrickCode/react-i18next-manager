@@ -3,7 +3,6 @@ import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
 
 import { IconButton } from "~/core/button";
-import { EditGroupLabelReqBodyDto } from "~/core/codegen";
 import { useColorModeValue } from "~/core/color-mode";
 import { z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
@@ -16,6 +15,7 @@ import { NodeRendererProps } from "~/core/tree";
 import { replaceBlank } from "~/core/utils";
 
 import { AddGroupModal } from "./add-group-modal";
+import { SchemaDto } from "~/core/codegen";
 
 const schema = z.object({
   newLabel: z.string(),
@@ -55,7 +55,9 @@ export const GroupTreeviewNode = ({
   const inputBgColor = useColorModeValue("white", "gray.800");
 
   const refetchQueryKeys = [[buildApiPath("/api/groups")]];
-  const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
+  const { mutate: editGroupLabel } = useMutation<
+    SchemaDto<"EditGroupLabelReqBodyDto">
+  >({
     refetchQueryKeys,
     schema,
     toast: t(i18nKeys.group.editGroupLabelSuccess),
