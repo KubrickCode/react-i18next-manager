@@ -1,5 +1,13 @@
 import { Module } from '@nestjs/common';
-import { translationModuleConfig } from './translation.module.config';
+import { DBModule } from 'src/db';
+import { TranslationController } from './translation.controller';
+import { TranslationService } from './translation.service';
+import { TranslationRepository } from './translation.repository';
+import { GroupRepository } from 'src/group';
 
-@Module(translationModuleConfig)
+@Module({
+  imports: [DBModule],
+  controllers: [TranslationController],
+  providers: [TranslationService, TranslationRepository, GroupRepository],
+})
 export class TranslationModule {}

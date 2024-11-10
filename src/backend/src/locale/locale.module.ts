@@ -1,5 +1,12 @@
 import { Module } from '@nestjs/common';
-import { localeModuleConfig } from './locale.module.config';
+import { DBModule } from 'src/db';
+import { LocaleController } from './locale.controller';
+import { LocaleService } from './locale.service';
+import { LocaleRepository } from './locale.repository';
 
-@Module(localeModuleConfig)
+@Module({
+  imports: [DBModule],
+  controllers: [LocaleController],
+  providers: [LocaleService, LocaleRepository],
+})
 export class LocaleModule {}
