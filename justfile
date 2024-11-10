@@ -27,7 +27,7 @@ package-build:
   cd "{{ package_dir }}" && yarn build
 
 package-init:
-  cd "{{ package_dir }}" && chmod +x dist/init.js && npx init
+  cd "{{ package_dir }}" && chmod +x ./bin/init.js
 
 package-publish:
   cd "{{ package_dir }}" && npm publish --access public
