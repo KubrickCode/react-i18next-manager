@@ -2,13 +2,9 @@ import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 import { buildApiPath, useMutation } from "~/core/react-query";
-import { Tree } from "~/core/tree";
-import { SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
 import { IconButton } from "~/core/button";
 import { ModalToggle } from "~/core/modal";
-import { Box, Flex, VStack } from "~/core/layout";
-import { useColorModeValue } from "~/core/color-mode";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { z } from "~/core/form";
 
@@ -16,6 +12,9 @@ import { convertGroupsToTreeData } from "./utils";
 import { AddGroupModal } from "./add-group-modal";
 import { GroupTreeviewNode } from "./group-treeview-node";
 import { SchemaDto } from "~/core/codegen";
+import { Box, Flex, useColorModeValue, VStack } from "@chakra-ui/react";
+import { SearchInput } from "@saas-ui/react";
+import { Tree } from "react-arborist";
 
 const schema = z.object({
   parentId: z.string().nullable(),

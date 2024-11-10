@@ -4,3 +4,4 @@ export * from "./modal-footer";
 export * from "./modal-header";
 export * from "./modal-toggle";
 export * from "./modal";
+export * from "./menu-modal-toggle";

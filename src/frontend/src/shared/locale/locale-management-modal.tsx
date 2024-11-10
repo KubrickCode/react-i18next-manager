@@ -15,16 +15,17 @@ import { Button, IconButton } from "~/core/button";
 import {
   DragDropContext,
   Draggable,
-  DropResult,
   Droppable,
-} from "~/core/drag-drop";
-import { Box, Divider, Flex } from "~/core/layout";
+  DropResult,
+} from "@hello-pangea/dnd";
+
 import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { MutationForm, z, Input } from "~/core/form";
 
 import { AddLocaleModal } from "./add-locale-modal";
 import { SchemaDto } from "~/core/codegen";
+import { Box, Divider, Flex } from "@chakra-ui/react";
 
 const editLocalesPositionSchema = z.object({
   locales: z.array(

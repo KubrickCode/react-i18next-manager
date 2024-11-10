@@ -1,10 +1,10 @@
 import { Suspense, useState } from "react";
 
-import { Box } from "~/core/layout";
 import { Loader } from "~/core/loader";
 
 import { TranslationsTableToolbar, TranslationsTable } from "./components";
 import { useHomePageContext } from "../context";
+import { Box } from "@chakra-ui/react";
 
 export const HomePageMain = () => {
   const { selectedGroup } = useHomePageContext();

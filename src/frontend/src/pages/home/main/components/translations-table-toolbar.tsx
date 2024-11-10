@@ -4,19 +4,18 @@ import { FaTrash } from "react-icons/fa";
 import assert from "assert";
 
 import { Button, IconButton } from "~/core/button";
-import { SearchInput } from "~/core/input";
-import { HStack } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
 import { buildApiPath, useQueryClient } from "~/core/react-query";
 import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { LocaleManagementModal } from "~/shared/locale";
-import { useColorModeValue } from "~/core/color-mode";
 
 import { AddTranslationModal } from "./add-translation-modal";
 import { DeleteTranslationModal } from "./delete-translations-modal";
 import { useHomePageContext } from "../../context";
 import { MoveTranslationsGroupModal } from "./move-translations-group-modal";
+import { HStack, useColorModeValue } from "@chakra-ui/react";
+import { SearchInput } from "@saas-ui/react";
 
 type TranslationsTableToolbarProps = {
   handleSelectedIds: (ids: string[]) => void;

@@ -1,21 +1,20 @@
 import { useState } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
+import { NodeRendererProps } from "react-arborist";
 
 import { IconButton } from "~/core/button";
-import { useColorModeValue } from "~/core/color-mode";
 import { z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { Input } from "~/core/input";
-import { Box, Flex } from "~/core/layout";
 import { DeleteModal, ModalToggle } from "~/core/modal";
 import { buildApiPath, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
-import { NodeRendererProps } from "~/core/tree";
 import { replaceBlank } from "~/core/utils";
 
 import { AddGroupModal } from "./add-group-modal";
 import { SchemaDto } from "~/core/codegen";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 
 const schema = z.object({
   newLabel: z.string(),

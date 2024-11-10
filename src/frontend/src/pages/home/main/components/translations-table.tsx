@@ -1,7 +1,5 @@
-import { Table, Tbody, Td, Th, Thead, Tr } from "~/core/table";
 import { useSuspenseQuery } from "~/core/react-query";
 import { Checkbox } from "~/core/checkbox";
-import { Center } from "~/core/layout";
 import { Text } from "~/core/text";
 import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
@@ -9,6 +7,7 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 import { useHomePageContext } from "../../context";
 import { TranslationsTableRow } from "./translations-table-row";
 import { SchemaDto } from "~/core/codegen";
+import { Center, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 
 type TranslationsTableProps = {
   handleSelectedIds: (ids: string[]) => void;

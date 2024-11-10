@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
+import { Box } from "@chakra-ui/react";
 
-import { Box } from "../layout";
 import { Text } from "../text";
 
 export type FormFooterProps = HTMLAttributes<HTMLDivElement>;

@@ -1,8 +1,7 @@
-import { chakra } from "@chakra-ui/react";
+import { chakra, useColorModeValue } from "@chakra-ui/react";
+import { Select, SelectButton, SelectList } from "@saas-ui/react";
 
-import { useColorModeValue } from "~/core/color-mode";
 import { useI18n } from "~/core/i18n";
-import { Select, SelectButton, SelectList } from "~/core/select";
 
 const supportedLanguages = [
   { key: "en", label: "English" },

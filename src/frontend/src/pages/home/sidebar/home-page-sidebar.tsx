@@ -1,20 +1,18 @@
-import { Sidebar, SidebarSection } from "~/core/sidebar";
 import { Button } from "~/core/button";
 import { LABELS } from "~/core/constants";
-import { Flex } from "~/core/layout";
-import { Image } from "~/core/image";
-import { useColorModeValue } from "~/core/color-mode";
 import { GroupTreeView } from "~/shared/group";
 
 import { SettingMenu } from "./components";
 import { useHomePageContext } from "../context";
+import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
+import { Sidebar, SidebarSection } from "@saas-ui/react";
 
 export const HomePageSidebar = () => {
   const { groups, handleSelectedGroup } = useHomePageContext();
   const darkModeImageSrc = useColorModeValue("logo-light.png", "logo-dark.png");
 
   return (
-    <Sidebar>
+    <Sidebar padding={5}>
       <SidebarSection>
         <Flex alignItems="center" justifyContent="space-between">
           <Button

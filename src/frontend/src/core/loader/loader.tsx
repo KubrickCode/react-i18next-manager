@@ -1,7 +1,5 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, VStack } from "@chakra-ui/react";
 import { LoadingSpinner, LoadingSpinnerProps } from "@saas-ui/react";
-
-import { VStack } from "../layout";
 
 export const Spinner = (props?: LoadingSpinnerProps) => {
   return <LoadingSpinner {...props} />;

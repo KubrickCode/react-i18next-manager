@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { FaEdit, FaSave } from "react-icons/fa";
+import { Flex, Td, Tr, useColorModeValue } from "@chakra-ui/react";
 
 import { useApp } from "~/core/app";
 import { Button, IconButton } from "~/core/button";
 import { Checkbox } from "~/core/checkbox";
-import { useColorModeValue } from "~/core/color-mode";
 import { Highlight } from "~/core/highlight";
 import { Input } from "~/core/input";
-import { Flex } from "~/core/layout";
 import { buildApiPath, useMutation } from "~/core/react-query";
-import { Td, Tr } from "~/core/table";
 import { replaceBlank } from "~/core/utils";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { z } from "~/core/form";

@@ -4,24 +4,25 @@ import { CiLight } from "react-icons/ci";
 import { FaLanguage } from "react-icons/fa";
 import { AiOutlineFileSync } from "react-icons/ai";
 
+import { Text } from "~/core/text";
+import { IconButton } from "~/core/button";
+import { useMutation } from "~/core/react-query";
+import { i18nKeys, useTranslation } from "~/core/i18n";
+import { LocaleManagementModal } from "~/shared/locale";
+
+import { LanguageSelect } from "./language-select";
 import {
+  Box,
   Menu,
   MenuButton,
   MenuDivider,
   MenuGroup,
   MenuItem,
   MenuList,
-  MenuModalToggle,
-} from "~/core/menu";
-import { Text } from "~/core/text";
-import { useColorMode, useColorModeValue } from "~/core/color-mode";
-import { IconButton } from "~/core/button";
-import { useMutation } from "~/core/react-query";
-import { Box } from "~/core/layout";
-import { i18nKeys, useTranslation } from "~/core/i18n";
-import { LocaleManagementModal } from "~/shared/locale";
-
-import { LanguageSelect } from "./language-select";
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { MenuModalToggle } from "~/core/modal";
 
 export const SettingMenu = () => {
   const { t } = useTranslation();

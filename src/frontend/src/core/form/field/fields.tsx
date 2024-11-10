@@ -1,4 +1,4 @@
-import { Flex, FlexProps } from "../../layout";
+import { Flex, FlexProps } from "@chakra-ui/react";
 
 export type FieldsProps = FlexProps;
 

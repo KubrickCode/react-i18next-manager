@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ElementType } from "react";
+import { MenuItem, MenuItemProps } from "@chakra-ui/react";
 
-import { MenuItem, MenuItemProps } from "./menu-item";
-import { ModalToggle } from "../modal";
+import { ModalToggle } from ".";
 
 export type MenuModalToggleProps<Modal extends ElementType> = MenuItemProps & {
   modal: Modal;
