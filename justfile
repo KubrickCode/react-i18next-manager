@@ -33,7 +33,7 @@ package-publish:
   cd "{{ package_dir }}" && npm publish --access public
 
 package-studio:
-  cd "{{ package_dir }}" && chmod +x dist/main.js && npx @kubrick/react-i18next-manager studio
+  cd "{{ package_dir }}" && ./bin/cli.js studio
 
 package-version *version:
   cd "{{ package_dir }}" && npm version {{version}}
