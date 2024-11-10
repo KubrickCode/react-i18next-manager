@@ -10,7 +10,7 @@ export type Endpoint<P extends keyof paths = keyof paths> =
     ? { path: P; params: ExtractPathParams<P> }
     : P;
 
-export const buildUrl = <P extends keyof paths>(
+export const buildApiPath = <P extends keyof paths>(
   endpoint: Endpoint<P>
 ): string => {
   if (typeof endpoint === "string") return endpoint;

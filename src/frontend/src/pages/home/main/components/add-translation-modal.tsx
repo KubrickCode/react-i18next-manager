@@ -11,7 +11,7 @@ import {
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { buildUrl } from "~/core/react-query";
+import { buildApiPath } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
 
@@ -50,7 +50,7 @@ export const AddTranslationModal = ({
         onComplete={onClose}
         refetchQueryKeys={[
           [
-            buildUrl({
+            buildApiPath({
               path: "/api/translations/{groupId}",
               params: { groupId: selectedGroup.id },
             }),

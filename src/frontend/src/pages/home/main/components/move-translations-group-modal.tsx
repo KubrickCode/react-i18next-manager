@@ -13,7 +13,7 @@ import {
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { buildUrl, useSuspenseQuery } from "~/core/react-query";
+import { buildApiPath, useSuspenseQuery } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { GroupTreeView } from "~/shared/group";
 
@@ -65,7 +65,7 @@ export const MoveTranslationsGroupModal = ({
       onComplete={handleComplete}
       refetchQueryKeys={[
         [
-          buildUrl({
+          buildApiPath({
             path: "/api/translations/{groupId}",
             params: { groupId: currentGroup.id },
           }),

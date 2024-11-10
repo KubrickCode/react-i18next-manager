@@ -10,7 +10,7 @@ import {
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader } from "~/core/modal";
-import { buildUrl } from "~/core/react-query";
+import { buildApiPath } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { replaceBlank } from "~/core/utils";
 
@@ -32,7 +32,7 @@ export const AddGroupModal = ({ parentId, parentName }: AddGroupModalProps) => {
       defaultValues={{ parentId }}
       endpoint="/api/groups"
       method="post"
-      refetchQueryKeys={[[buildUrl("/api/groups")]]}
+      refetchQueryKeys={[[buildApiPath("/api/groups")]]}
       schema={schema}
       toast={t(i18nKeys.group.addGroupSuccess)}
     >

@@ -10,7 +10,7 @@ import { i18nKeys, useTranslation } from "~/core/i18n";
 import { Input } from "~/core/input";
 import { Box, Flex } from "~/core/layout";
 import { DeleteModal, ModalToggle } from "~/core/modal";
-import { buildUrl, useMutation } from "~/core/react-query";
+import { buildApiPath, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { NodeRendererProps } from "~/core/tree";
 import { replaceBlank } from "~/core/utils";
@@ -54,7 +54,7 @@ export const GroupTreeviewNode = ({
   );
   const inputBgColor = useColorModeValue("white", "gray.800");
 
-  const refetchQueryKeys = [[buildUrl("/api/groups")]];
+  const refetchQueryKeys = [[buildApiPath("/api/groups")]];
   const { mutate: editGroupLabel } = useMutation<EditGroupLabelReqBodyDto>({
     refetchQueryKeys,
     schema,

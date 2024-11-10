@@ -9,7 +9,7 @@ import {
   ModalHeader,
   ModalToggle,
 } from "~/core/modal";
-import { buildUrl, useMutation } from "~/core/react-query";
+import { buildApiPath, useMutation } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { Button, IconButton } from "~/core/button";
 import {
@@ -46,7 +46,7 @@ export const LocaleManagementModal = () => {
   const { t } = useTranslation();
   const { locales } = useApp();
 
-  const refetchQueryKeys = [[buildUrl("/api/locales")]];
+  const refetchQueryKeys = [[buildApiPath("/api/locales")]];
   const [editMode, setEditMode] = useState(false);
   const [selectedLocaleId, setSelectedLocaleId] = useState<string>();
 

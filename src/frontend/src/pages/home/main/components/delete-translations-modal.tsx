@@ -2,7 +2,7 @@ import { DeleteTranslationsReqBodyDto } from "~/core/codegen";
 import { MutationForm, SubmitButton, z } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { buildUrl } from "~/core/react-query";
+import { buildApiPath } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 const schema = z.object({
@@ -41,7 +41,7 @@ export const DeleteTranslationModal = ({
         onComplete={handleComplete}
         refetchQueryKeys={[
           [
-            buildUrl({
+            buildApiPath({
               path: "/api/translations/{groupId}",
               params: { groupId: selectedGroupId },
             }),

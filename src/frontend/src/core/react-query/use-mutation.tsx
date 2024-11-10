@@ -8,7 +8,7 @@ import { ZodError, ZodType } from "zod";
 import { MethodType, RequestConfig, api } from "../axios";
 import { queryClient } from "./provider";
 import { useToast } from "../toast";
-import { buildUrl, Endpoint } from "./utils";
+import { buildApiPath, Endpoint } from "./utils";
 
 export type MutateParams<TBody> = {
   endpoint: Endpoint;
@@ -50,7 +50,7 @@ export const useMutation = <TBody, TData = unknown>({
           }
         }
       }
-      const response = await api[method](buildUrl(endpoint), body, config);
+      const response = await api[method](buildApiPath(endpoint), body, config);
       return response.data;
     },
     onSuccess: async () => {
