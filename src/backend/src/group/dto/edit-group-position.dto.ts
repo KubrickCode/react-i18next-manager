@@ -9,7 +9,7 @@ export class EditGroupPositionReqParamDto {
 }
 
 export class EditGroupPositionReqBodyDto {
-  @ApiProperty()
+  @ApiProperty({ nullable: true })
   @IsUUID()
   @IsOptional()
   parentId: UUID | null;

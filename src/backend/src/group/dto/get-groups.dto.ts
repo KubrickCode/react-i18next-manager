@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { UUID } from 'src/common/types';
 
-class Group {
+class GetGroupsResGroup {
   @ApiProperty()
   @IsUUID()
   id: UUID;
@@ -30,9 +30,9 @@ class Group {
 }
 
 export class GetGroupsResDto {
-  @ApiProperty()
+  @ApiProperty({ type: [GetGroupsResGroup] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Group)
-  groups: Group[];
+  @Type(() => GetGroupsResGroup)
+  groups: GetGroupsResGroup[];
 }

@@ -3,16 +3,16 @@ import { Type } from 'class-transformer';
 import { IsArray, IsUUID, ValidateNested } from 'class-validator';
 import { UUID } from 'src/common/types';
 
-class Translation {
+class DeleteTranslationsReqBodyTranslation {
   @ApiProperty()
   @IsUUID()
   id: UUID;
 }
 
 export class DeleteTranslationsReqBodyDto {
-  @ApiProperty()
+  @ApiProperty({ type: [DeleteTranslationsReqBodyTranslation] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Translation)
-  translations: Translation[];
+  @Type(() => DeleteTranslationsReqBodyTranslation)
+  translations: DeleteTranslationsReqBodyTranslation[];
 }

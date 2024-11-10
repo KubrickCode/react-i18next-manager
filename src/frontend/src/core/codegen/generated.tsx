@@ -216,8 +216,13 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        GetLocalesResLocale: {
+            id: string;
+            label: string;
+            position: number;
+        };
         GetLocalesResDto: {
-            locales: string[];
+            locales: components["schemas"]["GetLocalesResLocale"][];
         };
         AddLocaleReqBodyDto: {
             label: string;
@@ -225,40 +230,74 @@ export interface components {
         EditLocaleLabelReqBodyDto: {
             newLabel: string;
         };
+        EditLocalesPositionReqBodyLocale: {
+            id: string;
+            position: number;
+        };
         EditLocalesPositionReqBodyDto: {
-            locales: string[];
+            locales: components["schemas"]["EditLocalesPositionReqBodyLocale"][];
+        };
+        GetGroupsResGroup: {
+            id: string;
+            label: string;
+            parentId: string;
+            position: number;
         };
         GetGroupsResDto: {
-            groups: string[];
+            groups: components["schemas"]["GetGroupsResGroup"][];
         };
         AddGroupReqBodyDto: {
             label: string;
-            parentId: string;
+            parentId: string | null;
         };
         EditGroupLabelReqBodyDto: {
             newLabel: string;
         };
         EditGroupPositionReqBodyDto: {
-            parentId: string;
+            parentId: string | null;
             position: number;
         };
+        GetTranslationsResTranslationValue: {
+            localeId: string;
+            value: string;
+        };
+        GetTranslationsResTranslation: {
+            id: string;
+            groupId: string;
+            key: string;
+            values: components["schemas"]["GetTranslationsResTranslationValue"][];
+        };
         GetTranslationsResDto: {
-            translations: string[];
+            translations: components["schemas"]["GetTranslationsResTranslation"][];
+        };
+        DeleteTranslationsReqBodyTranslation: {
+            id: string;
         };
         DeleteTranslationsReqBodyDto: {
-            translations: string[];
+            translations: components["schemas"]["DeleteTranslationsReqBodyTranslation"][];
+        };
+        AddTranslationReqBodyTranslationValue: {
+            localeId: string;
+            value: string;
         };
         AddTranslationReqBodyDto: {
             key: string;
-            values: string[];
+            values: components["schemas"]["AddTranslationReqBodyTranslationValue"][];
+        };
+        EditTranslationsParentGroupReqBodyTranslation: {
+            id: string;
         };
         EditTranslationsParentGroupReqBodyDto: {
-            translations: string[];
+            translations: components["schemas"]["EditTranslationsParentGroupReqBodyTranslation"][];
             newGroupId: string;
+        };
+        EditTranslationReqBodyTranslationValue: {
+            localeId: string;
+            value: string;
         };
         EditTranslationReqBodyDto: {
             newKey: string;
-            newValues: string[];
+            newValues: components["schemas"]["EditTranslationReqBodyTranslationValue"][];
         };
     };
     responses: never;

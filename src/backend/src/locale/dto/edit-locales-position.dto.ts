@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { IsArray, IsInt, IsUUID, ValidateNested } from 'class-validator';
 import { UUID } from 'src/common/types';
 
-class Locale {
+class EditLocalesPositionReqBodyLocale {
   @ApiProperty()
   @IsUUID()
   id: UUID;
@@ -14,9 +14,9 @@ class Locale {
 }
 
 export class EditLocalesPositionReqBodyDto {
-  @ApiProperty()
+  @ApiProperty({ type: [EditLocalesPositionReqBodyLocale] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Locale)
-  locales: Locale[];
+  @Type(() => EditLocalesPositionReqBodyLocale)
+  locales: EditLocalesPositionReqBodyLocale[];
 }

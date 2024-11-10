@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { UUID } from 'src/common/types';
 
-class Locale {
+class GetLocalesResLocale {
   @ApiProperty()
   @IsUUID()
   id: UUID;
@@ -24,9 +24,9 @@ class Locale {
 }
 
 export class GetLocalesResDto {
-  @ApiProperty()
+  @ApiProperty({ type: [GetLocalesResLocale] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Locale)
-  locales: Locale[];
+  @Type(() => GetLocalesResLocale)
+  locales: GetLocalesResLocale[];
 }

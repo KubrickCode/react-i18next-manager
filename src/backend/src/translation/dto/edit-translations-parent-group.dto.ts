@@ -3,18 +3,18 @@ import { Type } from 'class-transformer';
 import { IsArray, IsUUID, ValidateNested } from 'class-validator';
 import { UUID } from 'src/common/types';
 
-class Translation {
+class EditTranslationsParentGroupReqBodyTranslation {
   @ApiProperty()
   @IsUUID()
   id: UUID;
 }
 
 export class EditTranslationsParentGroupReqBodyDto {
-  @ApiProperty()
+  @ApiProperty({ type: [EditTranslationsParentGroupReqBodyTranslation] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Translation)
-  translations: Translation[];
+  @Type(() => EditTranslationsParentGroupReqBodyTranslation)
+  translations: EditTranslationsParentGroupReqBodyTranslation[];
 
   @ApiProperty()
   @IsUUID()

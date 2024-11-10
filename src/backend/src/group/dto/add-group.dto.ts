@@ -17,7 +17,7 @@ export class AddGroupReqBodyDto {
   @Trim()
   label: string;
 
-  @ApiProperty()
+  @ApiProperty({ nullable: true })
   @IsUUID()
   @IsOptional()
   parentId: UUID | null;

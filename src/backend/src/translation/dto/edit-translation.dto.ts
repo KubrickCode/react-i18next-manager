@@ -11,7 +11,7 @@ import {
 import { Trim } from 'src/common/decorator/trim.decorator';
 import { UUID } from 'src/common/types';
 
-class TranslationValue {
+class EditTranslationReqBodyTranslationValue {
   @ApiProperty()
   @IsUUID()
   localeId: UUID;
@@ -31,11 +31,11 @@ export class EditTranslationReqBodyDto {
   @Trim()
   newKey: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: [EditTranslationReqBodyTranslationValue] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => TranslationValue)
-  newValues: TranslationValue[];
+  @Type(() => EditTranslationReqBodyTranslationValue)
+  newValues: EditTranslationReqBodyTranslationValue[];
 }
 
 export class EditTranslationReqParamDto {

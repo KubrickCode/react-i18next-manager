@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { IsArray, IsString, IsUUID, ValidateNested } from 'class-validator';
 import { UUID } from 'src/common/types';
 
-class TranslationValue {
+class GetTranslationsResTranslationValue {
   @ApiProperty()
   @IsUUID()
   localeId: UUID;
@@ -13,7 +13,7 @@ class TranslationValue {
   value: string;
 }
 
-class Translation {
+class GetTranslationsResTranslation {
   @ApiProperty()
   @IsUUID()
   id: UUID;
@@ -26,19 +26,19 @@ class Translation {
   @IsString()
   key: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: [GetTranslationsResTranslationValue] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => TranslationValue)
-  values: TranslationValue[];
+  @Type(() => GetTranslationsResTranslationValue)
+  values: GetTranslationsResTranslationValue[];
 }
 
 export class GetTranslationsResDto {
-  @ApiProperty()
+  @ApiProperty({ type: [GetTranslationsResTranslation] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Translation)
-  translations: Translation[];
+  @Type(() => GetTranslationsResTranslation)
+  translations: GetTranslationsResTranslation[];
 }
 
 export class GetTranslationsReqParamDto {
