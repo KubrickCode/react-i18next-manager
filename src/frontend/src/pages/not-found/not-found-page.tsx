@@ -1,7 +1,3 @@
 import { Page } from "~/core/page";
 
-export const NotFoundPage = () => (
-  <Page height="100vh">
-    <>Not Found Page</>
-  </Page>
-);
+export const NotFoundPage = () => <Page>Not Found Page</Page>;
