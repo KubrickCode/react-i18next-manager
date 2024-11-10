@@ -39,7 +39,9 @@ const bootstrap = async () => {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  writeFileSync('./swagger-spec.json', JSON.stringify(document));
+  if (process.env.NODE_ENV === 'development') {
+    writeFileSync('./swagger-spec.json', JSON.stringify(document));
+  }
   SwaggerModule.setup('api', app, document);
 
   await app.listen(port);
