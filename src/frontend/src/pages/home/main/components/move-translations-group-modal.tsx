@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { SchemaDto } from "~/core/codegen";
 import {
   Field,
@@ -34,6 +35,7 @@ export const MoveTranslationsGroupModal = ({
   const { data } =
     useSuspenseQuery<SchemaDto<"GetGroupsResDto">>("/api/groups");
   const { onClose } = useModal();
+  const [targetGroupId, setTargetGroupId] = useState<string>("");
 
   const { groups } = data;
 
@@ -67,6 +69,10 @@ export const MoveTranslationsGroupModal = ({
             path: "/api/translations/{groupId}",
             params: { groupId: currentGroup.id },
           }),
+          buildApiPath({
+            path: "/api/translations/{groupId}",
+            params: { groupId: targetGroupId },
+          }),
         ],
       ]}
       schema={schema}
@@ -88,7 +94,10 @@ export const MoveTranslationsGroupModal = ({
                 <GroupTreeView
                   groups={groups}
                   handleSelectedGroup={(group) => {
-                    if (group) setValue("newGroupId", group.id);
+                    if (group) {
+                      setValue("newGroupId", group.id);
+                      setTargetGroupId(group.id);
+                    }
                   }}
                   height={300}
                   width={400}
