@@ -63,7 +63,12 @@ export const MutationForm = <
 
   return (
     <FormProvider {...useFormReturn}>
-      <Form onSubmit={onSubmit}>
+      <Form
+        onSubmit={(e) => {
+          if (e) e.stopPropagation();
+          return onSubmit(e);
+        }}
+      >
         {typeof children === "function"
           ? createElement(children, {
               ...useFormReturn,
