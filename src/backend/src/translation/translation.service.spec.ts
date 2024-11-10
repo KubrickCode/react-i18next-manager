@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DB, DBService } from 'src/db';
+import { DB, DBModule, DBService } from 'src/db';
 import { TranslationService } from './translation.service';
-import { translationModuleConfig } from './translation.module.config';
 import {
   initialGroups,
   initialLocales,
@@ -9,6 +8,8 @@ import {
 } from 'src/test/seed.data';
 import { faker } from '@faker-js/faker';
 import { ConflictException } from '@nestjs/common';
+import { TranslationRepository } from './translation.repository';
+import { GroupRepository } from 'src/group';
 
 describe('TranslationService Integration', () => {
   let module: TestingModule;
@@ -17,7 +18,10 @@ describe('TranslationService Integration', () => {
   let db: DB;
 
   beforeAll(async () => {
-    module = await Test.createTestingModule(translationModuleConfig).compile();
+    module = await Test.createTestingModule({
+      imports: [DBModule],
+      providers: [TranslationService, TranslationRepository, GroupRepository],
+    }).compile();
 
     service = module.get<TranslationService>(TranslationService);
     dbService = module.get<DBService>(DBService);

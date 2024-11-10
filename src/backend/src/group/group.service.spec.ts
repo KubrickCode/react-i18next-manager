@@ -1,8 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DB, DBService } from 'src/db';
+import { DB, DBModule, DBService } from 'src/db';
 import { generateUUID } from 'src/common';
 import { GroupService } from './group.service';
-import { groupModuleConfig } from './group.module.config';
 import { ConflictException } from '@nestjs/common';
 import {
   initialGroups,
@@ -10,6 +9,8 @@ import {
   initialTranslations,
 } from 'src/test/seed.data';
 import { faker } from '@faker-js/faker';
+import { GroupRepository } from './group.repository';
+import { TranslationRepository } from 'src/translation';
 
 describe('GroupService Integration', () => {
   let module: TestingModule;
@@ -18,7 +19,10 @@ describe('GroupService Integration', () => {
   let db: DB;
 
   beforeAll(async () => {
-    module = await Test.createTestingModule(groupModuleConfig).compile();
+    module = await Test.createTestingModule({
+      imports: [DBModule],
+      providers: [GroupService, GroupRepository, TranslationRepository],
+    }).compile();
 
     service = module.get<GroupService>(GroupService);
     dbService = module.get<DBService>(DBService);
