@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 
 import { GetLocalesResDto } from "~/core/codegen";
-import { KEY, useSuspenseQuery } from "~/core/react-query";
+import { useSuspenseQuery } from "~/core/react-query";
 
 type State = {
   locales: GetLocalesResDto["locales"];
@@ -16,10 +16,7 @@ export const useApp = () => useContext(AppContext);
 type AppContextProviderProps = PropsWithChildren;
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const { data } = useSuspenseQuery<GetLocalesResDto>(
-    "/api/locales",
-    KEY.GET_LOCALES
-  );
+  const { data } = useSuspenseQuery<GetLocalesResDto>("/api/locales");
 
   const { locales } = data;
 

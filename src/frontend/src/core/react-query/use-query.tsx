@@ -11,19 +11,19 @@ const QUERY_STALE_TIME = 1000 * 60 * 5;
 
 export const useQuery = <TQueryFnData = unknown, TError = ResponseError>(
   endpoint: Endpoint,
-  key: string | string[],
   queryOptions?: Omit<
     UseQueryOptions<TQueryFnData, TError>,
     "queryKey" | "queryFn"
   >
 ) => {
+  const url = buildUrl(endpoint);
   const queryFn = async (): Promise<TQueryFnData> => {
-    const response = await api.get<TQueryFnData>(buildUrl(endpoint));
+    const response = await api.get<TQueryFnData>(url);
     return response.data;
   };
 
   return useTanstackQuery<TQueryFnData, TError>({
-    queryKey: [key],
+    queryKey: [url],
     queryFn,
     retry: false,
     staleTime: QUERY_STALE_TIME,
@@ -37,19 +37,19 @@ export const useSuspenseQuery = <
   TError = ResponseError
 >(
   endpoint: Endpoint,
-  key: string | string[],
   queryOptions?: Omit<
     UseQueryOptions<TQueryFnData, TError>,
     "queryKey" | "queryFn"
   >
 ) => {
+  const url = buildUrl(endpoint);
   const queryFn = async (): Promise<TQueryFnData> => {
-    const response = await api.get<TQueryFnData>(buildUrl(endpoint));
+    const response = await api.get<TQueryFnData>(url);
     return response.data;
   };
 
   return useTanstackSuspenseQuery<TQueryFnData, TError>({
-    queryKey: [key],
+    queryKey: [url],
     queryFn,
     retry: false,
     staleTime: QUERY_STALE_TIME,

@@ -7,7 +7,7 @@ import { Button, IconButton } from "~/core/button";
 import { SearchInput } from "~/core/input";
 import { HStack } from "~/core/layout";
 import { ModalToggle } from "~/core/modal";
-import { KEY, useQueryClient } from "~/core/react-query";
+import { buildUrl, useQueryClient } from "~/core/react-query";
 import { useApp } from "~/core/app";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { LocaleManagementModal } from "~/shared/locale";
@@ -40,7 +40,12 @@ export const TranslationsTableToolbar = ({
 
   const handleRefresh = () => {
     queryClient.invalidateQueries({
-      queryKey: [KEY.GET_TRANSLATIONS(selectedGroup?.id ?? "")],
+      queryKey: [
+        buildUrl({
+          path: "/api/translations/{groupId}",
+          params: { groupId: selectedGroup?.id ?? "" },
+        }),
+      ],
     });
   };
 

@@ -1,4 +1,3 @@
-export { default as KEY } from "./keys";
 export * from "./provider";
 export * from "./use-mutation";
 export * from "./use-query-client";

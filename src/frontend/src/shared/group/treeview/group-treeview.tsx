@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
-import { useMutation, KEY } from "~/core/react-query";
+import { buildUrl, useMutation } from "~/core/react-query";
 import { Tree } from "~/core/tree";
 import { SearchInput } from "~/core/input";
 import { Text } from "~/core/text";
@@ -49,7 +49,7 @@ export const GroupTreeView = ({
   );
   const { t } = useTranslation();
 
-  const refetchQueryKeys = [[KEY.GET_GROUPS]];
+  const refetchQueryKeys = [[buildUrl("/api/groups")]];
   const { mutate: editGroupPosition } =
     useMutation<EditGroupPositionReqBodyDto>({
       refetchQueryKeys,

@@ -13,7 +13,7 @@ import {
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { KEY, useSuspenseQuery } from "~/core/react-query";
+import { buildUrl, useSuspenseQuery } from "~/core/react-query";
 import { Text } from "~/core/text";
 import { GroupTreeView } from "~/shared/group";
 
@@ -34,10 +34,7 @@ export const MoveTranslationsGroupModal = ({
   translationIds,
 }: MoveTranslationsGroupModalProps) => {
   const { t } = useTranslation();
-  const { data } = useSuspenseQuery<GetGroupsResDto>(
-    "/api/groups",
-    KEY.GET_GROUPS_IN_MOVE_GROUP_MODAL
-  );
+  const { data } = useSuspenseQuery<GetGroupsResDto>("/api/groups");
   const { onClose } = useModal();
 
   const { groups } = data;
@@ -66,7 +63,14 @@ export const MoveTranslationsGroupModal = ({
       endpoint={"/api/translations/group"}
       method="patch"
       onComplete={handleComplete}
-      refetchQueryKeys={[[KEY.GET_TRANSLATIONS(currentGroup.id)]]}
+      refetchQueryKeys={[
+        [
+          buildUrl({
+            path: "/api/translations/{groupId}",
+            params: { groupId: currentGroup.id },
+          }),
+        ],
+      ]}
       schema={schema}
       toast={t(i18nKeys.group.moveGroupSuccess)}
     >

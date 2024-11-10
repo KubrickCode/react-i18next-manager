@@ -9,7 +9,7 @@ import {
 } from "~/core/form";
 import { i18nKeys, useTranslation } from "~/core/i18n";
 import { ModalBody, ModalFooter, ModalHeader, useModal } from "~/core/modal";
-import { KEY } from "~/core/react-query";
+import { buildUrl } from "~/core/react-query";
 import { Text } from "~/core/text";
 
 const schema = z.object({
@@ -25,7 +25,7 @@ export const AddLocaleModal = () => {
       endpoint="/api/locales"
       method="post"
       onComplete={onClose}
-      refetchQueryKeys={[[KEY.GET_LOCALES]]}
+      refetchQueryKeys={[[buildUrl("/api/locales")]]}
       schema={schema}
       toast={t(i18nKeys.setting.addLocaleSuccess)}
     >

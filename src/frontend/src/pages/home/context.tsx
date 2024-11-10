@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 import { GetGroupsResDto } from "~/core/codegen";
-import { KEY, useSuspenseQuery } from "~/core/react-query";
+import { useSuspenseQuery } from "~/core/react-query";
 
 type SelectedGroup = {
   id: string;
@@ -39,10 +39,7 @@ export const HomePageContextProvider = ({
   children,
 }: HomePageContextProviderProps) => {
   const [selectedGroup, setSelectedGroup] = useState<SelectedGroup>(null);
-  const { data } = useSuspenseQuery<GetGroupsResDto>(
-    "/api/groups",
-    KEY.GET_GROUPS
-  );
+  const { data } = useSuspenseQuery<GetGroupsResDto>("/api/groups");
 
   const { groups } = data;
 
