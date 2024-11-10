@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import { Loader } from "~/core/loader";
 
@@ -18,6 +18,12 @@ export const HomePageMain = () => {
   const handleTerm = (term: string) => {
     setTerm(term);
   };
+
+  // TODO: 현재 그룹이 바뀌어도 선택된 아이디와 검색어가 초기화되지 않음. useEffect 사용하지 않도록 구조 변경 필요.
+  useEffect(() => {
+    setSelectedIds([]);
+    setTerm("");
+  }, [selectedGroup?.id]);
 
   return (
     <Box as="main" height="100vh" overflowY="auto" padding="1rem">
