@@ -27,7 +27,15 @@ export const ModalToggle = <Modal extends ElementType>({
 
   return (
     <>
-      <Flex alignItems="center" onClick={onOpen} tabIndex={0} {...otherProps}>
+      <Flex
+        alignItems="center"
+        onClick={(e) => {
+          e.stopPropagation();
+          onOpen();
+        }}
+        tabIndex={0}
+        {...otherProps}
+      >
         {children}
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose}>
